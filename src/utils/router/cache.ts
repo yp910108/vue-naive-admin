@@ -8,10 +8,11 @@ import type { RouteRecordRaw } from 'vue-router'
 export function getCachedRoutes(routes: RouteRecordRaw[]) {
   const cached: string[] = []
   for (const route of routes) {
-    const { meta, children } = route
+    const { children } = route
     if (children && children.length) {
       for (const _route of children) {
-        if (meta?.keepAlive && _route.name) {
+        const { meta } = _route
+        if (meta?.keepAlive) {
           cached.push(_route.name as string)
         }
       }
