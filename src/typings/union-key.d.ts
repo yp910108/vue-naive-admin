@@ -15,13 +15,6 @@ declare namespace UnionKey {
   type LoginModule = 'pwd-login' | 'code-login' | 'register' | 'reset-pwd' | 'bind-wechat'
 
   /**
-   * 布局组件的名称
-   * - basic 基础布局
-   * - blank 空白布局
-   */
-  type LayoutComponentType = 'basic' | 'blank'
-
-  /**
    * 布局模式
    * - vertical 左侧菜单模式
    * - horizontal 顶部菜单模式

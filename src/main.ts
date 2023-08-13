@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { setupAssets } from './plugins'
 import { setupRouter } from './router'
-import { setupStore } from './store'
+// import { setupStore } from './store'
 import { setupI18n } from './locales'
 import AppLoading from './components/common/app-loading.vue'
 import App from './App.vue'
@@ -16,7 +16,7 @@ async function setupApp() {
 
   setupRouter(app)
 
-  setupStore(app)
+  // setupStore(app)
 
   setupI18n(app)
 

@@ -1,138 +1,45 @@
-import type { RouteRecordRaw } from 'vue-router'
-import { getLayoutComponent, getViewComponent } from './component'
+import type { RouteComponent, RouteRecordRaw } from 'vue-router'
+import { BasicLayout, BlankLayout } from '@/layouts'
+import views from '@/views'
+import { camelize, combineURL, isFunction } from '../common'
 
-type ComponentAction = Record<AuthRoute.RouteComponentType, () => void>
+type Lazy<T> = () => Promise<T>
 
-/**
- * 是否有外链
- * @param authRoute 权限路由
- */
-function hasHref(authRoute: AuthRoute.Route) {
-  return Boolean(authRoute.meta.href)
+type ModuleComponent = {
+  default: RouteComponent
 }
 
 /**
- * 是否有路由组件
- * @param authRoute 权限路由
+ * 通过路径获取组件名称
+ * @param path
  */
-function hasComponent(authRoute: AuthRoute.Route) {
-  return Boolean(authRoute.component)
+function parsePathToName(path: string) {
+  return camelize(path.replace(/\//g, '-'), true)
 }
 
 /**
- * 是否有子路由
- * @param authRoute 权限路由
+ * 判断是否是异步组件
+ * @param component
  */
-function hasChildren(authRoute: AuthRoute.Route) {
-  return Boolean(authRoute.children && authRoute.children.length)
+function isAsyncComponent(
+  component: RouteComponent | Lazy<ModuleComponent>
+): component is Lazy<ModuleComponent> {
+  return isFunction(component)
 }
 
 /**
- * 是否是单层路由
- * @param authRoute
+ * 给页面组件设置名称
+ * @param component
+ * @param name
  */
-function isSingleRoute(authRoute: AuthRoute.Route) {
-  return Boolean(authRoute.meta.singleLayout)
-}
-
-/**
- * 将单个权限路由转换成 vue 路由
- * @param authRoute
- * @returns vueRoute
- */
-export function transformAuthRouteToVueRoute(authRoute: AuthRoute.Route) {
-  const resultRoutes: RouteRecordRaw[] = []
-
-  const route = { ...authRoute } as RouteRecordRaw
-
-  // 外链路由
-  if (hasHref(authRoute)) {
-    route.component = getViewComponent('404')
-  }
-
-  // 路由组件
-  if (hasComponent(authRoute)) {
-    const action: ComponentAction = {
-      basic() {
-        route.component = getLayoutComponent('basic')
-      },
-      blank() {
-        route.component = getLayoutComponent('blank')
-      },
-      multi() {
-        if (hasChildren(authRoute)) {
-          route.meta = { ...route.meta!, multi: true }
-          delete route.component
-        } else {
-          console.error('多级路由缺少子路由：', authRoute)
-        }
-      },
-      self() {
-        route.component = getViewComponent(authRoute.name as AuthRoute.LastDegreeRouteKey)
-      }
-    }
-    try {
-      action[authRoute.component!]()
-    } catch {
-      console.error('路由组件解析失败: ', authRoute)
+function setViewComponentName(component: RouteComponent | Lazy<ModuleComponent>, name: string) {
+  if (isAsyncComponent(component)) {
+    return async () => {
+      const result = await component()
+      Object.assign(result.default, { name })
+      return result
     }
   }
-
-  // 单层路由
-  if (isSingleRoute(authRoute)) {
-    if (hasChildren(authRoute)) {
-      console.error('单独路由不应该有子路由: ', authRoute)
-    }
-    if (authRoute.name === 'not-found') {
-      route.children = [
-        {
-          path: '',
-          name: authRoute.name,
-          component: getViewComponent('not-found')
-        }
-      ]
-    } else {
-      const parentPath = `${route.path}-parent` as AuthRouteUtils.SingelRouteKey
-
-      const layout =
-        authRoute.meta.singleLayout === 'basic'
-          ? getLayoutComponent('basic')
-          : getLayoutComponent('blank')
-
-      const parentRoute: RouteRecordRaw = {
-        path: parentPath,
-        component: layout,
-        redirect: authRoute.path,
-        children: [route]
-      }
-
-      return [parentRoute]
-    }
-  }
-
-  if (hasChildren(authRoute)) {
-    const children = (authRoute.children as AuthRoute.Route[])
-      .map((child) => transformAuthRouteToVueRoute(child))
-      .flat()
-
-    const redirectPath = (children.find((v) => !v.meta?.multi)?.path ?? '/') as AuthRoute.RoutePath
-
-    if (redirectPath === '/') {
-      console.error('该多级路由没有有效的子路径', authRoute)
-    }
-
-    if (authRoute.component === 'multi') {
-      resultRoutes.push(...children)
-      delete route.children
-    } else {
-      route.children = children
-    }
-    route.redirect = redirectPath
-  }
-
-  resultRoutes.push(route)
-
-  return resultRoutes
 }
 
 /**
@@ -141,32 +48,68 @@ export function transformAuthRouteToVueRoute(authRoute: AuthRoute.Route) {
  * @returns vueRoutes
  */
 export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
-  return authRoutes.map((authRoute) => transformAuthRouteToVueRoute(authRoute)).flat(1)
-}
+  const vueRootRoute = {
+    name: 'Root',
+    path: '/'
+  } as RouteRecordRaw
+  const vueBlankLayoutRoute: RouteRecordRaw = {
+    path: '/',
+    name: 'BlankLayout',
+    component: BlankLayout,
+    children: []
+  }
+  const vueBasicLayoutRoute: RouteRecordRaw = {
+    path: '/',
+    name: 'BasicLayout',
+    component: BasicLayout,
+    children: []
+  }
+  const vueNotFoundRoute = {
+    name: 'NotFound',
+    path: '/:pathMatch(.*)*'
+  } as RouteRecordRaw
 
-/**
- * 将路由 name 转换成路由 path
- * @param name
- * @returns path
- */
-export function transformRouteNameToRoutePath(name: Exclude<AuthRoute.AllRouteKey, 'not-found'>) {
-  const rootPath: AuthRoute.RoutePath = '/'
-  if (name === 'root') return rootPath
+  const vueRoutes: RouteRecordRaw[] = [
+    vueRootRoute,
+    vueBlankLayoutRoute,
+    vueBasicLayoutRoute,
+    vueNotFoundRoute
+  ]
 
-  const path = name.split('_').join('/')
+  const transform = (authRoutes: AuthRoute.Route[], prefix: string = '') => {
+    for (const authRoute of authRoutes) {
+      const { path, layout, children, ...rest } = authRoute
+      const fullpath = combineURL(prefix, path ?? '')
+      const name = parsePathToName(fullpath)
+      if (children && children.length) {
+        transform(children, fullpath)
+      } else {
+        const component = views[`./${fullpath}/index.vue`]
+        setViewComponentName(component, name)
+        const vueRoute = {
+          path: fullpath,
+          component,
+          meta: { ...rest }
+        }
+        if (layout === 'blank') {
+          vueBlankLayoutRoute.children.push(vueRoute)
+        } else {
+          vueBasicLayoutRoute.children.push(vueRoute)
+        }
+      }
+    }
+  }
 
-  return `/${path}` as AuthRoute.RoutePath
-}
+  transform(authRoutes)
 
-/**
- * 将路由 path 转换成路由 name
- * @param path
- * @returns name
- */
-export function transformRoutePathToRouteName<K extends AuthRoute.RoutePath>(path: K) {
-  if (path === '/') return 'root'
+  const routes = vueBasicLayoutRoute.children.length
+    ? vueBasicLayoutRoute.children
+    : vueBlankLayoutRoute.children
 
-  const name = path.split('/').slice(1).join('_')
+  const redirectPath = routes.length ? `/${routes[0].path}` : undefined
 
-  return name as AuthRoute.AllRouteKey
+  vueRootRoute.redirect = redirectPath
+  vueNotFoundRoute.redirect = redirectPath
+
+  return vueRoutes
 }

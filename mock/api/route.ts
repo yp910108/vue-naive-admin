@@ -9,8 +9,6 @@ const apis: MockMethod[] = [
     response: (options): Service.MockServiceResult => {
       const { userId } = options.body
 
-      const routeHomeName: AuthRoute.LastDegreeRouteKey = 'dashboard_analysis'
-
       const role = userModel.find((item) => item.userId === userId)?.userRole ?? 'super'
 
       const routes = routeModel[role]
@@ -18,10 +16,7 @@ const apis: MockMethod[] = [
       return {
         code: 200,
         message: 'ok',
-        data: {
-          routes,
-          home: routeHomeName
-        }
+        data: routes
       }
     }
   }

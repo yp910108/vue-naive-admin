@@ -1,3 +1,3 @@
-export * from './transform'
-export * from './error'
-export * from './handler'
+import { createRequest } from './request'
+
+export const mockRequest = createRequest({ baseURL: '/mock' })

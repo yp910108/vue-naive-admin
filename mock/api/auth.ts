@@ -25,7 +25,7 @@ const apis: MockMethod[] = [
     //   res.statusCode = 401
     //   res.end(`hello, this is data.`)
     // },
-    response: (options): Service.MockServiceResult<ApiAuth.Token | null> => {
+    response: (options): Service.MockServiceResult<string | null> => {
       const { userName = undefined, password = undefined } = options.body
 
       if (!userName || !password) {
@@ -44,10 +44,7 @@ const apis: MockMethod[] = [
         return {
           code: 200,
           message: 'ok',
-          data: {
-            token: findItem.token,
-            refreshToken: findItem.refreshToken
-          }
+          data: findItem.token
         }
       }
       return {
@@ -60,7 +57,7 @@ const apis: MockMethod[] = [
   {
     url: '/mock/getUserInfo',
     method: 'get',
-    response: (options): Service.MockServiceResult<ApiAuth.UserInfo | null> => {
+    response: (options): Service.MockServiceResult<Auth.UserInfo | null> => {
       const { authorization = '' } = options.headers
       const REFRESH_TOKEN_CODE = 66666
 
@@ -72,6 +69,7 @@ const apis: MockMethod[] = [
         }
       }
       const userInfo: Auth.UserInfo = {
+        token: '',
         userId: '',
         userName: '',
         userRole: 'user'
@@ -96,31 +94,6 @@ const apis: MockMethod[] = [
       return {
         code: REFRESH_TOKEN_CODE,
         message: '用户信息异常！',
-        data: null
-      }
-    }
-  },
-  {
-    url: '/mock/updateToken',
-    method: 'post',
-    response: (options): Service.MockServiceResult<ApiAuth.Token | null> => {
-      const { refreshToken } = options.body
-
-      const item = userModel.find((item) => item.refreshToken === refreshToken)
-
-      if (item) {
-        return {
-          code: 200,
-          message: 'ok',
-          data: {
-            token: item.token,
-            refreshToken: item.refreshToken
-          }
-        }
-      }
-      return {
-        code: 3000,
-        message: '用户已失效或不存在！',
         data: null
       }
     }

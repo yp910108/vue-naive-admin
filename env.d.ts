@@ -16,8 +16,6 @@ interface ImportMetaEnv {
   readonly VITE_ROUTE_HOME_PATH: AuthRoute.RoutePath // 路由首页的路径
 
   readonly VITE_HASH_ROUTE?: 'Y' | 'N' // 是否 hash 路由模式
-
-  readonly VITE_SOYBEAN_ROUTE_PLUGIN?: 'Y' | 'N' // 是否应用自动生成路由的插件
 }
 
 interface ImportMeta {

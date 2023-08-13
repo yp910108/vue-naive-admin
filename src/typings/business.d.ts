@@ -8,6 +8,7 @@ declare namespace Auth {
   type RoleType = 'super' | 'admin' | 'user'
 
   interface UserInfo {
+    token: string
     userId: string
     userName: string
     userRole: RoleType

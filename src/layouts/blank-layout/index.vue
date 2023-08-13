@@ -1,9 +1,5 @@
 <template>
-  <global-content :show-padding="false" />
+  <div class="this is blank layout">
+    <router-view />
+  </div>
 </template>
-
-<script setup lang="ts">
-import { GlobalContent } from '../common'
-
-defineOptions({ name: 'BlankLayout' })
-</script>

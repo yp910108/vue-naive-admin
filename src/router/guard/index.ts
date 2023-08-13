@@ -1,6 +1,5 @@
 import type { Router } from 'vue-router'
 import { useTitle } from '@vueuse/core'
-import { $t } from '@/locales'
 import { createPermissionGuard } from './permission'
 
 export function createRouterGuard(router: Router) {
@@ -9,7 +8,7 @@ export function createRouterGuard(router: Router) {
     await createPermissionGuard(to, from, next)
   })
   router.afterEach((to) => {
-    useTitle(to.meta.i18nTitle ? $t(to.meta.i18nTitle) : to.meta.title)
+    useTitle(to.meta.title)
     window.$loadingBar?.finish()
   })
 }
