@@ -30,7 +30,7 @@ export function createRequest(
 
   async function asyncRequest<T>(param: RequestParam) {
     const { instance } = customInstance
-    return (await getRequestResponse({ ...param, instance })) as Service.RequestResult<T>
+    return (await getRequestResponse({ ...param, instance })) as T | undefined
   }
 
   function get<T>(url: string, config?: AxiosRequestConfig) {

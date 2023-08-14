@@ -1,4 +1,5 @@
 interface UserModel extends Auth.UserInfo {
+  token: string
   password: string
 }
 

@@ -113,9 +113,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
 
   transform(authRoutes)
 
-  const routes = vueBasicLayoutRoute.children.length
-    ? vueBasicLayoutRoute.children
-    : vueBlankLayoutRoute.children
+  const routes = vueBasicLayoutRoute.children
 
   const redirectPath = routes.length ? `/${removeParamsFromPath(routes[0].path)}` : undefined
 

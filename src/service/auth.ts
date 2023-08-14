@@ -15,7 +15,7 @@ export function fetchSmsCode(phone: string) {
  * @param password
  * @returns
  */
-export function fetchLogin(userName: string, password: string) {
+export function login(userName: string, password: string) {
   return mockRequest.post<string>('/login', { userName, password })
 }
 

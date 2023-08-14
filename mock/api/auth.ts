@@ -59,6 +59,7 @@ const apis: MockMethod[] = [
     method: 'get',
     response: (options): Service.MockServiceResult<Auth.UserInfo | null> => {
       const { authorization = '' } = options.headers
+      console.log(authorization)
       const REFRESH_TOKEN_CODE = 66666
 
       if (!authorization) {
@@ -68,22 +69,10 @@ const apis: MockMethod[] = [
           data: null
         }
       }
-      const userInfo: Auth.UserInfo = {
-        token: '',
-        userId: '',
-        userName: '',
-        userRole: 'user'
-      }
-      const isInUser = userModel.some((item) => {
-        const flag = item.token === authorization
-        if (flag) {
-          const { userId: itemUserId, userName, userRole } = item
-          Object.assign(userInfo, { userId: itemUserId, userName, userRole })
-        }
-        return flag
-      })
 
-      if (isInUser) {
+      const userInfo = userModel.find(({ token }) => token === authorization)
+
+      if (userInfo) {
         return {
           code: 200,
           message: 'ok',

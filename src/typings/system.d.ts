@@ -258,30 +258,6 @@ declare namespace Service {
     successCode: number | string
   }
 
-  interface SuccessResult<T = any> {
-    error: null
-    data: T
-  }
-
-  interface FailedResult {
-    error: RequestError
-    data: null
-  }
-
-  type RequestResult<T = any> = SuccessResult<T> | FailedResult
-
-  type MultiRequestResult<T extends any[]> = T extends [infer First, ...infer Rest]
-    ? [First] extends [any]
-      ? Rest extends any[]
-        ? [RequestResult<First>, ...MultiRequestResult<Rest>]
-        : [RequestResult<First>]
-      : Rest extends any[]
-      ? MultiRequestResult<Rest>
-      : []
-    : []
-
-  type ServiceAdapter<T = any, A extends any[] = any[]> = (...args: A) => T
-
   interface MockServiceResult<T = any> {
     code: string | number
     data: T

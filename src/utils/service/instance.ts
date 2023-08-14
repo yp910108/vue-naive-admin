@@ -1,12 +1,7 @@
 import axios from 'axios'
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import { localStg } from '../storage'
-import {
-  handleAxiosError,
-  handleBackendError,
-  handleServiceResult,
-  transformRequestData
-} from './helpers'
+import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
 
 export default class CustomAxiosInstance {
   instance: AxiosInstance
@@ -46,21 +41,21 @@ export default class CustomAxiosInstance {
 
         // 请求成功
         if (code === successCode) {
-          return handleServiceResult(null, data)
+          return data
         } else {
           const error = handleBackendError(code, message)
-          return handleServiceResult(error, null) as any
+          return Promise.reject(error)
         }
       },
       (axiosError: AxiosError) => {
         if (axiosError.response) {
           const { status, data } = axiosError.response
           if (status === 304) {
-            return handleServiceResult(null, data)
+            return data
           }
         }
         const error = handleAxiosError(axiosError)
-        return handleServiceResult(error, null)
+        return Promise.reject(error)
       }
     )
   }
