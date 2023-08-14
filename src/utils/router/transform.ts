@@ -1,6 +1,6 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { BasicLayout, BlankLayout } from '@/layouts'
-import views from '@/views'
+import views, { NotFound } from '@/views'
 import { camelize, combineURL, isFunction } from '../common'
 
 type Lazy<T> = () => Promise<T>
@@ -75,7 +75,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   const vueNotFoundRoute = {
     name: 'NotFound',
     path: '/:pathMatch(.*)*',
-    component: views['./404/index.vue']
+    component: NotFound
   } as RouteRecordRaw
 
   const vueRoutes: RouteRecordRaw[] = [
