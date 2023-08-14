@@ -59,7 +59,6 @@ const apis: MockMethod[] = [
     method: 'get',
     response: (options): Service.MockServiceResult<Auth.UserInfo | null> => {
       const { authorization = '' } = options.headers
-      console.log(authorization)
       const REFRESH_TOKEN_CODE = 66666
 
       if (!authorization) {
