@@ -1,5 +1,5 @@
 import { $t } from '@/locales'
-import { transformObjectToOption } from './_shared'
+import { transformObjectToOption } from '@/utils'
 
 export const loginModuleLabels: Record<UnionKey.LoginModule, string> = {
   'pwd-login': $t('page.login.pwdLogin.title'),

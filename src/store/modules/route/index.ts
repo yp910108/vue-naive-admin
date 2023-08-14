@@ -20,7 +20,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const setRoutes = (routes: RouteRecordRaw[]) => {
     reset()
-
+    isInitAuthRoute.value = true
     for (const route of routes) {
       router.addRoute(route)
     }
@@ -52,6 +52,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
   return {
     isInitAuthRoute,
+    reset,
     initAuthRoute
   }
 })

@@ -1,4 +1,4 @@
-import { transformObjectToOption } from './_shared'
+import { transformObjectToOption } from '@/utils'
 
 export const themeLayoutModeLabels: Record<UnionKey.ThemeLayoutMode, string> = {
   vertical: '左侧菜单模式',

@@ -1,7 +1,6 @@
 import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
-import type { TranslateOptions } from 'vue-i18n'
-import { localStg } from '../utils/storage'
+import { localStg } from '@/utils'
 import messages from './lang'
 
 const i18n = createI18n({
@@ -15,16 +14,7 @@ export function setupI18n(app: App) {
   app.use(i18n)
 }
 
-interface T {
-  (key: I18nType.I18nKey): string
-  (
-    key: I18nType.I18nKey,
-    named: Record<string, unknown>,
-    options?: TranslateOptions<I18nType.Lang>
-  ): string
-}
-
-export const $t = i18n.global.t as T
+export const $t = i18n.global.t
 
 export function setLocale(locale: I18nType.Lang) {
   i18n.global.locale.value = locale

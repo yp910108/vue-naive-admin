@@ -226,6 +226,15 @@ declare namespace I18nType {
     : never
 
   type I18nKey = GetI18nKey<Schema>
+
+  type T = {
+    (key: I18nKey): string
+    (
+      key: I18nType.I18nKey,
+      named: Record<string, unknown>,
+      options?: import('vue-i18n').TranslateOptions<I18nType.Lang>
+    ): string
+  }
 }
 
 declare namespace Service {

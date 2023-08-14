@@ -10,11 +10,19 @@ type ModuleComponent = {
 }
 
 /**
+ * /login/:module => /login
+ * @param path
+ */
+function removeParamsFromPath(path: string) {
+  return path.split('/:')[0]
+}
+
+/**
  * 通过路径获取组件名称
  * @param path
  */
 function parsePathToName(path: string) {
-  return camelize(path.replace(/\//g, '-'), true)
+  return camelize(removeParamsFromPath(path).replace(/\//g, '-'), true)
 }
 
 /**
@@ -80,14 +88,16 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
     for (const authRoute of authRoutes) {
       const { path, layout, children, ...rest } = authRoute
       const fullpath = combineURL(prefix, path ?? '')
+      const pagePath = removeParamsFromPath(fullpath)
       const name = parsePathToName(fullpath)
       if (children && children.length) {
         transform(children, fullpath)
       } else {
-        const component = views[`./${fullpath}/index.vue`]
+        const component = views[`./${pagePath}/index.vue`]
         setViewComponentName(component, name)
         const vueRoute = {
           path: fullpath,
+          name,
           component,
           meta: { ...rest }
         }
@@ -106,7 +116,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
     ? vueBasicLayoutRoute.children
     : vueBlankLayoutRoute.children
 
-  const redirectPath = routes.length ? `/${routes[0].path}` : undefined
+  const redirectPath = routes.length ? `/${removeParamsFromPath(routes[0].path)}` : undefined
 
   vueRootRoute.redirect = redirectPath
   vueNotFoundRoute.redirect = redirectPath

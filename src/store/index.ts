@@ -8,4 +8,4 @@ export function setupStore(app: App) {
 }
 
 export * from './modules'
-// export * from './subscribe'
+export * from './subscribe'

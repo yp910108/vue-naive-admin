@@ -9,8 +9,8 @@ export async function createPermissionGuard(
 ) {
   const isLogin = localStg.get('token')
   const routeStore = useRouteStore()
-  if (!isLogin) {
-    if (to.path === 'login') {
+  if (isLogin) {
+    if (to.path === '/login') {
       next({ name: 'Root' })
     } else {
       if (!routeStore.isInitAuthRoute) {
