@@ -15,7 +15,8 @@ export async function createPermissionGuard(
     } else {
       if (!routeStore.isInitAuthRoute) {
         await routeStore.initAuthRoute()
-        next({ ...to, replace: true })
+        const { path, query } = to
+        next({ path, query, replace: true })
       } else {
         next()
       }

@@ -74,7 +74,8 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   }
   const vueNotFoundRoute = {
     name: 'NotFound',
-    path: '/:pathMatch(.*)*'
+    path: '/:pathMatch(.*)*',
+    component: views['./404/index.vue']
   } as RouteRecordRaw
 
   const vueRoutes: RouteRecordRaw[] = [
@@ -118,7 +119,6 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   const redirectPath = routes.length ? `/${removeParamsFromPath(routes[0].path)}` : undefined
 
   vueRootRoute.redirect = redirectPath
-  vueNotFoundRoute.redirect = redirectPath
 
   return vueRoutes
 }
