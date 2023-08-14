@@ -28,29 +28,34 @@ export const useRouteStore = defineStore('route-store', () => {
     }
   }
 
-  const initStaticRoute = () => {
+  const initConstantRoutes = () => {
+    setRoutes(transformAuthRoutesToVueRoutes(constantRoutes))
+  }
+
+  const initStaticRoutes = () => {
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...staticRoutes]))
   }
 
-  const initDynamicRoute = async () => {
+  const initDynamicRoutes = async () => {
     const userInfo = authStore.userInfo
 
     const data = await fetchUserRoutes(userInfo!.userId)
 
-    setRoutes(transformAuthRoutesToVueRoutes(data ?? []))
+    setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
   }
 
-  const initAuthRoute = async () => {
+  const initAuthRoutes = async () => {
     if (authRouteMode.value === 'static') {
-      initStaticRoute()
+      initStaticRoutes()
     } else {
-      await initDynamicRoute()
+      await initDynamicRoutes()
     }
   }
 
   return {
     cachedRoutes,
     reset,
-    initAuthRoute
+    initConstantRoutes,
+    initAuthRoutes
   }
 })

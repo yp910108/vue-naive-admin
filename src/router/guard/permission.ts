@@ -11,18 +11,19 @@ export async function createPermissionGuard(
   const authStore = useAuthStore()
   const routeStore = useRouteStore()
   if (isLogin) {
-    if (to.path === '/login') {
+    if (to.name === 'Login') {
       next({ name: 'Root' })
     } else {
       if (!authStore.userInfo) {
         try {
           await authStore.getUserInfo()
-          await routeStore.initAuthRoute()
+          await routeStore.initAuthRoutes()
           const { path, query, hash } = to
           next({ path, query, hash, replace: true })
         } catch (e) {
           authStore.reset()
           routeStore.reset()
+          routeStore.initConstantRoutes()
           const redirect = to.fullPath
           next({ name: 'Login', query: { redirect } })
         }

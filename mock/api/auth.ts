@@ -57,6 +57,11 @@ const apis: MockMethod[] = [
   {
     url: '/mock/getUserInfo',
     method: 'get',
+    // rawResponse: (_, res) => {
+    //   res.setHeader('Content-Type', 'text/plain')
+    //   res.statusCode = 401
+    //   res.end(`hello, this is data.`)
+    // },
     response: (options): Service.MockServiceResult<Auth.UserInfo | null> => {
       const { authorization = '' } = options.headers
       const REFRESH_TOKEN_CODE = 66666
