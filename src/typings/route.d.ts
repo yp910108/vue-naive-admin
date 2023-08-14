@@ -15,7 +15,7 @@ declare namespace AuthRoute {
     href?: string
     layout?: LayoutType
     children?: Route[]
-  }
+  } & Omit<import('vue-router').RouteRecordRaw, 'path' | 'redirect' | 'children'>
 
   type RouteModule = Record<string, { default: Route }>
 }

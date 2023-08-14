@@ -86,7 +86,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
 
   const transform = (authRoutes: AuthRoute.Route[], prefix: string = '') => {
     for (const authRoute of authRoutes) {
-      const { path, layout, children, ...rest } = authRoute
+      const { path, layout, props, children, ...rest } = authRoute
       const fullpath = combineURL(prefix, path ?? '')
       const pagePath = removeParamsFromPath(fullpath)
       const name = parsePathToName(fullpath)
@@ -98,6 +98,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
         const vueRoute = {
           path: fullpath,
           name,
+          props,
           component,
           meta: { ...rest }
         }

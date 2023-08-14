@@ -8,6 +8,7 @@ import { fetchUserRoutes } from '@/service'
 export const useRouteStore = defineStore('route-store', () => {
   const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
   const isInitAuthRoute = ref(false)
+  const cachedRoutes = ref<string[]>([])
 
   const reset = () => {
     const routes = router.getRoutes()
@@ -16,6 +17,7 @@ export const useRouteStore = defineStore('route-store', () => {
     }
 
     isInitAuthRoute.value = false
+    cachedRoutes.value = []
   }
 
   const setRoutes = (routes: RouteRecordRaw[]) => {
@@ -52,6 +54,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
   return {
     isInitAuthRoute,
+    cachedRoutes,
     reset,
     initAuthRoute
   }

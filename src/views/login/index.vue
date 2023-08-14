@@ -9,7 +9,9 @@
       <div class="w-300px sm:w-360px">
         <header class="flex-y-center justify-between">
           <system-logo class="text-64px text-primary" />
-          <n-gradient-text type="primary" :size="28">{{ $t('system.title') }}</n-gradient-text>
+          <n-gradient-text type="primary" :size="28">
+            {{ $translate('system.title') }}
+          </n-gradient-text>
         </header>
         <main class="pt-24px">
           <h3 class="text-18px text-primary font-medium">{{ activeModule.label }}</h3>
@@ -28,13 +30,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { Component } from 'vue'
-import { useRoute } from 'vue-router'
 import { getColorPalette, mixColor } from '@/utils'
 import { useThemeStore } from '@/store'
 import { loginModuleLabels } from '@/constants'
 import { BindWechat, CodeLogin, LoginBg, PwdLogin, Register, ResetPwd } from './components'
 
-const route = useRoute()
+interface Props {
+  module: UnionKey.LoginModule
+}
+
+const props = defineProps<Props>()
+
 const { theme, setDarkMode } = useThemeStore()
 
 const bgThemeColor = computed(() =>
@@ -62,7 +68,7 @@ const modules: LoginModule[] = [
 ]
 
 const activeModule = computed(() => {
-  const { module } = route.query
+  const { module } = props
   const active = modules.find((item) => item.key === module)
   return active ?? modules[0]
 })
