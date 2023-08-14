@@ -8,8 +8,8 @@ declare namespace Auth {
   type RoleType = 'super' | 'admin' | 'user'
 
   interface UserInfo {
-    userId?: string
-    userName?: string
-    userRole?: RoleType
+    userId: string
+    userName: string
+    userRole: RoleType
   }
 }

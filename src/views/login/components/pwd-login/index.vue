@@ -28,7 +28,7 @@
         size="large"
         :block="true"
         :round="true"
-        :loading="auth.loginLoading"
+        :loading="authStore.loginLoading"
         @click="handleSubmit"
       >
         {{ $translate('page.login.common.confirm') }}
@@ -56,7 +56,7 @@ import { useRouterPush } from '@/composables'
 import { formRules } from '@/utils'
 import { OtherAccount } from './components'
 
-const auth = useAuthStore()
+const authStore = useAuthStore()
 const { login } = useAuthStore()
 const { toLoginModule } = useRouterPush()
 

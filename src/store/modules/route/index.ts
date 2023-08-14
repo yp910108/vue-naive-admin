@@ -2,12 +2,14 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { router, constantRoutes, staticRoutes } from '@/router'
 import type { RouteRecordRaw } from 'vue-router'
-import { localStg, transformAuthRoutesToVueRoutes } from '@/utils'
+import { transformAuthRoutesToVueRoutes } from '@/utils'
 import { fetchUserRoutes } from '@/service'
+import { useAuthStore } from '../auth'
 
 export const useRouteStore = defineStore('route-store', () => {
+  const authStore = useAuthStore()
+
   const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
-  const isInitAuthRoute = ref(false)
   const cachedRoutes = ref<string[]>([])
 
   const reset = () => {
@@ -16,13 +18,11 @@ export const useRouteStore = defineStore('route-store', () => {
       router.removeRoute(route.name!)
     }
 
-    isInitAuthRoute.value = false
     cachedRoutes.value = []
   }
 
   const setRoutes = (routes: RouteRecordRaw[]) => {
     reset()
-    isInitAuthRoute.value = true
     for (const route of routes) {
       router.addRoute(route)
     }
@@ -33,13 +33,9 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   const initDynamicRoute = async () => {
-    const { userId } = localStg.get('userInfo') ?? {}
+    const userInfo = authStore.userInfo
 
-    if (!userId) {
-      throw new Error('userId 不能为空!')
-    }
-
-    const data = await fetchUserRoutes(userId)
+    const data = await fetchUserRoutes(userInfo!.userId)
 
     setRoutes(transformAuthRoutesToVueRoutes(data ?? []))
   }
@@ -53,7 +49,6 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   return {
-    isInitAuthRoute,
     cachedRoutes,
     reset,
     initAuthRoute
