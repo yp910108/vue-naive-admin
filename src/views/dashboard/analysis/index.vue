@@ -1,15 +1,13 @@
 <template>
-  <div>
-    this is analysis.
-    <n-button type="primary" @click="handleClick">click</n-button>
-  </div>
+  <n-space :vertical="true" :size="16">
+    <top-chart />
+    <data-card />
+    <bottom-part />
+  </n-space>
 </template>
 
-<script setup lang="ts">
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-const handleClick = () => {
-  router.push({ path: '/dashboard/workbench?id=123' })
-}
+<script lang="ts" setup>
+import { BottomPart, DataCard, TopChart } from './components'
 </script>
+
+<style scoped></style>
