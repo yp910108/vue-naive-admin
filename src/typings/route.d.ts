@@ -3,8 +3,7 @@ declare namespace AuthRoute {
 
   type Route = {
     title: string
-    path?: string
-    redirect?: string
+    path: string
     icon?: Icon.IconName
     hide?: boolean
     white?: boolean
@@ -14,6 +13,7 @@ declare namespace AuthRoute {
     affix?: boolean
     href?: string
     layout?: LayoutType
+    redirect?: string
     children?: Route[]
   } & Omit<import('vue-router').RouteRecordRaw, 'path' | 'redirect' | 'children'>
 

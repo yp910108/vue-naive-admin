@@ -1,20 +1,41 @@
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { useAppStore, useThemeStore } from '@/store'
+
+type LayoutHeaderProps = Record<UnionKey.ThemeLayoutMode, App.GlobalHeaderProps>
+
+const layoutHeaderProps: LayoutHeaderProps = {
+  vertical: {
+    showLogo: false,
+    showHeaderMenu: false,
+    showMenuCollapse: true
+  },
+  'vertical-mix': {
+    showLogo: false,
+    showHeaderMenu: false,
+    showMenuCollapse: false
+  },
+  horizontal: {
+    showLogo: true,
+    showHeaderMenu: true,
+    showMenuCollapse: false
+  },
+  'horizontal-mix': {
+    showLogo: true,
+    showHeaderMenu: false,
+    showMenuCollapse: true
+  }
+}
 
 export default function useLayout() {
   const appStore = useAppStore()
   const themeStore = useThemeStore()
-  const breakpoints = useBreakpoints(breakpointsTailwind)
   const { theme } = storeToRefs(themeStore)
 
   const mode = computed(() => {
     const mode = themeStore.theme.layout.mode
     return mode.includes('vertical') ? 'vertical' : 'horizontal'
   })
-
-  const isMobile = breakpoints.smaller('sm')
 
   const siderVisible = computed(() => {
     const mode = themeStore.theme.layout.mode
@@ -41,21 +62,15 @@ export default function useLayout() {
     return w
   })
 
-  watch(
-    isMobile,
-    (newVal) => {
-      if (newVal) {
-        appStore.setSiderCollapse(true)
-      }
-    },
-    { immediate: true }
-  )
+  const headerProps = computed(() => {
+    return layoutHeaderProps[theme.value.layout.mode]
+  })
 
   return {
     mode,
-    isMobile,
     siderVisible,
     siderWidth,
-    siderCollapsedWidth
+    siderCollapsedWidth,
+    headerProps
   }
 }

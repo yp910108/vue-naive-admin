@@ -380,7 +380,6 @@ declare namespace App {
     routePath: string
     icon?: () => import('vue').VNodeChild
     children?: GlobalMenuOption[]
-    i18nTitle?: I18nType.I18nKey
   }
 
   type GlobalBreadcrumb = Omit<import('naive-ui').DropdownOption, 'icon'> & {

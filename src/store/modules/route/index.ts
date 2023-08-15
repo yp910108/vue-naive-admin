@@ -10,6 +10,7 @@ export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()
 
   const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
+
   const cachedRoutes = ref<string[]>([])
 
   const reset = () => {
@@ -17,7 +18,6 @@ export const useRouteStore = defineStore('route-store', () => {
     for (const route of routes) {
       router.removeRoute(route.name!)
     }
-
     cachedRoutes.value = []
   }
 

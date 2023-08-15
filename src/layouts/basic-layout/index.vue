@@ -19,7 +19,12 @@
     :right-footer="theme.footer.right"
     @click-mobile-sider-mask="appStore.setSiderCollapse(true)"
   >
-    sdfs
+    <!-- <template #header>
+      <app-header v-bind="headerProps" />
+    </template> -->
+    <template #sider>
+      <app-sider />
+    </template>
   </admin-layout>
 </template>
 
@@ -27,6 +32,9 @@
 import { storeToRefs } from 'pinia'
 import { AdminLayout } from '@soybeanjs/vue-materials'
 import { useAppStore, useThemeStore } from '@/store'
+// import AppHeader from './app-header/index.vue'
+import AppSider from './app-sider/index.vue'
+import useMobile from './mobile'
 import useLayout from './layout'
 
 defineOptions({ name: 'BasicLayout' })
@@ -35,7 +43,8 @@ const appStore = useAppStore()
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-const { mode, isMobile, siderVisible, siderWidth, siderCollapsedWidth } = useLayout()
+const { isMobile } = useMobile()
+const { mode, siderVisible, siderWidth, siderCollapsedWidth, headerProps } = useLayout()
 </script>
 
 <style lang="scss">

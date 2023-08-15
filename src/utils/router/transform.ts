@@ -1,7 +1,7 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
-import { camelize, combineURL, isFunction } from '../common'
+import { camelize, combineURL, isFunction, renderIcon } from '../common'
 
 type Lazy<T> = () => Promise<T>
 
@@ -72,11 +72,11 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
     component: BasicLayout,
     children: []
   }
-  const vueNotFoundRoute = {
+  const vueNotFoundRoute: RouteRecordRaw = {
     name: 'NotFound',
     path: '/:pathMatch(.*)*',
     component: NotFound
-  } as RouteRecordRaw
+  }
 
   const vueRoutes: RouteRecordRaw[] = [
     vueRootRoute,
@@ -87,16 +87,27 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
 
   const transform = (authRoutes: AuthRoute.Route[], prefix: string = '') => {
     for (const authRoute of authRoutes) {
-      const { path, layout, props, children, ...rest } = authRoute
-      const fullpath = combineURL(prefix, path ?? '')
+      const { path, layout, redirect, props, children, ...rest } = authRoute
+      const fullpath = combineURL(prefix, path)
       const pagePath = removeParamsFromPath(fullpath)
       const name = parsePathToName(fullpath)
       if (children && children.length) {
+        const firstChild = children[0]
+        const vueRoute: RouteRecordRaw = {
+          path: fullpath,
+          name,
+          redirect: redirect ?? `/${combineURL(fullpath, firstChild.path)}`
+        }
+        if (layout === 'blank') {
+          vueBlankLayoutRoute.children.push(vueRoute)
+        } else {
+          vueBasicLayoutRoute.children.push(vueRoute)
+        }
         transform(children, fullpath)
       } else {
         const component = views[`./${pagePath}/index.vue`]
         setViewComponentName(component, name)
-        const vueRoute = {
+        const vueRoute: RouteRecordRaw = {
           path: fullpath,
           name,
           props,
@@ -121,4 +132,33 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   vueRootRoute.redirect = redirectPath
 
   return vueRoutes
+}
+
+/**
+ * 将权限路由转换成菜单
+ * @param authRoutes
+ * @returns
+ */
+export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '') {
+  const menus: App.GlobalMenuOption[] = []
+  for (const authRoute of authRoutes) {
+    const { title, path, icon, hide, children } = authRoute
+    if (hide) continue
+    const fullpath = combineURL(prefix, path)
+    const name = parsePathToName(fullpath)
+    const menu: App.GlobalMenuOption = {
+      key: name,
+      label: title,
+      routeName: name,
+      routePath: `/${fullpath}`
+    }
+    if (icon) {
+      menu.icon = renderIcon({ icon })
+    }
+    if (children && children.length) {
+      menu.children = transformAuthRoutesToMenus(children, fullpath)
+    }
+    menus.push(menu)
+  }
+  return menus
 }

@@ -1,7 +1,0 @@
-export { default as DrawerButton } from './drawer-button/index.vue'
-export { default as DarkMode } from './dark-mode/index.vue'
-export { default as LayoutMode } from './layout-mode/index.vue'
-export { default as ThemeColorSelect } from './theme-color-select/index.vue'
-export { default as PageFunc } from './page-func/index.vue'
-export { default as PageView } from './page-view/index.vue'
-export { default as ThemeConfig } from './theme-config/index.vue'
