@@ -13,16 +13,19 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const cachedRoutes = ref<string[]>([])
 
-  const reset = () => {
+  const resetRoutes = () => {
     const routes = router.getRoutes()
     for (const route of routes) {
       router.removeRoute(route.name!)
     }
+  }
+
+  const reset = () => {
+    resetRoutes()
     cachedRoutes.value = []
   }
 
   const setRoutes = (routes: RouteRecordRaw[]) => {
-    reset()
     for (const route of routes) {
       router.addRoute(route)
     }
@@ -33,6 +36,7 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   const initStaticRoutes = () => {
+    resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...staticRoutes]))
   }
 
@@ -41,6 +45,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
     const data = await fetchUserRoutes(userInfo!.userId)
 
+    resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
   }
 
