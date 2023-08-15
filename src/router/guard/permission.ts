@@ -1,42 +1,38 @@
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import type { RouteLocationNormalized } from 'vue-router'
 import { localStg } from '@/utils'
 import { useAuthStore, useRouteStore } from '@/store'
 
-export async function createPermissionGuard(
-  to: RouteLocationNormalized,
-  _: RouteLocationNormalized,
-  next: NavigationGuardNext
-) {
+export async function createPermissionGuard(to: RouteLocationNormalized) {
   const isLogin = localStg.get('token')
   const authStore = useAuthStore()
   const routeStore = useRouteStore()
   if (isLogin) {
     if (to.name === 'Login') {
-      next({ name: 'Root' })
+      return { name: 'Root' }
     } else {
       if (!authStore.userInfo) {
         try {
           await authStore.getUserInfo()
           await routeStore.initAuthRoutes()
           const { path, query, hash } = to
-          next({ path, query, hash, replace: true })
+          return { path, query, hash, replace: true }
         } catch (e) {
           authStore.reset()
           routeStore.reset()
           routeStore.initConstantRoutes()
           const redirect = to.fullPath
-          next({ name: 'Login', query: { redirect } })
+          return { name: 'Login', query: { redirect } }
         }
       } else {
-        next()
+        return true
       }
     }
   } else {
     if (to.meta.white) {
-      next()
+      return true
     } else {
       const redirect = to.fullPath
-      next({ name: 'Login', query: { redirect } })
+      return { name: 'Login', query: { redirect } }
     }
   }
 }

@@ -17,7 +17,7 @@ export const NETWORK_ERROR_MSG = '网络不可用～' // 网络不可用的错�
 // 请求失败各种状态的错误信息
 export const ERROR_STATUS = {
   400: '400: 请求出现语法错误～',
-  401: '401: 用户未授权～',
+  401: '401: 用户信息已失效～',
   403: '403: 服务器拒绝访问～',
   404: '404: 请求的资源不存在～',
   405: '405: 请求方法未允许～',
@@ -33,4 +33,4 @@ export const ERROR_STATUS = {
 
 export const NO_ERROR_MSG_CODE: (string | number)[] = [] // 不弹出错误信息的 code
 
-export const REFRESH_TOKEN_CODE: (string | number)[] = [66666] // token 失效需要刷新 token 的 code（这里的 66666 只是个例子，需要将后端表示 token 过期的 code 填进来）
+export const INVALID_CODE: (string | number)[] = [66666] // token 失效需要刷新 token 的 code（这里的 66666 只是个例子，需要将后端表示 token 过期的 code 填进来）

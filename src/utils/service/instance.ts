@@ -2,6 +2,7 @@ import axios from 'axios'
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import { localStg } from '../storage'
 import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
+import { INVALID_CODE } from './config'
 
 export default class CustomAxiosInstance {
   instance: AxiosInstance
@@ -42,6 +43,8 @@ export default class CustomAxiosInstance {
         // 请求成功
         if (code === successCode) {
           return data
+        } else if (INVALID_CODE.includes(code)) {
+          // TODO logout
         } else {
           const error = handleBackendError(code, message)
           return Promise.reject(error)
@@ -52,6 +55,8 @@ export default class CustomAxiosInstance {
           const { status, data } = axiosError.response
           if (status === 304) {
             return data
+          } else if (status === 401) {
+            // TODO logout
           }
         }
         const error = handleAxiosError(axiosError)

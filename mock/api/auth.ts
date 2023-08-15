@@ -64,11 +64,11 @@ const apis: MockMethod[] = [
     // },
     response: (options): Service.MockServiceResult<Auth.UserInfo | null> => {
       const { authorization = '' } = options.headers
-      const REFRESH_TOKEN_CODE = 66666
+      const INVALID_CODE = 66666
 
       if (!authorization) {
         return {
-          code: REFRESH_TOKEN_CODE,
+          code: INVALID_CODE,
           message: '用户已失效或不存在！',
           data: null
         }
@@ -85,7 +85,7 @@ const apis: MockMethod[] = [
       }
 
       return {
-        code: REFRESH_TOKEN_CODE,
+        code: INVALID_CODE,
         message: '用户信息异常！',
         data: null
       }
