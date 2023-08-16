@@ -4,7 +4,7 @@
   "isCustomizeDarkModeTransition": false,
   "layout": {
     "minWidth": 900,
-    "mode": "vertical",
+    "mode": "vertical-mix",
     "modeList": [
       {
         "value": "vertical",

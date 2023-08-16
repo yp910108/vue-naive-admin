@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 interface Props {
-  showTitle: boolean
+  showTitle?: boolean
 }
 
 defineProps<Props>()

@@ -16,7 +16,6 @@ export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix
     const menu: App.GlobalMenuOption = {
       key: name,
       label: title,
-      routeName: name,
       routePath: `/${fullpath}`
     }
     if (icon) {
@@ -39,9 +38,9 @@ export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.GlobalMen
   const keys: string[] = []
   const pushToKeys = (activeKey: string, menus: App.GlobalMenuOption[]) => {
     for (const menu of menus) {
-      const { routeName, children } = menu
-      if (activeKey.startsWith(routeName)) {
-        keys.push(routeName)
+      const { key, children } = menu
+      if (activeKey.startsWith(key)) {
+        keys.push(key)
         if (children && children.length) {
           pushToKeys(activeKey, children)
         }
