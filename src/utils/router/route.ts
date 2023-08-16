@@ -1,28 +1,13 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
-import { camelize, combineURL, isFunction, renderIcon } from '../common'
+import { combineURL, isFunction } from '../common'
+import { parsePathToName, removeParamsFromPath } from './helper'
 
 type Lazy<T> = () => Promise<T>
 
 type ModuleComponent = {
   default: RouteComponent
-}
-
-/**
- * /login/:module => /login
- * @param path
- */
-function removeParamsFromPath(path: string) {
-  return path.split('/:')[0]
-}
-
-/**
- * 通过路径获取组件名称
- * @param path
- */
-function parsePathToName(path: string) {
-  return camelize(removeParamsFromPath(path).replace(/\//g, '-'), true)
 }
 
 /**
@@ -132,33 +117,4 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   vueRootRoute.redirect = redirectPath
 
   return vueRoutes
-}
-
-/**
- * 将权限路由转换成菜单
- * @param authRoutes
- * @returns
- */
-export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '') {
-  const menus: App.GlobalMenuOption[] = []
-  for (const authRoute of authRoutes) {
-    const { title, path, icon, hide, children } = authRoute
-    if (hide) continue
-    const fullpath = combineURL(prefix, path)
-    const name = parsePathToName(fullpath)
-    const menu: App.GlobalMenuOption = {
-      key: name,
-      label: title,
-      routeName: name,
-      routePath: `/${fullpath}`
-    }
-    if (icon) {
-      menu.icon = renderIcon({ icon })
-    }
-    if (children && children.length) {
-      menu.children = transformAuthRoutesToMenus(children, fullpath)
-    }
-    menus.push(menu)
-  }
-  return menus
 }

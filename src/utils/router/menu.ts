@@ -1,0 +1,53 @@
+import { combineURL, renderIcon } from '../common'
+import { parsePathToName } from './helper'
+
+/**
+ * 将权限路由转换成菜单
+ * @param authRoutes
+ * @returns
+ */
+export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '') {
+  const menus: App.GlobalMenuOption[] = []
+  for (const authRoute of authRoutes) {
+    const { title, path, icon, hide, children } = authRoute
+    if (hide) continue
+    const fullpath = combineURL(prefix, path)
+    const name = parsePathToName(fullpath)
+    const menu: App.GlobalMenuOption = {
+      key: name,
+      label: title,
+      routeName: name,
+      routePath: `/${fullpath}`
+    }
+    if (icon) {
+      menu.icon = renderIcon({ icon })
+    }
+    if (children && children.length) {
+      menu.children = transformAuthRoutesToMenus(children, fullpath)
+    }
+    menus.push(menu)
+  }
+  return menus
+}
+
+/**
+ * 根据当前选中的菜单获取父级（包括自己）的菜单路径
+ * @param activeKey
+ * @param menus
+ */
+export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.GlobalMenuOption[]) {
+  const keys: string[] = []
+  const pushToKeys = (activeKey: string, menus: App.GlobalMenuOption[]) => {
+    for (const menu of menus) {
+      const { routeName, children } = menu
+      if (activeKey.startsWith(routeName)) {
+        keys.push(routeName)
+        if (children && children.length) {
+          pushToKeys(activeKey, children)
+        }
+      }
+    }
+  }
+  pushToKeys(activeKey, menus)
+  return keys
+}
