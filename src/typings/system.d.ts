@@ -357,41 +357,40 @@ declare namespace Theme {
   }
 }
 
-/** 多页签 Tab 的路由 */
 declare namespace App {
+  /**
+   * 菜单
+   */
+  type GlobalMenuOption = import('naive-ui').MenuOption & {
+    key: string
+    label: string
+    routePath: string
+    icon?: () => import('vue').Component
+    children?: GlobalMenuOption[]
+  }
+
+  /**
+   * 搜索菜单
+   */
+  type GlobalSearchMenu = {
+    key: string
+    label: string
+    routePath: string
+    icon?: () => import('vue').Component
+  }
+
+  /**
+   * 面包屑
+   */
+  type GlobalBreadcrumb = GlobalMenuOption
+
+  /** 多页签 Tab 的路由 */
   interface GlobalTabRoute
     extends Pick<import('vue-router').RouteLocationNormalizedLoaded, 'name' | 'fullPath' | 'meta'> {
     scrollPosition: {
       left: number
       top: number
     }
-  }
-
-  interface GlobalHeaderProps {
-    showLogo: boolean // 显示 logo
-    showHeaderMenu: boolean // 显示头部菜单
-    showMenuCollapse: boolean // 显示菜单折叠按钮
-  }
-
-  type GlobalMenuOption = import('naive-ui').MenuOption & {
-    key: string
-    label: string
-    routePath: string
-    icon?: () => import('vue').VNodeChild
-    children?: GlobalMenuOption[]
-  }
-
-  type GlobalBreadcrumb = Omit<import('naive-ui').DropdownOption, 'icon'> & {
-    key: string
-    label: string
-    disabled: boolean
-    routeName: string
-    hasChildren: boolean
-    icon?: import('vue').Component
-    i18nTitle?: I18nType.I18nKey
-    options?: (import('naive-ui/es/dropdown/src/interface').DropdownMixedOption & {
-      i18nTitle?: I18nType.I18nKey
-    })[]
   }
 
   interface MessageTab {

@@ -4,11 +4,11 @@
 </template>
 
 <script setup lang="ts">
-import VerticalSider from './vertical-sider/index.vue'
-import VerticalMixSider from './vertical-mix-sider/index.vue'
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
-import { computed } from 'vue'
+import VerticalSider from './vertical-sider/index.vue'
+import VerticalMixSider from './vertical-mix-sider/index.vue'
 
 defineOptions({ name: 'AppSider' })
 

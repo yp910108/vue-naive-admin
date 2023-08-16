@@ -11,7 +11,7 @@
         { 'text-primary !bg-primary_active': item.key === activeKey, 'text-primary': isHover }
       ]"
     >
-      <icon :class="[isMini ? 'text-16px' : 'text-20px']" />
+      <icon v-if="Icon" :class="[isMini ? 'text-16px' : 'text-20px']" />
       <p
         class="w-full text-center ellipsis-text text-12px transition-height duration-300 ease-in-out"
         :class="[isMini ? 'h-0 pt-0' : 'h-24px pt-4px']"
@@ -41,7 +41,7 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const Icon = computed(() => props.item.icon as Component)
+const Icon = computed(() => props.item.icon)
 
 const { bool: isHover, setTrue, setFalse } = useBoolean()
 

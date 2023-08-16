@@ -36,17 +36,32 @@ export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix
  */
 export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.GlobalMenuOption[]) {
   const keys: string[] = []
-  const pushToKeys = (activeKey: string, menus: App.GlobalMenuOption[]) => {
-    for (const menu of menus) {
-      const { key, children } = menu
-      if (activeKey.startsWith(key)) {
-        keys.push(key)
-        if (children && children.length) {
-          pushToKeys(activeKey, children)
-        }
+  for (const menu of menus) {
+    const { key, children } = menu
+    if (activeKey.startsWith(key)) {
+      keys.push(key)
+      if (children && children.length) {
+        const _keys = getActiveKeyPathsOfMenus(activeKey, children)
+        keys.push(..._keys)
       }
     }
   }
-  pushToKeys(activeKey, menus)
   return keys
+}
+
+/**
+ * 将权限路由转换为搜索菜单
+ * @param authRoutes
+ */
+export function transformAuthRoutesToSearchMenus(menus: App.GlobalMenuOption[]) {
+  const searchMenu: App.GlobalSearchMenu[] = []
+  for (const menu of menus) {
+    const { children, ...rest } = menu
+    searchMenu.push({ ...rest })
+    if (children && children.length) {
+      const _searchMenus = transformAuthRoutesToSearchMenus(children)
+      searchMenu.push(..._searchMenus)
+    }
+  }
+  return menus
 }

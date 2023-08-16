@@ -1,0 +1,61 @@
+<template>
+  <n-scrollbar>
+    <div class="pb-12px">
+      <div
+        v-for="item of options"
+        :key="item.key"
+        class="bg-#e5e7eb dark:bg-dark h-56px mt-8px px-14px rounded-4px cursor-pointer flex-y-center justify-between"
+        :style="{
+          background: item.routePath === active ? theme.themeColor : '',
+          color: item.routePath === active ? '#fff' : ''
+        }"
+        @click="handleTo"
+        @mouseenter="handleMouseEnter(item)"
+      >
+        <component v-if="item.icon" :is="item.icon" />
+        <span class="flex-1 ml-5px">{{ item.label }}</span>
+        <icon-enter-outlined class="icon text-20px p-2px mr-3px" />
+      </div>
+    </div>
+  </n-scrollbar>
+</template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useThemeStore } from '@/store'
+import { storeToRefs } from 'pinia'
+
+interface Props {
+  value?: string
+  options: App.GlobalSearchMenu[]
+}
+
+const props = defineProps<Props>()
+
+interface Emits {
+  (e: 'update:value', value?: string): void
+  (e: 'enter'): void
+}
+
+const emit = defineEmits<Emits>()
+
+const themeStore = useThemeStore()
+const { theme } = storeToRefs(themeStore)
+
+const active = computed({
+  get() {
+    return props.value
+  },
+  set(newVal) {
+    emit('update:value', newVal)
+  }
+})
+
+const handleTo = () => {
+  emit('enter')
+}
+
+const handleMouseEnter = ({ routePath }: App.GlobalSearchMenu) => {
+  active.value = routePath
+}
+</script>
