@@ -47,7 +47,7 @@ export const useRouteStore = defineStore('route-store', () => {
   const initDynamicRoutes = async () => {
     const userInfo = authStore.userInfo
 
-    const data = await fetchUserRoutes(userInfo!.userId)
+    const data = await fetchUserRoutes(userInfo?.userId ?? '')
 
     resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
