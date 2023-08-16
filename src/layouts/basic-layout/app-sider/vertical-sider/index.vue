@@ -1,18 +1,20 @@
 <template>
-  <dark-mode-container class="flex h-full" :inverted="theme.sider.inverted">
+  <dark-mode-container class="flex-col h-full" :inverted="theme.sider.inverted">
     <logo
       v-if="!isHorizontalMix"
       :show-title="showTitle"
       :style="{ height: `${theme.header.height}px` }"
     />
+    <vertical-menu />
   </dark-mode-container>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore, useThemeStore } from '@/store'
 import Logo from '../../components/logo.vue'
-import { computed } from 'vue'
+import VerticalMenu from './vertical-menu.vue'
 
 const appStore = useAppStore()
 const themeStore = useThemeStore()

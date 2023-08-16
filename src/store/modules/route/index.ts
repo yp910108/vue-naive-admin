@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { router, constantRoutes, staticRoutes } from '@/router'
 import type { RouteRecordRaw } from 'vue-router'
-import { transformAuthRoutesToVueRoutes } from '@/utils'
+import { transformAuthRoutesToMenus, transformAuthRoutesToVueRoutes } from '@/utils'
 import { fetchUserRoutes } from '@/service'
 import { useAuthStore } from '../auth'
 
@@ -10,6 +10,8 @@ export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()
 
   const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
+
+  const menus = ref<App.GlobalMenuOption[]>()
 
   const cachedRoutes = ref<string[]>([])
 
@@ -22,6 +24,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const reset = () => {
     resetRoutes()
+    menus.value = []
     cachedRoutes.value = []
   }
 
@@ -38,6 +41,7 @@ export const useRouteStore = defineStore('route-store', () => {
   const initStaticRoutes = () => {
     resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...staticRoutes]))
+    menus.value = transformAuthRoutesToMenus(staticRoutes)
   }
 
   const initDynamicRoutes = async () => {
@@ -47,6 +51,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
     resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
+    menus.value = transformAuthRoutesToMenus(data ?? [])
   }
 
   const initAuthRoutes = async () => {
@@ -58,6 +63,7 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   return {
+    menus,
     cachedRoutes,
     reset,
     initConstantRoutes,
