@@ -16,6 +16,7 @@
           @change="handleMixMenuChange"
         />
       </n-scrollbar>
+      <mix-menu-collapse />
     </div>
     <mix-menu-drawer ref="mixMenuDrawerRef" />
   </dark-mode-container>
@@ -29,6 +30,7 @@ import { useAppStore, useMenuStore, useThemeStore } from '@/store'
 import Logo from '../../components/logo.vue'
 import MixMenuItem from './mix-menu-item.vue'
 import MixMenuDrawer from './mix-menu-drawer.vue'
+import MixMenuCollapse from './mix-menu-collapse.vue'
 
 const route = useRoute()
 const router = useRouter()
