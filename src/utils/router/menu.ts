@@ -54,14 +54,14 @@ export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.GlobalMen
  * @param authRoutes
  */
 export function transformAuthRoutesToSearchMenus(menus: App.GlobalMenuOption[]) {
-  const searchMenu: App.GlobalSearchMenu[] = []
+  const searchMenus: App.GlobalSearchMenu[] = []
   for (const menu of menus) {
     const { children, ...rest } = menu
-    searchMenu.push({ ...rest })
+    searchMenus.push({ ...rest })
     if (children && children.length) {
       const _searchMenus = transformAuthRoutesToSearchMenus(children)
-      searchMenu.push(..._searchMenus)
+      searchMenus.push(..._searchMenus)
     }
   }
-  return menus
+  return searchMenus
 }

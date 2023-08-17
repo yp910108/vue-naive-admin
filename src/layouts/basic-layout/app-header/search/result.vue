@@ -4,11 +4,11 @@
       <div
         v-for="item of options"
         :key="item.key"
-        class="bg-#e5e7eb dark:bg-dark h-56px mt-8px px-14px rounded-4px cursor-pointer flex-y-center justify-between"
         :style="{
-          background: item.routePath === active ? theme.themeColor : '',
-          color: item.routePath === active ? '#fff' : ''
+          background: item.key === active ? theme.themeColor : '',
+          color: item.key === active ? '#fff' : ''
         }"
+        class="bg-#e5e7eb dark:bg-dark h-56px mt-8px px-14px rounded-4px cursor-pointer flex-y-center justify-between"
         @click="handleTo"
         @mouseenter="handleMouseEnter(item)"
       >
@@ -55,7 +55,7 @@ const handleTo = () => {
   emit('enter')
 }
 
-const handleMouseEnter = ({ routePath }: App.GlobalSearchMenu) => {
-  active.value = routePath
+const handleMouseEnter = ({ key }: App.GlobalSearchMenu) => {
+  active.value = key
 }
 </script>

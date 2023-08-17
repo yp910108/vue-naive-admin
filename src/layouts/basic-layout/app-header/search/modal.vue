@@ -6,7 +6,7 @@
     :segmented="{ footer: 'soft' }"
     :closable="false"
     :class="['fixed left-0 right-0', isMobile ? 'wh-full top-0px rounded-0' : 'w-630px top-50px']"
-    @after-leave="handleClose"
+    @after-leave="handeAfterLeave"
   >
     <n-input-group>
       <n-input
@@ -18,12 +18,12 @@
         <template #prefix>
           <icon-search class="text-15px text-#c2c2c2" />
         </template>
-        <n-button v-if="isMobile" type="primary" ghost @click="handleClose">取消</n-button>
+        <n-button v-if="isMobile" type="primary" ghost @click="hide">取消</n-button>
       </n-input>
     </n-input-group>
     <div class="mt-20px">
       <n-empty v-if="!resultOptions?.length" description="暂无搜索结果" />
-      <result v-else v-model:value="activePath" :options="resultOptions" @enter="handleEnter" />
+      <result v-else v-model:value="activeKey" :options="resultOptions" @enter="handleEnter" />
     </div>
     <template #footer>
       <search-footer v-if="!isMobile" />
@@ -49,23 +49,23 @@ const { isMobile } = useMobile()
 
 const { bool: visible, setTrue, setFalse } = useBoolean()
 
-const keyword = ref<string>()
-const activePath = ref<string>()
+const keyword = ref<string | null>()
+const activeKey = ref<string>()
 const resultOptions = shallowRef<App.GlobalSearchMenu[]>()
 
 const search = () => {
   resultOptions.value = menuStore.searchMenus.filter(({ label }) => {
     if (keyword.value) {
-      const _keyword = keyword.value?.toLocaleLowerCase()
-      return _keyword.includes(label.toLocaleLowerCase().trim())
+      const _keyword = keyword.value?.toLocaleLowerCase().trim()
+      return label.toLocaleLowerCase().includes(_keyword)
     } else {
       return false
     }
   })
   if (resultOptions.value.length > 0) {
-    activePath.value = resultOptions.value[0].routePath
+    activeKey.value = resultOptions.value[0].key
   } else {
-    activePath.value = undefined
+    activeKey.value = undefined
   }
 }
 
@@ -73,45 +73,41 @@ const handleSearch = useDebounceFn(search)
 
 const handleUp = () => {
   if (!resultOptions.value?.length) return
-  const index = resultOptions.value?.findIndex((item) => item.routePath === activePath.value)
+  const index = resultOptions.value?.findIndex((item) => item.key === activeKey.value)
   if (index === 0) {
-    activePath.value = resultOptions.value?.[resultOptions.value?.length - 1].routePath
+    activeKey.value = resultOptions.value?.[resultOptions.value?.length - 1].key
   } else {
-    activePath.value = resultOptions.value?.[index - 1].routePath
+    activeKey.value = resultOptions.value?.[index - 1].key
   }
 }
 
 const handleDown = () => {
   if (!resultOptions.value?.length) return
-  const index = resultOptions.value?.findIndex((item) => item.routePath === activePath.value)
-  if (index + 1 === length) {
-    activePath.value = resultOptions.value[0].routePath
+  const index = resultOptions.value?.findIndex((item) => item.key === activeKey.value)
+  if (index + 1 === resultOptions.value?.length) {
+    activeKey.value = resultOptions.value[0].key
   } else {
-    activePath.value = resultOptions.value[index + 1].routePath
+    activeKey.value = resultOptions.value[index + 1].key
   }
 }
 
-const handleClose = () => {
-  hide()
-  setTimeout(() => {
-    keyword.value = undefined
-    resultOptions.value = undefined
-  }, 200)
+const handeAfterLeave = () => {
+  keyword.value = null
+  resultOptions.value = undefined
 }
 
 const handleEnter = () => {
   const length = resultOptions.value?.length
-  if (!length || !activePath.value) return
-  const item = resultOptions.value?.find((item) => item.routePath === activePath.value)
+  if (!length || !activeKey.value) return
+  const item = resultOptions.value?.find((item) => item.key === activeKey.value)
   // TODO href
   router.push({ name: item?.key })
-  handleClose()
+  hide()
 }
 
-onKeyStroke('Escape', handleClose)
-onKeyStroke('Enter', handleEnter)
 onKeyStroke('ArrowUp', handleUp)
 onKeyStroke('ArrowDown', handleDown)
+onKeyStroke('Enter', handleEnter)
 
 const show = () => {
   setTrue()
