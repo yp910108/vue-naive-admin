@@ -45,6 +45,7 @@ export const useAuthStore = defineStore('auth-store', () => {
       })
       router.push(route.query.redirect ? (route.query.redirect as string) : { name: 'Root' })
     } catch (e) {
+      console.warn(e)
       loginLoading.value = false
       reset()
     }

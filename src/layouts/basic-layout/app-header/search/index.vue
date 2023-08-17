@@ -15,7 +15,6 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import Modal from './modal.vue'
-import { onMounted } from 'vue'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
@@ -25,8 +24,4 @@ const modalRef = ref<InstanceType<typeof Modal>>()
 const handleSearch = () => {
   modalRef.value?.show()
 }
-
-onMounted(() => {
-  modalRef.value?.show()
-})
 </script>

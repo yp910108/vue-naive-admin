@@ -42,7 +42,6 @@ export const useRouteStore = defineStore('route-store', () => {
     resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...staticRoutes]))
     menuStore.setMenus(staticRoutes)
-    menuStore.setSearchMenus(staticRoutes)
   }
 
   const initDynamicRoutes = async () => {
@@ -53,7 +52,6 @@ export const useRouteStore = defineStore('route-store', () => {
     resetRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
     menuStore.setMenus(data ?? [])
-    menuStore.setSearchMenus(data ?? [])
   }
 
   const initAuthRoutes = async () => {

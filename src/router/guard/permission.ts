@@ -17,6 +17,7 @@ export async function createPermissionGuard(to: RouteLocationNormalized) {
           const { path, query, hash } = to
           return { path, query, hash, replace: true }
         } catch (e) {
+          console.warn(e)
           authStore.reset()
           routeStore.reset()
           routeStore.initConstantRoutes()
