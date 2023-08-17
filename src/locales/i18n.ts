@@ -4,7 +4,7 @@ import { localStg } from '@/utils'
 import messages from './lang'
 
 const i18n = createI18n({
-  locale: localStg.get('lang') || 'zh-CN',
+  locale: localStg.get('lang') ?? 'zh-CN',
   fallbackLocale: 'en',
   messages,
   legacy: false
@@ -15,7 +15,7 @@ export function setupI18n(app: App) {
   app.config.globalProperties.$translate = i18n.global.t
 }
 
-export const $t = i18n.global.t
+export const $t = i18n.global.t // TODO $translate
 
 export function setLocale(locale: I18nType.Lang) {
   i18n.global.locale.value = locale

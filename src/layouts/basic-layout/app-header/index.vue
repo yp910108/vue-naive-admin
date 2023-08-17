@@ -13,6 +13,10 @@
     <header-menu v-else />
     <div class="flex justify-end h-full">
       <search />
+      <git-hub-site />
+      <full-screen />
+      <theme-mode />
+      <toggle-lang />
     </div>
   </dark-mode-container>
 </template>
@@ -26,6 +30,10 @@ import MenuCollapse from './menu-collapse.vue'
 import Breadcrumb from './breadcrumb.vue'
 import HeaderMenu from './header-menu.vue'
 import Search from './search/index.vue'
+import GitHubSite from './github-site.vue'
+import FullScreen from './full-screen.vue'
+import ThemeMode from './theme-mode.vue'
+import ToggleLang from './toggle-lang.vue'
 import useMobile from '../mobile'
 
 const themeStore = useThemeStore()

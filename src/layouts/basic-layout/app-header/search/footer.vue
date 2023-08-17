@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .icon {
   box-shadow:
     inset 0 -2px #cdcde6,

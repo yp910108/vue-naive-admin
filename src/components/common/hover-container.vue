@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PopoverPlacement } from 'naive-ui'
 import { computed } from 'vue'
+import type { PopoverPlacement } from 'naive-ui'
 
 defineOptions({ name: 'HoverContainer' })
 

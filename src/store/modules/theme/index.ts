@@ -26,12 +26,12 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value = initThemeSettings()
   }
 
-  const setThemeColor = (themeColor: string) => {
-    theme.value.themeColor = themeColor
-  }
-
   const setDarkMode = (darkMode: boolean) => {
     theme.value.darkMode = darkMode
+  }
+
+  const setThemeColor = (themeColor: string) => {
+    theme.value.themeColor = themeColor
   }
 
   const setLayoutMode = (mode: UnionKey.ThemeLayoutMode) => {
@@ -146,8 +146,8 @@ export const useThemeStore = defineStore('theme-store', () => {
     naiveThemeOverrides,
     pageAnimateMode,
     reset,
-    setThemeColor,
     setDarkMode,
+    setThemeColor,
     setLayoutMode,
     setFollowSystemTheme,
     setIsCustomizeDarkModeTransition,
