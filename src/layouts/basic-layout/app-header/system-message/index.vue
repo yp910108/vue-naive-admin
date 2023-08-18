@@ -65,7 +65,7 @@ import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBoolean } from '@/hooks'
 import { useThemeStore } from '@/store'
-import useMobile from '../../mobile'
+import { useMobile } from '../../hooks'
 import MessageList from './message-list.vue'
 
 const themeStore = useThemeStore()

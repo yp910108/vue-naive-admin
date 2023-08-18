@@ -1,3 +1,3 @@
-export { default as useCountDown } from './use-count-down'
-export { default as useSmsCode } from './use-sms-code'
-export { default as useImageVerify } from './use-image-verify'
+export { default as useCountDown } from './count-down'
+export { default as useSmsCode } from './sms-code'
+export { default as useImageVerify } from './image-verify'

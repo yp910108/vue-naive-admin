@@ -38,7 +38,7 @@ import ThemeMode from './theme-mode.vue'
 import ToggleLang from './toggle-lang.vue'
 import SystemMessage from './system-message/index.vue'
 import UserAvatar from './user-avatar.vue'
-import useMobile from '../mobile'
+import { useMobile } from '../hooks'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)

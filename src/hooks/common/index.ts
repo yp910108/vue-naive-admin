@@ -1,2 +1,2 @@
-export { default as useBoolean } from './use-boolean'
-export { default as useLoading } from './use-loading'
+export { default as useBoolean } from './boolean'
+export { default as useLoading } from './loading'

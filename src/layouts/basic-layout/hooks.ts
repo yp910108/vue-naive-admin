@@ -1,8 +1,29 @@
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { useAppStore, useThemeStore } from '@/store'
 
-export default function useLayout() {
+export const useMobile = () => {
+  const appStore = useAppStore()
+
+  const breakpoints = useBreakpoints(breakpointsTailwind)
+
+  const isMobile = breakpoints.smaller('sm')
+
+  watch(
+    isMobile,
+    (newVal) => {
+      if (newVal) {
+        appStore.setSiderCollapse(true)
+      }
+    },
+    { immediate: true }
+  )
+
+  return { isMobile }
+}
+
+export const useLayout = () => {
   const appStore = useAppStore()
   const themeStore = useThemeStore()
   const { theme } = storeToRefs(themeStore)

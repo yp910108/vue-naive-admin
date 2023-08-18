@@ -46,10 +46,10 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, toRefs } from 'vue'
+import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
 import { useSmsCode } from '@/hooks'
-import { formRules, getConfirmPwdRule } from '@/utils'
+import { REGEXP_PHONE, REGEXP_CODE_SIX, REGEXP_PWD } from '@/utils'
 import { $t } from '@/locales'
 import { useToLoginModule } from '../hooks'
 
@@ -66,17 +66,42 @@ const model = reactive({
 })
 
 const rules: FormRules = {
-  phone: formRules.phone,
-  code: formRules.code,
-  pwd: formRules.pwd,
-  confirmPwd: getConfirmPwdRule(toRefs(model).pwd)
+  phone: [
+    { required: true, message: '请输入手机号码' },
+    { pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input' }
+  ],
+  code: [
+    { required: true, message: '请输入验证码' },
+    { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
+  ],
+  password: [
+    { required: true, message: '请输入密码' },
+    {
+      pattern: REGEXP_PWD,
+      message: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
+      trigger: 'input'
+    }
+  ],
+  confirmPwd: [
+    { required: true, message: '请输入确认密码' },
+    {
+      validator: (rule, value) => {
+        if (!(value.trim() === '') && value !== model.pwd) {
+          return Promise.reject(rule.message)
+        }
+        return Promise.resolve()
+      },
+      message: '输入的值与密码不一致',
+      trigger: 'input'
+    }
+  ]
 }
 
-function handleSmsCode() {
+const handleSmsCode = () => {
   start()
 }
 
-async function handleSubmit() {
+const handleSubmit = async () => {
   await formRef.value?.validate()
   window.$message?.success($t('page.login.common.validateSuccess'))
 }

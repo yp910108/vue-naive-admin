@@ -1,4 +1,4 @@
-import useBoolean from './use-boolean'
+import useBoolean from './boolean'
 
 /**
  * loading 组合式函数

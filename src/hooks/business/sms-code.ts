@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { REGEXP_PHONE } from '../../utils'
 import { fetchSmsCode } from '@/service'
 import { useLoading } from '../common'
-import useCountDown from './use-count-down'
+import useCountDown from './count-down'
 
 export default function useSmsCode() {
   const { loading, startLoading, endLoading } = useLoading()
@@ -37,11 +37,9 @@ export default function useSmsCode() {
     const valid = isPhoneValid(phone)
     if (!valid || loading.value) return
     startLoading()
-    const { data } = await fetchSmsCode(phone)
-    if (data) {
-      window.$message?.success('验证码发送成功！')
-      start()
-    }
+    const data = await fetchSmsCode(phone)
+    window.$message?.success('验证码发送成功！')
+    start()
     endLoading()
   }
 

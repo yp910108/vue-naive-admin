@@ -92,11 +92,11 @@ const rules: FormRules = {
   ]
 }
 
-function handleSmsCode() {
+const handleSmsCode = () => {
   getSmsCode(model.phone)
 }
 
-async function handleSubmit() {
+const handleSubmit = async () => {
   await formRef.value?.validate()
   window.$message?.success($t('page.login.common.validateSuccess'))
 }

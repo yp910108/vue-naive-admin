@@ -101,11 +101,11 @@ const rules: FormRules = {
 
 const agreement = ref(false)
 
-function handleSmsCode() {
+const handleSmsCode = () => {
   start()
 }
 
-async function handleSubmit() {
+const handleSubmit = async () => {
   await formRef.value?.validate()
   window.$message?.success($t('page.login.common.validateSuccess'))
 }

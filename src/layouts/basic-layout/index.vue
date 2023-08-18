@@ -34,8 +34,7 @@ import { AdminLayout } from '@soybeanjs/vue-materials'
 import { useAppStore, useThemeStore } from '@/store'
 import AppHeader from './app-header/index.vue'
 import AppSider from './app-sider/index.vue'
-import useMobile from './mobile'
-import useLayout from './layout'
+import { useMobile, useLayout } from './hooks'
 
 defineOptions({ name: 'BasicLayout' })
 
