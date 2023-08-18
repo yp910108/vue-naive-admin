@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 import { defineStore } from 'pinia'
-import { useRouterPush } from '@/composables'
+import { useRouter } from 'vue-router'
 import {
   clearTabStorage,
   getTabRouteByVueRoute,
@@ -14,7 +14,7 @@ import { computed } from 'vue'
 import { useThemeStore } from '../theme'
 
 export const useTabStore = defineStore('tab-store', () => {
-  const { routerPush } = useRouterPush()
+  const router = useRouter()
 
   const tabs = ref<App.GlobalTabRoute[]>([])
   const homeTab = ref<App.GlobalTabRoute>({
@@ -76,7 +76,7 @@ export const useTabStore = defineStore('tab-store', () => {
     }
     if (isActive && updateTabs.length) {
       const activePath = updateTabs[updateTabs.length - 1].fullPath
-      const navigationFailure = await routerPush(activePath)
+      const navigationFailure = await router.push(activePath)
       if (!navigationFailure) {
         tabs.value = updateTabs
         setActiveTab(activePath)
@@ -85,8 +85,6 @@ export const useTabStore = defineStore('tab-store', () => {
   }
 
   const clearTab = async (excludes: string[] = []) => {
-    const { routerPush } = useRouterPush(false)
-
     const homePath = homeTab.value.fullPath
     const remain = [homePath, ...excludes]
     const hasActive = remain.includes(activeTab.value)
@@ -94,7 +92,7 @@ export const useTabStore = defineStore('tab-store', () => {
     if (hasActive) tabs.value = updateTabs
     if (!hasActive && updateTabs.length) {
       const activePath = updateTabs[updateTabs.length - 1].fullPath
-      const navigationFailure = await routerPush(activePath)
+      const navigationFailure = await router.push(activePath)
       if (!navigationFailure) {
         tabs.value = updateTabs
         setActiveTab(activePath)
@@ -123,11 +121,9 @@ export const useTabStore = defineStore('tab-store', () => {
   }
 
   const handleClickTab = async (fullPath: string) => {
-    const { routerPush } = useRouterPush(false)
-
     const isActive = activeTab.value === fullPath
     if (!isActive) {
-      const navigationFailure = await routerPush(fullPath)
+      const navigationFailure = await router.push(fullPath)
       if (!navigationFailure) setActiveTab(fullPath)
     }
   }

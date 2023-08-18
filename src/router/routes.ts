@@ -4,7 +4,7 @@ const routes: AuthRoute.Route[] = [
     path: 'login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
     layout: 'blank',
     props: (route) => ({
-      module: (route.params.module ?? 'pwd-login') as UnionKey.LoginModule
+      module: route.params.module ?? 'pwd-login'
     }),
     white: true
   },
