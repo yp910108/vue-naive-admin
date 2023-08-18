@@ -34,8 +34,7 @@
         :placeholder="$t('page.login.common.confirmPasswordPlaceholder')"
       />
     </n-form-item>
-    <n-space :vertical="true" :size="18">
-      <login-agreement v-model:value="agreement" />
+    <n-space :vertical="true" size="large">
       <n-button type="primary" size="large" :block="true" :round="true" @click="handleSubmit">
         {{ $t('page.login.common.confirm') }}
       </n-button>
@@ -49,12 +48,12 @@
 <script lang="ts" setup>
 import { reactive, ref, toRefs } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
-import { useRouterPush } from '@/composables'
 import { useSmsCode } from '@/hooks'
 import { formRules, getConfirmPwdRule } from '@/utils'
 import { $t } from '@/locales'
+import { useToLoginModule } from '../hooks'
 
-const { toLoginModule } = useRouterPush()
+const { toLoginModule } = useToLoginModule()
 const { label, isCounting, loading: smsLoading, start } = useSmsCode()
 
 const formRef = ref<HTMLElement & FormInst>()
@@ -72,8 +71,6 @@ const rules: FormRules = {
   pwd: formRules.pwd,
   confirmPwd: getConfirmPwdRule(toRefs(model).pwd)
 }
-
-const agreement = ref(false)
 
 function handleSmsCode() {
   start()

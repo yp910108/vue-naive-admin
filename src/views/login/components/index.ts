@@ -1,6 +1,0 @@
-export { default as LoginBg } from './login-bg/index.vue'
-export { default as PwdLogin } from './pwd-login/index.vue'
-export { default as CodeLogin } from './code-login/index.vue'
-export { default as Register } from './register-user/index.vue'
-export { default as ResetPwd } from './reset-pwd/index.vue'
-export { default as BindWechat } from './bind-wechat/index.vue'

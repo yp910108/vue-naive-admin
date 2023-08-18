@@ -1,8 +1,8 @@
 <template>
   <n-space :vertical="true">
-    <n-divider class="!mb-0 text-14px text-#666">{{
-      $t('page.login.pwdLogin.otherAccountLogin')
-    }}</n-divider>
+    <n-divider class="!mb-0 text-14px text-#666">
+      {{ $translate('page.login.pwdLogin.otherAccountLogin') }}
+    </n-divider>
     <n-space justify="center">
       <n-button
         v-for="item in accounts"
@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts" setup>
-import { $t } from '@/locales'
 import { userRoleLabels } from '@/constants'
 
 interface Emits {

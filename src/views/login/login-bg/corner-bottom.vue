@@ -18,7 +18,7 @@
   </svg>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 interface Props {
   startColor?: string // 过渡的开始颜色
   endColor?: string // 过渡的结束颜色

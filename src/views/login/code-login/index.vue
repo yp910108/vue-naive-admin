@@ -47,15 +47,15 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import type { FormInst } from 'naive-ui'
+import type { FormInst, FormRules } from 'naive-ui'
 import { useAuthStore } from '@/store'
-import { useRouterPush } from '@/composables'
 import { useSmsCode } from '@/hooks'
-import { formRules, getImgCodeRule } from '@/utils'
+import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/utils'
 import { $t } from '@/locales'
+import { useToLoginModule } from '../hooks'
 
 const auth = useAuthStore()
-const { toLoginModule } = useRouterPush()
+const { toLoginModule } = useToLoginModule()
 const { label, isCounting, loading: smsLoading, getSmsCode } = useSmsCode()
 
 const formRef = ref<HTMLElement & FormInst>()
@@ -68,10 +68,28 @@ const model = reactive({
 
 const imgCode = ref('')
 
-const rules = {
-  phone: formRules.phone,
-  code: formRules.code,
-  imgCode: getImgCodeRule(imgCode)
+const rules: FormRules = {
+  phone: [
+    { required: true, message: '请输入手机号码' },
+    { pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input' }
+  ],
+  code: [
+    { required: true, message: '请输入验证码' },
+    { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
+  ],
+  imgCode: [
+    { required: true, message: '请输入验证码' },
+    {
+      validator: (rule, value) => {
+        if (!(value.trim() === '') && value !== imgCode.value) {
+          return Promise.reject(rule.message)
+        }
+        return Promise.resolve()
+      },
+      message: '验证码不正确',
+      trigger: 'blur'
+    }
+  ]
 }
 
 function handleSmsCode() {

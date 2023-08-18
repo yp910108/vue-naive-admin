@@ -32,12 +32,12 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInst } from 'naive-ui'
-import { useRouterPush } from '@/composables'
 import { useSmsCode } from '@/hooks'
-import { formRules } from '@/utils'
+import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/utils'
 import { $t } from '@/locales'
+import { useToLoginModule } from '../hooks'
 
-const { toLoginModule } = useRouterPush()
+const { toLoginModule } = useToLoginModule()
 const { label, isCounting, loading: smsLoading, getSmsCode } = useSmsCode()
 
 const formRef = ref<HTMLElement & FormInst>()
@@ -49,15 +49,21 @@ const model = reactive({
 })
 
 const rules = {
-  phone: formRules.phone,
-  code: formRules.code
+  phone: [
+    { required: true, message: '请输入手机号码' },
+    { pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input' }
+  ],
+  code: [
+    { required: true, message: '请输入验证码' },
+    { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
+  ]
 }
 
-function handleSmsCode() {
+const handleSmsCode = () => {
   getSmsCode(model.phone)
 }
 
-async function handleSubmit() {
+const handleSubmit = async () => {
   await formRef.value?.validate()
   window.$message?.success($t('page.login.common.validateSuccess'))
 }

@@ -14,10 +14,10 @@
           </n-gradient-text>
         </header>
         <main class="pt-24px">
-          <h3 class="text-18px text-primary font-medium">{{ activeModule.label }}</h3>
+          <h3 class="text-18px text-primary font-medium">{{ activeType.label }}</h3>
           <div class="pt-24px">
             <transition name="fade-slide" mode="out-in" appear>
-              <component :is="activeModule.component" />
+              <component :is="activeType.component" />
             </transition>
           </div>
         </main>
@@ -33,10 +33,16 @@ import type { Component } from 'vue'
 import { getColorPalette, mixColor } from '@/utils'
 import { useThemeStore } from '@/store'
 import { loginModuleLabels } from '@/constants'
-import { BindWechat, CodeLogin, LoginBg, PwdLogin, Register, ResetPwd } from './components'
+import type { LoginModule } from './typing'
+import LoginBg from './login-bg/index.vue'
+import PwdLogin from './pwd-login/index.vue'
+import CodeLogin from './code-login/index.vue'
+import BindWechat from './bind-wechat/index.vue'
+import ResetPwd from './reset-pwd/index.vue'
+import Register from './register/index.vue'
 
 interface Props {
-  module: UnionKey.LoginModule
+  module: LoginModule
 }
 
 const props = defineProps<Props>()
@@ -53,13 +59,13 @@ const bgColor = computed(() => {
   return mixColor(COLOR_WHITE, theme.themeColor, ratio)
 })
 
-interface LoginModule {
-  key: UnionKey.LoginModule
+interface LoginType {
+  key: LoginModule
   label: string
   component: Component
 }
 
-const modules: LoginModule[] = [
+const types: LoginType[] = [
   { key: 'pwd-login', label: loginModuleLabels['pwd-login'], component: PwdLogin },
   { key: 'code-login', label: loginModuleLabels['code-login'], component: CodeLogin },
   { key: 'register', label: loginModuleLabels.register, component: Register },
@@ -67,9 +73,9 @@ const modules: LoginModule[] = [
   { key: 'bind-wechat', label: loginModuleLabels['bind-wechat'], component: BindWechat }
 ]
 
-const activeModule = computed(() => {
+const activeType = computed(() => {
   const { module } = props
-  const active = modules.find((item) => item.key === module)
-  return active ?? modules[0]
+  const active = types.find((item) => item.key === module)
+  return active ?? types[0]
 })
 </script>

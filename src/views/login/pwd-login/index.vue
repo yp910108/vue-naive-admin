@@ -16,9 +16,9 @@
     </n-form-item>
     <n-space :vertical="true" :size="24">
       <div class="flex-y-center justify-between">
-        <n-checkbox v-model:checked="rememberMe">{{
-          $translate('page.login.pwdLogin.rememberMe')
-        }}</n-checkbox>
+        <n-checkbox v-model:checked="rememberMe">
+          {{ $translate('page.login.pwdLogin.rememberMe') }}
+        </n-checkbox>
         <n-button :text="true" @click="toLoginModule('reset-pwd')">
           {{ $translate('page.login.pwdLogin.forgetPassword') }}
         </n-button>
@@ -51,14 +51,14 @@
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
 import { loginModuleLabels } from '@/constants'
+import { REGEXP_PWD } from '@/utils'
 import { useAuthStore } from '@/store'
-import { useRouterPush } from '@/composables'
-import { formRules } from '@/utils'
-import { OtherAccount } from './components'
+import { useToLoginModule } from '../hooks'
+import OtherAccount from './other-account.vue'
 
 const authStore = useAuthStore()
 const { login } = useAuthStore()
-const { toLoginModule } = useRouterPush()
+const { toLoginModule } = useToLoginModule()
 
 const formRef = ref<HTMLElement & FormInst>()
 
@@ -68,12 +68,19 @@ const model = reactive({
 })
 
 const rules: FormRules = {
-  password: formRules.pwd
+  password: [
+    { required: true, message: '请输入密码' },
+    {
+      pattern: REGEXP_PWD,
+      message: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
+      trigger: 'input'
+    }
+  ]
 }
 
 const rememberMe = ref(false)
 
-async function handleSubmit() {
+const handleSubmit = async () => {
   await formRef.value?.validate()
 
   const { userName, password } = model
@@ -81,7 +88,7 @@ async function handleSubmit() {
   login(userName, password)
 }
 
-function handleLoginOtherAccount(param: { userName: string; password: string }) {
+const handleLoginOtherAccount = (param: { userName: string; password: string }) => {
   const { userName, password } = param
   login(userName, password)
 }

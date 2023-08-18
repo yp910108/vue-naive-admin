@@ -9,10 +9,11 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { getColorPalette } from '@/utils'
-import { CornerBottom, CornerTop } from './components'
+import CornerTop from './corner-top.vue'
+import CornerBottom from './corner-bottom.vue'
 
 interface Props {
   themeColor: string // 主题颜色
@@ -23,5 +24,3 @@ const props = defineProps<Props>()
 const lightColor = computed(() => getColorPalette(props.themeColor, 3))
 const darkColor = computed(() => getColorPalette(props.themeColor, 6))
 </script>
-
-<style scoped></style>
