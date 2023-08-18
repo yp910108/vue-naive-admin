@@ -5,7 +5,6 @@ declare namespace AuthRoute {
     title: string
     path: string
     icon?: Icon.IconName
-    hide?: boolean
     white?: boolean
     keepAlive?: boolean
     multiTab?: boolean

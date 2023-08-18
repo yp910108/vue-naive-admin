@@ -32,9 +32,9 @@
 import { storeToRefs } from 'pinia'
 import { AdminLayout } from '@soybeanjs/vue-materials'
 import { useAppStore, useThemeStore } from '@/store'
+import { useMobile, useLayout } from './hooks'
 import AppHeader from './app-header/index.vue'
 import AppSider from './app-sider/index.vue'
-import { useMobile, useLayout } from './hooks'
 
 defineOptions({ name: 'BasicLayout' })
 

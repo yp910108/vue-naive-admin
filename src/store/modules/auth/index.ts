@@ -12,14 +12,19 @@ export const useAuthStore = defineStore('auth-store', () => {
   const routeStore = useRouteStore()
 
   const token = ref(localStg.get('token'))
-  const userInfo = ref<Auth.UserInfo>()
+  const userInfo = ref(localStg.get('userInfo'))
   const loginLoading = ref(false)
 
   const reset = () => {
-    localStg.remove('token')
+    token.value = localStg.get('token')
+    userInfo.value = localStg.get('userInfo')
+  }
 
-    token.value = undefined
-    userInfo.value = undefined
+  const getUserInfo = async () => {
+    const _userInfo = await fetchUserInfo()
+    localStg.set('userInfo', _userInfo)
+    userInfo.value = _userInfo
+    await routeStore.initAuthRoutes()
   }
 
   const login = async (userName: string, password: string) => {
@@ -29,13 +34,11 @@ export const useAuthStore = defineStore('auth-store', () => {
       localStg.set('token', _token)
       token.value = _token
 
-      // 下面三行可以视情况去掉，因为 router/guard/permission.ts 中做了处理
+      // 下面一行可以视情况去掉，因为 router/guard/permission.ts 中做了处理
       // 此处这样做的好处：
       // - 登录成功后可以更快的进入首页
       // - 登录成功欢迎提示可以拿到用户信息
-      const _userInfo = await fetchUserInfo()
-      userInfo.value = _userInfo
-      await routeStore.initAuthRoutes()
+      await getUserInfo()
 
       loginLoading.value = false
       window.$notification?.success({
@@ -49,11 +52,6 @@ export const useAuthStore = defineStore('auth-store', () => {
       loginLoading.value = false
       reset()
     }
-  }
-
-  const getUserInfo = async () => {
-    const _userInfo = await fetchUserInfo()
-    userInfo.value = _userInfo
   }
 
   return {

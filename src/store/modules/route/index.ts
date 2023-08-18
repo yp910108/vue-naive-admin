@@ -12,21 +12,8 @@ export const useRouteStore = defineStore('route-store', () => {
   const menuStore = useMenuStore()
 
   const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
-
+  const isInitAuthRoutes = ref(false)
   const cachedRoutes = ref<string[]>([])
-
-  const resetRoutes = () => {
-    const routes = router.getRoutes()
-    for (const route of routes) {
-      router.removeRoute(route.name!)
-    }
-  }
-
-  const reset = () => {
-    resetRoutes()
-    cachedRoutes.value = []
-    menuStore.reset()
-  }
 
   const setRoutes = (routes: RouteRecordRaw[]) => {
     for (const route of routes) {
@@ -36,6 +23,21 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const initConstantRoutes = () => {
     setRoutes(transformAuthRoutesToVueRoutes(constantRoutes))
+  }
+
+  const resetRoutes = () => {
+    const routes = router.getRoutes()
+    for (const route of routes) {
+      router.removeRoute(route.name!)
+    }
+  }
+
+  const reset = () => {
+    isInitAuthRoutes.value = false
+    cachedRoutes.value = []
+    resetRoutes()
+    initConstantRoutes()
+    menuStore.reset()
   }
 
   const initStaticRoutes = () => {
@@ -60,12 +62,13 @@ export const useRouteStore = defineStore('route-store', () => {
     } else {
       await initDynamicRoutes()
     }
+    isInitAuthRoutes.value = true
   }
 
   return {
+    isInitAuthRoutes,
     cachedRoutes,
     reset,
-    initConstantRoutes,
     initAuthRoutes
   }
 })

@@ -10,17 +10,14 @@ export async function createPermissionGuard(to: RouteLocationNormalized) {
     if (to.name === 'Login') {
       return { name: 'Root' }
     } else {
-      if (!authStore.userInfo) {
+      if (!routeStore.isInitAuthRoutes) {
         try {
-          await authStore.getUserInfo()
           await routeStore.initAuthRoutes()
           const { path, query, hash } = to
           return { path, query, hash, replace: true }
         } catch (e) {
           console.warn(e)
           authStore.reset()
-          routeStore.reset()
-          routeStore.initConstantRoutes()
           const redirect = to.fullPath
           return { name: 'Login', query: { redirect } }
         }
