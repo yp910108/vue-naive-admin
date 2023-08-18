@@ -1,13 +1,13 @@
 <template>
   <dark-mode-container class="global-header flex-y-center h-full" :inverted="theme.header.inverted">
     <logo
-      v-if="modeProps.showLogo"
+      v-if="headerProps.showLogo"
       show-title
       class="h-full"
       :style="{ width: `${theme.sider.width}px` }"
     />
-    <div v-if="!modeProps.showHeaderMenu" class="flex-1-hidden flex-y-center h-full">
-      <menu-collapse v-if="modeProps.showMenuCollapse || isMobile" />
+    <div v-if="!headerProps.showHeaderMenu" class="flex-1-hidden flex-y-center h-full">
+      <menu-collapse v-if="headerProps.showMenuCollapse || isMobile" />
       <breadcrumb v-if="theme.header.crumb.visible && !isMobile" />
     </div>
     <header-menu v-else />
@@ -68,6 +68,5 @@ const LAYOUT_HEADER_PROPS = {
   }
 }
 
-// TODO destruct
-const modeProps = computed(() => LAYOUT_HEADER_PROPS[theme.value.layout.mode])
+const headerProps = computed(() => LAYOUT_HEADER_PROPS[theme.value.layout.mode])
 </script>
