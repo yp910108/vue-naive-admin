@@ -17,6 +17,8 @@
       <full-screen />
       <theme-mode />
       <toggle-lang />
+      <system-message />
+      <user-avatar />
     </div>
   </dark-mode-container>
 </template>
@@ -34,6 +36,8 @@ import GitHubSite from './github-site.vue'
 import FullScreen from './full-screen.vue'
 import ThemeMode from './theme-mode.vue'
 import ToggleLang from './toggle-lang.vue'
+import SystemMessage from './system-message/index.vue'
+import UserAvatar from './user-avatar.vue'
 import useMobile from '../mobile'
 
 const themeStore = useThemeStore()

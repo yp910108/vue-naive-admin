@@ -16,8 +16,13 @@ import { setLocale } from '@/locales'
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
+type Option = {
+  label: string
+  key: I18nType.Lang
+}
+
 const language = ref<I18nType.Lang>(localStg.get('lang') ?? 'zh-CN')
-const options = [
+const options: Option[] = [
   { label: '中文', key: 'zh-CN' },
   { label: 'English', key: 'en' },
   { label: 'ភាសាខ្មែរ', key: 'km-KH' }

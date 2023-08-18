@@ -370,6 +370,11 @@ declare namespace App {
   }
 
   /**
+   * 面包屑
+   */
+  type GlobalBreadcrumb = GlobalMenuOption
+
+  /**
    * 搜索菜单
    */
   type GlobalSearchMenu = {
@@ -379,18 +384,16 @@ declare namespace App {
     icon?: () => import('vue').Component
   }
 
-  /**
-   * 面包屑
-   */
-  type GlobalBreadcrumb = GlobalMenuOption
-
-  /** 多页签 Tab 的路由 */
-  interface GlobalTabRoute
-    extends Pick<import('vue-router').RouteLocationNormalizedLoaded, 'name' | 'fullPath' | 'meta'> {
-    scrollPosition: {
-      left: number
-      top: number
-    }
+  interface MessageList {
+    id: number // 数据唯一值
+    avatar?: string // 头像
+    icon?: Icon.IconName // 消息 icon
+    title: string // 消息标题
+    date?: string // 消息发送时间
+    isRead?: boolean // 消息是否已读
+    description?: string // 消息描述
+    tagTitle?: string // 标签名称
+    tagProps?: import('naive-ui').TagProps // 标签props
   }
 
   interface MessageTab {
@@ -400,16 +403,12 @@ declare namespace App {
     list: MessageList[] // 消息数据
   }
 
-  interface MessageList {
-    id: number // 数据唯一值
-    avatar?: string // 头像
-    icon?: Icon.IconName // 消息 icon
-    svgIcon?: string
-    title: string // 消息标题
-    date?: string // 消息发送时间
-    isRead?: boolean // 消息是否已读
-    description?: string // 消息描述
-    tagTitle?: string // 标签名称
-    tagProps?: import('naive-ui').TagProps // 标签props
+  /** 多页签 Tab 的路由 */
+  interface GlobalTabRoute
+    extends Pick<import('vue-router').RouteLocationNormalizedLoaded, 'name' | 'fullPath' | 'meta'> {
+    scrollPosition: {
+      left: number
+      top: number
+    }
   }
 }
