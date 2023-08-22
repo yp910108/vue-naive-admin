@@ -410,6 +410,6 @@ declare namespace App {
     key: string
     title: string
     routePath: string
-    icon?: () => import('vue').Component
+    icon?: Icon.IconName
   }
 }

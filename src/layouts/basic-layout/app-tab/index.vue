@@ -8,32 +8,46 @@
         ref="bsScroll"
         :options="{ scrollX: true, scrollY: false, click: !!deviceInfo.device.type }"
       >
-        <tab-detail />
+        <tabs @scroll="handleTabsScroll" />
       </better-scroll>
     </div>
   </dark-mode-container>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
-// import { useElementBounding } from '@vueuse/core'
+import { useElementBounding } from '@vueuse/core'
 import { useTabStore, useThemeStore } from '@/store'
 import { useDeviceInfo } from './hooks'
-import TabDetail from './tab-detail.vue'
+import Tabs from './tabs.vue'
+
+defineOptions({ name: 'AppTab' })
 
 const route = useRoute()
 const tabStore = useTabStore()
 const deviceInfo = useDeviceInfo()
 
 const bsWrapper = ref<HTMLElement>()
-// const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper)
+const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper)
 
 const bsScroll = ref<Expose.BetterScroll>()
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
+
+const handleTabsScroll = (clientX: number) => {
+  const currentX = clientX - bsWrapperLeft.value
+  const deltaX = currentX - bsWrapperWidth.value / 2
+  if (bsScroll.value) {
+    const { maxScrollX, x } = bsScroll.value.instance
+    const right = maxScrollX - x
+    console.log(maxScrollX, x)
+    const update = deltaX > 0 ? Math.max(-deltaX, right) : Math.min(-deltaX, -x)
+    bsScroll.value?.instance.scrollBy(update, 0, 300)
+  }
+}
 
 watch(route, (newVal) => {
   const newTab = tabStore.addTab(newVal)

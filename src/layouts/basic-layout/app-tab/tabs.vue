@@ -1,10 +1,7 @@
 <template>
-  <div
-    ref="tabRef"
-    class="flex h-full pr-18px"
-    :class="[isChromeMode ? 'items-end' : 'items-center gap-12px']"
-  >
+  <div class="flex h-full pr-18px" :class="[isChromeMode ? 'items-end' : 'items-center gap-12px']">
     <PageTab
+      ref="tabRef"
       v-for="tab in tabStore.tabs"
       :key="tab.key"
       :mode="theme.tab.mode"
@@ -17,11 +14,7 @@
       @contextmenu.prevent="handleContextMenu($event, tab)"
     >
       <template #prefix>
-        <component
-          v-if="tab.icon"
-          :is="tab.icon"
-          class="inline-block align-text-bottom text-16px"
-        />
+        <svg-icon :icon="tab.icon" class="inline-block align-text-bottom text-16px" />
       </template>
       {{ tab.title }}
     </PageTab>
@@ -30,19 +23,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { PageTab } from '@soybeanjs/vue-materials'
 import { useRouteStore, useTabStore, useThemeStore } from '@/store'
 import ContextMenu from './context-menu.vue'
+
+interface Emits {
+  (e: 'scroll', clientX: number): void
+}
+
+const emit = defineEmits<Emits>()
 
 const router = useRouter()
 const routerStore = useRouteStore()
 const themeStore = useThemeStore()
 const { theme } = themeStore
 const tabStore = useTabStore()
-
-const tabRef = ref<HTMLElement>()
 
 const isChromeMode = computed(() => theme.tab.mode === 'chrome')
 
@@ -61,7 +58,6 @@ const contextMenuProps = ref<ContextMenuProps>({})
 
 const handleClick = (tab: App.GlobalTab) => {
   router.push(tab.routePath)
-  tabStore.setActiveTab(tab)
 }
 
 const handleClose = (tab: App.GlobalTab) => {
@@ -82,4 +78,22 @@ const handleContextMenu = (e: MouseEvent, tab: App.GlobalTab) => {
 const handleDropdownVisible = (visible: boolean) => {
   contextMenuProps.value.visible = visible
 }
+
+const tabRef = ref<InstanceType<typeof PageTab>[]>()
+
+watch(
+  () => tabStore.activeTab,
+  (activeTab) => {
+    nextTick(() => {
+      const activeTabIndex = tabStore.tabs.findIndex(({ key }) => key === activeTab?.key)
+      if (tabRef.value && tabRef.value.length) {
+        const activeEl = tabRef.value[activeTabIndex].$el as HTMLDivElement
+        const { x, width } = activeEl.getBoundingClientRect()
+        const clientX = x + width / 2
+        emit('scroll', clientX)
+      }
+    })
+  },
+  { immediate: true }
+)
 </script>

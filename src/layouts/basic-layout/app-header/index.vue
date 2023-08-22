@@ -40,6 +40,8 @@ import SystemMessage from './system-message/index.vue'
 import UserAvatar from './user-avatar.vue'
 import { useMobile } from '../hooks'
 
+defineOptions({ name: 'AppHeader' })
+
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 

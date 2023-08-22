@@ -91,7 +91,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
         }
         transform(children, fullpath)
       } else {
-        const component = views[`./${pagePath}/index.vue`]
+        const component = views[`./${pagePath}/index.vue`] ?? NotFound
         setViewComponentName(component, name)
         const vueRoute: RouteRecordRaw = {
           path: fullpath,

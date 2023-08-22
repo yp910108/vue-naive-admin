@@ -1,5 +1,4 @@
 import type { RouteLocationNormalizedLoaded, RouteRecordNormalized } from 'vue-router'
-import { renderIcon } from '@/utils'
 
 function hasFullPath(
   route: RouteLocationNormalizedLoaded | RouteRecordNormalized
@@ -13,7 +12,7 @@ export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecord
     key: name as string,
     routePath: hasFullPath(route) ? route.fullPath : route.path,
     title: meta.title,
-    icon: renderIcon({ icon: meta.icon })
+    icon: meta.icon
   }
 }
 

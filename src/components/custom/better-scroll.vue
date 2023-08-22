@@ -41,7 +41,7 @@ watch([() => wrapWidth.value, () => width.value, () => height.value], () => {
   }
 })
 
-onMounted(() => initBetterScroll)
+onMounted(initBetterScroll)
 
 defineExpose({ instance })
 </script>
