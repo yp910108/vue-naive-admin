@@ -7,7 +7,7 @@ declare namespace StorageInterface {
   interface Local {
     token?: string
     userInfo?: Auth.UserInfo
-    multiTabRoutes?: App.GlobalTabRoute[]
     lang?: I18nType.Lang
+    tabs?: App.GlobalTab[]
   }
 }

@@ -7,9 +7,7 @@ declare namespace AuthRoute {
     icon?: Icon.IconName
     white?: boolean
     keepAlive?: boolean
-    multiTab?: boolean
     order?: number
-    affix?: boolean
     href?: string
     layout?: LayoutType
     redirect?: string

@@ -1,0 +1,85 @@
+<template>
+  <div
+    ref="tabRef"
+    class="flex h-full pr-18px"
+    :class="[isChromeMode ? 'items-end' : 'items-center gap-12px']"
+  >
+    <PageTab
+      v-for="tab in tabStore.tabs"
+      :key="tab.key"
+      :mode="theme.tab.mode"
+      :dark-mode="theme.darkMode"
+      :active="tabStore.activeTab?.key === tab.key"
+      :active-color="theme.themeColor"
+      :closable="closeable(tab)"
+      @click="handleClick(tab)"
+      @close="handleClose(tab)"
+      @contextmenu.prevent="handleContextMenu($event, tab)"
+    >
+      <template #prefix>
+        <component
+          v-if="tab.icon"
+          :is="tab.icon"
+          class="inline-block align-text-bottom text-16px"
+        />
+      </template>
+      {{ tab.title }}
+    </PageTab>
+  </div>
+  <context-menu v-bind="contextMenuProps" @update:visible="handleDropdownVisible" />
+</template>
+
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { PageTab } from '@soybeanjs/vue-materials'
+import { useRouteStore, useTabStore, useThemeStore } from '@/store'
+import ContextMenu from './context-menu.vue'
+
+const router = useRouter()
+const routerStore = useRouteStore()
+const themeStore = useThemeStore()
+const { theme } = themeStore
+const tabStore = useTabStore()
+
+const tabRef = ref<HTMLElement>()
+
+const isChromeMode = computed(() => theme.tab.mode === 'chrome')
+
+const closeable = (tab: App.GlobalTab) => {
+  return tab.key !== routerStore.rootRoute.name
+}
+
+interface ContextMenuProps {
+  visible?: boolean
+  tab?: App.GlobalTab
+  closable?: boolean
+  x?: number
+  y?: number
+}
+const contextMenuProps = ref<ContextMenuProps>({})
+
+const handleClick = (tab: App.GlobalTab) => {
+  router.push(tab.routePath)
+  tabStore.setActiveTab(tab)
+}
+
+const handleClose = (tab: App.GlobalTab) => {
+  tabStore.removeTab(tab)
+}
+
+const handleContextMenu = (e: MouseEvent, tab: App.GlobalTab) => {
+  const duration = contextMenuProps.value.visible ? 150 : 0
+  setTimeout(() => {
+    contextMenuProps.value.visible = true
+    contextMenuProps.value.tab = tab
+    contextMenuProps.value.closable = closeable(tab)
+    contextMenuProps.value.x = e.clientX
+    contextMenuProps.value.y = e.clientY
+  }, duration)
+}
+
+const handleDropdownVisible = (visible: boolean) => {
+  contextMenuProps.value.visible = visible
+}
+</script>

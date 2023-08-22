@@ -1,5 +1,5 @@
 <template>
-  <dark-mode-container class="global-header flex-y-center h-full" :inverted="theme.header.inverted">
+  <dark-mode-container class="app-header flex-y-center h-full" :inverted="theme.header.inverted">
     <logo
       v-if="headerProps.showLogo"
       show-title
@@ -70,3 +70,9 @@ const LAYOUT_HEADER_PROPS = {
 
 const headerProps = computed(() => LAYOUT_HEADER_PROPS[theme.value.layout.mode])
 </script>
+
+<style scoped>
+.app-header {
+  box-shadow: 0 1px 2px rgb(0 21 41 / 8%);
+}
+</style>

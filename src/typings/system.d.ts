@@ -403,12 +403,13 @@ declare namespace App {
     list: MessageList[] // 消息数据
   }
 
-  /** 多页签 Tab 的路由 */
-  interface GlobalTabRoute
-    extends Pick<import('vue-router').RouteLocationNormalizedLoaded, 'name' | 'fullPath' | 'meta'> {
-    scrollPosition: {
-      left: number
-      top: number
-    }
+  /**
+   * 多页签 Tab 的路由
+   */
+  type GlobalTab = {
+    key: string
+    title: string
+    routePath: string
+    icon?: () => import('vue').Component
   }
 }

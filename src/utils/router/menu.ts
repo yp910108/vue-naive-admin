@@ -9,8 +9,7 @@ import { parsePathToName } from './helper'
 export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '') {
   const menus: App.GlobalMenuOption[] = []
   for (const authRoute of authRoutes) {
-    const { title, path, icon, hide, children } = authRoute
-    if (hide) continue
+    const { title, path, icon, children } = authRoute
     const fullpath = combineURL(prefix, path)
     const name = parsePathToName(fullpath)
     const menu: App.GlobalMenuOption = {

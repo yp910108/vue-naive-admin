@@ -19,11 +19,14 @@
     :right-footer="theme.footer.right"
     @click-mobile-sider-mask="appStore.setSiderCollapse(true)"
   >
+    <template #sider>
+      <app-sider />
+    </template>
     <template #header>
       <app-header />
     </template>
-    <template #sider>
-      <app-sider />
+    <template #tab>
+      <app-tab />
     </template>
   </admin-layout>
 </template>
@@ -35,6 +38,7 @@ import { useAppStore, useThemeStore } from '@/store'
 import { useMobile, useLayout } from './hooks'
 import AppHeader from './app-header/index.vue'
 import AppSider from './app-sider/index.vue'
+import AppTab from './app-tab/index.vue'
 
 defineOptions({ name: 'BasicLayout' })
 

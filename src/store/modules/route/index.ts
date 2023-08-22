@@ -1,7 +1,8 @@
+import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { router, constantRoutes, staticRoutes } from '@/router'
-import type { RouteRecordRaw } from 'vue-router'
+import { router, constantRoutes } from '@/router'
+import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import { transformAuthRoutesToVueRoutes } from '@/utils'
 import { fetchUserRoutes } from '@/service'
 import { useAuthStore } from '../auth'
@@ -11,21 +12,31 @@ export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()
   const menuStore = useMenuStore()
 
-  const authRouteMode = ref(import.meta.env.VITE_AUTH_ROUTE_MODE)
   const isInitAuthRoutes = ref(false)
+  const rootRoute = ref<RouteRecordNormalized>()
   const cachedRoutes = ref<string[]>([])
+
+  const setRootRoute = () => {
+    const routes = router.getRoutes()
+    let route = routes.find((route) => route.name === 'Root')
+    while (route?.redirect) {
+      route = routes.find(({ path }) => path === route?.redirect)
+    }
+    rootRoute.value = route
+  }
 
   const setRoutes = (routes: RouteRecordRaw[]) => {
     for (const route of routes) {
       router.addRoute(route)
     }
+    setRootRoute()
   }
 
   const initConstantRoutes = () => {
     setRoutes(transformAuthRoutesToVueRoutes(constantRoutes))
   }
 
-  const resetRoutes = () => {
+  const clearRoutes = () => {
     const routes = router.getRoutes()
     for (const route of routes) {
       router.removeRoute(route.name!)
@@ -35,15 +46,9 @@ export const useRouteStore = defineStore('route-store', () => {
   const reset = () => {
     isInitAuthRoutes.value = false
     cachedRoutes.value = []
-    resetRoutes()
+    clearRoutes()
     initConstantRoutes()
     menuStore.reset()
-  }
-
-  const initStaticRoutes = () => {
-    resetRoutes()
-    setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...staticRoutes]))
-    menuStore.setMenus(staticRoutes)
   }
 
   const initDynamicRoutes = async () => {
@@ -51,22 +56,19 @@ export const useRouteStore = defineStore('route-store', () => {
 
     const data = await fetchUserRoutes(userInfo?.userId ?? '')
 
-    resetRoutes()
+    clearRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
     menuStore.setMenus(data ?? [])
   }
 
   const initAuthRoutes = async () => {
-    if (authRouteMode.value === 'static') {
-      initStaticRoutes()
-    } else {
-      await initDynamicRoutes()
-    }
+    await initDynamicRoutes()
     isInitAuthRoutes.value = true
   }
 
   return {
     isInitAuthRoutes,
+    rootRoute: rootRoute as Ref<RouteRecordNormalized>,
     cachedRoutes,
     reset,
     initAuthRoutes

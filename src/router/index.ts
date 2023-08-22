@@ -18,4 +18,3 @@ export function setupRouter(app: App) {
 }
 
 export { constantRoutes }
-export { default as staticRoutes } from './modules'
