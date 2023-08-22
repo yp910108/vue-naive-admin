@@ -60,17 +60,9 @@ export const useAppStore = defineStore('app-store', () => {
   const reloadFlag = ref(true)
   const reloadPage = async (duration = 0) => {
     reloadFlag.value = false
-    await nextTick()
-    if (duration) {
-      setTimeout(() => {
-        reloadFlag.value = true
-      }, duration)
-    } else {
-      reloadFlag.value = true
-    }
     setTimeout(() => {
-      document.documentElement.scrollTo({ left: 0, top: 0 })
-    }, 100)
+      reloadFlag.value = true
+    }, duration)
   }
 
   return {

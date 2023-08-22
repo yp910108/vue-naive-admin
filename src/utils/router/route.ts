@@ -40,7 +40,7 @@ function setViewComponentName(component: RouteComponent | Lazy<ModuleComponent>,
  * @param authRoutes
  * @returns vueRoutes
  */
-// TODO order activeMenu 404 i18n href
+// TODO order activeMenu i18n href
 export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   const vueRootRoute = {
     name: 'Root',

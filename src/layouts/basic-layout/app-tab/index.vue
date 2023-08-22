@@ -11,6 +11,7 @@
         <tabs @scroll="handleTabsScroll" />
       </better-scroll>
     </div>
+    <reload-button />
   </dark-mode-container>
 </template>
 
@@ -22,6 +23,7 @@ import { useElementBounding } from '@vueuse/core'
 import { useTabStore, useThemeStore } from '@/store'
 import { useDeviceInfo } from './hooks'
 import Tabs from './tabs.vue'
+import ReloadButton from './reload-button.vue'
 
 defineOptions({ name: 'AppTab' })
 
