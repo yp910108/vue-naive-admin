@@ -51,9 +51,9 @@ type DropdownKey =
   | 'full-content'
   | 'reload-current'
   | 'close-current'
-  | 'close-other'
   | 'close-left'
   | 'close-right'
+  | 'close-other'
   | 'close-all'
 type Option = DropdownOption & {
   key: DropdownKey
@@ -78,11 +78,6 @@ const options = computed<Option[]>(() => [
     icon: renderIcon({ icon: 'close-outlined' })
   },
   {
-    label: '关闭其他',
-    key: 'close-other',
-    icon: renderIcon({ icon: 'column-width-outlined' })
-  },
-  {
     label: '关闭左侧',
     key: 'close-left',
     icon: renderIcon({ icon: 'format-horizontal-align-left' })
@@ -91,6 +86,11 @@ const options = computed<Option[]>(() => [
     label: '关闭右侧',
     key: 'close-right',
     icon: renderIcon({ icon: 'format-horizontal-align-right' })
+  },
+  {
+    label: '关闭其他',
+    key: 'close-other',
+    icon: renderIcon({ icon: 'column-width-outlined' })
   },
   {
     label: '关闭所有',
@@ -113,14 +113,14 @@ const actions: Record<DropdownKey, () => void> = {
   'close-current': () => {
     tabStore.removeTab(props.tab!)
   },
-  'close-other': () => {
-    tabStore.clearOtherTabs(props.tab!)
-  },
   'close-left': () => {
     tabStore.clearLeftTabs(props.tab!)
   },
   'close-right': () => {
     tabStore.clearRightTabs(props.tab!)
+  },
+  'close-other': () => {
+    tabStore.clearOtherTabs(props.tab!)
   },
   'close-all': () => {
     tabStore.clearAllTabs()

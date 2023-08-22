@@ -36,7 +36,7 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const router = useRouter()
-const routerStore = useRouteStore()
+const routeStore = useRouteStore()
 const themeStore = useThemeStore()
 const { theme } = themeStore
 const tabStore = useTabStore()
@@ -44,7 +44,7 @@ const tabStore = useTabStore()
 const isChromeMode = computed(() => theme.tab.mode === 'chrome')
 
 const closeable = (tab: App.GlobalTab) => {
-  return tab.key !== routerStore.rootRoute.name
+  return tab.key !== routeStore.rootRoute.name
 }
 
 interface ContextMenuProps {

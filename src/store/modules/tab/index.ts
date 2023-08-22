@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import type { RouteLocationNormalizedLoaded, RouteRecordNormalized } from 'vue-router'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { defineStore, storeToRefs } from 'pinia'
 import { localStg } from '@/utils'
@@ -10,7 +10,7 @@ import { useThemeStore } from '../theme'
 export const useTabStore = defineStore('tab-store', () => {
   const route = useRoute()
   const router = useRouter()
-  const routerStore = useRouteStore()
+  const routeStore = useRouteStore()
   const themeStore = useThemeStore()
   const { theme } = storeToRefs(themeStore)
 
@@ -19,10 +19,9 @@ export const useTabStore = defineStore('tab-store', () => {
     const lastTab = tabs.value[tabs.value.length - 1]
     router.push(lastTab.routePath)
   }
-  const addTab = (route: RouteLocationNormalizedLoaded | RouteRecordNormalized) => {
+  const addTab = (route: RouteLocationNormalizedLoaded) => {
     const tab = getTabByRoute(route)
-    const active = tabs.value.find(({ key }) => key === tab.key)
-    if (!active) {
+    if (!hasTab(tabs.value, tab)) {
       tabs.value.push(tab)
     }
     return tab
@@ -36,7 +35,7 @@ export const useTabStore = defineStore('tab-store', () => {
   }
   const clearLeftTabs = (currentTab: App.GlobalTab) => {
     const currentIndex = tabs.value.findIndex(({ key }) => key === currentTab.key)
-    const rootTab = getTabByRoute(routerStore.rootRoute)
+    const rootTab = getTabByRoute(routeStore.rootRoute)
     const _tabs = tabs.value.slice(currentIndex)
     _tabs.unshift(rootTab)
     tabs.value = _tabs
@@ -52,7 +51,7 @@ export const useTabStore = defineStore('tab-store', () => {
     }
   }
   const clearOtherTabs = (currentTab: App.GlobalTab) => {
-    const rootTab = getTabByRoute(routerStore.rootRoute)
+    const rootTab = getTabByRoute(routeStore.rootRoute)
     const restTabs = tabs.value.filter(({ key }) => currentTab.key === key)
     restTabs.unshift(rootTab)
     tabs.value = restTabs
@@ -61,7 +60,7 @@ export const useTabStore = defineStore('tab-store', () => {
     }
   }
   const clearAllTabs = () => {
-    const rootTab = getTabByRoute(routerStore.rootRoute)
+    const rootTab = getTabByRoute(routeStore.rootRoute)
     tabs.value = [rootTab]
     if (!hasTab(tabs.value, activeTab.value!)) {
       pushLastTab()
@@ -74,7 +73,7 @@ export const useTabStore = defineStore('tab-store', () => {
   }
 
   const initTabStore = () => {
-    const rootTab = getTabByRoute(routerStore.rootRoute)
+    const rootTab = getTabByRoute(routeStore.rootRoute)
     const currentTab = getTabByRoute(route)
     if (theme.value.tab.isCache) {
       const _tabs = localStg.get('tabs') ?? []

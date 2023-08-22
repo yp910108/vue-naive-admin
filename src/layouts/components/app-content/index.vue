@@ -7,7 +7,7 @@
       @before-leave="app.setDisableMainXScroll(true)"
       @after-enter="app.setDisableMainXScroll(false)"
     >
-      <keep-alive>
+      <keep-alive :include="['DashboardAnalysis', 'DashboardWorkbench']">
         <component
           v-if="app.reloadFlag"
           :is="Component"
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore, useThemeStore } from '@/store'
+import { useAppStore, useCacheStore, useThemeStore } from '@/store'
 
 defineOptions({ name: 'AppContent' })
 
@@ -40,4 +40,5 @@ withDefaults(defineProps<Props>(), {
 
 const app = useAppStore()
 const themeStore = useThemeStore()
+const cacheStore = useCacheStore()
 </script>

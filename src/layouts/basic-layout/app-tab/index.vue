@@ -22,7 +22,7 @@ import { useRoute } from 'vue-router'
 import { useElementBounding } from '@vueuse/core'
 import { useTabStore, useThemeStore } from '@/store'
 import { useDeviceInfo } from './hooks'
-import Tabs from './tabs.vue'
+import Tabs from './tabs/index.vue'
 import ReloadButton from './reload-button.vue'
 
 defineOptions({ name: 'AppTab' })

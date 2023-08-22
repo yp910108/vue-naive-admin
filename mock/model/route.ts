@@ -8,12 +8,14 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         {
           title: '分析页',
           path: 'analysis',
-          icon: 'analysis'
+          icon: 'analysis',
+          keepAlive: true
         },
         {
           title: '工作台',
           path: 'workbench',
-          icon: 'workbench'
+          icon: 'workbench',
+          keepAlive: true
         }
       ]
     },
