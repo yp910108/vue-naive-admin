@@ -1,13 +1,13 @@
 <template>
-  <router-view #="{ Component, route }">
+  <router-view v-slot="{ Component, route }">
     <transition
-      :name="theme.pageAnimateMode"
       mode="out-in"
       appear
+      :name="themeStore.pageAnimateMode"
       @before-leave="app.setDisableMainXScroll(true)"
       @after-enter="app.setDisableMainXScroll(false)"
     >
-      <keep-alive :include="routeStore.cachedRoutes">
+      <keep-alive>
         <component
           v-if="app.reloadFlag"
           :is="Component"
@@ -23,12 +23,15 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore, useRouteStore, useThemeStore } from '@/store'
+import { useAppStore, useThemeStore } from '@/store'
 
-defineOptions({ name: 'GlobalContent' })
+defineOptions({ name: 'AppContent' })
 
 interface Props {
-  showPadding?: boolean // 显示 padding
+  /**
+   * 显示padding
+   */
+  showPadding?: boolean
 }
 
 withDefaults(defineProps<Props>(), {
@@ -36,6 +39,5 @@ withDefaults(defineProps<Props>(), {
 })
 
 const app = useAppStore()
-const theme = useThemeStore()
-const routeStore = useRouteStore()
+const themeStore = useThemeStore()
 </script>

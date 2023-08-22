@@ -43,7 +43,7 @@ import { useMobile, useLayout } from './hooks'
 import AppHeader from './app-header/index.vue'
 import AppSider from './app-sider/index.vue'
 import AppTab from './app-tab/index.vue'
-import AppContent from './app-content/index.vue'
+import AppContent from '../components/app-content/index.vue'
 import AppFooter from './app-footer/index.vue'
 
 defineOptions({ name: 'BasicLayout' })

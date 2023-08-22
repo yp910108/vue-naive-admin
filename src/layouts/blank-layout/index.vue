@@ -1,9 +1,9 @@
 <template>
-  <global-content :show-padding="false" />
+  <app-content :show-padding="false" />
 </template>
 
 <script setup lang="ts">
-import { GlobalContent } from '../common'
+import AppContent from '../components/app-content/index.vue'
 
 defineOptions({ name: 'BlankLayout' })
 </script>
