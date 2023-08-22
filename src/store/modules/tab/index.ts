@@ -74,16 +74,19 @@ export const useTabStore = defineStore('tab-store', () => {
   }
 
   const initTabStore = () => {
+    const rootTab = getTabByRoute(routerStore.rootRoute)
     const currentTab = getTabByRoute(route)
     if (theme.value.tab.isCache) {
       const _tabs = localStg.get('tabs') ?? []
+      if (!hasTab(_tabs, rootTab)) {
+        _tabs.push(rootTab)
+      }
       if (!hasTab(_tabs, currentTab)) {
         _tabs.push(currentTab)
       }
       setActiveTab(currentTab)
       tabs.value = _tabs
     } else {
-      const rootTab = getTabByRoute(routerStore.rootRoute)
       const _tabs = [rootTab]
       if (currentTab.key !== rootTab.key) {
         _tabs.push(currentTab)
@@ -93,6 +96,12 @@ export const useTabStore = defineStore('tab-store', () => {
       }
       tabs.value = _tabs
     }
+  }
+
+  const reset = () => {
+    tabs.value = []
+    activeTab.value = undefined
+    localStg.set('tabs', undefined)
   }
 
   return {
@@ -107,6 +116,8 @@ export const useTabStore = defineStore('tab-store', () => {
     activeTab,
     setActiveTab,
 
-    initTabStore
+    initTabStore,
+
+    reset
   }
 })

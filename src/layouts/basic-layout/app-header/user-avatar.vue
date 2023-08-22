@@ -10,16 +10,18 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
 import { localStg, renderIcon } from '@/utils'
-import { useAuthStore, useRouteStore, useThemeStore } from '@/store'
+import { useAuthStore, useRouteStore, useTabStore, useThemeStore } from '@/store'
 
+const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 const routeStore = useRouteStore()
 const themeStore = useThemeStore()
+const tabStore = useTabStore()
 const { theme } = storeToRefs(themeStore)
 
 const options: DropdownOption[] = [
@@ -36,12 +38,14 @@ const handleDropdown = (optionKey: string) => {
       positiveText: '确定',
       negativeText: '取消',
       onPositiveClick: () => {
+        const redirect = route.fullPath
         localStg.remove('token')
         localStg.remove('userInfo')
-        router.push({ name: 'Login' })
+        router.push({ name: 'Login', query: { redirect } })
         setTimeout(() => {
           authStore.reset()
           routeStore.reset()
+          tabStore.reset()
         }, 200)
       }
     })
