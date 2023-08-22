@@ -28,6 +28,10 @@
     <template #tab>
       <app-tab />
     </template>
+    <app-content />
+    <template #footer>
+      <app-footer />
+    </template>
   </admin-layout>
 </template>
 
@@ -39,6 +43,8 @@ import { useMobile, useLayout } from './hooks'
 import AppHeader from './app-header/index.vue'
 import AppSider from './app-sider/index.vue'
 import AppTab from './app-tab/index.vue'
+import AppContent from './app-content/index.vue'
+import AppFooter from './app-footer/index.vue'
 
 defineOptions({ name: 'BasicLayout' })
 

@@ -14,7 +14,6 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const isInitAuthRoutes = ref(false)
   const rootRoute = ref<RouteRecordNormalized>()
-  const cachedRoutes = ref<string[]>([])
 
   const setRootRoute = () => {
     const routes = router.getRoutes()
@@ -45,7 +44,6 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const reset = () => {
     isInitAuthRoutes.value = false
-    cachedRoutes.value = []
     clearRoutes()
     initConstantRoutes()
     menuStore.reset()
@@ -69,7 +67,6 @@ export const useRouteStore = defineStore('route-store', () => {
   return {
     isInitAuthRoutes,
     rootRoute: rootRoute as Ref<RouteRecordNormalized>,
-    cachedRoutes,
     reset,
     initAuthRoutes
   }
