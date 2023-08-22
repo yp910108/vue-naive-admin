@@ -38,15 +38,16 @@ const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
 const handleTabsScroll = (clientX: number) => {
-  const currentX = clientX - bsWrapperLeft.value
-  const deltaX = currentX - bsWrapperWidth.value / 2
-  if (bsScroll.value) {
-    const { maxScrollX, x } = bsScroll.value.instance
-    const right = maxScrollX - x
-    console.log(maxScrollX, x)
-    const update = deltaX > 0 ? Math.max(-deltaX, right) : Math.min(-deltaX, -x)
-    bsScroll.value?.instance.scrollBy(update, 0, 300)
-  }
+  setTimeout(() => {
+    const currentX = clientX - bsWrapperLeft.value
+    const deltaX = currentX - bsWrapperWidth.value / 2
+    if (bsScroll.value) {
+      const { maxScrollX, x } = bsScroll.value.instance
+      const scrollX = maxScrollX - x
+      const update = deltaX > 0 ? Math.max(-deltaX, scrollX) : Math.min(-deltaX, -x)
+      bsScroll.value?.instance.scrollBy(update, 0, 300)
+    }
+  })
 }
 
 watch(route, (newVal) => {
@@ -54,7 +55,7 @@ watch(route, (newVal) => {
   tabStore.setActiveTab(newTab)
 })
 
-tabStore.initTabStore()
+onMounted(tabStore.initTabStore)
 </script>
 
 <style scoped>

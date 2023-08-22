@@ -93,7 +93,6 @@ watch(
         emit('scroll', clientX)
       }
     })
-  },
-  { immediate: true }
+  }
 )
 </script>
