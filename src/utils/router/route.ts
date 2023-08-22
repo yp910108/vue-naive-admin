@@ -1,7 +1,7 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
-import { combineURL, isFunction } from '../common'
+import { combineURL } from '../common'
 import { parsePathToName, removeParamsFromPath } from './helper'
 
 type Lazy<T> = () => Promise<T>
@@ -11,27 +11,15 @@ type ModuleComponent = {
 }
 
 /**
- * 判断是否是异步组件
- * @param component
- */
-function isAsyncComponent(
-  component: RouteComponent | Lazy<ModuleComponent>
-): component is Lazy<ModuleComponent> {
-  return isFunction(component)
-}
-
-/**
- * 给页面组件设置名称
+ * 给页面设置名称并返回
  * @param component
  * @param name
  */
-function setViewComponentName(component: RouteComponent | Lazy<ModuleComponent>, name: string) {
-  if (isAsyncComponent(component)) {
-    return async () => {
-      const result = await component()
-      Object.assign(result.default, { name })
-      return result
-    }
+function getNamedView(view: Lazy<ModuleComponent>, name: string) {
+  return async () => {
+    const result = await view()
+    Object.assign(result.default, { name })
+    return result
   }
 }
 
@@ -91,8 +79,8 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
         }
         transform(children, fullpath)
       } else {
-        const component = views[`./${pagePath}/index.vue`] ?? NotFound
-        setViewComponentName(component, name)
+        const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
+        const component = getNamedView(view, name)
         const vueRoute: RouteRecordRaw = {
           path: fullpath,
           name,

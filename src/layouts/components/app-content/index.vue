@@ -7,7 +7,7 @@
       @before-leave="app.setDisableMainXScroll(true)"
       @after-enter="app.setDisableMainXScroll(false)"
     >
-      <keep-alive :include="['DashboardAnalysis', 'DashboardWorkbench']">
+      <keep-alive :include="cacheStore.caches">
         <component
           v-if="app.reloadFlag"
           :is="Component"
