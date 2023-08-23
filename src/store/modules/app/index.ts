@@ -1,8 +1,11 @@
-import { nextTick, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { LAYOUT_SCROLL_EL_ID } from '@soybeanjs/vue-materials'
+import { useCacheStore } from '../cache'
 
 export const useAppStore = defineStore('app-store', () => {
+  const cacheStore = useCacheStore()
+
   /**
    * 滚动元素的 id
    */
@@ -58,10 +61,12 @@ export const useAppStore = defineStore('app-store', () => {
    * 重载页面（控制页面的显示）
    */
   const reloadFlag = ref(true)
-  const reloadPage = async (duration = 0) => {
+  const reloadPage = async (key: string, duration = 0) => {
     reloadFlag.value = false
+    cacheStore.removeCache(key)
     setTimeout(() => {
       reloadFlag.value = true
+      cacheStore.addCache(key)
     }, duration)
   }
 

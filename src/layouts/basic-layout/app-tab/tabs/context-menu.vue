@@ -108,7 +108,7 @@ const actions: Record<DropdownKey, () => void> = {
     appStore.setContentFull(true)
   },
   'reload-current': () => {
-    appStore.reloadPage()
+    appStore.reloadPage(props.tab?.key!)
   },
   'close-current': () => {
     tabStore.removeTab(props.tab!)
