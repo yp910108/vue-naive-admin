@@ -44,6 +44,10 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.layout.mode = mode
   }
 
+  const setThemeColor = (themeColor: string) => {
+    theme.value.themeColor = themeColor
+  }
+
   const pageAnimateMode = computed(() => {
     const { page } = theme.value
     return page.animate ? page.animateMode : undefined
@@ -52,10 +56,6 @@ export const useThemeStore = defineStore('theme-store', () => {
   const reset = () => {
     sessionStg.remove('themeSettings')
     theme.value = initThemeSettings()
-  }
-
-  const setThemeColor = (themeColor: string) => {
-    theme.value.themeColor = themeColor
   }
 
   const setScrollMode = (mode: UnionKey.ThemeScrollMode) => {
@@ -151,10 +151,10 @@ export const useThemeStore = defineStore('theme-store', () => {
     setHeaderInverted,
     setFooterInverted,
     setLayoutMode,
+    setThemeColor,
 
     pageAnimateMode,
     reset,
-    setThemeColor,
     setScrollMode,
     setIsFixedHeaderAndTab,
     setHorizontalMenuPosition,

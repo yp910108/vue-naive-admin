@@ -20,6 +20,7 @@
     <n-drawer-content :title="$translate('layout.settingDrawer.title')" :native-scrollbar="false">
       <dark-mode />
       <layout-mode />
+      <color-select />
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -28,6 +29,7 @@
 import { useAppStore } from '@/store'
 import DarkMode from './dark-mode.vue'
 import LayoutMode from './layout-mode.vue'
+import ColorSelect from './color-select/index.vue'
 
 defineOptions({ name: 'AppSetting' })
 
