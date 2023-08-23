@@ -24,8 +24,7 @@ type Option = {
 const language = ref<I18nType.Lang>(localStg.get('lang') ?? 'zh-CN')
 const options: Option[] = [
   { label: '中文', key: 'zh-CN' },
-  { label: 'English', key: 'en' },
-  { label: 'ភាសាខ្មែរ', key: 'km-KH' }
+  { label: 'English', key: 'en' }
 ]
 const handleSelect = (key: I18nType.Lang) => {
   language.value = key

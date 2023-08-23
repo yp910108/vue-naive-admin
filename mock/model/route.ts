@@ -47,7 +47,8 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         {
           title: '项目文档（外链）',
           path: 'project-link',
-          icon: 'logo'
+          icon: 'logo',
+          href: 'https://docs.soybean.pro/'
         }
       ]
     },
