@@ -39,7 +39,7 @@ import { useBoolean } from '@/hooks'
 import { useMenuStore } from '@/store'
 import Result from './result.vue'
 import SearchFooter from './footer.vue'
-import { useMobile } from '../../hooks'
+import { useMobile } from '../../../hooks'
 
 const router = useRouter()
 

@@ -1,9 +1,9 @@
 <template>
-  <hover-container class="w-40px h-full" :inverted="theme.header.inverted">
-    <n-dropdown trigger="hover" :options="options" :value="language" @select="handleSelect">
+  <n-dropdown trigger="hover" :options="options" :value="language" @select="handleSelect">
+    <hover-container class="w-40px h-full" :inverted="theme.header.inverted">
       <icon-language class="text-18px outline-transparent" />
-    </n-dropdown>
-  </hover-container>
+    </hover-container>
+  </n-dropdown>
 </template>
 
 <script lang="ts" setup>
