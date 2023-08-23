@@ -54,6 +54,11 @@ export const useRouteStore = defineStore('route-store', () => {
 
     const data = await fetchUserRoutes(userInfo?.userId ?? '')
 
+    if (!data || !data.length) {
+      window.$message?.error('用户没有权限！')
+      return Promise.reject(new Error('用户没有权限！'))
+    }
+
     clearRoutes()
     setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
     menuStore.setMenus(data ?? [])

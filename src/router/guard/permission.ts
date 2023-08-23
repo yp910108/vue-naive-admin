@@ -17,6 +17,8 @@ export async function createPermissionGuard(to: RouteLocationNormalized) {
           return { path, query, hash, replace: true }
         } catch (e) {
           console.warn(e)
+          localStg.remove('token')
+          localStg.remove('userInfo')
           authStore.reset()
           const redirect = to.fullPath
           return { name: 'Login', query: { redirect } }

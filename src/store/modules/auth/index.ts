@@ -33,13 +33,7 @@ export const useAuthStore = defineStore('auth-store', () => {
       const _token = await fetchLogin(userName, password)
       localStg.set('token', _token)
       token.value = _token
-
-      // 下面一行可以视情况去掉，因为 router/guard/permission.ts 中做了处理
-      // 此处这样做的好处：
-      // - 登录成功后可以更快的进入首页
-      // - 登录成功欢迎提示可以拿到用户信息
       await getUserInfo()
-
       loginLoading.value = false
       window.$notification?.success({
         title: $t('page.login.common.loginSuccess'),
@@ -50,6 +44,8 @@ export const useAuthStore = defineStore('auth-store', () => {
     } catch (e) {
       console.warn(e)
       loginLoading.value = false
+      localStg.remove('token')
+      localStg.remove('userInfo')
       reset()
     }
   }
