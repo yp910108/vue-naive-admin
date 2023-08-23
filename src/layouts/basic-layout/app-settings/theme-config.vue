@@ -29,6 +29,7 @@ const { theme } = storeToRefs(themeStore)
 const copyRef = ref<HTMLDivElement>()
 
 const handleResetConfig = () => {
+  themeStore.reset()
   window.$message?.success($t('layout.settingDrawer.themeConfiguration.resetSuccess'))
 }
 
