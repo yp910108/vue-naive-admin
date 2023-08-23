@@ -40,6 +40,10 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.footer.inverted = inverted
   }
 
+  const setLayoutMode = (mode: UnionKey.ThemeLayoutMode) => {
+    theme.value.layout.mode = mode
+  }
+
   const pageAnimateMode = computed(() => {
     const { page } = theme.value
     return page.animate ? page.animateMode : undefined
@@ -52,10 +56,6 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const setThemeColor = (themeColor: string) => {
     theme.value.themeColor = themeColor
-  }
-
-  const setLayoutMode = (mode: UnionKey.ThemeLayoutMode) => {
-    theme.value.layout.mode = mode
   }
 
   const setScrollMode = (mode: UnionKey.ThemeScrollMode) => {
@@ -150,11 +150,11 @@ export const useThemeStore = defineStore('theme-store', () => {
     setSiderInverted,
     setHeaderInverted,
     setFooterInverted,
+    setLayoutMode,
 
     pageAnimateMode,
     reset,
     setThemeColor,
-    setLayoutMode,
     setScrollMode,
     setIsFixedHeaderAndTab,
     setHorizontalMenuPosition,
