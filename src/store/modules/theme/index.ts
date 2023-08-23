@@ -2,7 +2,6 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme } from 'naive-ui'
 import { getNaiveThemeOverrides, initThemeSettings } from './helper'
-import { sessionStg } from '@/utils'
 
 export const useThemeStore = defineStore('theme-store', () => {
   const theme = ref<Theme.Setting>(initThemeSettings())
@@ -129,14 +128,7 @@ export const useThemeStore = defineStore('theme-store', () => {
   }
 
   const reset = () => {
-    sessionStg.remove('themeSettings')
     theme.value = initThemeSettings()
-  }
-
-  const setAutoFollowSystemMode = (darkMode: boolean) => {
-    if (theme.value.followSystemTheme) {
-      theme.value.darkMode = darkMode
-    }
   }
 
   return {
@@ -171,7 +163,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     pageAnimateMode,
     setPageAnimateMode,
 
-    reset,
-    setAutoFollowSystemMode
+    reset
   }
 })

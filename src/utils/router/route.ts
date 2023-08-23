@@ -28,7 +28,7 @@ function getNamedView(view: Lazy<ModuleComponent>, name: string) {
  * @param authRoutes
  * @returns vueRoutes
  */
-// TODO order activeMenu i18n href
+// TODO activeMenu i18n href
 export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   const vueRootRoute = {
     name: 'Root',

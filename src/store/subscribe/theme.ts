@@ -74,7 +74,9 @@ export default function subscribeThemeStore() {
       osTheme,
       (newVal) => {
         const isDark = newVal === 'dark'
-        themeStore.setAutoFollowSystemMode(isDark)
+        if (theme.value.followSystemTheme) {
+          themeStore.setDarkMode(isDark)
+        }
       },
       { immediate: true }
     )

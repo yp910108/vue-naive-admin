@@ -2,7 +2,11 @@
   <n-divider title-placement="center">
     {{ $t('layout.settingDrawer.themeConfiguration.title') }}
   </n-divider>
-  <textarea id="themeConfigCopyTarget" :value="JSON.stringify(theme, null, '\t')"></textarea>
+  <textarea
+    id="themeConfigCopyTarget"
+    class="absolute opacity-0"
+    :value="JSON.stringify(theme, null, '\t')"
+  ></textarea>
   <n-space vertical>
     <div ref="copyRef" data-clipboard-target="#themeConfigCopyTarget">
       <n-button type="primary" block>

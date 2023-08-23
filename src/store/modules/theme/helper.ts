@@ -8,14 +8,6 @@ import { addColorAlpha, getColorPalette, sessionStg } from '@/utils'
  * @returns
  */
 export function initThemeSettings() {
-  const isProd = import.meta.env.PROD
-
-  const storageSettings = sessionStg.get('themeSettings')
-
-  if (isProd && storageSettings) {
-    return storageSettings
-  }
-
   const themeColor = sessionStg.get('themeColor') || themeSetting.themeColor
   const info = themeSetting.isCustomizeInfoColor
     ? themeSetting.otherColor.info

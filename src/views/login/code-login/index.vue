@@ -53,6 +53,7 @@ import { useSmsCode } from '@/hooks'
 import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/utils'
 import { $t } from '@/locales'
 import { useToLoginModule } from '../hooks'
+import ImageVerify from './image-verify.vue'
 
 const auth = useAuthStore()
 const { toLoginModule } = useToLoginModule()

@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { PageTab } from '@soybeanjs/vue-materials'
 import { useRouteStore, useTabStore, useThemeStore } from '@/store'
@@ -38,10 +39,10 @@ const emit = defineEmits<Emits>()
 const router = useRouter()
 const routeStore = useRouteStore()
 const themeStore = useThemeStore()
-const { theme } = themeStore
+const { theme } = storeToRefs(themeStore)
 const tabStore = useTabStore()
 
-const isChromeMode = computed(() => theme.tab.mode === 'chrome')
+const isChromeMode = computed(() => theme.value.tab.mode === 'chrome')
 
 const closeable = (tab: App.GlobalTab) => {
   return tab.key !== routeStore.rootRoute.name

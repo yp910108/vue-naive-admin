@@ -1,7 +1,6 @@
 declare namespace StorageInterface {
   interface Session {
-    themeColor?: string // 主题颜色
-    themeSettings?: Theme.Setting // 主题配置
+    themeColor?: string
   }
 
   interface Local {
