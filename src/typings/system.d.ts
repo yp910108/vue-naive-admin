@@ -9,7 +9,7 @@ declare namespace Service {
   interface RequestError {
     type: RequestErrorType
     code: string | number
-    msg: string
+    message: string
   }
 
   interface BackendResultConfig {

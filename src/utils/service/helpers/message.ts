@@ -15,7 +15,7 @@ import {
 const errorMsgStack = new Map<string | number, string>([]) // 错误消息栈，防止同一错误出现两次
 
 function addErrorMsg(err: Service.RequestError) {
-  errorMsgStack.set(err.code, err.msg)
+  errorMsgStack.set(err.code, err.message)
 }
 
 function removeErrMsg(err: Service.RequestError) {
@@ -32,11 +32,11 @@ function hasErrorMsg(error: Service.RequestError) {
  * @returns
  */
 export function showErrorMsg(error: Service.RequestError) {
-  if (!error.msg || NO_ERROR_MSG_CODE.includes(error.code) || hasErrorMsg(error)) return
+  if (!error.message || NO_ERROR_MSG_CODE.includes(error.code) || hasErrorMsg(error)) return
 
   addErrorMsg(error)
-  console.warn(error.code, error.msg)
-  window.$message?.error(error.msg, { duration: ERROR_MSG_DURATION })
+  console.warn(error.code, error.message)
+  window.$message?.error(error.message, { duration: ERROR_MSG_DURATION })
   setTimeout(() => {
     removeErrMsg(error)
   }, ERROR_MSG_DURATION)
@@ -53,7 +53,7 @@ export function handleAxiosError(axiosError: AxiosError) {
   const error: Service.RequestError = {
     type: 'http',
     code: DEFAULT_REQUEST_ERROR_CODE,
-    msg: DEFAULT_REQUEST_ERROR_MSG
+    message: DEFAULT_REQUEST_ERROR_MSG
   }
 
   const actions: Common.StrategyAction[] = [
@@ -64,7 +64,7 @@ export function handleAxiosError(axiosError: AxiosError) {
         axiosError.message === 'Network Error',
       () => {
         error.code = NETWORK_ERROR_CODE
-        error.msg = NETWORK_ERROR_MSG
+        error.message = NETWORK_ERROR_MSG
       }
     ],
     [
@@ -72,7 +72,7 @@ export function handleAxiosError(axiosError: AxiosError) {
       axiosError.code === REQUEST_TIMEOUT_CODE && axiosError.message.includes('timeout'),
       () => {
         error.code = REQUEST_TIMEOUT_CODE
-        error.msg = REQUEST_TIMEOUT_MSG
+        error.message = REQUEST_TIMEOUT_MSG
       }
     ],
     [
@@ -81,7 +81,7 @@ export function handleAxiosError(axiosError: AxiosError) {
       () => {
         const errorCode = axiosError.response?.status as ErrorStatus
         error.code = errorCode
-        error.msg = ERROR_STATUS[errorCode]
+        error.message = ERROR_STATUS[errorCode]
       }
     ]
   ]
@@ -101,7 +101,7 @@ export function handleBackendError(code: string | number, message: string) {
   const error: Service.RequestError = {
     type: 'backend',
     code: code,
-    msg: message
+    message
   }
 
   showErrorMsg(error)
