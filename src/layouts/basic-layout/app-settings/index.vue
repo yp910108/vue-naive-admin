@@ -23,6 +23,7 @@
       <color-select />
       <page-func />
       <page-view />
+      <theme-config />
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -34,6 +35,7 @@ import LayoutMode from './layout-mode.vue'
 import ColorSelect from './color-select/index.vue'
 import PageFunc from './page-func.vue'
 import PageView from './page-view.vue'
+import ThemeConfig from './theme-config.vue'
 
 defineOptions({ name: 'AppSetting' })
 
