@@ -16,26 +16,8 @@ export const useThemeStore = defineStore('theme-store', () => {
     return getNaiveThemeOverrides({ primary: themeColor, ...otherColor })
   })
 
-  const pageAnimateMode = computed(() => {
-    const { page } = theme.value
-    return page.animate ? page.animateMode : undefined
-  })
-
-  const reset = () => {
-    sessionStg.remove('themeSettings')
-    theme.value = initThemeSettings()
-  }
-
   const setDarkMode = (darkMode: boolean) => {
     theme.value.darkMode = darkMode
-  }
-
-  const setThemeColor = (themeColor: string) => {
-    theme.value.themeColor = themeColor
-  }
-
-  const setLayoutMode = (mode: UnionKey.ThemeLayoutMode) => {
-    theme.value.layout.mode = mode
   }
 
   const setFollowSystemTheme = (visible: boolean) => {
@@ -56,6 +38,24 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const setFooterInverted = (inverted: boolean) => {
     theme.value.footer.inverted = inverted
+  }
+
+  const pageAnimateMode = computed(() => {
+    const { page } = theme.value
+    return page.animate ? page.animateMode : undefined
+  })
+
+  const reset = () => {
+    sessionStg.remove('themeSettings')
+    theme.value = initThemeSettings()
+  }
+
+  const setThemeColor = (themeColor: string) => {
+    theme.value.themeColor = themeColor
+  }
+
+  const setLayoutMode = (mode: UnionKey.ThemeLayoutMode) => {
+    theme.value.layout.mode = mode
   }
 
   const setScrollMode = (mode: UnionKey.ThemeScrollMode) => {
@@ -144,16 +144,17 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme,
     naiveTheme,
     naiveThemeOverrides,
-    pageAnimateMode,
-    reset,
     setDarkMode,
-    setThemeColor,
-    setLayoutMode,
     setFollowSystemTheme,
     setIsCustomizeDarkModeTransition,
     setSiderInverted,
     setHeaderInverted,
     setFooterInverted,
+
+    pageAnimateMode,
+    reset,
+    setThemeColor,
+    setLayoutMode,
     setScrollMode,
     setIsFixedHeaderAndTab,
     setHorizontalMenuPosition,

@@ -1,6 +1,50 @@
 <template>
   <div>
-    this is analysis.
     <n-input />
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
+    <p>this is analysis.</p>
   </div>
 </template>

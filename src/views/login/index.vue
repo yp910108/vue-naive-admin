@@ -1,8 +1,8 @@
 <template>
   <div class="relative flex-center wh-full" :style="{ backgroundColor: bgColor }">
     <dark-mode-switch
-      :dark="theme.darkMode"
       class="absolute left-48px top-24px z-3"
+      :dark="theme.darkMode"
       @update:dark="setDarkMode"
     />
     <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm">

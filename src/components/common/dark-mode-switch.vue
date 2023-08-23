@@ -12,7 +12,7 @@ defineOptions({ name: 'DarkModeSwitch' })
 
 interface Props {
   dark?: boolean
-  customizeDarkModeTransition?: boolean
+  customizeTransition?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,7 +35,7 @@ const darkMode = computed({
 })
 
 const handleSwitch = async (event: MouseEvent) => {
-  if (!props.customizeDarkModeTransition || !document.startViewTransition) {
+  if (!props.customizeTransition || !document.startViewTransition) {
     darkMode.value = !darkMode.value
     return
   }
