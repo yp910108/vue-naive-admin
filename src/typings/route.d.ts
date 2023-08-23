@@ -7,7 +7,6 @@ declare namespace AuthRoute {
     icon?: Icon.IconName
     white?: boolean
     keepAlive?: boolean
-    href?: string
     layout?: LayoutType
     redirect?: string
     children?: Route[]

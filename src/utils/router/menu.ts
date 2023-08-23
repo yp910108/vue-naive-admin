@@ -1,4 +1,4 @@
-import { combineURL, renderIcon } from '../common'
+import { combineURL, isExternal, renderIcon } from '../common'
 import { parsePathToName } from './helper'
 
 /**
@@ -6,16 +6,16 @@ import { parsePathToName } from './helper'
  * @param authRoutes
  * @returns
  */
-export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '') {
+export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '/') {
   const menus: App.GlobalMenuOption[] = []
   for (const authRoute of authRoutes) {
     const { title, path, icon, children } = authRoute
-    const fullpath = combineURL(prefix, path)
+    const fullpath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
     const name = parsePathToName(fullpath)
     const menu: App.GlobalMenuOption = {
       key: name,
       label: title,
-      routePath: `/${fullpath}`
+      routePath: fullpath
     }
     if (icon) {
       menu.icon = renderIcon({ icon })

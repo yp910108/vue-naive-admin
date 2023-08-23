@@ -40,6 +40,7 @@ import { useMenuStore } from '@/store'
 import { useMobile } from '../../../hooks'
 import Result from './result.vue'
 import SearchFooter from './footer.vue'
+import { isExternal } from '@/utils'
 
 const router = useRouter()
 
@@ -97,11 +98,13 @@ const handeAfterLeave = () => {
 }
 
 const handleEnter = () => {
-  const length = resultOptions.value?.length
-  if (!length || !activeKey.value) return
-  const item = resultOptions.value?.find((item) => item.key === activeKey.value)
-  // TODO href
-  router.push({ name: item?.key })
+  if (!resultOptions.value?.length || !activeKey.value) return
+  const { key, routePath } = resultOptions.value.find((item) => item.key === activeKey.value)!
+  if (isExternal(routePath)) {
+    window.open(routePath, '_blank')
+  } else {
+    router.push({ name: key })
+  }
   hide()
 }
 

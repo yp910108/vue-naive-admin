@@ -8,14 +8,12 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         {
           title: '分析页',
           path: 'analysis',
-          icon: 'analysis',
-          keepAlive: true
+          icon: 'analysis'
         },
         {
           title: '工作台',
           path: 'workbench',
-          icon: 'workbench',
-          keepAlive: true
+          icon: 'workbench'
         }
       ]
     },
@@ -46,9 +44,8 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
         },
         {
           title: '项目文档（外链）',
-          path: 'project-link',
-          icon: 'logo',
-          href: 'https://docs.soybean.pro/'
+          path: 'https://docs.soybean.pro',
+          icon: 'logo'
         }
       ]
     },

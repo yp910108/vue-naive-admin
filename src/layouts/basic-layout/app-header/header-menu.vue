@@ -18,6 +18,8 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import type { MenuOption } from 'naive-ui'
+import { isExternal } from '@/utils'
 import { useMenuStore, useThemeStore } from '@/store'
 
 const route = useRoute()
@@ -28,8 +30,13 @@ const { theme } = storeToRefs(themeStore)
 
 const activeKey = computed(() => route.name as string)
 
-const handleUpdateMenu = (key: string) => {
-  router.push({ name: key })
+const handleUpdateMenu = (key: string, item: MenuOption) => {
+  const { routePath } = item as App.GlobalMenuOption
+  if (isExternal(routePath)) {
+    window.open(routePath, '_blank')
+  } else {
+    router.push({ name: key })
+  }
 }
 </script>
 
