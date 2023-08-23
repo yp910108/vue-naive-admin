@@ -37,9 +37,9 @@ import { useRouter } from 'vue-router'
 import { onKeyStroke, useDebounceFn } from '@vueuse/core'
 import { useBoolean } from '@/hooks'
 import { useMenuStore } from '@/store'
+import { useMobile } from '../../../hooks'
 import Result from './result.vue'
 import SearchFooter from './footer.vue'
-import { useMobile } from '../../../hooks'
 
 const router = useRouter()
 
