@@ -164,7 +164,7 @@ const locale: I18nType.Schema = {
         reset: '重置当前配置',
         resetSuccess: '已重置配置，请重新拷贝！',
         operateSuccess: '操作成功',
-        copySuccess: '复制成功,请替换 src/settings/theme.json的内容！',
+        copySuccess: '复制成功，请替换 src/settings/theme.json 的内容！',
         confirmCopy: '确认'
       }
     }

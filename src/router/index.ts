@@ -12,9 +12,10 @@ export const router = createRouter({
   routes: transformAuthRoutesToVueRoutes(constantRoutes)
 })
 
-export function setupRouter(app: App) {
+export async function setupRouter(app: App) {
   app.use(router)
   createRouterGuard(router)
+  await router.isReady()
 }
 
 export { constantRoutes }
