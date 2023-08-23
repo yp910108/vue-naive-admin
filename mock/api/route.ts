@@ -11,28 +11,28 @@ const apis: MockMethod[] = [
     //   res.statusCode = 401
     //   res.end(`hello, this is data.`)
     // },
-    response: (): Service.MockServiceResult => {
-      const INVALID_CODE = 66666
-
-      return {
-        code: INVALID_CODE,
-        message: '用户信息已失效～',
-        data: null
-      }
-    }
-    // response: (options): Service.MockServiceResult => {
-    //   const { userId } = options.body
-
-    //   const role = userModel.find((item) => item.userId === userId)?.userRole ?? 'super'
-
-    //   const routes = routeModel[role]
+    // response: (): Service.MockServiceResult => {
+    //   const INVALID_CODE = 66666
 
     //   return {
-    //     code: 200,
-    //     message: 'ok',
-    //     data: routes
+    //     code: INVALID_CODE,
+    //     message: '用户信息已失效～',
+    //     data: null
     //   }
-    // }
+    // },
+    response: (options): Service.MockServiceResult => {
+      const { userId } = options.body
+
+      const role = userModel.find((item) => item.userId === userId)?.userRole ?? 'super'
+
+      const routes = routeModel[role]
+
+      return {
+        code: 200,
+        message: 'ok',
+        data: routes
+      }
+    }
   }
 ]
 
