@@ -21,6 +21,8 @@
       <dark-mode />
       <layout-mode />
       <color-select />
+      <page-func />
+      <page-view />
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -30,6 +32,8 @@ import { useAppStore } from '@/store'
 import DarkMode from './dark-mode.vue'
 import LayoutMode from './layout-mode.vue'
 import ColorSelect from './color-select/index.vue'
+import PageFunc from './page-func.vue'
+import PageView from './page-view.vue'
 
 defineOptions({ name: 'AppSetting' })
 

@@ -8,7 +8,7 @@
       >
         <span>
           <component
-            v-if="theme.header.crumb && breadcrumb.icon"
+            v-if="theme.header.crumb.showIcon && breadcrumb.icon"
             :is="breadcrumb.icon"
             class="inline-block align-text-bottom mr-4px text-16px"
           />
@@ -17,7 +17,7 @@
       </n-dropdown>
       <template v-else>
         <component
-          v-if="theme.header.crumb && breadcrumb.icon"
+          v-if="theme.header.crumb.showIcon && breadcrumb.icon"
           :is="breadcrumb.icon"
           :class="[
             'inline-block align-text-bottom mr-4px text-16px',

@@ -48,16 +48,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.themeColor = themeColor
   }
 
-  const pageAnimateMode = computed(() => {
-    const { page } = theme.value
-    return page.animate ? page.animateMode : undefined
-  })
-
-  const reset = () => {
-    sessionStg.remove('themeSettings')
-    theme.value = initThemeSettings()
-  }
-
   const setScrollMode = (mode: UnionKey.ThemeScrollMode) => {
     theme.value.scrollMode = mode
   }
@@ -130,8 +120,17 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.page.animate = animate
   }
 
+  const pageAnimateMode = computed(() => {
+    const { page } = theme.value
+    return page.animate ? page.animateMode : undefined
+  })
   const setPageAnimateMode = (mode: UnionKey.ThemeAnimateMode) => {
     theme.value.page.animateMode = mode
+  }
+
+  const reset = () => {
+    sessionStg.remove('themeSettings')
+    theme.value = initThemeSettings()
   }
 
   const setAutoFollowSystemMode = (darkMode: boolean) => {
@@ -152,9 +151,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     setFooterInverted,
     setLayoutMode,
     setThemeColor,
-
-    pageAnimateMode,
-    reset,
     setScrollMode,
     setIsFixedHeaderAndTab,
     setHorizontalMenuPosition,
@@ -171,7 +167,11 @@ export const useThemeStore = defineStore('theme-store', () => {
     setTabVisible,
     setTabMode,
     setPageIsAnimate,
+
+    pageAnimateMode,
     setPageAnimateMode,
+
+    reset,
     setAutoFollowSystemMode
   }
 })
