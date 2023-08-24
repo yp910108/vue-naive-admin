@@ -52,14 +52,12 @@ const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
 const { bool: visible, setTrue, setFalse } = useBoolean()
+
 const menus = ref<App.GlobalMenuOption[]>()
 
-const activeKey = computed(() => route.name as string)
+const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 const expandedKeys = ref<string[]>()
 
-// const handleUpdateMenu = (key: string) => {
-//   router.push({ name: key })
-// }
 const handleUpdateMenu = (key: string, item: MenuOption) => {
   const { routePath } = item as App.GlobalMenuOption
   if (isExternal(routePath)) {

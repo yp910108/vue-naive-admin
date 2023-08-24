@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { router, constantRoutes } from '@/router'
 import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
-import { transformAuthRoutesToVueRoutes } from '@/utils'
+import { useOsTheme, darkTheme, createDiscreteApi } from 'naive-ui'
+import { NO_MENU_MSG, transformAuthRoutesToVueRoutes } from '@/utils'
 import { fetchUserRoutes } from '@/service'
 import { useAuthStore } from '../auth'
 import { useMenuStore } from '../menu'
@@ -55,12 +56,17 @@ export const useRouteStore = defineStore('route-store', () => {
     const data = await fetchUserRoutes(userInfo?.userId ?? '')
 
     if (!data || !data.length) {
-      window.$message?.error('用户没有权限！')
-      return Promise.reject(new Error('用户没有权限！'))
+      const osTheme = useOsTheme()
+      const theme = osTheme.value === 'dark' ? darkTheme : undefined
+      const { message } = createDiscreteApi(['message'], {
+        configProviderProps: { theme }
+      })
+      message.error(NO_MENU_MSG)
+      return Promise.reject(new Error(NO_MENU_MSG))
     }
 
     clearRoutes()
-    setRoutes(transformAuthRoutesToVueRoutes([...constantRoutes, ...(data ?? [])]))
+    setRoutes(transformAuthRoutesToVueRoutes([...(data ?? []), ...constantRoutes]))
     menuStore.setMenus(data ?? [])
   }
 

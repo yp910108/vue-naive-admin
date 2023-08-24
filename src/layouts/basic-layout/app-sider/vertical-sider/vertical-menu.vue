@@ -30,7 +30,7 @@ const themeStore = useThemeStore()
 const menuStore = useMenuStore()
 const { theme } = storeToRefs(themeStore)
 
-const activeKey = computed(() => route.name as string)
+const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 const expandedKeys = ref<string[]>()
 
 const handleUpdateMenu = (key: string, item: MenuOption) => {

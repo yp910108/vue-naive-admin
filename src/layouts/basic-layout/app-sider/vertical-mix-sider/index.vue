@@ -53,7 +53,7 @@ const handleMixMenuChange = ({ key, children }: App.GlobalMenuOption) => {
 }
 
 const setActiveKeyByRoute = () => {
-  const routeName = route.name as string
+  const routeName = (route.meta.activeMenu ?? route.name) as string
   for (const { key } of menuStore.menus ?? []) {
     if (routeName.includes(key)) {
       activeKey.value = key

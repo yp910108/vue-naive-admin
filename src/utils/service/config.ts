@@ -14,6 +14,8 @@ export const NETWORK_ERROR_CODE = 'ERR_NETWORK' // 网络不可用的 code
 
 export const NETWORK_ERROR_MSG = '网络不可用～' // 网络不可用的错误文本
 
+export const NO_MENU_MSG = '用户没有菜单权限~'
+
 // 请求失败各种状态的错误信息
 export const ERROR_STATUS = {
   400: '400: 请求出现语法错误～',

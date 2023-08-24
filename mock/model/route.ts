@@ -165,18 +165,8 @@ export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
       icon: 'all-application',
       children: [
         {
-          title: 'Tab',
+          title: 'Tab 页签',
           path: 'tab',
-          icon: 'round-tab'
-        },
-        {
-          title: 'Tab Detail',
-          path: 'tab-detail',
-          icon: 'round-tab'
-        },
-        {
-          title: 'Tab Multi Detail',
-          path: 'tab-multi-detail',
           icon: 'round-tab'
         }
       ]

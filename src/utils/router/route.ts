@@ -102,6 +102,9 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
           component,
           meta: { ...rest }
         }
+        if (vueRoute.meta?.activeMenu) {
+          vueRoute.meta.activeMenu = parsePathToName(vueRoute.meta.activeMenu)
+        }
         if (layout === 'blank') {
           vueBlankLayoutRoute.children.push(vueRoute)
         } else {
