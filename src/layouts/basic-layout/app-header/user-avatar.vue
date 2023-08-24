@@ -39,14 +39,12 @@ const handleDropdown = (optionKey: string) => {
       negativeText: '取消',
       onPositiveClick: () => {
         const redirect = route.fullPath
-        localStg.remove('token')
-        localStg.remove('userInfo')
+        authStore.reset(500)
         router.push({ name: 'Login', query: { redirect } })
         setTimeout(() => {
-          authStore.reset()
           routeStore.reset()
           tabStore.reset()
-        }, 200)
+        }, 500)
       }
     })
   }

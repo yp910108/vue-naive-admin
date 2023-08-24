@@ -15,9 +15,13 @@ export const useAuthStore = defineStore('auth-store', () => {
   const userInfo = ref(localStg.get('userInfo'))
   const loginLoading = ref(false)
 
-  const reset = () => {
-    token.value = localStg.get('token')
-    userInfo.value = localStg.get('userInfo')
+  const reset = (timeout = 0) => {
+    localStg.remove('token')
+    localStg.remove('userInfo')
+    setTimeout(() => {
+      token.value = localStg.get('token')
+      userInfo.value = localStg.get('userInfo')
+    }, timeout)
   }
 
   const getUserInfo = async () => {
@@ -44,8 +48,6 @@ export const useAuthStore = defineStore('auth-store', () => {
     } catch (e) {
       console.warn(e)
       loginLoading.value = false
-      localStg.remove('token')
-      localStg.remove('userInfo')
       reset()
     }
   }
