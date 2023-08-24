@@ -5,11 +5,13 @@ import { login as fetchLogin, fetchUserInfo } from '@/service'
 import { localStg } from '@/utils'
 import { $t } from '@/locales'
 import { useRouteStore } from '../route'
+import { useTabStore } from '../tab'
 
 export const useAuthStore = defineStore('auth-store', () => {
   const router = useRouter()
   const route = useRoute()
   const routeStore = useRouteStore()
+  const tabStore = useTabStore()
 
   const token = ref(localStg.get('token'))
   const userInfo = ref(localStg.get('userInfo'))
@@ -52,11 +54,23 @@ export const useAuthStore = defineStore('auth-store', () => {
     }
   }
 
+  const logout = () => {
+    console.log(route)
+    const redirect = route.fullPath
+    // 设置 500 毫秒延迟，避免页面出现空白
+    reset(500)
+    router.push({ name: 'Login', query: { redirect } })
+    setTimeout(() => {
+      routeStore.reset()
+      tabStore.reset()
+    }, 500)
+  }
+
   return {
     userInfo,
     loginLoading,
     reset,
     login,
-    getUserInfo
+    logout
   }
 })

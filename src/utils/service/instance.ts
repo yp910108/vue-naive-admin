@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import { useAuthStore } from '@/store'
 import { localStg } from '../storage'
 import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
 import { INVALID_CODE } from './config'
@@ -44,7 +45,10 @@ export default class CustomAxiosInstance {
         if (code === successCode) {
           return data
         } else if (INVALID_CODE.includes(code)) {
-          // TODO logout
+          const error = handleBackendError(code, message)
+          const authStore = useAuthStore()
+          authStore.logout()
+          return Promise.reject(error)
         } else {
           const error = handleBackendError(code, message)
           return Promise.reject(error)
@@ -56,7 +60,10 @@ export default class CustomAxiosInstance {
           if (status === 304) {
             return data
           } else if (status === 401) {
-            // TODO logout
+            const error = handleAxiosError(axiosError)
+            const authStore = useAuthStore()
+            authStore.logout()
+            return Promise.reject(error)
           }
         }
         const error = handleAxiosError(axiosError)
