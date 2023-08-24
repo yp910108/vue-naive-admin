@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from 'vue-router'
-import { localStg } from '@/utils'
+import { INVALID_CODE, localStg } from '@/utils'
 import { useAuthStore, useRouteStore } from '@/store'
 
 export async function createPermissionGuard(to: RouteLocationNormalized) {
@@ -16,6 +16,9 @@ export async function createPermissionGuard(to: RouteLocationNormalized) {
           const { path, query, hash } = to
           return { path, query, hash, replace: true }
         } catch (e) {
+          if ([...INVALID_CODE, 401].includes((e as Service.RequestError).code)) {
+            return true
+          }
           console.warn(e)
           authStore.reset()
           const redirect = to.fullPath
