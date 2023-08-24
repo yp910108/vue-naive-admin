@@ -55,7 +55,6 @@ export const useAuthStore = defineStore('auth-store', () => {
   }
 
   const logout = () => {
-    console.log(route)
     const redirect = route.fullPath
     // 设置 500 毫秒延迟，避免页面出现空白
     reset(500)

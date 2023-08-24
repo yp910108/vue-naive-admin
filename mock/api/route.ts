@@ -6,11 +6,11 @@ const apis: MockMethod[] = [
   {
     url: '/mock/getUserRoutes',
     method: 'post',
-    rawResponse: (_, res) => {
-      res.setHeader('Content-Type', 'text/plain')
-      res.statusCode = 401
-      res.end(`hello, this is data.`)
-    }
+    // rawResponse: (_, res) => {
+    //   res.setHeader('Content-Type', 'text/plain')
+    //   res.statusCode = 401
+    //   res.end(`hello, this is data.`)
+    // },
     // response: (): Service.MockServiceResult => {
     //   const INVALID_CODE = 66666
 
@@ -20,19 +20,19 @@ const apis: MockMethod[] = [
     //     data: null
     //   }
     // },
-    // response: (options): Service.MockServiceResult => {
-    //   const { userId } = options.body
+    response: (options): Service.MockServiceResult => {
+      const { userId } = options.body
 
-    //   const role = userModel.find((item) => item.userId === userId)?.userRole ?? 'super'
+      const role = userModel.find((item) => item.userId === userId)?.userRole ?? 'super'
 
-    //   const routes = routeModel[role]
+      const routes = routeModel[role]
 
-    //   return {
-    //     code: 200,
-    //     message: 'ok',
-    //     data: routes
-    //   }
-    // }
+      return {
+        code: 200,
+        message: 'ok',
+        data: routes
+      }
+    }
   }
 ]
 
