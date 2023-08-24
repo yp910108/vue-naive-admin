@@ -8,15 +8,14 @@
       @after-enter="app.setDisableMainXScroll(false)"
     >
       <keep-alive :include="cacheStore.caches">
-        <component
-          v-if="app.reloadFlag"
-          :is="Component"
-          :key="route.fullPath"
+        <div
           :class="[
             'flex-grow bg-#f6f9f8 dark:bg-#101014 transition duration-300 ease-in-out',
             { 'p-16px': showPadding }
           ]"
-        />
+        >
+          <component v-if="app.reloadFlag" :is="Component" :key="route.fullPath" />
+        </div>
       </keep-alive>
     </transition>
   </router-view>
