@@ -54,9 +54,15 @@ const { theme } = storeToRefs(themeStore)
 const { bool: visible, setTrue, setFalse } = useBoolean()
 
 const menus = ref<App.GlobalMenuOption[]>()
+const setMenus = (_menus: App.GlobalMenuOption[]) => {
+  menus.value = _menus
+}
 
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 const expandedKeys = ref<string[]>()
+const setExpandKeys = (menus: App.GlobalMenuOption[]) => {
+  expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menus)
+}
 
 const handleUpdateMenu = (key: string, item: MenuOption) => {
   const { routePath } = item as App.GlobalMenuOption
@@ -71,9 +77,9 @@ const handleUpdateExpandedKeys = (keys: string[]) => {
   expandedKeys.value = keys
 }
 
-const show = (_menus: App.GlobalMenuOption[]) => {
-  menus.value = _menus
-  expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, _menus)
+const show = (menus: App.GlobalMenuOption[]) => {
+  setMenus(menus)
+  setExpandKeys(menus)
   setTrue()
 }
 
@@ -86,7 +92,7 @@ const hide = () => {
   }, 300)
 }
 
-defineExpose({ show, hide })
+defineExpose({ show, hide, setMenus, setExpandKeys })
 </script>
 
 <style scoped lang="scss">

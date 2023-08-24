@@ -40,7 +40,6 @@ function getFirstPathNotExternal(authRoutes: AuthRoute.Route[]) {
  * @param authRoutes
  * @returns vueRoutes
  */
-// TODO activeMenu
 export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
   const vueRootRoute = {
     name: 'Root',

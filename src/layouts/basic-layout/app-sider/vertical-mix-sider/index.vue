@@ -54,9 +54,15 @@ const handleMixMenuChange = ({ key, children }: App.GlobalMenuOption) => {
 
 const setActiveKeyByRoute = () => {
   const routeName = (route.meta.activeMenu ?? route.name) as string
-  for (const { key } of menuStore.menus ?? []) {
+  for (const { key, children } of menuStore.menus ?? []) {
     if (routeName.includes(key)) {
       activeKey.value = key
+      if (children && children.length) {
+        mixMenuDrawerRef.value?.setMenus(children)
+        mixMenuDrawerRef.value?.setExpandKeys(children)
+      } else {
+        mixMenuDrawerRef.value?.setMenus([])
+      }
       break
     }
   }
