@@ -1,7 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import type { GlobalThemeOverrides } from 'naive-ui'
 import { themeSetting } from '@/settings'
-import { addColorAlpha, getColorPalette, sessionStg } from '@/utils'
+import { getColorPalette, sessionStg } from '@/utils'
 
 /**
  * 初始化主题配置
@@ -25,51 +24,6 @@ interface ColorAction {
   scene: ColorScene
   handler: (color: string) => string
 }
-
-// function getThemeColors(colors: [ColorType, string][]) {
-//   const colorActions: ColorAction[] = [
-//     { scene: '', handler: (color) => color },
-//     { scene: 'Hover', handler: (color) => getColorPalette(color, 5) },
-//     { scene: 'Pressed', handler: (color) => getColorPalette(color, 7) },
-//     { scene: 'Suppl', handler: (color) => getColorPalette(color, 5) }
-//   ]
-
-//   const themeColor: ThemeColor = {}
-
-//   for (const color of colors) {
-//     const [colorType, colorValue] = color
-//     for (const action of colorActions) {
-//       const colorKey: ColorKey = `${colorType}Color${action.scene}`
-//       themeColor[colorKey] = action.handler(colorValue)
-//     }
-//   }
-
-//   return themeColor
-// }
-
-// /**
-//  * 获取 naive 的主题颜色
-//  * @param colors
-//  * @returns
-//  */
-// export function getNaiveThemeOverrides(colors: Record<ColorType, string>): GlobalThemeOverrides {
-//   const { primary, info, success, warning, error } = colors
-
-//   const themeColors = getThemeColors([
-//     ['primary', primary],
-//     ['info', info],
-//     ['success', success],
-//     ['warning', warning],
-//     ['error', error]
-//   ])
-
-//   return {
-//     common: {
-//       fontWeightStrong: '600',
-//       ...themeColors
-//     }
-//   }
-// }
 
 export function getThemeColors(colors: Record<ColorType, string>) {
   const { primary, info, success, warning, error } = colors

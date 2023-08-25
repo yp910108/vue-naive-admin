@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
+import type { GlobalThemeOverrides } from 'naive-ui'
 import { darkTheme } from 'naive-ui'
 import { getThemeColors, initThemeSettings } from './helper'
 
@@ -10,7 +11,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     return theme.value.darkMode ? darkTheme : undefined
   })
 
-  const naiveThemeOverrides = computed(() => {
+  const naiveThemeOverrides = computed<GlobalThemeOverrides>(() => {
     const { themeColor, otherColor } = theme.value
     const themeColors = getThemeColors({ primary: themeColor, ...otherColor })
     return {
