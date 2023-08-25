@@ -17,7 +17,7 @@ export function initThemeSettings() {
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'
-type ColorScene = '' | 'Suppl' | 'Hover' | 'Pressed' | 'Active'
+type ColorScene = '' | 'Hover' | 'Pressed' | 'Suppl'
 type ColorKey = `${ColorType}Color${ColorScene}`
 type ThemeColor = Partial<Record<ColorKey, string>>
 
@@ -29,10 +29,9 @@ interface ColorAction {
 function getThemeColors(colors: [ColorType, string][]) {
   const colorActions: ColorAction[] = [
     { scene: '', handler: (color) => color },
-    { scene: 'Suppl', handler: (color) => color },
     { scene: 'Hover', handler: (color) => getColorPalette(color, 5) },
-    { scene: 'Pressed', handler: (color) => getColorPalette(color, 6) },
-    { scene: 'Active', handler: (color) => addColorAlpha(color, 0.1) }
+    { scene: 'Pressed', handler: (color) => getColorPalette(color, 7) },
+    { scene: 'Suppl', handler: (color) => getColorPalette(color, 5) }
   ]
 
   const themeColor: ThemeColor = {}
@@ -54,9 +53,7 @@ function getThemeColors(colors: [ColorType, string][]) {
  * @returns
  */
 export function getNaiveThemeOverrides(colors: Record<ColorType, string>): GlobalThemeOverrides {
-  const { primary, success, warning, error } = colors
-
-  const info = themeSetting.isCustomizeInfoColor ? colors.info : getColorPalette(primary, 7)
+  const { primary, info, success, warning, error } = colors
 
   const themeColors = getThemeColors([
     ['primary', primary],
@@ -66,14 +63,10 @@ export function getNaiveThemeOverrides(colors: Record<ColorType, string>): Globa
     ['error', error]
   ])
 
-  const colorLoading = primary
   return {
     common: {
       fontWeightStrong: '600',
       ...themeColors
-    },
-    LoadingBar: {
-      colorLoading
     }
   }
 }
