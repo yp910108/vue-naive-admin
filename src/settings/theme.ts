@@ -130,4 +130,4 @@ const defaultThemeSetting: Theme.Setting = {
   }
 }
 
-export const themeSetting = (jsonSetting as Theme.Setting) || defaultThemeSetting
+export const themeSetting = (jsonSetting as Theme.Setting) ?? defaultThemeSetting

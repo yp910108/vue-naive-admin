@@ -2,7 +2,7 @@
   <n-loading-bar-provider>
     <n-dialog-provider>
       <n-notification-provider>
-        <n-message-provider>
+        <n-message-provider :container-style="{ top: '200px' }">
           <naive-provider-content>
             <slot></slot>
           </naive-provider-content>
