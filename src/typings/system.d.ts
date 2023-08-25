@@ -172,5 +172,9 @@ declare namespace App {
     title: string
     routePath: string
     icon?: Icon.IconName
+    scrollPosition: {
+      left: number
+      top: number
+    }
   }
 }

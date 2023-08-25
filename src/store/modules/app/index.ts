@@ -1,6 +1,7 @@
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { LAYOUT_SCROLL_EL_ID } from '@soybeanjs/vue-materials'
+import { scrollTo } from '@/utils'
 import { useCacheStore } from '../cache'
 
 export const useAppStore = defineStore('app-store', () => {
@@ -58,16 +59,29 @@ export const useAppStore = defineStore('app-store', () => {
   }
 
   /**
+   * 获取滚动区域的滚动位置信息
+   */
+  const getScrollInfo = () => {
+    const scrollEl = document.querySelector(`#${scrollElId.value}`)
+    const { scrollLeft = 0, scrollTop = 0 } = scrollEl ?? {}
+    return { scrollEl, scrollLeft, scrollTop }
+  }
+
+  /**
    * 重载页面（控制页面的显示）
    */
   const reloadFlag = ref(true)
-  const reloadPage = async (key: string, duration = 0) => {
+  const reloadPage = (key: string) => {
     reloadFlag.value = false
     cacheStore.removeCache(key)
-    setTimeout(() => {
+    nextTick(() => {
       reloadFlag.value = true
       cacheStore.addCache(key)
-    }, duration)
+      setTimeout(() => {
+        const { scrollEl } = getScrollInfo()
+        scrollEl && scrollTo(scrollEl)
+      }, 600)
+    })
   }
 
   return {
@@ -89,6 +103,8 @@ export const useAppStore = defineStore('app-store', () => {
     settingDrawerVisible,
     closeSettingDrawer,
     toggleSettingDrawerVisible,
+
+    getScrollInfo,
 
     reloadFlag,
     reloadPage

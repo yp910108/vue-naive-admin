@@ -29,7 +29,7 @@ const NaiveProviderContent = defineComponent({
   name: 'NaiveProviderContent',
   setup(_, { slots }) {
     registerNaiveTools()
-    return () => h('div', { class: 'naive-provider-content h-full' }, slots.default?.())
+    return () => h('div', { class: 'h-full' }, slots.default?.())
   }
 })
 </script>

@@ -72,6 +72,13 @@ export const useTabStore = defineStore('tab-store', () => {
     activeTab.value = tab
   }
 
+  const setScrollPosition = (
+    tab: App.GlobalTab,
+    scrollPosition: App.GlobalTab['scrollPosition']
+  ) => {
+    tab.scrollPosition = scrollPosition
+  }
+
   const initTabStore = () => {
     const rootTab = getTabByRoute(routeStore.rootRoute)
     const currentTab = getTabByRoute(route)
@@ -114,6 +121,8 @@ export const useTabStore = defineStore('tab-store', () => {
 
     activeTab,
     setActiveTab,
+
+    setScrollPosition,
 
     initTabStore,
 

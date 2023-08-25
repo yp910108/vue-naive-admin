@@ -12,8 +12,12 @@ export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecord
     key: name as string,
     routePath: hasFullPath(route) ? route.fullPath : route.path,
     title: meta.title,
-    icon: meta.icon
-  }
+    icon: meta.icon,
+    scrollPosition: {
+      left: 0,
+      top: 0
+    }
+  } as App.GlobalTab
 }
 
 export function hasTab(tabs: App.GlobalTab[], activeTab: App.GlobalTab) {
