@@ -8,9 +8,7 @@ import { getColorPalette, sessionStg } from '@/utils'
  */
 export function initThemeSettings() {
   const themeColor = sessionStg.get('themeColor') ?? themeSetting.themeColor
-  const infoColor = themeSetting.isCustomizeInfoColor
-    ? themeSetting.otherColor.info
-    : getColorPalette(themeColor, 7)
+  const infoColor = themeSetting.isCustomizeInfoColor ? themeSetting.otherColor.info : themeColor
   const otherColor = { ...themeSetting.otherColor, info: infoColor }
   return cloneDeep({ ...themeSetting, themeColor, otherColor })
 }

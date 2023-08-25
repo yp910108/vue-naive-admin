@@ -106,7 +106,7 @@ declare namespace Theme {
     themeColor: string // 主题颜色
     themeColorList: string[] // 主题颜色列表
     otherColor: OtherColor // 其他颜色
-    isCustomizeInfoColor: boolean // 是否自定义 info 的颜色（默认取比主题色深一级的颜色）
+    isCustomizeInfoColor: boolean // 是否自定义 info 的颜色（默认取主题颜色）
     fixedHeaderAndTab: boolean // 固定头部和多页签
     showReload: boolean // 显示重载按钮
     header: Header // 头部样式

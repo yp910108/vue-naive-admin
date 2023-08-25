@@ -2,6 +2,7 @@
   <n-space>
     <n-input />
     <n-button type="primary" @click="handleClick">click</n-button>
+    <n-button type="success" @click="handleClick">click</n-button>
   </n-space>
 </template>
 
