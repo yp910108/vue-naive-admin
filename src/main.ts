@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import { setupAssets } from './plugins'
-import { setupRouter } from './router'
 import { setupStore } from './store'
 import { setupI18n } from './locales'
+import { setupRouter } from './router'
 import AppLoading from './components/common/app-loading.vue'
 import App from './App.vue'
 
@@ -16,9 +16,9 @@ async function setupApp() {
 
   setupStore(app)
 
-  await setupRouter(app)
-
   setupI18n(app)
+
+  await setupRouter(app)
 
   appLoading.unmount()
   app.mount('#app')
