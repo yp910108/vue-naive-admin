@@ -4,10 +4,9 @@
     <div class="w-56px h-56px my-36px">
       <div class="relative h-full animate-spin">
         <div
-          v-for="(item, index) in lodingClasses"
+          v-for="(item, index) in loadingClses"
           :key="index"
-          class="absolute w-16px h-16px rounded-8px bg-primary animate-pulse"
-          :class="item"
+          :class="['absolute w-16px h-16px rounded-8px bg-primary animate-pulse', item]"
         ></div>
       </div>
     </div>
@@ -22,7 +21,7 @@ import { sessionStg, getRgbOfColor } from '@/utils'
 
 defineOptions({ name: 'AppLoading' })
 
-const lodingClasses = [
+const loadingClses = [
   'left-0 top-0',
   'left-0 bottom-0 animate-delay-500',
   'right-0 top-0 animate-delay-1000',
@@ -35,8 +34,7 @@ function addThemeColorCssVars() {
 
   const { r, g, b } = getRgbOfColor(themeColor)
 
-  const cssVars = `--primary-color: ${r},${g},${b}`
-  document.documentElement.style.cssText = cssVars
+  document.documentElement.style.setProperty('--primary-color', `${r}, ${g}, ${b}`)
 }
 
 addThemeColorCssVars()

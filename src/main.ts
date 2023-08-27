@@ -3,7 +3,7 @@ import { setupAssets } from './plugins'
 import { setupStore } from './store'
 import { setupI18n } from './locales'
 import { setupRouter } from './router'
-import AppLoading from './components/common/app-loading.vue'
+import AppLoading from './components/app-loading/index.vue'
 import App from './App.vue'
 
 async function setupApp() {
