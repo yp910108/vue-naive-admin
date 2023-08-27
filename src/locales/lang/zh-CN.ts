@@ -1,4 +1,6 @@
-const locale: I18nType.Schema = {
+import type { Schema } from '../typing'
+
+const locale: Schema = {
   system: {
     title: 'Soybean管理系统'
   },

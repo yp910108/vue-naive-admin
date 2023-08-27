@@ -11,22 +11,22 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import { localStg } from '@/utils'
-import { setLocale } from '@/locales'
+import { setLocale, type Lang } from '@/locales'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
 type Option = {
   label: string
-  key: I18nType.Lang
+  key: Lang
 }
 
-const language = ref<I18nType.Lang>(localStg.get('lang') ?? 'zh-CN')
+const language = ref<Lang>(localStg.get('lang') ?? 'zh-CN')
 const options: Option[] = [
   { label: '中文', key: 'zh-CN' },
   { label: 'English', key: 'en' }
 ]
-const handleSelect = (key: I18nType.Lang) => {
+const handleSelect = (key: Lang) => {
   language.value = key
   setLocale(key)
   localStg.set('lang', key)

@@ -1,6 +1,6 @@
 <template>
   <n-divider title-placement="center">
-    {{ $t('layout.settingDrawer.themeConfiguration.title') }}
+    {{ $translate('layout.settingDrawer.themeConfiguration.title') }}
   </n-divider>
   <textarea
     id="themeConfigCopyTarget"
@@ -10,11 +10,11 @@
   <n-space vertical>
     <div ref="copyRef" data-clipboard-target="#themeConfigCopyTarget">
       <n-button type="primary" block>
-        {{ $t('layout.settingDrawer.themeConfiguration.copy') }}
+        {{ $translate('layout.settingDrawer.themeConfiguration.copy') }}
       </n-button>
     </div>
     <n-button type="warning" block @click="handleResetConfig">
-      {{ $t('layout.settingDrawer.themeConfiguration.reset') }}
+      {{ $translate('layout.settingDrawer.themeConfiguration.reset') }}
     </n-button>
   </n-space>
 </template>
@@ -23,7 +23,7 @@
 import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import ClipboardJS from 'clipboard'
-import { $t } from '@/locales'
+import { $translate } from '@/locales'
 import { renderIcon } from '@/utils'
 import { useThemeStore } from '@/store'
 
@@ -34,16 +34,16 @@ const copyRef = ref<HTMLDivElement>()
 
 const handleResetConfig = () => {
   themeStore.reset()
-  window.$message?.success($t('layout.settingDrawer.themeConfiguration.resetSuccess'))
+  window.$message?.success($translate('layout.settingDrawer.themeConfiguration.resetSuccess'))
 }
 
 onMounted(() => {
   const copy = new ClipboardJS(copyRef.value!)
   copy.on('success', () => {
     window.$dialog?.info({
-      title: $t('layout.settingDrawer.themeConfiguration.operateSuccess'),
-      content: $t('layout.settingDrawer.themeConfiguration.copySuccess'),
-      positiveText: $t('layout.settingDrawer.themeConfiguration.confirmCopy'),
+      title: $translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
+      content: $translate('layout.settingDrawer.themeConfiguration.copySuccess'),
+      positiveText: $translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
       icon: renderIcon({ icon: 'success-filled' })
     })
   })

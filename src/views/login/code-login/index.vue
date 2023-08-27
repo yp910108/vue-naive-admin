@@ -3,14 +3,14 @@
     <n-form-item path="phone">
       <n-input
         v-model:value="model.phone"
-        :placeholder="$t('page.login.common.phonePlaceholder')"
+        :placeholder="$translate('page.login.common.phonePlaceholder')"
       />
     </n-form-item>
     <n-form-item path="code">
       <div class="flex-y-center w-full">
         <n-input
           v-model:value="model.code"
-          :placeholder="$t('page.login.common.codePlaceholder')"
+          :placeholder="$translate('page.login.common.codePlaceholder')"
         />
         <div class="w-18px"></div>
         <n-button size="large" :disabled="isCounting" :loading="smsLoading" @click="handleSmsCode">
@@ -21,7 +21,7 @@
     <n-form-item path="imgCode">
       <n-input
         v-model:value="model.imgCode"
-        :placeholder="$t('page.login.codeLogin.imageCodePlaceholder')"
+        :placeholder="$translate('page.login.codeLogin.imageCodePlaceholder')"
       />
       <div class="pl-8px">
         <image-verify v-model:code="imgCode" />
@@ -36,10 +36,10 @@
         :loading="auth.loginLoading"
         @click="handleSubmit"
       >
-        {{ $t('page.login.common.confirm') }}
+        {{ $translate('page.login.common.confirm') }}
       </n-button>
       <n-button size="large" :block="true" :round="true" @click="toLoginModule('pwd-login')">
-        {{ $t('page.login.common.back') }}
+        {{ $translate('page.login.common.back') }}
       </n-button>
     </n-space>
   </n-form>
@@ -51,7 +51,7 @@ import type { FormInst, FormRules } from 'naive-ui'
 import { useAuthStore } from '@/store'
 import { useSmsCode } from '@/hooks'
 import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/utils'
-import { $t } from '@/locales'
+import { $translate } from '@/locales'
 import { useToLoginModule } from '../hooks'
 import ImageVerify from './image-verify.vue'
 
@@ -99,6 +99,6 @@ const handleSmsCode = () => {
 
 const handleSubmit = async () => {
   await formRef.value?.validate()
-  window.$message?.success($t('page.login.common.validateSuccess'))
+  window.$message?.success($translate('page.login.common.validateSuccess'))
 }
 </script>

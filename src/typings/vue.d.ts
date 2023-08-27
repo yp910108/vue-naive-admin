@@ -2,6 +2,6 @@ import 'vue'
 
 declare module 'vue' {
   interface ComponentCustomProperties {
-    $translate: I18nType.T
+    $translate: import('../locales/typing').T
   }
 }

@@ -10,13 +10,13 @@
         ></div>
       </div>
     </div>
-    <h2 class="font-500 text-28px text-#646464">{{ $t('system.title') }}</h2>
+    <h2 class="font-500 text-28px text-#646464">{{ $translate('system.title') }}</h2>
   </div>
 </template>
 
 <script setup lang="ts">
 import themeSettings from '@/settings/theme.json'
-import { $t } from '@/locales'
+import { $translate } from '@/locales'
 import { sessionStg, getRgbOfColor } from '@/utils'
 
 defineOptions({ name: 'AppLoading' })
