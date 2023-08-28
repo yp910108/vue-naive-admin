@@ -30,7 +30,8 @@ const routes: AuthRoute.Route[] = [
     title: 'Tab 详情',
     path: 'function/tab-detail',
     icon: 'round-tab',
-    activeMenu: '/function/tab'
+    activeMenu: '/function/tab',
+    hide: true
   }
 ]
 

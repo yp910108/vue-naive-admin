@@ -7,6 +7,7 @@ declare namespace AuthRoute {
     icon?: Icon.IconName
     activeMenu?: string
     white?: boolean
+    hide?: boolean
     keepAlive?: boolean
     layout?: LayoutType
     redirect?: string

@@ -115,7 +115,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
 
   transform(authRoutes)
 
-  const routes = vueBasicLayoutRoute.children
+  const routes = vueBasicLayoutRoute.children.filter(({ meta }) => !meta?.hide)
 
   const redirectPath = routes.length ? `/${removeParamsFromPath(routes[0].path)}` : undefined
 
