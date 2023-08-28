@@ -1,6 +1,10 @@
 import { decrypto, encrypto } from '../crypto'
 
-function createSessionStorage<T extends StorageInterface.Session>() {
+interface SessionStorage {
+  themeColor?: string
+}
+
+function createSessionStorage<T extends SessionStorage>() {
   function set<K extends keyof T>(key: K, value: T[K]) {
     const json = encrypto(value)
     sessionStorage.setItem(key as string, json)

@@ -1,11 +1,19 @@
+import type { Lang } from '@/locales'
 import { decrypto, encrypto } from '../crypto'
+
+interface LocalStorage {
+  token?: string
+  userInfo?: Auth.UserInfo
+  lang?: Lang
+  tabs?: App.GlobalTab[]
+}
 
 interface StorageData<T> {
   value: T
   expire?: number
 }
 
-function createLocalStorage<T extends StorageInterface.Local>() {
+function createLocalStorage<T extends LocalStorage>() {
   const DEFAULT_EXPIRE = 7 * 24 * 60 * 60
 
   /**
