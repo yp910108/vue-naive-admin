@@ -52,8 +52,7 @@ import AppSettings from './app-settings/index.vue'
 defineOptions({ name: 'BasicLayout' })
 
 const appStore = useAppStore()
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 const { mode, siderVisible, siderWidth, siderCollapsedWidth } = useLayout()

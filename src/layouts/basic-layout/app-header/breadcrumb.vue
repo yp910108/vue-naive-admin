@@ -41,9 +41,8 @@ import { getBreadcrumbsNyRouteName } from '@/utils'
 
 const route = useRoute()
 const router = useRouter()
-const themeStore = useThemeStore()
 const menuStore = useMenuStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const breadcrumbs = computed(() => {
   // @ts-ignore

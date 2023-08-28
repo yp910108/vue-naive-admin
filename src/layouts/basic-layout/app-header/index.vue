@@ -42,8 +42,7 @@ import { useMobile } from '../hooks'
 
 defineOptions({ name: 'AppHeader' })
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 

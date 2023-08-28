@@ -16,8 +16,7 @@ import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import Modal from './modal/index.vue'
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const modalRef = ref<InstanceType<typeof Modal>>()
 

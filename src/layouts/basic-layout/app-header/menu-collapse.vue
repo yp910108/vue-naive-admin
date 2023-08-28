@@ -14,6 +14,5 @@ import { storeToRefs } from 'pinia'
 import { useAppStore, useThemeStore } from '@/store'
 
 const appStore = useAppStore()
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 </script>

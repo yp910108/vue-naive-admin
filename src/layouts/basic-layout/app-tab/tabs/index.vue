@@ -38,8 +38,7 @@ const emit = defineEmits<Emits>()
 
 const router = useRouter()
 const routeStore = useRouteStore()
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 const tabStore = useTabStore()
 
 const isChromeMode = computed(() => theme.value.tab.mode === 'chrome')

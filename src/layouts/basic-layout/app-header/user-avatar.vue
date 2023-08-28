@@ -16,8 +16,7 @@ import { renderIcon } from '@/utils'
 import { useAuthStore, useThemeStore } from '@/store'
 
 const authStore = useAuthStore()
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const options: DropdownOption[] = [
   { label: '用户中心', key: 'user-center', icon: renderIcon({ icon: 'user-avatar' }) },

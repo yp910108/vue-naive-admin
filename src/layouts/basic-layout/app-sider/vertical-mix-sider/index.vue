@@ -35,9 +35,8 @@ import MixMenuCollapse from './mix-menu-collapse.vue'
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
-const themeStore = useThemeStore()
 const menuStore = useMenuStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const activeKey = ref<string>()
 

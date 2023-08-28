@@ -17,8 +17,7 @@ import Logo from '../../components/logo.vue'
 import VerticalMenu from './vertical-menu.vue'
 
 const appStore = useAppStore()
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const isHorizontalMix = computed(() => theme.value.layout.mode === 'horizontal-mix')
 const showTitle = computed(

@@ -15,8 +15,7 @@ import { storeToRefs } from 'pinia'
 import { useFullscreen } from '@vueuse/core'
 import { useThemeStore } from '@/store'
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const { isFullscreen, toggle } = useFullscreen()
 </script>

@@ -10,6 +10,5 @@ import { useThemeStore } from '@/store'
 
 defineOptions({ name: 'AppFooter' })
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 </script>

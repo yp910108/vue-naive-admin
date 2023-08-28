@@ -12,8 +12,7 @@ import VerticalMixSider from './vertical-mix-sider/index.vue'
 
 defineOptions({ name: 'AppSider' })
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const isVerticalMix = computed(() => theme.value.layout.mode === 'vertical-mix')
 </script>

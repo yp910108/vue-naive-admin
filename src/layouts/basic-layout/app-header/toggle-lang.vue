@@ -13,8 +13,7 @@ import { useThemeStore } from '@/store'
 import { localStg } from '@/utils'
 import { setLocale, type Lang } from '@/locales'
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 type Option = {
   label: string

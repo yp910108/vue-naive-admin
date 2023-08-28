@@ -36,8 +36,7 @@ const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrap
 
 const bsScroll = ref<Expose.BetterScroll>()
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const handleTabsScroll = (clientX: number) => {
   setTimeout(() => {

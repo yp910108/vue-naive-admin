@@ -13,8 +13,7 @@
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const handleClickLink = () => {
   window.open('https://github.com/honghuangdc/soybean-admin', '_blank')

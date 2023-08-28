@@ -25,16 +25,15 @@ export const useMobile = () => {
 
 export const useLayout = () => {
   const appStore = useAppStore()
-  const themeStore = useThemeStore()
-  const { theme } = storeToRefs(themeStore)
+  const { theme } = storeToRefs(useThemeStore())
 
   const mode = computed(() => {
-    const mode = themeStore.theme.layout.mode
+    const mode = theme.value.layout.mode
     return mode.includes('vertical') ? 'vertical' : 'horizontal'
   })
 
   const siderVisible = computed(() => {
-    const mode = themeStore.theme.layout.mode
+    const mode = theme.value.layout.mode
     return mode !== 'horizontal'
   })
 

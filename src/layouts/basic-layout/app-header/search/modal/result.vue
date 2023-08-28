@@ -39,8 +39,7 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const active = computed({
   get() {

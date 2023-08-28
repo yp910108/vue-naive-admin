@@ -24,9 +24,8 @@ import { useMenuStore, useThemeStore } from '@/store'
 
 const route = useRoute()
 const router = useRouter()
-const themeStore = useThemeStore()
 const menuStore = useMenuStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 

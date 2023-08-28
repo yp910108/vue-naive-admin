@@ -11,8 +11,7 @@ export const useTabStore = defineStore('tab-store', () => {
   const route = useRoute()
   const router = useRouter()
   const routeStore = useRouteStore()
-  const themeStore = useThemeStore()
-  const { theme } = storeToRefs(themeStore)
+  const { theme } = storeToRefs(useThemeStore())
 
   const tabs = ref<App.GlobalTab[]>([])
   const pushLastTab = () => {

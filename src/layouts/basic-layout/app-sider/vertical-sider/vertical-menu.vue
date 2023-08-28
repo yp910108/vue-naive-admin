@@ -26,9 +26,8 @@ import { getActiveKeyPathsOfMenus, isExternal } from '@/utils'
 const route = useRoute()
 const router = useRouter()
 const appStore = useAppStore()
-const themeStore = useThemeStore()
 const menuStore = useMenuStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 const expandedKeys = ref<string[]>()

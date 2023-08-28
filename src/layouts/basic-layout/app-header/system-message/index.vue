@@ -68,8 +68,7 @@ import { useThemeStore } from '@/store'
 import { useMobile } from '../../hooks'
 import MessageList from './message-list.vue'
 
-const themeStore = useThemeStore()
-const { theme } = storeToRefs(themeStore)
+const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 
