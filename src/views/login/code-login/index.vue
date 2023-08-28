@@ -49,11 +49,10 @@
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
 import { useAuthStore } from '@/store'
-import { useSmsCode } from '@/hooks'
-import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/utils'
+import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/constants'
 import { $translate } from '@/locales'
-import { useToLoginModule } from '../hooks'
-import ImageVerify from './image-verify.vue'
+import ImageVerify from './image-verify/index.vue'
+import { useSmsCode, useToLoginModule } from '../hooks'
 
 const auth = useAuthStore()
 const { toLoginModule } = useToLoginModule()

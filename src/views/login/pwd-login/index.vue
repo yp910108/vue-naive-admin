@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
-import { REGEXP_PWD } from '@/utils'
+import { REGEXP_PWD } from '@/constants'
 import { useAuthStore } from '@/store'
 import { loginModuleLabels } from '../constant'
 import { useToLoginModule } from '../hooks'

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { userRoleLabels } from '@/constants'
+import { userRoleLabels } from './constant'
 
 interface Emits {
   (e: 'login', param: { userName: string; password: string }): void

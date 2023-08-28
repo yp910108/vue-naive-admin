@@ -1,4 +1,4 @@
-import type { Lang } from '@/locales'
+import type { Lang } from '@/locales/typing'
 import { decrypto, encrypto } from '../crypto'
 
 interface LocalStorage {

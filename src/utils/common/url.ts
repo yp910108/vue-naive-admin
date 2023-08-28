@@ -1,8 +1,10 @@
+import { REGEXP_URL } from '@/constants/regexp'
+
 /**
  * @param path
  */
 export function isExternal(path: string): boolean {
-  return /^(https?:|mailto:|tel:)/.test(path)
+  return REGEXP_URL.test(path)
 }
 
 /**

@@ -48,10 +48,9 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
-import { useSmsCode } from '@/hooks'
-import { REGEXP_PHONE, REGEXP_CODE_SIX, REGEXP_PWD } from '@/utils'
+import { REGEXP_PHONE, REGEXP_CODE_SIX, REGEXP_PWD } from '@/constants'
 import { $translate } from '@/locales'
-import { useToLoginModule } from '../hooks'
+import { useSmsCode, useToLoginModule } from '../hooks'
 
 const { toLoginModule } = useToLoginModule()
 const { label, isCounting, loading: smsLoading, start } = useSmsCode()

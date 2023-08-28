@@ -5,7 +5,7 @@ import { onMounted, ref } from 'vue'
  * @param width - 图形宽度
  * @param height - 图形高度
  */
-export default function useImageVerify(width = 152, height = 40) {
+export function useImageVerify(width = 152, height = 40) {
   const domRef = ref<HTMLCanvasElement>()
   const imgCode = ref('')
 

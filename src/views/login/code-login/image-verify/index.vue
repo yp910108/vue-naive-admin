@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { watch } from 'vue'
-import { useImageVerify } from '@/hooks'
+import { useImageVerify } from './hooks'
 
 defineOptions({ name: 'ImageVerify' })
 
