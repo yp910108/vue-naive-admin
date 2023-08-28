@@ -1,1 +1,2 @@
-export { default as setupAssets } from './assets'
+export * from './assets'
+export * from './naive'

@@ -1,9 +1,7 @@
 <template>
   <n-config-provider abstract :theme="naiveTheme" :theme-overrides="naiveThemeOverrides">
     <n-global-style />
-    <naive-provider>
-      <router-view />
-    </naive-provider>
+    <router-view />
   </n-config-provider>
 </template>
 

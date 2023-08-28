@@ -60,6 +60,9 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const setPrimaryColor = (primaryColor: string) => {
     theme.value.primaryColor = primaryColor
+    if (!theme.value.isCustomizeInfoColor) {
+      theme.value.otherColor.info = primaryColor
+    }
   }
 
   const setScrollMode = (mode: ThemeScrollMode) => {

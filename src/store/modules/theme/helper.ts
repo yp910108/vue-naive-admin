@@ -7,10 +7,10 @@ import { getColorPalette, sessionStg } from '@/utils'
  * @returns
  */
 export function initSettings() {
-  const themeColor = sessionStg.get('primaryColor') ?? settings.primaryColor
-  const infoColor = settings.isCustomizeInfoColor ? settings.otherColor.info : themeColor
+  const primaryColor = sessionStg.get('primaryColor') ?? settings.primaryColor
+  const infoColor = settings.isCustomizeInfoColor ? settings.otherColor.info : primaryColor
   const otherColor = { ...settings.otherColor, info: infoColor }
-  return cloneDeep({ ...settings, themeColor, otherColor })
+  return cloneDeep({ ...settings, primaryColor, otherColor })
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'

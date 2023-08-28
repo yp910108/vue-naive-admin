@@ -1,5 +1,4 @@
 import type { AxiosError } from 'axios'
-import { useOsTheme, darkTheme, createDiscreteApi } from 'naive-ui'
 import { exeStrategyActions } from '../../common'
 import {
   DEFAULT_REQUEST_ERROR_CODE,
@@ -33,16 +32,11 @@ function hasErrorMsg(error: Service.RequestError) {
  * @returns
  */
 export function showErrorMsg(error: Service.RequestError) {
-  const osTheme = useOsTheme()
-  const theme = osTheme.value === 'dark' ? darkTheme : undefined
-  const { message } = createDiscreteApi(['message'], {
-    configProviderProps: { theme }
-  })
   if (!error.message || NO_ERROR_MSG_CODE.includes(error.code) || hasErrorMsg(error)) return
 
   addErrorMsg(error)
   console.warn(error.code, error.message)
-  message.error(error.message, { duration: ERROR_MSG_DURATION })
+  window.$message?.error(error.message, { duration: ERROR_MSG_DURATION })
   setTimeout(() => {
     removeErrMsg(error)
   }, ERROR_MSG_DURATION)
