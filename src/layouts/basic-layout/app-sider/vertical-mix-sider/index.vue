@@ -42,7 +42,7 @@ const activeKey = ref<string>()
 
 const mixMenuDrawerRef = ref<InstanceType<typeof MixMenuDrawer>>()
 
-const handleMixMenuChange = ({ key, children }: App.GlobalMenuOption) => {
+const handleMixMenuChange = ({ key, children }: App.MenuOption) => {
   activeKey.value = key
   if (children && children.length) {
     mixMenuDrawerRef.value?.show(children)

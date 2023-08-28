@@ -3,8 +3,8 @@
  * @param routeName
  * @param menus
  */
-export function getBreadcrumbsNyRouteName(routeName: string, menus: App.GlobalMenuOption[]) {
-  const breadcrumbs: App.GlobalBreadcrumb[] = []
+export function getBreadcrumbsNyRouteName(routeName: string, menus: App.MenuOption[]) {
+  const breadcrumbs: App.Breadcrumb[] = []
   for (const menu of menus) {
     const { key, children } = menu
     if (routeName.includes(key)) {

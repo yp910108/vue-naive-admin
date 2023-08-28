@@ -27,7 +27,7 @@ import { storeToRefs } from 'pinia'
 
 interface Props {
   value?: string
-  options: App.GlobalSearchMenu[]
+  options: App.SearchMenu[]
 }
 
 const props = defineProps<Props>()
@@ -54,7 +54,7 @@ const handleTo = () => {
   emit('enter')
 }
 
-const handleMouseEnter = ({ key }: App.GlobalSearchMenu) => {
+const handleMouseEnter = ({ key }: App.SearchMenu) => {
   active.value = key
 }
 </script>

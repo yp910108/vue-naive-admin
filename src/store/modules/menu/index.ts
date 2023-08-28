@@ -4,7 +4,7 @@ import { transformAuthRoutesToMenus, transformAuthRoutesToSearchMenus } from '@/
 import type { Route } from '@/router'
 
 export const useMenuStore = defineStore('menu-store', () => {
-  const menus = ref<App.GlobalMenuOption[]>()
+  const menus = ref<App.MenuOption[]>()
 
   const reset = () => {
     menus.value = []

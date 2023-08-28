@@ -52,19 +52,19 @@ const { theme } = storeToRefs(useThemeStore())
 
 const { bool: visible, setTrue, setFalse } = useBoolean()
 
-const menus = ref<App.GlobalMenuOption[]>()
-const setMenus = (_menus: App.GlobalMenuOption[]) => {
+const menus = ref<App.MenuOption[]>()
+const setMenus = (_menus: App.MenuOption[]) => {
   menus.value = _menus
 }
 
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 const expandedKeys = ref<string[]>()
-const setExpandKeys = (menus: App.GlobalMenuOption[]) => {
+const setExpandKeys = (menus: App.MenuOption[]) => {
   expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menus)
 }
 
 const handleUpdateMenu = (key: string, item: MenuOption) => {
-  const { routePath } = item as App.GlobalMenuOption
+  const { routePath } = item as App.MenuOption
   if (isExternal(routePath)) {
     window.open(routePath, '_blank')
   } else {
@@ -76,7 +76,7 @@ const handleUpdateExpandedKeys = (keys: string[]) => {
   expandedKeys.value = keys
 }
 
-const show = (menus: App.GlobalMenuOption[]) => {
+const show = (menus: App.MenuOption[]) => {
   setMenus(menus)
   setExpandKeys(menus)
   setTrue()

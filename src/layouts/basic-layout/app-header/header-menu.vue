@@ -30,7 +30,7 @@ const { theme } = storeToRefs(useThemeStore())
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 
 const handleUpdateMenu = (key: string, item: MenuOption) => {
-  const { routePath } = item as App.GlobalMenuOption
+  const { routePath } = item as App.MenuOption
   if (isExternal(routePath)) {
     window.open(routePath, '_blank')
   } else {

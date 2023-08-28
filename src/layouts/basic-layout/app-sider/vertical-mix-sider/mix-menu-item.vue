@@ -27,7 +27,7 @@ import { computed } from 'vue'
 import { useBoolean } from '@/hooks'
 
 interface Props {
-  item: App.GlobalMenuOption
+  item: App.MenuOption
   activeKey?: string
   isMini: boolean
 }
@@ -35,7 +35,7 @@ interface Props {
 const props = defineProps<Props>()
 
 interface Emits {
-  (e: 'change', menus: App.GlobalMenuOption): void
+  (e: 'change', menus: App.MenuOption): void
 }
 
 const emit = defineEmits<Emits>()

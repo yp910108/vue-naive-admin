@@ -8,12 +8,12 @@ import { parsePathToName } from './helper'
  * @returns
  */
 export function transformAuthRoutesToMenus(authRoutes: Route[], prefix: string = '/') {
-  const menus: App.GlobalMenuOption[] = []
+  const menus: App.MenuOption[] = []
   for (const authRoute of authRoutes) {
     const { title, path, icon, children } = authRoute
     const fullpath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
     const name = parsePathToName(fullpath)
-    const menu: App.GlobalMenuOption = {
+    const menu: App.MenuOption = {
       key: name,
       label: title,
       routePath: fullpath
@@ -34,7 +34,7 @@ export function transformAuthRoutesToMenus(authRoutes: Route[], prefix: string =
  * @param activeKey
  * @param menus
  */
-export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.GlobalMenuOption[]) {
+export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.MenuOption[]) {
   const keys: string[] = []
   for (const menu of menus) {
     const { key, children } = menu
@@ -53,8 +53,8 @@ export function getActiveKeyPathsOfMenus(activeKey: string, menus: App.GlobalMen
  * 将权限路由转换为搜索菜单
  * @param authRoutes
  */
-export function transformAuthRoutesToSearchMenus(menus: App.GlobalMenuOption[]) {
-  const searchMenus: App.GlobalSearchMenu[] = []
+export function transformAuthRoutesToSearchMenus(menus: App.MenuOption[]) {
+  const searchMenus: App.SearchMenu[] = []
   for (const menu of menus) {
     const { children, ...rest } = menu
     searchMenus.push({ ...rest })

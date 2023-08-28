@@ -52,7 +52,7 @@ const { bool: visible, setTrue, setFalse } = useBoolean()
 
 const keyword = ref<string | null>()
 const activeKey = ref<string>()
-const resultOptions = shallowRef<App.GlobalSearchMenu[]>()
+const resultOptions = shallowRef<App.SearchMenu[]>()
 
 const search = () => {
   resultOptions.value = menuStore.searchMenus.filter(({ label }) => {
