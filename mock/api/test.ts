@@ -1,5 +1,4 @@
 import type { MockMethod } from 'vite-plugin-mock'
-import type { MockServiceResult } from '../typing'
 
 const apis: MockMethod[] = [
   {
@@ -10,7 +9,7 @@ const apis: MockMethod[] = [
       res.statusCode = 401
       res.end(`hello, this is data.`)
     },
-    response: (): MockServiceResult<string | null> => {
+    response: () => {
       return {
         code: 200,
         message: 'ok',
