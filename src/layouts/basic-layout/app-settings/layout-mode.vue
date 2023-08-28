@@ -57,7 +57,8 @@
 <script setup lang="ts">
 import type { PopoverPlacement } from 'naive-ui'
 import { storeToRefs } from 'pinia'
-import { useThemeStore, type Settings } from '@/store'
+import type { Settings } from '@/settings'
+import { useThemeStore } from '@/store'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
