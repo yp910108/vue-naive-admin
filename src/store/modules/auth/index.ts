@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
-import { login as fetchLogin, fetchUserInfo } from '@/service'
+import { login as postLogin, fetchUserInfo } from './service'
 import { localStg } from '@/utils'
 import { $translate } from '@/locales'
 import { useRouteStore } from '../route'
@@ -36,7 +36,7 @@ export const useAuthStore = defineStore('auth-store', () => {
   const login = async (userName: string, password: string) => {
     loginLoading.value = true
     try {
-      const _token = await fetchLogin(userName, password)
+      const _token = await postLogin(userName, password)
       localStg.set('token', _token)
       token.value = _token
       await getUserInfo()

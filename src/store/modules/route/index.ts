@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import { NO_MENU_MSG, transformRoutes } from '@/utils'
 import { router, constantRoutes } from '@/router'
-import { fetchUserRoutes } from '@/service'
+import { fetchUserRoutes } from './service'
 import { useAuthStore } from '../auth'
 import { useMenuStore } from '../menu'
 

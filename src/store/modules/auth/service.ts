@@ -1,5 +1,4 @@
-import type { Route } from '@/router'
-import { mockRequest } from '../utils'
+import { mockRequest } from '@/utils'
 
 /**
  * 登录
@@ -17,13 +16,4 @@ export function login(userName: string, password: string) {
  */
 export function fetchUserInfo() {
   return mockRequest.get<Auth.UserInfo>('/getUserInfo')
-}
-
-/**
- * 获取用户路由数据
- * @param userId
- * @returns
- */
-export function fetchUserRoutes(userId: string) {
-  return mockRequest.post<Route[]>('/getUserRoutes', { userId })
 }

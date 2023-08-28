@@ -1,5 +1,4 @@
 import type { MockMethod } from 'vite-plugin-mock'
-import type { MockServiceResult } from '../typing'
 import { userModel } from '../model'
 
 const ERROR_PARAM_CODE = 10000
@@ -10,7 +9,7 @@ const apis: MockMethod[] = [
   {
     url: '/mock/getSmsCode',
     method: 'post',
-    response: (): MockServiceResult<boolean> => {
+    response: () => {
       return {
         code: 200,
         message: 'ok',
@@ -26,7 +25,7 @@ const apis: MockMethod[] = [
     //   res.statusCode = 401
     //   res.end(`hello, this is data.`)
     // },
-    response: (options): MockServiceResult<string | null> => {
+    response: (options) => {
       const { userName = undefined, password = undefined } = options.body
 
       if (!userName || !password) {
@@ -63,7 +62,7 @@ const apis: MockMethod[] = [
     //   res.statusCode = 401
     //   res.end(`hello, this is data.`)
     // },
-    response: (options): MockServiceResult<Auth.UserInfo | null> => {
+    response: (options) => {
       const { authorization = '' } = options.headers
       const INVALID_CODE = 66666
 

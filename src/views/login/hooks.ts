@@ -82,7 +82,7 @@ export function useSmsCode() {
     const valid = isPhoneValid(phone)
     if (!valid || loading.value) return
     loading.value = true
-    const data = await fetchSmsCode(phone)
+    await fetchSmsCode(phone)
     window.$message?.success('验证码发送成功！')
     start()
     loading.value = false
