@@ -32,7 +32,7 @@ function addThemeCssVarsToHtml(themeVars: ThemeVars) {
         const colorPalettes = getColorPalettes(color)
         colorPalettes.forEach((palette, index) => {
           const { r: pR, g: pG, b: pB } = getRgbOfColor(palette)
-          style.push(`--${kebabCase(key)}${index + 1}: ${pR}, ${pG}, ${pB}`)
+          style.push(`--${kebabCase(key)}-${index + 1}: ${pR}, ${pG}, ${pB}`)
         })
       }
     }

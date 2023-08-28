@@ -1,16 +1,16 @@
 import { cloneDeep } from 'lodash-es'
-import { themeSetting } from '@/settings'
+import { settings } from '@/settings'
 import { getColorPalette, sessionStg } from '@/utils'
 
 /**
  * 初始化主题配置
  * @returns
  */
-export function initThemeSettings() {
-  const themeColor = sessionStg.get('themeColor') ?? themeSetting.themeColor
-  const infoColor = themeSetting.isCustomizeInfoColor ? themeSetting.otherColor.info : themeColor
-  const otherColor = { ...themeSetting.otherColor, info: infoColor }
-  return cloneDeep({ ...themeSetting, themeColor, otherColor })
+export function initSettings() {
+  const themeColor = sessionStg.get('themeColor') ?? settings.themeColor
+  const infoColor = settings.isCustomizeInfoColor ? settings.otherColor.info : themeColor
+  const otherColor = { ...settings.otherColor, info: infoColor }
+  return cloneDeep({ ...settings, themeColor, otherColor })
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'
