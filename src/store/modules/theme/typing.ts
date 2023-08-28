@@ -5,7 +5,7 @@
  * - vertical-mix 左侧菜单混合模式
  * - horizontal-mix 顶部菜单混合模式
  */
-export type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix'
+type LayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix'
 
 /**
  * 布局样式
@@ -18,11 +18,11 @@ interface Layout {
   /**
    * 布局模式
    */
-  mode: ThemeLayoutMode
+  mode: LayoutMode
   /**
    * 布局模式列表
    */
-  modeList: Common.OptionWithKey<ThemeLayoutMode>[]
+  modeList: Common.OptionWithKey<LayoutMode>[]
 }
 
 /**
@@ -82,7 +82,7 @@ interface Header {
  * - chrome 谷歌风格
  * - button 按钮风格
  */
-export type ThemeTabMode = 'chrome' | 'button'
+type TabMode = 'chrome' | 'button'
 
 /**
  * 多页签样式
@@ -99,11 +99,11 @@ interface Tab {
   /**
    * 多页签风格
    */
-  mode: ThemeTabMode
+  mode: TabMode
   /**
    * 多页签风格列表
    */
-  modeList: Common.OptionWithKey<ThemeTabMode>[]
+  modeList: Common.OptionWithKey<TabMode>[]
   /**
    * 开启多页签缓存
    */
@@ -146,7 +146,7 @@ interface Sider {
  * - center 居中
  * - flex-end 居右
  */
-export type ThemeHorizontalMenuPosition = 'flex-start' | 'center' | 'flex-end'
+type HorizontalMenuPosition = 'flex-start' | 'center' | 'flex-end'
 
 /**
  * 菜单样式
@@ -155,11 +155,11 @@ interface Menu {
   /**
    * 水平模式的菜单的位置
    */
-  horizontalPosition: ThemeHorizontalMenuPosition
+  horizontalPosition: HorizontalMenuPosition
   /**
    * 水平模式的菜单的位置列表
    */
-  horizontalPositionList: Common.OptionWithKey<ThemeHorizontalMenuPosition>[]
+  horizontalPositionList: Common.OptionWithKey<HorizontalMenuPosition>[]
 }
 
 /**
@@ -197,13 +197,7 @@ interface Footer {
  * - zoom-fade: 渐变
  * - zoom-out: 闪现
  */
-export type ThemeAnimateMode =
-  | 'fade-slide'
-  | 'fade'
-  | 'fade-bottom'
-  | 'fade-scale'
-  | 'zoom-fade'
-  | 'zoom-out'
+type AnimateMode = 'fade-slide' | 'fade' | 'fade-bottom' | 'fade-scale' | 'zoom-fade' | 'zoom-out'
 
 /**
  * 页面样式
@@ -216,11 +210,11 @@ interface Page {
   /**
    * 动画类型
    */
-  animateMode: ThemeAnimateMode
+  animateMode: AnimateMode
   /**
    * 动画类型列表
    */
-  animateModeList: Common.OptionWithKey<ThemeAnimateMode>[]
+  animateModeList: Common.OptionWithKey<AnimateMode>[]
 }
 
 /**
@@ -228,7 +222,7 @@ interface Page {
  * - wrapper 布局组件最外层的元素出现滚动条
  * - content 主体内容组件出现滚动条
  */
-export type ThemeScrollMode = 'wrapper' | 'content'
+type ScrollMode = 'wrapper' | 'content'
 
 export interface Settings {
   /**
@@ -250,11 +244,11 @@ export interface Settings {
   /**
    * 滚动模式
    */
-  scrollMode: ThemeScrollMode
+  scrollMode: ScrollMode
   /**
    * 滚动模式列表
    */
-  scrollModeList: Common.OptionWithKey<ThemeScrollMode>[]
+  scrollModeList: Common.OptionWithKey<ScrollMode>[]
   /**
    * 主颜色
    */

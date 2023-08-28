@@ -57,12 +57,12 @@
 <script setup lang="ts">
 import type { PopoverPlacement } from 'naive-ui'
 import { storeToRefs } from 'pinia'
-import { useThemeStore, type ThemeLayoutMode } from '@/store'
+import { useThemeStore, type Settings } from '@/store'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-type Placement = Record<ThemeLayoutMode, PopoverPlacement>
+type Placement = Record<Settings['layout']['mode'], PopoverPlacement>
 
 const placement: Placement = {
   vertical: 'bottom-start',

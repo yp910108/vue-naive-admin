@@ -2,14 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme, type GlobalThemeOverrides } from 'naive-ui'
 import { sessionStg } from '@/utils'
-import type {
-  Settings,
-  ThemeAnimateMode,
-  ThemeHorizontalMenuPosition,
-  ThemeLayoutMode,
-  ThemeScrollMode,
-  ThemeTabMode
-} from './typing'
+import type { Settings } from './typing'
 import {
   addDarkClassToDocument,
   getThemeColors,
@@ -64,7 +57,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.footer.inverted = inverted
   }
 
-  const setLayoutMode = (mode: ThemeLayoutMode) => {
+  const setLayoutMode = (mode: Settings['layout']['mode']) => {
     theme.value.layout.mode = mode
   }
 
@@ -76,7 +69,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     }
   }
 
-  const setScrollMode = (mode: ThemeScrollMode) => {
+  const setScrollMode = (mode: Settings['scrollMode']) => {
     theme.value.scrollMode = mode
   }
 
@@ -84,7 +77,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.fixedHeaderAndTab = isFixed
   }
 
-  const setHorizontalMenuPosition = (position: ThemeHorizontalMenuPosition) => {
+  const setHorizontalMenuPosition = (position: Settings['menu']['horizontalPosition']) => {
     theme.value.menu.horizontalPosition = position
   }
 
@@ -140,7 +133,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.tab.visible = visible
   }
 
-  const setTabMode = (mode: ThemeTabMode) => {
+  const setTabMode = (mode: Settings['tab']['mode']) => {
     theme.value.tab.mode = mode
   }
 
@@ -152,7 +145,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     const { page } = theme.value
     return page.animate ? page.animateMode : undefined
   })
-  const setPageAnimateMode = (mode: ThemeAnimateMode) => {
+  const setPageAnimateMode = (mode: Settings['page']['animateMode']) => {
     theme.value.page.animateMode = mode
   }
 
