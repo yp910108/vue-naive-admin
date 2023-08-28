@@ -37,7 +37,7 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useMenuStore, useThemeStore } from '@/store'
-import { getBreadcrumbsNyRouteName } from '@/utils'
+import { getBreadcrumbsNyRouteName } from './helper'
 
 const route = useRoute()
 const router = useRouter()

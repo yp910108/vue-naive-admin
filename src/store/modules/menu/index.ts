@@ -1,7 +1,7 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { transformAuthRoutesToMenus, transformAuthRoutesToSearchMenus } from '@/utils'
 import type { Route } from '@/router'
+import { transformMenus, transformSearchMenus } from './helper'
 
 export const useMenuStore = defineStore('menu-store', () => {
   const menus = ref<App.MenuOption[]>()
@@ -11,10 +11,10 @@ export const useMenuStore = defineStore('menu-store', () => {
   }
 
   const setMenus = (authRoutes: Route[]) => {
-    menus.value = transformAuthRoutesToMenus(authRoutes)
+    menus.value = transformMenus(authRoutes)
   }
 
-  const searchMenus = computed(() => transformAuthRoutesToSearchMenus(menus.value ?? []))
+  const searchMenus = computed(() => transformSearchMenus(menus.value ?? []))
 
   return {
     menus,

@@ -20,8 +20,9 @@ import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import type { MenuOption } from 'naive-ui'
-import { getActiveKeyPathsOfMenus, isExternal } from '@/utils'
+import { isExternal } from '@/utils'
 import { useAppStore, useMenuStore, useThemeStore } from '@/store'
+import { getActiveKeyPathsOfMenus } from '../hepler'
 
 const route = useRoute()
 const router = useRouter()
