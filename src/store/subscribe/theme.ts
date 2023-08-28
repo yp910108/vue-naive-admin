@@ -50,9 +50,9 @@ export default function subscribeThemeStore() {
 
   scope.run(() => {
     watch(
-      () => theme.value.themeColor,
+      () => theme.value.primaryColor,
       (newVal) => {
-        sessionStg.set('themeColor', newVal)
+        sessionStg.set('primaryColor', newVal)
       },
       { immediate: true }
     )

@@ -28,14 +28,13 @@ const loadingClses = [
   'right-0 bottom-0 animate-delay-1500'
 ]
 
-function addThemeColorCssVars() {
-  const defaultColor = settings.themeColor
-  const themeColor = sessionStg.get('themeColor') ?? defaultColor
+function addPrimaryColorCssVar() {
+  const primaryColor = sessionStg.get('primaryColor') ?? settings.primaryColor
 
-  const { r, g, b } = getRgbOfColor(themeColor)
+  const { r, g, b } = getRgbOfColor(primaryColor)
 
   document.documentElement.style.setProperty('--primary-color', `${r}, ${g}, ${b}`)
 }
 
-addThemeColorCssVars()
+addPrimaryColorCssVar()
 </script>

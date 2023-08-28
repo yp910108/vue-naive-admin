@@ -7,7 +7,7 @@
       :mode="theme.tab.mode"
       :dark-mode="theme.darkMode"
       :active="tabStore.activeTab?.key === tab.key"
-      :active-color="theme.themeColor"
+      :active-color="theme.primaryColor"
       :closable="closeable(tab)"
       @click="handleClick(tab)"
       @close="handleClose(tab)"

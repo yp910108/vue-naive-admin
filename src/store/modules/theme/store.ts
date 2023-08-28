@@ -2,7 +2,14 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { GlobalThemeOverrides } from 'naive-ui'
 import { darkTheme } from 'naive-ui'
-import type { Settings } from './typing'
+import type {
+  Settings,
+  ThemeAnimateMode,
+  ThemeHorizontalMenuPosition,
+  ThemeLayoutMode,
+  ThemeScrollMode,
+  ThemeTabMode
+} from './typing'
 import { getThemeColors, initSettings } from './helper'
 
 export const useThemeStore = defineStore('theme-store', () => {
@@ -13,8 +20,8 @@ export const useThemeStore = defineStore('theme-store', () => {
   })
 
   const naiveThemeOverrides = computed<GlobalThemeOverrides>(() => {
-    const { themeColor, otherColor } = theme.value
-    const themeColors = getThemeColors({ primary: themeColor, ...otherColor })
+    const { primaryColor, otherColor } = theme.value
+    const themeColors = getThemeColors({ primary: primaryColor, ...otherColor })
     return {
       common: {
         fontWeightStrong: '600',
@@ -47,15 +54,15 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.footer.inverted = inverted
   }
 
-  const setLayoutMode = (mode: UnionKey.ThemeLayoutMode) => {
+  const setLayoutMode = (mode: ThemeLayoutMode) => {
     theme.value.layout.mode = mode
   }
 
-  const setThemeColor = (themeColor: string) => {
-    theme.value.themeColor = themeColor
+  const setPrimaryColor = (primaryColor: string) => {
+    theme.value.primaryColor = primaryColor
   }
 
-  const setScrollMode = (mode: UnionKey.ThemeScrollMode) => {
+  const setScrollMode = (mode: ThemeScrollMode) => {
     theme.value.scrollMode = mode
   }
 
@@ -63,7 +70,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.fixedHeaderAndTab = isFixed
   }
 
-  const setHorizontalMenuPosition = (position: UnionKey.ThemeHorizontalMenuPosition) => {
+  const setHorizontalMenuPosition = (position: ThemeHorizontalMenuPosition) => {
     theme.value.menu.horizontalPosition = position
   }
 
@@ -119,7 +126,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.tab.visible = visible
   }
 
-  const setTabMode = (mode: UnionKey.ThemeTabMode) => {
+  const setTabMode = (mode: ThemeTabMode) => {
     theme.value.tab.mode = mode
   }
 
@@ -131,7 +138,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     const { page } = theme.value
     return page.animate ? page.animateMode : undefined
   })
-  const setPageAnimateMode = (mode: UnionKey.ThemeAnimateMode) => {
+  const setPageAnimateMode = (mode: ThemeAnimateMode) => {
     theme.value.page.animateMode = mode
   }
 
@@ -150,7 +157,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     setHeaderInverted,
     setFooterInverted,
     setLayoutMode,
-    setThemeColor,
+    setPrimaryColor,
     setScrollMode,
     setIsFixedHeaderAndTab,
     setHorizontalMenuPosition,

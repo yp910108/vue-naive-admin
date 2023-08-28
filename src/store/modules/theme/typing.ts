@@ -1,4 +1,13 @@
 /**
+ * 布局模式
+ * - vertical 左侧菜单模式
+ * - horizontal 顶部菜单模式
+ * - vertical-mix 左侧菜单混合模式
+ * - horizontal-mix 顶部菜单混合模式
+ */
+export type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix'
+
+/**
  * 布局样式
  */
 interface Layout {
@@ -9,11 +18,11 @@ interface Layout {
   /**
    * 布局模式
    */
-  mode: UnionKey.ThemeLayoutMode
+  mode: ThemeLayoutMode
   /**
    * 布局模式列表
    */
-  modeList: Common.OptionWithKey<UnionKey.ThemeLayoutMode>[]
+  modeList: Common.OptionWithKey<ThemeLayoutMode>[]
 }
 
 /**
@@ -69,6 +78,13 @@ interface Header {
 }
 
 /**
+ * 多页签风格
+ * - chrome 谷歌风格
+ * - button 按钮风格
+ */
+export type ThemeTabMode = 'chrome' | 'button'
+
+/**
  * 多页签样式
  */
 export interface Tab {
@@ -83,11 +99,11 @@ export interface Tab {
   /**
    * 多页签风格
    */
-  mode: UnionKey.ThemeTabMode
+  mode: ThemeTabMode
   /**
    * 多页签风格列表
    */
-  modeList: Common.OptionWithKey<UnionKey.ThemeTabMode>[]
+  modeList: Common.OptionWithKey<ThemeTabMode>[]
   /**
    * 开启多页签缓存
    */
@@ -125,17 +141,25 @@ interface Sider {
 }
 
 /**
+ * 水平模式的菜单位置
+ * - flex-start 居左
+ * - center 居中
+ * - flex-end 居右
+ */
+export type ThemeHorizontalMenuPosition = 'flex-start' | 'center' | 'flex-end'
+
+/**
  * 菜单样式
  */
 interface Menu {
   /**
    * 水平模式的菜单的位置
    */
-  horizontalPosition: UnionKey.ThemeHorizontalMenuPosition
+  horizontalPosition: ThemeHorizontalMenuPosition
   /**
    * 水平模式的菜单的位置列表
    */
-  horizontalPositionList: Common.OptionWithKey<UnionKey.ThemeHorizontalMenuPosition>[]
+  horizontalPositionList: Common.OptionWithKey<ThemeHorizontalMenuPosition>[]
 }
 
 /**
@@ -165,6 +189,23 @@ interface Footer {
 }
 
 /**
+ * 过渡动画类型
+ * - fade-slide: 滑动
+ * - fade: 消退
+ * - fade-bottom: 底部消退
+ * - fade-scale: 缩放消退
+ * - zoom-fade: 渐变
+ * - zoom-out: 闪现
+ */
+export type ThemeAnimateMode =
+  | 'fade-slide'
+  | 'fade'
+  | 'fade-bottom'
+  | 'fade-scale'
+  | 'zoom-fade'
+  | 'zoom-out'
+
+/**
  * 页面样式
  */
 interface Page {
@@ -175,12 +216,19 @@ interface Page {
   /**
    * 动画类型
    */
-  animateMode: UnionKey.ThemeAnimateMode
+  animateMode: ThemeAnimateMode
   /**
    * 动画类型列表
    */
-  animateModeList: Common.OptionWithKey<UnionKey.ThemeAnimateMode>[]
+  animateModeList: Common.OptionWithKey<ThemeAnimateMode>[]
 }
+
+/**
+ * 内容溢出时的出现滚动条的方式
+ * - wrapper 布局组件最外层的元素出现滚动条
+ * - content 主体内容组件出现滚动条
+ */
+export type ThemeScrollMode = 'wrapper' | 'content'
 
 export interface Settings {
   /**
@@ -202,19 +250,19 @@ export interface Settings {
   /**
    * 滚动模式
    */
-  scrollMode: UnionKey.ThemeScrollMode
+  scrollMode: ThemeScrollMode
   /**
    * 滚动模式列表
    */
-  scrollModeList: Common.OptionWithKey<UnionKey.ThemeScrollMode>[]
+  scrollModeList: Common.OptionWithKey<ThemeScrollMode>[]
   /**
-   * 主题颜色
+   * 主颜色
    */
-  themeColor: string
+  primaryColor: string
   /**
-   * 主题颜色列表
+   * 主颜色列表
    */
-  themeColorList: string[]
+  primaryColorList: string[]
   /**
    * 其他颜色
    */

@@ -15,10 +15,10 @@
             <div
               class="flex-center w-full h-36px rounded-4px shadow cursor-pointer"
               :style="{ backgroundColor: i.color }"
-              @click="themeStore.setThemeColor(i.color)"
+              @click="themeStore.setPrimaryColor(i.color)"
             >
               <icon-outline-check
-                v-if="i.color === theme.themeColor"
+                v-if="i.color === theme.primaryColor"
                 :class="['text-20px', isWhite(i.color) ? 'text-gray-700' : 'text-white']"
               />
             </div>

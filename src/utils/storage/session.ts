@@ -1,7 +1,7 @@
 import { decrypto, encrypto } from '../crypto'
 
 interface SessionStorage {
-  themeColor?: string
+  primaryColor?: string
 }
 
 function createSessionStorage<T extends SessionStorage>() {

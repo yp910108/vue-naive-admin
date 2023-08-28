@@ -7,7 +7,7 @@ import { getColorPalette, sessionStg } from '@/utils'
  * @returns
  */
 export function initSettings() {
-  const themeColor = sessionStg.get('themeColor') ?? settings.themeColor
+  const themeColor = sessionStg.get('primaryColor') ?? settings.primaryColor
   const infoColor = settings.isCustomizeInfoColor ? settings.otherColor.info : themeColor
   const otherColor = { ...settings.otherColor, info: infoColor }
   return cloneDeep({ ...settings, themeColor, otherColor })

@@ -3,14 +3,14 @@
     {{ $translate('layout.settingDrawer.systemThemeTitle') }}
   </n-divider>
   <n-grid :cols="8" :x-gap="8" :y-gap="12">
-    <n-grid-item v-for="color in theme.themeColorList" :key="color" class="flex-x-center">
+    <n-grid-item v-for="color in theme.primaryColorList" :key="color" class="flex-x-center">
       <div
         class="flex-center w-20px h-20px rounded-2px shadow cursor-pointer"
         :style="{ backgroundColor: color }"
-        @click="themeStore.setThemeColor(color)"
+        @click="themeStore.setPrimaryColor(color)"
       >
         <icon-outline-check
-          v-if="color === theme.themeColor"
+          v-if="color === theme.primaryColor"
           :class="[isWhite(color) ? 'text-gray-700' : 'text-white']"
         />
       </div>
@@ -18,9 +18,9 @@
   </n-grid>
   <n-space :vertical="true" class="pt-12px">
     <n-color-picker
-      :value="theme.themeColor"
+      :value="theme.primaryColor"
       :show-alpha="false"
-      @update-value="themeStore.setThemeColor"
+      @update-value="themeStore.setPrimaryColor"
     />
     <n-button :block="true" :type="otherColorBtnType" @click="showMore">
       {{ $translate('layout.settingDrawer.systemTheme.moreColors') }}
@@ -42,7 +42,7 @@ const { theme } = storeToRefs(themeStore)
 
 const moreRef = ref<InstanceType<typeof More>>()
 
-const isInOther = computed(() => isInTraditionColors(theme.value.themeColor))
+const isInOther = computed(() => isInTraditionColors(theme.value.primaryColor))
 const otherColorBtnType = computed(() => (isInOther.value ? 'primary' : 'default'))
 
 const showMore = () => {

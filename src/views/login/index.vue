@@ -50,13 +50,13 @@ const props = defineProps<Props>()
 const { theme, setDarkMode } = useThemeStore()
 
 const bgThemeColor = computed(() =>
-  theme.darkMode ? getColorPalette(theme.themeColor, 7) : theme.themeColor
+  theme.darkMode ? getColorPalette(theme.primaryColor, 7) : theme.primaryColor
 )
 
 const bgColor = computed(() => {
   const COLOR_WHITE = '#fff'
   const ratio = theme.darkMode ? 0.5 : 0.2
-  return mixColor(COLOR_WHITE, theme.themeColor, ratio)
+  return mixColor(COLOR_WHITE, theme.primaryColor, ratio)
 })
 
 interface LoginType {
