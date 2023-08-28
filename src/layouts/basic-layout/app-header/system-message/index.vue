@@ -66,13 +66,14 @@ import { storeToRefs } from 'pinia'
 import { useBoolean } from '@/hooks'
 import { useThemeStore } from '@/store'
 import { useMobile } from '../../hooks'
+import type { MessageTab } from './typing'
 import MessageList from './message-list.vue'
 
 const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 
-const tabData = ref<App.MessageTab[]>([
+const tabData = ref<MessageTab[]>([
   {
     key: 1,
     name: '通知',

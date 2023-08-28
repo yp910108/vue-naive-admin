@@ -37,8 +37,10 @@
   </n-scrollbar>
 </template>
 <script setup lang="ts">
+import type { MessageList } from './typing'
+
 interface Props {
-  list?: App.MessageList[]
+  list?: MessageList[]
 }
 
 withDefaults(defineProps<Props>(), {
