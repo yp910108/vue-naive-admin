@@ -1,4 +1,5 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { BackendResultConfig } from './typing'
 import CustomAxiosInstance from './instance'
 
 type RequestMethod = 'get' | 'post' | 'put' | 'delete'
@@ -24,7 +25,7 @@ async function getRequestResponse(params: RequestParams): Promise<any> {
 
 export function createRequest(
   axiosConfig: AxiosRequestConfig,
-  backendConfig?: Service.BackendResultConfig
+  backendConfig?: BackendResultConfig
 ) {
   const customInstance = new CustomAxiosInstance(axiosConfig, backendConfig)
 

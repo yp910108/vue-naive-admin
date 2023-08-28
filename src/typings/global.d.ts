@@ -14,8 +14,6 @@ interface Document {
 }
 
 declare namespace Common {
-  type StrategyAction = [boolean, () => void] // 策略模式 [true, 为 true 时执行的回调函数]
-
   type OptionWithKey<K> = { value: K; label: string }
 }
 

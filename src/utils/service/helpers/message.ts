@@ -1,5 +1,5 @@
 import type { AxiosError } from 'axios'
-import { exeStrategyActions } from '../../common'
+import type { RequestError } from '../typing'
 import {
   DEFAULT_REQUEST_ERROR_CODE,
   DEFAULT_REQUEST_ERROR_MSG,
@@ -7,22 +7,21 @@ import {
   ERROR_STATUS,
   NETWORK_ERROR_CODE,
   NETWORK_ERROR_MSG,
-  NO_ERROR_MSG_CODE,
   REQUEST_TIMEOUT_CODE,
   REQUEST_TIMEOUT_MSG
-} from '../config'
+} from '../constant'
 
 const errorMsgStack = new Map<string | number, string>([]) // 错误消息栈，防止同一错误出现两次
 
-function addErrorMsg(err: Service.RequestError) {
+function addErrorMsg(err: RequestError) {
   errorMsgStack.set(err.code, err.message)
 }
 
-function removeErrMsg(err: Service.RequestError) {
+function removeErrMsg(err: RequestError) {
   errorMsgStack.delete(err.code)
 }
 
-function hasErrorMsg(error: Service.RequestError) {
+function hasErrorMsg(error: RequestError) {
   return errorMsgStack.has(error.code)
 }
 
@@ -31,8 +30,8 @@ function hasErrorMsg(error: Service.RequestError) {
  * @param error
  * @returns
  */
-export function showErrorMsg(error: Service.RequestError) {
-  if (!error.message || NO_ERROR_MSG_CODE.includes(error.code) || hasErrorMsg(error)) return
+export function showErrorMsg(error: RequestError) {
+  if (!error.message || hasErrorMsg(error)) return
 
   addErrorMsg(error)
   console.warn(error.code, error.message)
@@ -50,42 +49,35 @@ type ErrorStatus = keyof typeof ERROR_STATUS
  * @returns
  */
 export function handleAxiosError(axiosError: AxiosError) {
-  const error: Service.RequestError = {
+  const error: RequestError = {
     type: 'http',
     code: DEFAULT_REQUEST_ERROR_CODE,
     message: DEFAULT_REQUEST_ERROR_MSG
   }
 
-  const actions: Common.StrategyAction[] = [
-    [
-      // 网络错误
-      !window.navigator.onLine ||
-        axiosError.code === NETWORK_ERROR_CODE ||
-        axiosError.message === 'Network Error',
-      () => {
-        error.code = NETWORK_ERROR_CODE
-        error.message = NETWORK_ERROR_MSG
-      }
-    ],
-    [
-      // 超时错误
-      axiosError.code === REQUEST_TIMEOUT_CODE && axiosError.message.includes('timeout'),
-      () => {
-        error.code = REQUEST_TIMEOUT_CODE
-        error.message = REQUEST_TIMEOUT_MSG
-      }
-    ],
-    [
-      // 请求失败的错误
-      Boolean(axiosError.response),
-      () => {
-        const errorCode = axiosError.response?.status as ErrorStatus
-        error.code = errorCode
-        error.message = ERROR_STATUS[errorCode]
-      }
-    ]
-  ]
-  exeStrategyActions(actions)
+  if (
+    // 网络错误
+    !window.navigator.onLine ||
+    axiosError.code === NETWORK_ERROR_CODE ||
+    axiosError.message === 'Network Error'
+  ) {
+    error.code = NETWORK_ERROR_CODE
+    error.message = NETWORK_ERROR_MSG
+  } else if (
+    // 超时错误
+    axiosError.code === REQUEST_TIMEOUT_CODE &&
+    axiosError.message.includes('timeout')
+  ) {
+    error.code = REQUEST_TIMEOUT_CODE
+    error.message = REQUEST_TIMEOUT_MSG
+  } else if (
+    // 请求失败的错误
+    axiosError.response
+  ) {
+    const errorCode = axiosError.response.status as ErrorStatus
+    error.code = errorCode
+    error.message = ERROR_STATUS[errorCode]
+  }
 
   showErrorMsg(error)
 
@@ -98,7 +90,7 @@ export function handleAxiosError(axiosError: AxiosError) {
  * @param message
  */
 export function handleBackendError(code: string | number, message: string) {
-  const error: Service.RequestError = {
+  const error: RequestError = {
     type: 'backend',
     code: code,
     message

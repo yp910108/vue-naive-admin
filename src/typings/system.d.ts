@@ -1,31 +1,3 @@
-declare namespace Service {
-  /**
-   * 请求的错误类型：
-   * - http: 网络错误、请求超时、网关错误等
-   * - backend: 请求成功，响应的 http 状态码为 200，由后端定义的业务错误
-   */
-  type RequestErrorType = 'http' | 'backend'
-
-  interface RequestError {
-    type: RequestErrorType
-    code: string | number
-    message: string
-  }
-
-  interface BackendResultConfig {
-    codeKey: string
-    dataKey: string
-    messageKey: string
-    successCode: number | string
-  }
-
-  interface MockServiceResult<T = any> {
-    code: string | number
-    data: T
-    message: string
-  }
-}
-
 declare namespace App {
   /**
    * 菜单

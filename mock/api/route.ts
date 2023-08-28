@@ -1,4 +1,5 @@
 import type { MockMethod } from 'vite-plugin-mock'
+import type { MockServiceResult } from '../typing'
 import { userModel } from '../model'
 import { routeModel } from '../model/route'
 
@@ -20,7 +21,7 @@ const apis: MockMethod[] = [
     //     data: null
     //   }
     // },
-    response: (options): Service.MockServiceResult => {
+    response: (options): MockServiceResult => {
       const { userId } = options.body
 
       const role = userModel.find((item) => item.userId === userId)?.userRole ?? 'super'

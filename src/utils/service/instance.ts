@@ -2,17 +2,18 @@ import axios from 'axios'
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/store'
 import { localStg } from '../storage'
+import type { BackendResultConfig, ContentType } from './typing'
+import { INVALID_CODE } from './constant'
 import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
-import { INVALID_CODE } from './config'
 
 export default class CustomAxiosInstance {
   instance: AxiosInstance
 
-  backendConfig: Service.BackendResultConfig
+  backendConfig: BackendResultConfig
 
   constructor(
     axiosConfig: AxiosRequestConfig,
-    backendConfig: Service.BackendResultConfig = {
+    backendConfig: BackendResultConfig = {
       codeKey: 'code',
       dataKey: 'data',
       messageKey: 'message',
@@ -27,7 +28,7 @@ export default class CustomAxiosInstance {
   setInterceptor() {
     this.instance.interceptors.request.use((config) => {
       if (config.headers) {
-        const contentType = config.headers['Content-Type'] as UnionKey.ContentType
+        const contentType = config.headers['Content-Type'] as ContentType
         config.headers.Authorization = localStg.get('token') ?? ''
         config.data = transformRequestData(config.data, contentType)
       }
@@ -60,10 +61,8 @@ export default class CustomAxiosInstance {
           if (status === 304) {
             return data
           } else if (status === 401) {
-            const error = handleAxiosError(axiosError)
             const authStore = useAuthStore()
             authStore.logout()
-            return Promise.reject(error)
           }
         }
         const error = handleAxiosError(axiosError)

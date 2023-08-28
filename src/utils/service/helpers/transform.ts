@@ -1,5 +1,6 @@
 import { stringify } from 'qs'
 import { isArray, isFile } from '../../common'
+import type { ContentType } from '../typing'
 
 async function transformFile(formData: FormData, key: string, file: File[] | File) {
   if (isArray(file)) {
@@ -36,7 +37,7 @@ function handleFormData(data: Record<string, any>) {
  * @param contentType
  * @returns
  */
-export function transformRequestData(requestData: any, contentType?: UnionKey.ContentType) {
+export function transformRequestData(requestData: any, contentType?: ContentType) {
   if (contentType === 'application/x-www-form-urlencoded') {
     requestData = stringify(requestData)
   } else if (contentType === 'multipart/form-data') {
