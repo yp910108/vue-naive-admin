@@ -38,20 +38,20 @@ function getFirstPathNotExternal(authRoutes: AuthRoute.Route[]) {
 /**
  * 将权限路由转换为 vue 路由
  * @param authRoutes
- * @returns vueRoutes
+ * @returns routes
  */
-export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
-  const vueRootRoute = {
+export function transformRouteMapToRoutes(authRoutes: AuthRoute.Route[]) {
+  const rootRoute = {
     name: 'Root',
     path: '/'
   } as RouteRecordRaw
-  const vueBlankLayoutRoute: RouteRecordRaw = {
+  const blankLayoutRoute: RouteRecordRaw = {
     path: '/',
     name: 'BlankLayout',
     component: BlankLayout,
     children: []
   }
-  const vueBasicLayoutRoute: RouteRecordRaw = {
+  const basicLayoutRoute: RouteRecordRaw = {
     path: '/',
     name: 'BasicLayout',
     component: BasicLayout,
@@ -63,12 +63,7 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
     component: NotFound
   }
 
-  const vueRoutes: RouteRecordRaw[] = [
-    vueRootRoute,
-    vueBlankLayoutRoute,
-    vueBasicLayoutRoute,
-    vueNotFoundRoute
-  ]
+  const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
 
   const transform = (authRoutes: AuthRoute.Route[], prefix: string = '') => {
     for (const authRoute of authRoutes) {
@@ -80,34 +75,34 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
       if (children && children.length) {
         const firstPathNotExternal = getFirstPathNotExternal(children)
         if (!firstPathNotExternal) continue
-        const vueRoute: RouteRecordRaw = {
+        const route: RouteRecordRaw = {
           path: fullpath,
           name,
           redirect: redirect ?? `/${combineURL(fullpath, firstPathNotExternal)}`
         }
         if (layout === 'blank') {
-          vueBlankLayoutRoute.children.push(vueRoute)
+          blankLayoutRoute.children.push(route)
         } else {
-          vueBasicLayoutRoute.children.push(vueRoute)
+          basicLayoutRoute.children.push(route)
         }
         transform(children, fullpath)
       } else {
         const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
         const component = getNamedView(view, name)
-        const vueRoute: RouteRecordRaw = {
+        const route: RouteRecordRaw = {
           path: fullpath,
           name,
           props,
           component,
           meta: { ...rest }
         }
-        if (vueRoute.meta?.activeMenu) {
-          vueRoute.meta.activeMenu = parsePathToName(vueRoute.meta.activeMenu)
+        if (route.meta?.activeMenu) {
+          route.meta.activeMenu = parsePathToName(route.meta.activeMenu)
         }
         if (layout === 'blank') {
-          vueBlankLayoutRoute.children.push(vueRoute)
+          blankLayoutRoute.children.push(route)
         } else {
-          vueBasicLayoutRoute.children.push(vueRoute)
+          basicLayoutRoute.children.push(route)
         }
       }
     }
@@ -115,11 +110,13 @@ export function transformAuthRoutesToVueRoutes(authRoutes: AuthRoute.Route[]) {
 
   transform(authRoutes)
 
-  const routes = vueBasicLayoutRoute.children.filter(({ meta }) => !meta?.hide)
+  const visibleRoutes = basicLayoutRoute.children.filter(({ meta }) => !meta?.hide)
 
-  const redirectPath = routes.length ? `/${removeParamsFromPath(routes[0].path)}` : undefined
+  const redirectPath = visibleRoutes.length
+    ? `/${removeParamsFromPath(visibleRoutes[0].path)}`
+    : undefined
 
-  vueRootRoute.redirect = redirectPath
+  rootRoute.redirect = redirectPath
 
-  return vueRoutes
+  return routes
 }

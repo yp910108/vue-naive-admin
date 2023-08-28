@@ -1,7 +1,7 @@
 import type { RouterScrollBehavior } from 'vue-router'
 import { useAppStore, useTabStore } from '@/store'
 
-const scrollBehavior: RouterScrollBehavior = (to, from) => {
+export const scrollBehavior: RouterScrollBehavior = (to, from) => {
   const appStore = useAppStore()
   const tabStore = useTabStore()
 
@@ -29,5 +29,3 @@ const scrollBehavior: RouterScrollBehavior = (to, from) => {
     }, 400)
   })
 }
-
-export default scrollBehavior

@@ -50,25 +50,6 @@ export default function subscribeThemeStore() {
 
   scope.run(() => {
     watch(
-      () => theme.value.primaryColor,
-      (newVal) => {
-        sessionStg.set('primaryColor', newVal)
-      },
-      { immediate: true }
-    )
-    watch(
-      () => theme.value.darkMode,
-      (newVal) => {
-        if (newVal) {
-          addDarkClass()
-        } else {
-          removeDarkClass()
-        }
-      },
-      { immediate: true }
-    )
-
-    watch(
       osTheme,
       (newVal) => {
         const isDark = newVal === 'dark'

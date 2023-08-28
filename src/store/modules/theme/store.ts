@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { GlobalThemeOverrides } from 'naive-ui'
 import { darkTheme } from 'naive-ui'
+import { sessionStg } from '@/utils'
 import type {
   Settings,
   ThemeAnimateMode,
@@ -10,7 +11,12 @@ import type {
   ThemeScrollMode,
   ThemeTabMode
 } from './typing'
-import { getThemeColors, initSettings } from './helper'
+import {
+  addDarkClassToDocument,
+  getThemeColors,
+  initSettings,
+  removeDarkClassFromDocument
+} from './helper'
 
 export const useThemeStore = defineStore('theme-store', () => {
   const theme = ref<Settings>(initSettings())
@@ -32,6 +38,11 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const setDarkMode = (darkMode: boolean) => {
     theme.value.darkMode = darkMode
+    if (darkMode) {
+      addDarkClassToDocument()
+    } else {
+      removeDarkClassFromDocument()
+    }
   }
 
   const setFollowSystemTheme = (visible: boolean) => {
@@ -59,6 +70,7 @@ export const useThemeStore = defineStore('theme-store', () => {
   }
 
   const setPrimaryColor = (primaryColor: string) => {
+    sessionStg.set('primaryColor', primaryColor)
     theme.value.primaryColor = primaryColor
     if (!theme.value.isCustomizeInfoColor) {
       theme.value.otherColor.info = primaryColor

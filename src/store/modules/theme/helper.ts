@@ -53,3 +53,19 @@ export function getThemeColors(colors: Record<ColorType, string>) {
 
   return themeColors
 }
+
+const DARK_CLASS = 'dark'
+
+/**
+ * 将 dark 类名添加到 document.documentELement
+ */
+export function addDarkClassToDocument() {
+  document.documentElement.classList.add(DARK_CLASS)
+}
+
+/**
+ * 将 dark 类名从 document.documentELement 移除
+ */
+export function removeDarkClassFromDocument() {
+  document.documentElement.classList.remove(DARK_CLASS)
+}

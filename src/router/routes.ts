@@ -1,4 +1,4 @@
-const routes: AuthRoute.Route[] = [
+export const routes: AuthRoute.Route[] = [
   {
     title: '登录',
     path: 'login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
@@ -34,5 +34,3 @@ const routes: AuthRoute.Route[] = [
     hide: true
   }
 ]
-
-export default routes
