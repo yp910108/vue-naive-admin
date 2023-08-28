@@ -62,18 +62,4 @@ declare namespace App {
     routePath: string
     icon?: () => import('vue').Component
   }
-
-  /**
-   * 多页签 Tab 的路由
-   */
-  type GlobalTab = {
-    key: string
-    title: string
-    routePath: string
-    icon?: Icon.IconName
-    scrollPosition: {
-      left: number
-      top: number
-    }
-  }
 }

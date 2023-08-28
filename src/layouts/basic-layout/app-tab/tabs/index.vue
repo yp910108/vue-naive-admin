@@ -27,7 +27,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { PageTab } from '@soybeanjs/vue-materials'
-import { useRouteStore, useTabStore, useThemeStore } from '@/store'
+import { useRouteStore, useTabStore, useThemeStore, type Tab } from '@/store'
 import ContextMenu from './context-menu.vue'
 
 interface Emits {
@@ -43,28 +43,28 @@ const tabStore = useTabStore()
 
 const isChromeMode = computed(() => theme.value.tab.mode === 'chrome')
 
-const closeable = (tab: App.GlobalTab) => {
+const closeable = (tab: Tab) => {
   return tab.key !== routeStore.rootRoute.name
 }
 
 interface ContextMenuProps {
   visible?: boolean
-  tab?: App.GlobalTab
+  tab?: Tab
   closable?: boolean
   x?: number
   y?: number
 }
 const contextMenuProps = ref<ContextMenuProps>({})
 
-const handleClick = (tab: App.GlobalTab) => {
+const handleClick = (tab: Tab) => {
   router.push(tab.routePath)
 }
 
-const handleClose = (tab: App.GlobalTab) => {
+const handleClose = (tab: Tab) => {
   tabStore.removeTab(tab)
 }
 
-const handleContextMenu = (e: MouseEvent, tab: App.GlobalTab) => {
+const handleContextMenu = (e: MouseEvent, tab: Tab) => {
   const duration = contextMenuProps.value.visible ? 150 : 0
   setTimeout(() => {
     contextMenuProps.value.visible = true

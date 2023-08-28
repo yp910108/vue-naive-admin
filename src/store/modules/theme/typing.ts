@@ -87,7 +87,7 @@ export type ThemeTabMode = 'chrome' | 'button'
 /**
  * 多页签样式
  */
-export interface Tab {
+interface Tab {
   /**
    * 多页签可见
    */

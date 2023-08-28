@@ -1,4 +1,5 @@
 import type { RouteLocationNormalizedLoaded, RouteRecordNormalized } from 'vue-router'
+import type { Tab } from './typing'
 
 function hasFullPath(
   route: RouteLocationNormalizedLoaded | RouteRecordNormalized
@@ -17,9 +18,9 @@ export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecord
       left: 0,
       top: 0
     }
-  } as App.GlobalTab
+  } as Tab
 }
 
-export function hasTab(tabs: App.GlobalTab[], activeTab: App.GlobalTab) {
+export function hasTab(tabs: Tab[], activeTab: Tab) {
   return !!tabs.find((tab) => tab.key === activeTab.key)
 }

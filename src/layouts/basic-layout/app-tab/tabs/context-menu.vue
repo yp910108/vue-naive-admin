@@ -14,11 +14,11 @@
 import { computed } from 'vue'
 import type { DropdownOption } from 'naive-ui'
 import { renderIcon } from '@/utils'
-import { useAppStore, useTabStore } from '@/store'
+import { useAppStore, useTabStore, type Tab } from '@/store'
 
 interface Props {
   visible?: boolean
-  tab?: App.GlobalTab
+  tab?: Tab
   /**
    * tab 是否可关闭
    */
