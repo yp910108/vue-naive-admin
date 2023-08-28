@@ -35,31 +35,3 @@ declare namespace Auth {
     userRole: RoleType
   }
 }
-
-declare namespace App {
-  /**
-   * 菜单
-   */
-  type MenuOption = import('naive-ui').MenuOption & {
-    key: string
-    label: string
-    routePath: string
-    icon?: () => import('vue').Component
-    children?: MenuOption[]
-  }
-
-  /**
-   * 面包屑
-   */
-  type Breadcrumb = MenuOption
-
-  /**
-   * 搜索菜单
-   */
-  type SearchMenu = {
-    key: string
-    label: string
-    routePath: string
-    icon?: () => import('vue').Component
-  }
-}

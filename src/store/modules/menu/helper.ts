@@ -1,5 +1,6 @@
 import type { Route } from '@/router'
 import { camelize, combineURL, isExternal, renderIcon } from '@/utils'
+import type { MenuOption, SearchMenuOption } from './typing'
 
 /**
  * 通过路径获取组件名称
@@ -16,11 +17,11 @@ export function parsePathToName(path: string) {
  * @param prefix
  */
 export function transformMenus(routeData: Route[], prefix: string = '/') {
-  const menus: App.MenuOption[] = []
+  const menus: MenuOption[] = []
   for (const { title, path, icon, children } of routeData) {
     const fullpath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
     const name = parsePathToName(fullpath)
-    const menu: App.MenuOption = {
+    const menu: MenuOption = {
       key: name,
       label: title,
       routePath: fullpath
@@ -40,8 +41,8 @@ export function transformMenus(routeData: Route[], prefix: string = '/') {
  * 将权限路由转换为搜索菜单
  * @param authRoutes
  */
-export function transformSearchMenus(menus: App.MenuOption[]) {
-  const searchMenus: App.SearchMenu[] = []
+export function transformSearchMenus(menus: MenuOption[]) {
+  const searchMenus: SearchMenuOption[] = []
   for (const menu of menus) {
     const { children, ...rest } = menu
     searchMenus.push({ ...rest })

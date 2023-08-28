@@ -26,7 +26,7 @@
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
-import { useAppStore, useMenuStore, useThemeStore } from '@/store'
+import { useAppStore, useMenuStore, useThemeStore, type MenuOption } from '@/store'
 import Logo from '../../components/logo.vue'
 import MixMenuItem from './mix-menu-item.vue'
 import MixMenuDrawer from './mix-menu-drawer.vue'
@@ -42,7 +42,7 @@ const activeKey = ref<string>()
 
 const mixMenuDrawerRef = ref<InstanceType<typeof MixMenuDrawer>>()
 
-const handleMixMenuChange = ({ key, children }: App.MenuOption) => {
+const handleMixMenuChange = ({ key, children }: MenuOption) => {
   activeKey.value = key
   if (children && children.length) {
     mixMenuDrawerRef.value?.show(children)

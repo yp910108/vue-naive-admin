@@ -36,7 +36,7 @@ import { ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { onKeyStroke, useDebounceFn } from '@vueuse/core'
 import { useBoolean } from '@/hooks'
-import { useMenuStore } from '@/store'
+import { useMenuStore, type SearchMenuOption } from '@/store'
 import { useMobile } from '../../../hooks'
 import Result from './result.vue'
 import SearchFooter from './footer.vue'
@@ -52,7 +52,7 @@ const { bool: visible, setTrue, setFalse } = useBoolean()
 
 const keyword = ref<string | null>()
 const activeKey = ref<string>()
-const resultOptions = shallowRef<App.SearchMenu[]>()
+const resultOptions = shallowRef<SearchMenuOption[]>()
 
 const search = () => {
   resultOptions.value = menuStore.searchMenus.filter(({ label }) => {

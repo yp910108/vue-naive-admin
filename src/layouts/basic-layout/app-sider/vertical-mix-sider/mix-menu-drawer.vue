@@ -40,10 +40,10 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import type { MenuOption } from 'naive-ui'
+import type { MenuOption as NaiveMenuOption } from 'naive-ui'
 import { isExternal } from '@/utils'
 import { useBoolean } from '@/hooks'
-import { useAppStore, useThemeStore } from '@/store'
+import { useAppStore, useThemeStore, type MenuOption } from '@/store'
 import { getActiveKeyPathsOfMenus } from '../hepler'
 
 const route = useRoute()
@@ -53,19 +53,19 @@ const { theme } = storeToRefs(useThemeStore())
 
 const { bool: visible, setTrue, setFalse } = useBoolean()
 
-const menus = ref<App.MenuOption[]>()
-const setMenus = (_menus: App.MenuOption[]) => {
+const menus = ref<MenuOption[]>()
+const setMenus = (_menus: MenuOption[]) => {
   menus.value = _menus
 }
 
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 const expandedKeys = ref<string[]>()
-const setExpandKeys = (menus: App.MenuOption[]) => {
+const setExpandKeys = (menus: MenuOption[]) => {
   expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menus)
 }
 
-const handleUpdateMenu = (key: string, item: MenuOption) => {
-  const { routePath } = item as App.MenuOption
+const handleUpdateMenu = (key: string, item: NaiveMenuOption) => {
+  const { routePath } = item as MenuOption
   if (isExternal(routePath)) {
     window.open(routePath, '_blank')
   } else {
@@ -77,7 +77,7 @@ const handleUpdateExpandedKeys = (keys: string[]) => {
   expandedKeys.value = keys
 }
 
-const show = (menus: App.MenuOption[]) => {
+const show = (menus: MenuOption[]) => {
   setMenus(menus)
   setExpandKeys(menus)
   setTrue()
