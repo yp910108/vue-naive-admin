@@ -1,7 +1,7 @@
 import { ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
-import { NO_MENU_MSG, transformRouteMapToRoutes } from '@/utils'
+import { NO_MENU_MSG, transformRoutes } from '@/utils'
 import { router, constantRoutes } from '@/router'
 import { fetchUserRoutes } from '@/service'
 import { useAuthStore } from '../auth'
@@ -31,7 +31,7 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   const initConstantRoutes = () => {
-    setRoutes(transformRouteMapToRoutes(constantRoutes))
+    setRoutes(transformRoutes(constantRoutes))
   }
 
   const clearRoutes = () => {
@@ -59,7 +59,7 @@ export const useRouteStore = defineStore('route-store', () => {
     }
 
     clearRoutes()
-    setRoutes(transformRouteMapToRoutes([...constantRoutes, ...(data ?? [])]))
+    setRoutes(transformRoutes([...constantRoutes, ...(data ?? [])]))
     menuStore.setMenus(data ?? [])
   }
 

@@ -1,4 +1,6 @@
-export const routes: AuthRoute.Route[] = [
+import type { Route } from './typing'
+
+export const routes: Route[] = [
   {
     title: '登录',
     path: 'login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',

@@ -1,4 +1,5 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
+import type { Route } from '@/router/typing'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
 import { combineURL, isExternal } from '../common'
@@ -25,10 +26,10 @@ function getNamedView(view: Lazy<ModuleComponent>, name: string) {
 
 /**
  * 获取第一个不为外部链接的 path
- * @param authRoutes
+ * @param routeData
  */
-function getFirstPathNotExternal(authRoutes: AuthRoute.Route[]) {
-  for (const { path } of authRoutes) {
+function getFirstPathNotExternal(routeData: Route[]) {
+  for (const { path } of routeData) {
     if (!isExternal(path)) {
       return path
     }
@@ -36,11 +37,10 @@ function getFirstPathNotExternal(authRoutes: AuthRoute.Route[]) {
 }
 
 /**
- * 将权限路由转换为 vue 路由
- * @param authRoutes
- * @returns routes
+ * 转换路由
+ * @param routeData
  */
-export function transformRouteMapToRoutes(authRoutes: AuthRoute.Route[]) {
+export function transformRoutes(routeData: Route[]) {
   const rootRoute = {
     name: 'Root',
     path: '/'
@@ -65,9 +65,8 @@ export function transformRouteMapToRoutes(authRoutes: AuthRoute.Route[]) {
 
   const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
 
-  const transform = (authRoutes: AuthRoute.Route[], prefix: string = '') => {
-    for (const authRoute of authRoutes) {
-      const { path, layout, redirect, props, children, ...rest } = authRoute
+  const transform = (routeData: Route[], prefix: string = '') => {
+    for (const { path, layout, redirect, props, children, ...rest } of routeData) {
       if (isExternal(path)) continue
       const fullpath = combineURL(prefix, path)
       const pagePath = removeParamsFromPath(fullpath)
@@ -108,7 +107,7 @@ export function transformRouteMapToRoutes(authRoutes: AuthRoute.Route[]) {
     }
   }
 
-  transform(authRoutes)
+  transform(routeData)
 
   const visibleRoutes = basicLayoutRoute.children.filter(({ meta }) => !meta?.hide)
 

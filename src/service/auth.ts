@@ -1,3 +1,4 @@
+import type { Route } from '@/router'
 import { mockRequest } from '../utils'
 
 /**
@@ -24,5 +25,5 @@ export function fetchUserInfo() {
  * @returns
  */
 export function fetchUserRoutes(userId: string) {
-  return mockRequest.post<AuthRoute.Route[]>('/getUserRoutes', { userId })
+  return mockRequest.post<Route[]>('/getUserRoutes', { userId })
 }

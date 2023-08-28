@@ -1,3 +1,4 @@
+import type { Route } from '@/router/typing'
 import { combineURL, isExternal, renderIcon } from '../common'
 import { parsePathToName } from './helper'
 
@@ -6,7 +7,7 @@ import { parsePathToName } from './helper'
  * @param authRoutes
  * @returns
  */
-export function transformAuthRoutesToMenus(authRoutes: AuthRoute.Route[], prefix: string = '/') {
+export function transformAuthRoutesToMenus(authRoutes: Route[], prefix: string = '/') {
   const menus: App.GlobalMenuOption[] = []
   for (const authRoute of authRoutes) {
     const { title, path, icon, children } = authRoute

@@ -1,4 +1,6 @@
-export const routeModel: Record<Auth.RoleType, AuthRoute.Route[]> = {
+import type { Route } from '@/router'
+
+export const routeModel: Record<Auth.RoleType, Route[]> = {
   super: [
     {
       title: '仪表盘',

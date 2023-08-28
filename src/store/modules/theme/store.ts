@@ -1,7 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { GlobalThemeOverrides } from 'naive-ui'
-import { darkTheme } from 'naive-ui'
+import { darkTheme, type GlobalThemeOverrides } from 'naive-ui'
 import { sessionStg } from '@/utils'
 import type {
   Settings,
