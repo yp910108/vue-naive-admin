@@ -28,11 +28,7 @@ export default defineConfig(({ mode }) => {
       proxy: setupViteProxy()
     },
     build: {
-      reportCompressedSize: false,
-      sourcemap: false,
-      commonjsOptions: {
-        ignoreTryCatch: false
-      }
+      reportCompressedSize: false
     }
   }
 })
