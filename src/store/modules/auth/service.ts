@@ -1,4 +1,5 @@
 import { mockRequest } from '@/utils'
+import type { UserInfo } from './typing'
 
 /**
  * 登录
@@ -15,5 +16,5 @@ export function login(userName: string, password: string) {
  * @returns
  */
 export function fetchUserInfo() {
-  return mockRequest.get<Auth.UserInfo>('/getUserInfo')
+  return mockRequest.get<UserInfo>('/getUserInfo')
 }

@@ -17,6 +17,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { RoleType } from '@/store'
 import { userRoleLabels } from './constant'
 
 interface Emits {
@@ -26,7 +27,7 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 interface Account {
-  key: Auth.RoleType
+  key: RoleType
   label: string
   userName: string
   password: string

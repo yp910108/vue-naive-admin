@@ -1,10 +1,10 @@
 import type { Lang } from '@/locales/typing'
 import { decrypto, encrypto } from '../crypto'
-import type { Tab } from '@/store'
+import type { Tab, UserInfo } from '@/store'
 
 interface LocalStorage {
   token?: string
-  userInfo?: Auth.UserInfo
+  userInfo?: UserInfo
   lang?: Lang
   tabs?: Tab[]
 }

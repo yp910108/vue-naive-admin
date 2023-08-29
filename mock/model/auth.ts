@@ -1,4 +1,6 @@
-interface UserModel extends Auth.UserInfo {
+import type { UserInfo } from '@/store'
+
+interface UserModel extends UserInfo {
   token: string
   password: string
 }
