@@ -11,27 +11,49 @@ defineOptions({ name: 'CountTo' })
 type TansitionKey = keyof typeof TransitionPresets
 
 interface Props {
-  /** 初始值 */
+  /**
+   * 初始值
+   */
   startValue?: number
-  /** 结束值 */
+  /**
+   *  结束值
+   */
   endValue?: number
-  /** 动画时长 */
+  /**
+   *  动画时长
+   */
   duration?: number
-  /** 自动动画 */
+  /**
+   * 自动动画
+   */
   autoplay?: boolean
-  /** 进制 */
+  /**
+   * 进制
+   */
   decimals?: number
-  /** 前缀 */
+  /**
+   *  前缀
+   */
   prefix?: string
-  /** 后缀 */
+  /**
+   * 后缀
+   */
   suffix?: string
-  /** 分割符号 */
+  /**
+   * 分割符号
+   */
   separator?: string
-  /** 小数点 */
+  /**
+   * 小数点
+   */
   decimal?: string
-  /** 使用缓冲动画函数 */
+  /**
+   * 使用缓冲动画函数
+   */
   useEasing?: boolean
-  /** 缓冲动画函数类型 */
+  /**
+   *  缓冲动画函数类型
+   */
   transition?: TansitionKey
 }
 

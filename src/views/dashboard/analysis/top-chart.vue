@@ -1,5 +1,5 @@
 <template>
-  <n-grid :x-gap="16" :y-gap="16" :item-responsive="true">
+  <n-grid :x-gap="16" :y-gap="16" item-responsive>
     <n-grid-item span="0:24 640:24 1024:6">
       <n-card :bordered="false" class="rounded-8px shadow-sm">
         <div class="w-full h-360px py-12px">
@@ -13,7 +13,7 @@
             <count-to :start-value="0" :end-value="1234" />
           </h3>
           <p class="text-#aaa">Current Month Sales</p>
-          <n-button class="mt-24px whitespace-pre-wrap" type="primary">Last Month Summary</n-button>
+          <n-button type="primary" class="mt-24px whitespace-pre-wrap">Last Month Summary</n-button>
         </div>
       </n-card>
     </n-grid-item>
