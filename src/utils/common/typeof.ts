@@ -1,5 +1,28 @@
+interface DataType {
+  number: number
+  string: string
+  boolean: boolean
+  null: null
+  undefined: undefined
+  symbol: symbol
+  bigInt: bigint
+  object: Record<string, any>
+  array: any[]
+  function: (...args: any[]) => any | void
+  date: Date
+  regExp: RegExp
+  promise: Promise<any>
+  set: Set<any>
+  map: Map<any, any>
+  file: File
+}
+
+type DataTypeStringKey = keyof DataType
+
+type DataTypeString<T extends DataTypeStringKey = DataTypeStringKey> = `[object ${Capitalize<T>}]`
+
 const dataTypeLabels: {
-  [K in TypeUtil.DataTypeStringKey]: TypeUtil.DataTypeString<K>
+  [K in DataTypeStringKey]: DataTypeString<K>
 } = {
   string: '[object String]',
   number: '[object Number]',
@@ -19,8 +42,8 @@ const dataTypeLabels: {
   file: '[object File]'
 }
 
-function getDataTypeString<K extends TypeUtil.DataTypeStringKey>(value: unknown) {
-  return Object.prototype.toString.call(value) as TypeUtil.DataTypeString<K>
+function getDataTypeString<K extends DataTypeStringKey>(value: unknown) {
+  return Object.prototype.toString.call(value) as DataTypeString<K>
 }
 
 export function isNumber<T extends number>(value: T | unknown): value is T {
