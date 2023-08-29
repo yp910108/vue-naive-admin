@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv } from 'vite'
-import { setupVitePlugins } from './build'
+import { setupVitePlugins, setupViteProxy } from './build'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd()) as ImportMetaEnv
@@ -23,6 +23,9 @@ export default defineConfig(({ mode }) => {
     },
     optimizeDeps: {
       include: ['@better-scroll/core']
+    },
+    server: {
+      proxy: setupViteProxy()
     },
     build: {
       reportCompressedSize: false,
