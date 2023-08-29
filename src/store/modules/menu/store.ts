@@ -5,7 +5,7 @@ import type { MenuOption } from './typing'
 import { transformMenus, transformSearchMenus } from './helper'
 
 export const useMenuStore = defineStore('menu-store', () => {
-  const menus = ref<MenuOption[]>()
+  const menus = ref<MenuOption[]>([])
 
   const reset = () => {
     menus.value = []
@@ -15,6 +15,7 @@ export const useMenuStore = defineStore('menu-store', () => {
     menus.value = transformMenus(authRoutes)
   }
 
+  // @ts-ignore
   const searchMenus = computed(() => transformSearchMenus(menus.value ?? []))
 
   return {

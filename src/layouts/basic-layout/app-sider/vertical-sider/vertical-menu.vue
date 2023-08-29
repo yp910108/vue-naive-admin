@@ -49,7 +49,7 @@ const handleUpdateExpandedKeys = (keys: string[]) => {
 watch(
   () => route.name,
   () => {
-    expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menuStore.menus ?? [])
+    expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menuStore.menus)
   }
 )
 </script>

@@ -46,7 +46,7 @@ const { theme } = storeToRefs(useThemeStore())
 
 const breadcrumbs = computed(() => {
   // @ts-ignore
-  return getBreadcrumbsNyRouteName(route.name as string, menuStore.menus ?? [])
+  return getBreadcrumbsNyRouteName(route.name as string, menuStore.menus)
 })
 
 const handleDropdownSelect = (key: string) => {
