@@ -13,6 +13,11 @@ interface Document {
   startViewTransition?: (callback: () => Promise<void> | void) => ViewTransition
 }
 
-declare namespace Common {
-  type OptionWithKey<K> = { value: K; label: string }
+/**
+ * vue 的 defineExpose 导出的类型
+ */
+declare namespace Expose {
+  interface BetterScroll {
+    instance: import('@better-scroll/core').BScrollInstance
+  }
 }

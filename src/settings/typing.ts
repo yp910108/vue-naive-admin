@@ -1,3 +1,5 @@
+import type { OptionWithKey } from '@/utils'
+
 /**
  * 布局模式
  * - vertical 左侧菜单模式
@@ -22,7 +24,7 @@ interface Layout {
   /**
    * 布局模式列表
    */
-  modeList: Common.OptionWithKey<LayoutMode>[]
+  modeList: OptionWithKey<LayoutMode>[]
 }
 
 /**
@@ -103,7 +105,7 @@ interface Tab {
   /**
    * 多页签风格列表
    */
-  modeList: Common.OptionWithKey<TabMode>[]
+  modeList: OptionWithKey<TabMode>[]
   /**
    * 开启多页签缓存
    */
@@ -159,7 +161,7 @@ interface Menu {
   /**
    * 水平模式的菜单的位置列表
    */
-  horizontalPositionList: Common.OptionWithKey<HorizontalMenuPosition>[]
+  horizontalPositionList: OptionWithKey<HorizontalMenuPosition>[]
 }
 
 /**
@@ -214,7 +216,7 @@ interface Page {
   /**
    * 动画类型列表
    */
-  animateModeList: Common.OptionWithKey<AnimateMode>[]
+  animateModeList: OptionWithKey<AnimateMode>[]
 }
 
 /**
@@ -248,7 +250,7 @@ export interface Settings {
   /**
    * 滚动模式列表
    */
-  scrollModeList: Common.OptionWithKey<ScrollMode>[]
+  scrollModeList: OptionWithKey<ScrollMode>[]
   /**
    * 主颜色
    */
