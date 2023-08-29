@@ -35,7 +35,6 @@
 import { ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { onKeyStroke, useDebounceFn } from '@vueuse/core'
-import { useBoolean } from '@/hooks'
 import { useMenuStore, type SearchMenuOption } from '@/store'
 import { useMobile } from '../../../hooks'
 import Result from './result.vue'
@@ -48,7 +47,7 @@ const menuStore = useMenuStore()
 
 const { isMobile } = useMobile()
 
-const { bool: visible, setTrue, setFalse } = useBoolean()
+const visible = ref(false)
 
 const keyword = ref<string | null>()
 const activeKey = ref<string>()
@@ -113,11 +112,11 @@ onKeyStroke('ArrowDown', handleDown)
 onKeyStroke('Enter', handleEnter)
 
 const show = () => {
-  setTrue()
+  visible.value = true
 }
 
 const hide = () => {
-  setFalse()
+  visible.value = false
 }
 
 defineExpose({ show, hide })

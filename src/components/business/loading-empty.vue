@@ -26,9 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { NETWORK_ERROR_MSG } from '@/utils'
-import { useBoolean } from '@/hooks'
 
 defineOptions({ name: 'LoadingEmptyWrapper' })
 
@@ -51,8 +50,8 @@ const props = withDefaults(defineProps<Props>(), {
   descClass: 'text-16px text-#666'
 })
 
-const { bool: network, setBool: setNetwork } = useBoolean(window.navigator.onLine)
-const { bool: reloadFlag, setBool: setReload } = useBoolean(true)
+const network = ref(window.navigator.onLine)
+const reloadFlag = ref(true)
 
 const isEmpty = computed(() => props.empty && !props.loading && network.value)
 
@@ -64,9 +63,9 @@ const networkErrorDesc = computed(() =>
 
 const handleReload = () => {
   if (!props.showNetworkReload) return
-  setReload(false)
+  reloadFlag.value = false
   nextTick(() => {
-    setReload(true)
+    reloadFlag.value = true
   })
 }
 
@@ -74,7 +73,7 @@ watch(
   () => props.loading,
   (newVal) => {
     if (!newVal) {
-      setNetwork(window.navigator.onLine)
+      network.value = window.navigator.onLine
     }
   }
 )

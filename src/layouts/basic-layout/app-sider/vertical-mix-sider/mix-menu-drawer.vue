@@ -42,7 +42,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import type { MenuOption as NaiveMenuOption } from 'naive-ui'
 import { isExternal } from '@/utils'
-import { useBoolean } from '@/hooks'
 import { useAppStore, useThemeStore, type MenuOption } from '@/store'
 import { getActiveKeyPathsOfMenus } from '../hepler'
 
@@ -51,7 +50,7 @@ const router = useRouter()
 const appStore = useAppStore()
 const { theme } = storeToRefs(useThemeStore())
 
-const { bool: visible, setTrue, setFalse } = useBoolean()
+const visible = ref(false)
 
 const menus = ref<MenuOption[]>()
 const setMenus = (_menus: MenuOption[]) => {
@@ -80,11 +79,11 @@ const handleUpdateExpandedKeys = (keys: string[]) => {
 const show = (menus: MenuOption[]) => {
   setMenus(menus)
   setExpandKeys(menus)
-  setTrue()
+  visible.value = true
 }
 
 const hide = () => {
-  setFalse()
+  visible.value = false
   setTimeout(() => {
     if (!appStore.mixSiderFixed) {
       menus.value = undefined

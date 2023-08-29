@@ -63,7 +63,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useBoolean } from '@/hooks'
 import { useThemeStore } from '@/store'
 import { useMobile } from '../../hooks'
 import type { MessageTab } from './typing'
@@ -220,7 +219,7 @@ const count = computed(() => {
 
 const currentTab = ref(0)
 
-const { bool: loading, setBool: setLoading } = useBoolean()
+const loading = ref(false)
 
 const currentList = computed({
   get() {
@@ -248,10 +247,10 @@ const handleAllRead = () => {
 }
 
 const handleLoadMore = () => {
-  setLoading(true)
+  loading.value = true
   setTimeout(() => {
     currentList.value.push(...currentList.value)
-    setLoading(false)
+    loading.value = false
   }, 1000)
 }
 </script>

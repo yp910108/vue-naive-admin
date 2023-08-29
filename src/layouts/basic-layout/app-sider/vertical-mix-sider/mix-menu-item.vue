@@ -1,8 +1,8 @@
 <template>
   <div
     class="mb-6px px-4px cursor-pointer"
-    @mouseenter="setTrue"
-    @mouseleave="setFalse"
+    @mouseenter="isHover = true"
+    @mouseleave="isHover = false"
     @click="handleClick"
   >
     <div
@@ -23,8 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useBoolean } from '@/hooks'
+import { computed, ref } from 'vue'
 import type { MenuOption } from '@/store'
 
 interface Props {
@@ -43,7 +42,7 @@ const emit = defineEmits<Emits>()
 
 const Icon = computed(() => props.item.icon)
 
-const { bool: isHover, setTrue, setFalse } = useBoolean()
+const isHover = ref(false)
 
 const handleClick = () => {
   emit('change', props.item)

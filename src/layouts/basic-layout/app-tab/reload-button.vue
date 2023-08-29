@@ -10,20 +10,20 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppStore } from '@/store'
-import { useLoading } from '@/hooks'
 
 const route = useRoute()
 const appStore = useAppStore()
-const { loading, startLoading, endLoading } = useLoading()
+const loading = ref(false)
 
 const handleRefresh = () => {
   const key = route.name as string
-  startLoading()
+  loading.value = true
   appStore.reloadPage(key)
   setTimeout(() => {
-    endLoading()
+    loading.value = false
   }, 1000)
 }
 </script>
