@@ -1,19 +1,13 @@
 <template>
-  <n-space>
-    <n-input />
-    <n-button type="primary" @click="handleClick">click</n-button>
-    <n-button type="success" @click="handleClick">click</n-button>
+  <n-space :vertical="true" :size="16">
+    <top-chart />
+    <data-card />
+    <bottom-part />
   </n-space>
 </template>
 
-<script setup lang="ts">
-const handleClick = () => {
-  const instance = window.$message?.loading('3 * 3 * 4 * 4 * ?', {
-    duration: 0
-  })
-
-  setTimeout(() => {
-    instance?.destroy()
-  }, 5000)
-}
+<script lang="ts" setup>
+import TopChart from './top-chart.vue'
+import DataCard from './data-card/index.vue'
+import BottomPart from './bottom-part.vue'
 </script>
