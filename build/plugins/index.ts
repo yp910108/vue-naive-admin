@@ -16,11 +16,14 @@ export function setupVitePlugins(env: ImportMetaEnv) {
     unocss(),
     components,
     icon(),
-    compress(),
     mock(env),
     progress(),
     vueDevTools()
   ]
+
+  if (env.VITE_COMPRESS === 'Y') {
+    plugins.push(compress())
+  }
 
   return plugins
 }
