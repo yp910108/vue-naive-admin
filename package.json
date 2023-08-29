@@ -58,6 +58,7 @@
     "unocss": "^0.54.1",
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.6",
+    "vite-plugin-compression": "^0.5.1",
     "vite-plugin-mock": "2.9.8",
     "vite-plugin-progress": "^0.0.7",
     "vite-plugin-vue-devtools": "1.0.0-rc.2",

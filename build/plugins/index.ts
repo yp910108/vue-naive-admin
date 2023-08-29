@@ -6,6 +6,7 @@ import progress from 'vite-plugin-progress'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import icon from './icon'
 import components from './components'
+import compress from './compress'
 import mock from './mock'
 
 export function setupVitePlugins(env: ImportMetaEnv) {
@@ -15,6 +16,7 @@ export function setupVitePlugins(env: ImportMetaEnv) {
     unocss(),
     components,
     icon(),
+    compress(),
     mock(env),
     progress(),
     vueDevTools()
