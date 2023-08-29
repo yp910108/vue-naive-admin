@@ -18,8 +18,8 @@
         <template #prefix>
           <icon-search class="text-15px text-#c2c2c2" />
         </template>
-        <n-button v-if="isMobile" type="primary" ghost @click="hide">取消</n-button>
       </n-input>
+      <n-button v-if="isMobile" type="primary" ghost @click="hide">取消</n-button>
     </n-input-group>
     <div class="mt-20px">
       <n-empty v-if="!resultOptions?.length" description="暂无搜索结果" />
