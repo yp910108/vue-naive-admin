@@ -1,6 +1,6 @@
 import { viteMockServe } from 'vite-plugin-mock'
 
-export default ({ VITE_PROD_MOCK }: ImportMetaEnv) => {
+export default function mock({ VITE_PROD_MOCK }: ImportMetaEnv) {
   const prodMock = VITE_PROD_MOCK === 'Y'
 
   return viteMockServe({

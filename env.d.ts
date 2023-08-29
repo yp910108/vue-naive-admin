@@ -35,6 +35,11 @@ interface ImportMetaEnv {
    * 是否开启打包压缩
    */
   readonly VITE_COMPRESS?: 'Y' | 'N'
+
+  /**
+   * 是否开启 pwa
+   */
+  readonly VITE_PWA?: 'Y' | 'N'
 }
 
 interface ImportMeta {
