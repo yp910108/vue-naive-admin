@@ -9,7 +9,7 @@ import {
   generateNameTypeStr,
   generateTypeStrs
 } from './utils'
-import type { Prefix, Exported } from './type'
+import type { Prefix, Exported } from './typing'
 import { exclude } from './exclude'
 
 // https://docs.iconify.design/articles/cleaning-up-icons/#parsing-an-entire-icon-set

@@ -1,4 +1,4 @@
-import type { Icon, Prefix } from './type'
+import type { Icon, Prefix } from './typing'
 
 const camelizeRE = /-(\w)/g
 export function camelize(str: string) {
