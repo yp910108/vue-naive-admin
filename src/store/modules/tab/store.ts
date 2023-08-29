@@ -6,7 +6,7 @@ import { localStg } from '@/utils'
 import { useRouteStore } from '../route'
 import { useThemeStore } from '../theme'
 import { getTabByRoute, hasTab } from './helper'
-import type { Tab } from './typing'
+import type { MultiTab } from './typing'
 
 export const useTabStore = defineStore('tab-store', () => {
   const route = useRoute()
@@ -14,7 +14,7 @@ export const useTabStore = defineStore('tab-store', () => {
   const routeStore = useRouteStore()
   const { theme } = storeToRefs(useThemeStore())
 
-  const tabs = ref<Tab[]>([])
+  const tabs = ref<MultiTab[]>([])
   const pushLastTab = () => {
     const lastTab = tabs.value[tabs.value.length - 1]
     router.push(lastTab.routePath)
@@ -26,14 +26,14 @@ export const useTabStore = defineStore('tab-store', () => {
     }
     return tab
   }
-  const removeTab = (tab: Tab) => {
+  const removeTab = (tab: MultiTab) => {
     const index = tabs.value.findIndex(({ key }) => key === tab.key)
     tabs.value.splice(index, 1)
     if (!hasTab(tabs.value, activeTab.value!)) {
       pushLastTab()
     }
   }
-  const clearLeftTabs = (currentTab: Tab) => {
+  const clearLeftTabs = (currentTab: MultiTab) => {
     const currentIndex = tabs.value.findIndex(({ key }) => key === currentTab.key)
     const rootTab = getTabByRoute(routeStore.rootRoute)
     const _tabs = tabs.value.slice(currentIndex)
@@ -43,14 +43,14 @@ export const useTabStore = defineStore('tab-store', () => {
       pushLastTab()
     }
   }
-  const clearRightTabs = (currentTab: Tab) => {
+  const clearRightTabs = (currentTab: MultiTab) => {
     const currentIndex = tabs.value.findIndex(({ key }) => key === currentTab.key)
     tabs.value = tabs.value.slice(0, currentIndex + 1)
     if (!hasTab(tabs.value, activeTab.value!)) {
       pushLastTab()
     }
   }
-  const clearOtherTabs = (currentTab: Tab) => {
+  const clearOtherTabs = (currentTab: MultiTab) => {
     const rootTab = getTabByRoute(routeStore.rootRoute)
     const restTabs = tabs.value.filter(({ key }) => currentTab.key === key)
     restTabs.unshift(rootTab)
@@ -67,12 +67,12 @@ export const useTabStore = defineStore('tab-store', () => {
     }
   }
 
-  const activeTab = ref<Tab>()
-  const setActiveTab = (tab: Tab) => {
+  const activeTab = ref<MultiTab>()
+  const setActiveTab = (tab: MultiTab) => {
     activeTab.value = tab
   }
 
-  const setScrollPosition = (tab: Tab, scrollPosition: Tab['scrollPosition']) => {
+  const setScrollPosition = (tab: MultiTab, scrollPosition: MultiTab['scrollPosition']) => {
     tab.scrollPosition = scrollPosition
   }
 

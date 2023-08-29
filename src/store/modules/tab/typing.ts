@@ -1,7 +1,7 @@
 /**
  * 多页签 Tab 的路由
  */
-export type Tab = {
+export type MultiTab = {
   key: string
   title: string
   routePath: string

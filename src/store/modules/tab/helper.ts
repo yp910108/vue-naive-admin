@@ -1,5 +1,5 @@
 import type { RouteLocationNormalizedLoaded, RouteRecordNormalized } from 'vue-router'
-import type { Tab } from './typing'
+import type { MultiTab } from './typing'
 
 function hasFullPath(
   route: RouteLocationNormalizedLoaded | RouteRecordNormalized
@@ -18,9 +18,9 @@ export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecord
       left: 0,
       top: 0
     }
-  } as Tab
+  } as MultiTab
 }
 
-export function hasTab(tabs: Tab[], activeTab: Tab) {
+export function hasTab(tabs: MultiTab[], activeTab: MultiTab) {
   return !!tabs.find((tab) => tab.key === activeTab.key)
 }

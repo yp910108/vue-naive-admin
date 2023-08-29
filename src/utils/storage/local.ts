@@ -1,12 +1,12 @@
 import type { Lang } from '@/locales/typing'
 import { decrypto, encrypto } from '../crypto'
-import type { Tab, UserInfo } from '@/store'
+import type { MultiTab, UserInfo } from '@/store'
 
 interface LocalStorage {
   token?: string
   userInfo?: UserInfo
   lang?: Lang
-  tabs?: Tab[]
+  tabs?: MultiTab[]
 }
 
 interface StorageData<T> {
