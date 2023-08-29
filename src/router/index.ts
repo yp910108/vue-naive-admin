@@ -21,5 +21,3 @@ export async function setupRouter(app: App) {
 }
 
 export { routes as constantRoutes }
-
-export * from './typing'

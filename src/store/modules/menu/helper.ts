@@ -1,5 +1,5 @@
-import type { Route } from '@/router'
 import { camelize, combineURL, isExternal, renderIcon } from '@/utils'
+import type { Route } from '../route'
 import type { MenuOption, SearchMenuOption } from './typing'
 
 /**

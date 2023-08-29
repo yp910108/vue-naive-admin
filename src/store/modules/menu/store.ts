@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Route } from '@/router'
+import type { Route } from '../route'
 import type { MenuOption } from './typing'
 import { transformMenus, transformSearchMenus } from './helper'
 

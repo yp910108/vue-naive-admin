@@ -1,4 +1,4 @@
-import type { Route } from '@/router'
+import type { Route } from '@/store'
 
 export const routeModel: Record<Auth.RoleType, Route[]> = {
   super: [

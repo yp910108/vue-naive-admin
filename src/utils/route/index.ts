@@ -1,5 +1,5 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
-import type { Route } from '@/router/typing'
+import type { Route } from '@/store'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
 import { camelize, combineURL, isExternal } from '../common'
