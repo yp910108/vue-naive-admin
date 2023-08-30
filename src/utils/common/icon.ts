@@ -1,16 +1,15 @@
-import { h } from 'vue'
-import type { StyleValue } from 'vue'
+import { h, type FunctionalComponent, type StyleValue } from 'vue'
 import * as icons from '@/icons'
 import { camelize } from './camelize'
 
-export interface IconConfig {
+export interface IconProps {
   icon?: Icon.IconName
   fontSize?: number
   color?: string
 }
 
-export const renderIcon = (config: IconConfig) => {
-  const { icon, fontSize, color } = config
+export const IconRender: FunctionalComponent<IconProps> = (props) => {
+  const { icon, fontSize, color } = props
 
   const iconName = (icon ? `Icon${camelize(icon, true)}` : '') as Icon.IconComponentName
 
@@ -30,5 +29,7 @@ export const renderIcon = (config: IconConfig) => {
     style.fontSize = `${fontSize}px`
   }
 
-  return () => h(icons[iconName], { style })
+  return h(icons[iconName], { style })
 }
+
+IconRender.props = ['icon', 'fontSize', 'color']

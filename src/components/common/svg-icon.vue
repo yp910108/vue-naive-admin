@@ -1,25 +1,11 @@
 <template>
-  <icon v-bind="props" />
+  <icon-render v-bind="props" />
 </template>
 
 <script setup lang="ts">
-import { defineComponent, h } from 'vue'
-import type { IconConfig } from '@/utils'
-import { renderIcon } from '@/utils'
+import { IconRender, type IconProps } from '@/utils'
 
 defineOptions({ name: 'SvgIcon' })
 
-const props = defineProps<IconConfig>()
-
-const Icon = defineComponent({
-  name: '_SvgIcon',
-  props: ['icon', 'fontSize', 'color'],
-  setup(props) {
-    if (!props.icon) {
-      return () => h('i')
-    } else {
-      return renderIcon({ ...props })
-    }
-  }
-})
+const props = defineProps<IconProps>()
 </script>

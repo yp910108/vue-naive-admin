@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     optimizeDeps: {
-      include: ['@better-scroll/core']
+      include: ['@better-scroll/core', 'echarts']
     },
     server: {
       proxy: setupViteProxy()

@@ -2,17 +2,10 @@
   <n-divider title-placement="center">
     {{ $translate('layout.settingDrawer.themeConfiguration.title') }}
   </n-divider>
-  <textarea
-    id="themeConfigCopyTarget"
-    class="absolute opacity-0"
-    :value="JSON.stringify(theme, null, '\t')"
-  ></textarea>
   <n-space vertical>
-    <div ref="copyRef" data-clipboard-target="#themeConfigCopyTarget">
-      <n-button type="primary" block>
-        {{ $translate('layout.settingDrawer.themeConfiguration.copy') }}
-      </n-button>
-    </div>
+    <n-button type="primary" block @click="handleCopy">
+      {{ $translate('layout.settingDrawer.themeConfiguration.copy') }}
+    </n-button>
     <n-button type="warning" block @click="handleResetConfig">
       {{ $translate('layout.settingDrawer.themeConfiguration.reset') }}
     </n-button>
@@ -20,32 +13,33 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { h } from 'vue'
 import { storeToRefs } from 'pinia'
-import ClipboardJS from 'clipboard'
+import { useClipboard } from '@vueuse/core'
 import { $translate } from '@/locales'
-import { renderIcon } from '@/utils'
+import { IconRender } from '@/utils'
 import { useThemeStore } from '@/store'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-const copyRef = ref<HTMLDivElement>()
+const { copy, isSupported } = useClipboard()
+
+const handleCopy = async () => {
+  if (!isSupported) {
+    return window.$message?.error('您的浏览器不支持 Clipboard API')
+  }
+  await copy(JSON.stringify(theme, null, '\t'))
+  window.$dialog?.info({
+    title: $translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
+    content: $translate('layout.settingDrawer.themeConfiguration.copySuccess'),
+    positiveText: $translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
+    icon: () => h(IconRender, { icon: 'success-filled' })
+  })
+}
 
 const handleResetConfig = () => {
   themeStore.reset()
   window.$message?.success($translate('layout.settingDrawer.themeConfiguration.resetSuccess'))
 }
-
-onMounted(() => {
-  const copy = new ClipboardJS(copyRef.value!)
-  copy.on('success', () => {
-    window.$dialog?.info({
-      title: $translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
-      content: $translate('layout.settingDrawer.themeConfiguration.copySuccess'),
-      positiveText: $translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
-      icon: renderIcon({ icon: 'success-filled' })
-    })
-  })
-})
 </script>

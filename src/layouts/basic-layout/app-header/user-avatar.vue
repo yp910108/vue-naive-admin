@@ -10,18 +10,19 @@
 </template>
 
 <script setup lang="ts">
+import { h } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
-import { renderIcon } from '@/utils'
+import { IconRender } from '@/utils'
 import { useAuthStore, useThemeStore } from '@/store'
 
 const authStore = useAuthStore()
 const { theme } = storeToRefs(useThemeStore())
 
 const options: DropdownOption[] = [
-  { label: '用户中心', key: 'user-center', icon: renderIcon({ icon: 'user-avatar' }) },
+  { label: '用户中心', key: 'user-center', icon: () => h(IconRender, { icon: 'user-avatar' }) },
   { type: 'divider', key: 'divider' },
-  { label: '退出登录', key: 'logout', icon: renderIcon({ icon: 'logout' }) }
+  { label: '退出登录', key: 'logout', icon: () => h(IconRender, { icon: 'logout' }) }
 ]
 
 const handleDropdown = (optionKey: string) => {

@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import type { DropdownOption } from 'naive-ui'
-import { renderIcon } from '@/utils'
+import { IconRender } from '@/utils'
 import { useAppStore, useTabStore, type MultiTab } from '@/store'
 
 interface Props {
@@ -63,39 +63,39 @@ const options = computed<Option[]>(() => [
   {
     label: '内容全屏',
     key: 'full-content',
-    icon: renderIcon({ icon: 'fullscreen' })
+    icon: () => h(IconRender, { icon: 'fullscreen' })
   },
   {
     label: '重新加载',
     key: 'reload-current',
     disabled: props.tab?.key !== tabStore.activeTab?.key,
-    icon: renderIcon({ icon: 'reload-outlined' })
+    icon: () => h(IconRender, { icon: 'reload-outlined' })
   },
   {
     label: '关闭',
     key: 'close-current',
     disabled: !props.closable,
-    icon: renderIcon({ icon: 'close-outlined' })
+    icon: () => h(IconRender, { icon: 'close-outlined' })
   },
   {
     label: '关闭左侧',
     key: 'close-left',
-    icon: renderIcon({ icon: 'format-horizontal-align-left' })
+    icon: () => h(IconRender, { icon: 'format-horizontal-align-left' })
   },
   {
     label: '关闭右侧',
     key: 'close-right',
-    icon: renderIcon({ icon: 'format-horizontal-align-right' })
+    icon: () => h(IconRender, { icon: 'format-horizontal-align-right' })
   },
   {
     label: '关闭其他',
     key: 'close-other',
-    icon: renderIcon({ icon: 'column-width-outlined' })
+    icon: () => h(IconRender, { icon: 'column-width-outlined' })
   },
   {
     label: '关闭所有',
     key: 'close-all',
-    icon: renderIcon({ icon: 'line-outlined' })
+    icon: () => h(IconRender, { icon: 'line-outlined' })
   }
 ])
 

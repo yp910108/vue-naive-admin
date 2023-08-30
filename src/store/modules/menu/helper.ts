@@ -1,4 +1,5 @@
-import { camelize, combineURL, isExternal, renderIcon } from '@/utils'
+import { h } from 'vue'
+import { camelize, combineURL, isExternal, IconRender } from '@/utils'
 import type { Route } from '../route'
 import type { MenuOption, SearchMenuOption } from './typing'
 
@@ -27,7 +28,7 @@ export function transformMenus(routeData: Route[], prefix: string = '/') {
       routePath: fullpath
     }
     if (icon) {
-      menu.icon = renderIcon({ icon })
+      menu.icon = () => h(IconRender, { icon })
     }
     if (children && children.length) {
       menu.children = transformMenus(children, fullpath)
