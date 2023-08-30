@@ -6,6 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import WorkbenchHeader from './workbench-header.vue'
-import WorkbenchMain from './workbench-main/index.vue'
+import WorkbenchHeader from './header.vue'
+import WorkbenchMain from './main/index.vue'
 </script>
