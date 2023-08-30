@@ -1,5 +1,6 @@
 import { nextTick, effectScope, onScopeDispose, ref, watch } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import * as echarts from 'echarts/core'
 import {
   BarChart,
@@ -40,7 +41,6 @@ import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 import { useElementSize } from '@vueuse/core'
 import { useThemeStore } from '@/store'
-import { storeToRefs } from 'pinia'
 
 export type ECOption = echarts.ComposeOption<
   | BarSeriesOption

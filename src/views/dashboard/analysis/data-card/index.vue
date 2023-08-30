@@ -20,10 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import GradientBg from './gradient-bg.vue'
 import CountTo from '../components/count-to/index.vue'
-
-defineOptions({ name: 'DashboardAnalysisDataCard' })
+import GradientBg from './gradient-bg.vue'
 
 interface CardData {
   id: string

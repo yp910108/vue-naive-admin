@@ -36,8 +36,6 @@ import type { Ref } from 'vue'
 import { type ECOption, useEcharts } from './hooks'
 import CountTo from './components/count-to/index.vue'
 
-defineOptions({ name: 'DashboardAnalysisTopCard' })
-
 const lineOptions = ref<ECOption>({
   tooltip: {
     trigger: 'axis',

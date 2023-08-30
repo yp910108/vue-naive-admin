@@ -6,8 +6,6 @@ import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { TransitionPresets, useTransition } from '@vueuse/core'
 import { isNumber } from '@/utils'
 
-defineOptions({ name: 'CountTo' })
-
 type TansitionKey = keyof typeof TransitionPresets
 
 interface Props {
@@ -81,11 +79,9 @@ const emit = defineEmits<Emits>()
 const source = ref(props.startValue)
 let outputValue = useTransition(source)
 const value = computed(() => formatNumber(outputValue.value))
-const disabled = ref(false)
 
 function run() {
   outputValue = useTransition(source, {
-    disabled,
     duration: props.duration,
     onStarted: () => emit('on-started'),
     onFinished: () => emit('on-finished'),
