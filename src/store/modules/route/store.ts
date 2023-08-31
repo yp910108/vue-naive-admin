@@ -54,7 +54,7 @@ export const useRouteStore = defineStore('route-store', () => {
     const data = await fetchUserRoutes(userInfo?.userId ?? '')
 
     if (!data || !data.length) {
-      window.$message?.error(NO_MENU_MSG)
+      window.$message.error(NO_MENU_MSG)
       return Promise.reject(new Error(NO_MENU_MSG))
     }
 

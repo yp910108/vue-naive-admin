@@ -35,7 +35,7 @@ export function showErrorMsg(error: RequestError) {
 
   addErrorMsg(error)
   console.warn(error.code, error.message)
-  window.$message?.error(error.message, { duration: ERROR_MSG_DURATION })
+  window.$message.error(error.message, { duration: ERROR_MSG_DURATION })
   setTimeout(() => {
     removeErrMsg(error)
   }, ERROR_MSG_DURATION)

@@ -187,7 +187,7 @@ function handleEditTable(rowId: string) {
 }
 
 function handleDeleteTable(rowId: string) {
-  window.$message?.info(`点击了删除，rowId为${rowId}`)
+  window.$message.info(`点击了删除，rowId为${rowId}`)
 }
 
 const pagination: PaginationProps = reactive({

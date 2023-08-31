@@ -42,20 +42,12 @@ const model = reactive({
 
 const rules = {
   phone: [
-    { required: true, message: window.$translate('login.form.phoneRequired'), trigger: 'input' },
-    {
-      pattern: REGEXP_PHONE,
-      message: window.$translate('login.form.phoneInvalid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.phoneRequired'), trigger: 'input' },
+    { pattern: REGEXP_PHONE, message: $translate('login.form.phoneInvalid'), trigger: 'input' }
   ],
   code: [
-    { required: true, message: window.$translate('login.form.codeRequired') },
-    {
-      pattern: REGEXP_CODE_SIX,
-      message: window.$translate('login.form.codeInvalid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.codeRequired') },
+    { pattern: REGEXP_CODE_SIX, message: $translate('login.form.codeInvalid'), trigger: 'input' }
   ]
 }
 
@@ -65,6 +57,6 @@ const handleSmsCode = () => {
 
 const handleSubmit = async () => {
   await formRef.value?.validate()
-  window.$message?.success(window.$translate('login.validateSuccess'))
+  window.$message.success($translate('login.validateSuccess'))
 }
 </script>

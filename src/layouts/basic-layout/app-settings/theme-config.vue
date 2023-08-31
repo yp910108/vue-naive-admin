@@ -26,10 +26,10 @@ const { copy, isSupported } = useClipboard()
 
 const handleCopy = async () => {
   if (!isSupported) {
-    return window.$message?.error('您的浏览器不支持 Clipboard API')
+    return window.$message.error('您的浏览器不支持 Clipboard API')
   }
   await copy(JSON.stringify(theme, null, '\t'))
-  window.$dialog?.info({
+  window.$dialog.info({
     title: window.$translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
     content: window.$translate('layout.settingDrawer.themeConfiguration.copySuccess'),
     positiveText: window.$translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
@@ -39,8 +39,6 @@ const handleCopy = async () => {
 
 const handleResetConfig = () => {
   themeStore.reset()
-  window.$message?.success(
-    window.$translate('layout.settingDrawer.themeConfiguration.resetSuccess')
-  )
+  window.$message.success(window.$translate('layout.settingDrawer.themeConfiguration.resetSuccess'))
 }
 </script>

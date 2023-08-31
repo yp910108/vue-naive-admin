@@ -18,14 +18,14 @@ const { copy, isSupported } = useClipboard()
 
 function handleCopy() {
   if (!isSupported) {
-    window.$message?.error('您的浏览器不支持Clipboard API')
+    window.$message.error('您的浏览器不支持Clipboard API')
     return
   }
   if (!source.value) {
-    window.$message?.error('请输入要复制的内容')
+    window.$message.error('请输入要复制的内容')
     return
   }
   copy(source.value)
-  window.$message?.success(`复制成功：${source.value}`)
+  window.$message.success(`复制成功：${source.value}`)
 }
 </script>

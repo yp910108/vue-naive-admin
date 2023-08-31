@@ -6,6 +6,8 @@ interface Window {
   $translate: typeof import('../locales').$translate
 }
 
+declare const $translate: typeof import('../locales').$translate
+
 interface ViewTransition {
   ready: Promise<void>
 }

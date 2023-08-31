@@ -61,35 +61,23 @@ const model = reactive({
 
 const rules: FormRules = {
   phone: [
-    { required: true, message: window.$translate('login.form.phoneRequired'), trigger: 'input' },
+    { required: true, message: $translate('login.form.phoneRequired'), trigger: 'input' },
     {
       pattern: REGEXP_PHONE,
-      message: window.$translate('login.form.phoneInvalid'),
+      message: $translate('login.form.phoneInvalid'),
       trigger: 'input'
     }
   ],
   code: [
-    { required: true, message: window.$translate('login.form.codeRequired'), trigger: 'input' },
-    {
-      pattern: REGEXP_CODE_SIX,
-      message: window.$translate('login.form.codeInvalid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.codeRequired'), trigger: 'input' },
+    { pattern: REGEXP_CODE_SIX, message: $translate('login.form.codeInvalid'), trigger: 'input' }
   ],
   pwd: [
-    { required: true, message: window.$translate('login.form.passwordRequired'), trigger: 'input' },
-    {
-      pattern: REGEXP_PWD,
-      message: window.$translate('login.form.passwordValid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.passwordRequired'), trigger: 'input' },
+    { pattern: REGEXP_PWD, message: $translate('login.form.passwordValid'), trigger: 'input' }
   ],
   confirmPwd: [
-    {
-      required: true,
-      message: window.$translate('login.form.confirmPasswordRequired'),
-      trigger: 'input'
-    },
+    { required: true, message: $translate('login.form.confirmPasswordRequired'), trigger: 'input' },
     {
       validator: (rule, value) => {
         if (!(value.trim() === '') && value !== model.pwd) {
@@ -97,7 +85,7 @@ const rules: FormRules = {
         }
         return Promise.resolve()
       },
-      message: window.$translate('login.form.confirmPasswordInvalid'),
+      message: $translate('login.form.confirmPasswordInvalid'),
       trigger: 'input'
     }
   ]
@@ -111,6 +99,6 @@ const handleSmsCode = () => {
 
 const handleSubmit = async () => {
   await formRef.value?.validate()
-  window.$message?.success(window.$translate('login.validateSuccess'))
+  window.$message.success($translate('login.validateSuccess'))
 }
 </script>

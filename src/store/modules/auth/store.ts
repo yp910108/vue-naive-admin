@@ -40,9 +40,9 @@ export const useAuthStore = defineStore('auth-store', () => {
       token.value = _token
       await getUserInfo()
       loginLoading.value = false
-      window.$notification?.success({
-        title: window.$translate('login.loginSuccess'),
-        content: window.$translate('login.welcomeBack', {
+      window.$notification.success({
+        title: $translate('login.loginSuccess'),
+        content: $translate('login.welcomeBack', {
           userName: userInfo.value?.userName
         }),
         duration: 3000

@@ -27,7 +27,7 @@ const options: DropdownOption[] = [
 
 const handleDropdown = (optionKey: string) => {
   if (optionKey === 'logout') {
-    window.$dialog?.info({
+    window.$dialog.info({
       title: '提示',
       content: '您确定要退出登录吗？',
       positiveText: '确定',

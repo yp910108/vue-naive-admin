@@ -63,23 +63,15 @@ const imgCode = ref('')
 
 const rules: FormRules = {
   phone: [
-    { required: true, message: window.$translate('login.form.phoneRequired'), trigger: 'input' },
-    {
-      pattern: REGEXP_PHONE,
-      message: window.$translate('login.form.phoneInvalid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.phoneRequired'), trigger: 'input' },
+    { pattern: REGEXP_PHONE, message: $translate('login.form.phoneInvalid'), trigger: 'input' }
   ],
   code: [
-    { required: true, message: window.$translate('login.form.codeRequired'), trigger: 'input' },
-    {
-      pattern: REGEXP_CODE_SIX,
-      message: window.$translate('login.form.codeInvalid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.codeRequired'), trigger: 'input' },
+    { pattern: REGEXP_CODE_SIX, message: $translate('login.form.codeInvalid'), trigger: 'input' }
   ],
   imgCode: [
-    { required: true, message: window.$translate('login.form.imgCodeRequired'), trigger: 'input' },
+    { required: true, message: $translate('login.form.imgCodeRequired'), trigger: 'input' },
     {
       validator: (rule, value) => {
         if (!(value.trim() === '') && value !== imgCode.value) {
@@ -87,7 +79,7 @@ const rules: FormRules = {
         }
         return Promise.resolve()
       },
-      message: window.$translate('login.form.imgCodeInvalid'),
+      message: $translate('login.form.imgCodeInvalid'),
       trigger: 'blur'
     }
   ]
@@ -99,6 +91,6 @@ const handleSmsCode = () => {
 
 const handleSubmit = async () => {
   await formRef.value?.validate()
-  window.$message?.success(window.$translate('login.validateSuccess'))
+  window.$message.success($translate('login.validateSuccess'))
 }
 </script>

@@ -70,20 +70,12 @@ const model = reactive({
 const rules: FormRules = {
   userName: {
     required: true,
-    message: window.$translate('login.form.userNameRequired'),
+    message: $translate('login.form.userNameRequired'),
     trigger: 'input'
   },
   password: [
-    {
-      required: true,
-      message: window.$translate('login.form.passwordRequired'),
-      trigger: 'input'
-    },
-    {
-      pattern: REGEXP_PWD,
-      message: window.$translate('login.form.passwordValid'),
-      trigger: 'input'
-    }
+    { required: true, message: $translate('login.form.passwordRequired'), trigger: 'input' },
+    { pattern: REGEXP_PWD, message: $translate('login.form.passwordValid'), trigger: 'input' }
   ]
 }
 

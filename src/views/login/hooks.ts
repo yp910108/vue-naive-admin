@@ -50,9 +50,8 @@ export function useSmsCode() {
   const loading = ref(false)
   const { counts, start, isCounting } = useCountDown(60)
 
-  const initLabel = window.$translate('login.smsCode.initLabel')
-  const countingLabel = (second: number) =>
-    `${second} ${window.$translate('login.smsCode.countingLabel')}`
+  const initLabel = $translate('login.smsCode.initLabel')
+  const countingLabel = (second: number) => `${second} ${$translate('login.smsCode.countingLabel')}`
   const label = computed(() => {
     let text = initLabel
     if (loading.value) {
@@ -68,10 +67,10 @@ export function useSmsCode() {
     let valid = true
     if (phone.trim() === '') {
       valid = false
-      window.$message?.error(window.$translate('login.smsCode.phoneNotEmpty'))
+      window.$message.error($translate('login.smsCode.phoneNotEmpty'))
     } else if (!REGEXP_PHONE.test(phone)) {
       valid = false
-      window.$message?.error(window.$translate('login.smsCode.phoneInvalid'))
+      window.$message.error($translate('login.smsCode.phoneInvalid'))
     }
     return valid
   }
@@ -81,7 +80,7 @@ export function useSmsCode() {
     if (!valid || loading.value) return
     loading.value = true
     await fetchSmsCode(phone)
-    window.$message?.success(window.$translate('login.smsCode.phoneSuccess'))
+    window.$message.success($translate('login.smsCode.phoneSuccess'))
     start()
     loading.value = false
   }

@@ -145,7 +145,7 @@ function handleUpdateFormModelByModalType() {
 
 async function handleSubmit() {
   await formRef.value?.validate()
-  window.$message?.success('新增成功!')
+  window.$message.success('新增成功!')
   closeModal()
 }
 
