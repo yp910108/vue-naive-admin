@@ -3,18 +3,8 @@ import { storeToRefs } from 'pinia'
 import { kebabCase } from 'lodash-es'
 import { useOsTheme } from 'naive-ui'
 import type { GlobalThemeOverrides } from 'naive-ui'
-import { getColorPalettes, getRgbOfColor, sessionStg } from '@/utils'
+import { getColorPalettes, getRgbOfColor } from '@/utils'
 import { useThemeStore } from '../modules'
-
-const DARK_CLASS = 'dark'
-
-function addDarkClass() {
-  document.documentElement.classList.add(DARK_CLASS)
-}
-
-function removeDarkClass() {
-  document.documentElement.classList.remove(DARK_CLASS)
-}
 
 type ThemeVars = Exclude<GlobalThemeOverrides['common'], undefined>
 type ThemeVarsKeys = keyof ThemeVars

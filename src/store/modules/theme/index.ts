@@ -151,6 +151,7 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const reset = () => {
     theme.value = initSettings()
+    setDarkMode(theme.value.darkMode)
   }
 
   return {
