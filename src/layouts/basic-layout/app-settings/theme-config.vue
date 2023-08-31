@@ -16,7 +16,6 @@
 import { h } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useClipboard } from '@vueuse/core'
-import { $translate } from '@/locales'
 import { IconRender } from '@/utils'
 import { useThemeStore } from '@/store'
 
@@ -31,15 +30,17 @@ const handleCopy = async () => {
   }
   await copy(JSON.stringify(theme, null, '\t'))
   window.$dialog?.info({
-    title: $translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
-    content: $translate('layout.settingDrawer.themeConfiguration.copySuccess'),
-    positiveText: $translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
+    title: window.$translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
+    content: window.$translate('layout.settingDrawer.themeConfiguration.copySuccess'),
+    positiveText: window.$translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
     icon: () => h(IconRender, { icon: 'success-filled' })
   })
 }
 
 const handleResetConfig = () => {
   themeStore.reset()
-  window.$message?.success($translate('layout.settingDrawer.themeConfiguration.resetSuccess'))
+  window.$message?.success(
+    window.$translate('layout.settingDrawer.themeConfiguration.resetSuccess')
+  )
 }
 </script>

@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
 import { login as postLogin, fetchUserInfo } from './service'
 import { localStg } from '@/utils'
-import { $translate } from '@/locales'
 import { useRouteStore } from '../route'
 import { useTabStore } from '../tab'
 
@@ -42,8 +41,8 @@ export const useAuthStore = defineStore('auth-store', () => {
       await getUserInfo()
       loginLoading.value = false
       window.$notification?.success({
-        title: $translate('page.login.common.loginSuccess'),
-        content: $translate('page.login.common.welcomeBack', {
+        title: window.$translate('login.loginSuccess'),
+        content: window.$translate('login.welcomeBack', {
           userName: userInfo.value?.userName
         }),
         duration: 3000

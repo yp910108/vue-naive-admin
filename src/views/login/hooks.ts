@@ -15,9 +15,6 @@ export const useToLoginModule = () => {
 }
 
 function useCountDown(second: number) {
-  if (second <= 0 || second % 1 !== 0) {
-    throw new Error('倒计时的时间应该为一个正整数！')
-  }
   const isComplete = ref(false)
 
   const counts = ref(0)
@@ -26,7 +23,7 @@ function useCountDown(second: number) {
   let intervalId: any
 
   const start = (updateSecond: number = second) => {
-    if (isCounting.value) {
+    if (!counts.value) {
       isComplete.value = false
       counts.value = updateSecond
       intervalId = setInterval(() => {
@@ -53,8 +50,9 @@ export function useSmsCode() {
   const loading = ref(false)
   const { counts, start, isCounting } = useCountDown(60)
 
-  const initLabel = '获取验证码'
-  const countingLabel = (second: number) => `${second} 秒后重新获取`
+  const initLabel = window.$translate('login.smsCode.initLabel')
+  const countingLabel = (second: number) =>
+    `${second} ${window.$translate('login.smsCode.countingLabel')}`
   const label = computed(() => {
     let text = initLabel
     if (loading.value) {
@@ -70,10 +68,10 @@ export function useSmsCode() {
     let valid = true
     if (phone.trim() === '') {
       valid = false
-      window.$message?.error('手机号不能为空！')
+      window.$message?.error(window.$translate('login.smsCode.phoneNotEmpty'))
     } else if (!REGEXP_PHONE.test(phone)) {
       valid = false
-      window.$message?.error('手机号码格式错误！')
+      window.$message?.error(window.$translate('login.smsCode.phoneInvalid'))
     }
     return valid
   }
@@ -83,10 +81,10 @@ export function useSmsCode() {
     if (!valid || loading.value) return
     loading.value = true
     await fetchSmsCode(phone)
-    window.$message?.success('验证码发送成功！')
+    window.$message?.success(window.$translate('login.smsCode.phoneSuccess'))
     start()
     loading.value = false
   }
 
-  return { loading, label, start, isCounting, getSmsCode }
+  return { loading, label, isCounting, getSmsCode }
 }

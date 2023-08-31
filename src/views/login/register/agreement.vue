@@ -1,8 +1,12 @@
 <template>
   <div class="w-full text-14px">
-    <n-checkbox v-model:checked="checked">我已经仔细阅读并接受</n-checkbox>
-    <n-button :text="true" type="primary" @click="handleClickProtocol">《用户协议》</n-button>
-    <n-button :text="true" type="primary" @click="handleClickPolicy">《隐私权政策》</n-button>
+    <n-checkbox v-model:checked="checked">{{ $translate('login.register.agreement') }}</n-checkbox>
+    <n-button :text="true" type="primary" @click="handleClickProtocol">
+      {{ $translate('login.register.protocol') }}
+    </n-button>
+    <n-button :text="true" type="primary" @click="handleClickPolicy">
+      {{ $translate('login.register.policy') }}
+    </n-button>
   </div>
 </template>
 

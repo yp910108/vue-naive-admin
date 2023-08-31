@@ -3,7 +3,7 @@
     <n-form-item path="userName">
       <n-input
         v-model:value="model.userName"
-        :placeholder="$translate('page.login.common.userNamePlaceholder')"
+        :placeholder="$translate('login.userNamePlaceholder')"
       />
     </n-form-item>
     <n-form-item path="password">
@@ -11,16 +11,16 @@
         v-model:value="model.password"
         type="password"
         show-password-on="click"
-        :placeholder="$translate('page.login.common.passwordPlaceholder')"
+        :placeholder="$translate('login.passwordPlaceholder')"
       />
     </n-form-item>
     <n-space :vertical="true" :size="24">
       <div class="flex-y-center justify-between">
         <n-checkbox v-model:checked="rememberMe">
-          {{ $translate('page.login.pwdLogin.rememberMe') }}
+          {{ $translate('login.pwdLogin.rememberMe') }}
         </n-checkbox>
         <n-button :text="true" @click="toLoginModule('reset-pwd')">
-          {{ $translate('page.login.pwdLogin.forgetPassword') }}
+          {{ $translate('login.pwdLogin.forgetPassword') }}
         </n-button>
       </div>
       <n-button
@@ -31,7 +31,7 @@
         :loading="authStore.loginLoading"
         @click="handleSubmit"
       >
-        {{ $translate('page.login.common.confirm') }}
+        {{ $translate('login.confirm') }}
       </n-button>
       <div class="flex-y-center justify-between">
         <n-button class="flex-1" :block="true" @click="toLoginModule('code-login')">

@@ -1,7 +1,7 @@
 <template>
   <n-space :vertical="true">
     <n-divider class="!mb-0 text-14px text-#666">
-      {{ $translate('page.login.pwdLogin.otherAccountLogin') }}
+      {{ $translate('login.pwdLogin.otherAccountLogin') }}
     </n-divider>
     <n-space justify="center">
       <n-button

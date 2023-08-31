@@ -1,17 +1,11 @@
 <template>
   <n-form ref="formRef" :model="model" :rules="rules" size="large" :show-label="false">
     <n-form-item path="phone">
-      <n-input
-        v-model:value="model.phone"
-        :placeholder="$translate('page.login.common.phonePlaceholder')"
-      />
+      <n-input v-model:value="model.phone" :placeholder="$translate('login.phonePlaceholder')" />
     </n-form-item>
     <n-form-item path="code">
       <div class="flex-y-center w-full">
-        <n-input
-          v-model:value="model.code"
-          :placeholder="$translate('page.login.common.codePlaceholder')"
-        />
+        <n-input v-model:value="model.code" :placeholder="$translate('login.codePlaceholder')" />
         <div class="w-18px"></div>
         <n-button size="large" :disabled="isCounting" :loading="smsLoading" @click="handleSmsCode">
           {{ label }}
@@ -23,7 +17,7 @@
         v-model:value="model.pwd"
         type="password"
         show-password-on="click"
-        :placeholder="$translate('page.login.common.passwordPlaceholder')"
+        :placeholder="$translate('login.passwordPlaceholder')"
       />
     </n-form-item>
     <n-form-item path="confirmPwd">
@@ -31,15 +25,15 @@
         v-model:value="model.confirmPwd"
         type="password"
         show-password-on="click"
-        :placeholder="$translate('page.login.common.confirmPasswordPlaceholder')"
+        :placeholder="$translate('login.confirmPasswordPlaceholder')"
       />
     </n-form-item>
     <n-space :vertical="true" size="large">
       <n-button type="primary" size="large" :block="true" :round="true" @click="handleSubmit">
-        {{ $translate('page.login.common.confirm') }}
+        {{ $translate('login.confirm') }}
       </n-button>
       <n-button size="large" :block="true" :round="true" @click="toLoginModule('pwd-login')">
-        {{ $translate('page.login.common.back') }}
+        {{ $translate('login.back') }}
       </n-button>
     </n-space>
   </n-form>
@@ -49,11 +43,10 @@
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
 import { REGEXP_PHONE, REGEXP_CODE_SIX, REGEXP_PWD } from '@/constants'
-import { $translate } from '@/locales'
 import { useSmsCode, useToLoginModule } from '../hooks'
 
 const { toLoginModule } = useToLoginModule()
-const { label, isCounting, loading: smsLoading, start } = useSmsCode()
+const { label, isCounting, loading: smsLoading, getSmsCode } = useSmsCode()
 
 const formRef = ref<HTMLElement & FormInst>()
 
@@ -97,11 +90,11 @@ const rules: FormRules = {
 }
 
 const handleSmsCode = () => {
-  start()
+  getSmsCode(model.phone)
 }
 
 const handleSubmit = async () => {
   await formRef.value?.validate()
-  window.$message?.success($translate('page.login.common.validateSuccess'))
+  window.$message?.success(window.$translate('login.validateSuccess'))
 }
 </script>
