@@ -20,9 +20,6 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
-  clipboard:
-    specifier: ^2.0.11
-    version: 2.0.11
   colord:
     specifier: ^2.9.3
     version: 2.9.3
@@ -85,6 +82,9 @@ devDependencies:
   '@types/crypto-js':
     specifier: ^4.1.1
     version: 4.1.1
+  '@types/mockjs':
+    specifier: ^1.0.7
+    version: 1.0.7
   '@types/node':
     specifier: ^18.17.0
     version: 18.17.0
@@ -776,7 +776,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.22.9
-      '@babel/helper-create-class-features-plugin': 7.22.9(@babel/core@7.22.9)
+      '@babel/helper-create-class-features-plugin': 7.22.11(@babel/core@7.22.9)
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
@@ -1104,7 +1104,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.22.9
-      '@babel/helper-create-class-features-plugin': 7.22.9(@babel/core@7.22.9)
+      '@babel/helper-create-class-features-plugin': 7.22.11(@babel/core@7.22.9)
       '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
@@ -3148,7 +3148,7 @@ packages:
     resolution: {integrity: sha512-GAwkz0AihzY5bkwIY5QDR+LvsRQgB/B+1foMPvi0FZPMl5fjD7ICiznUiBdLYMH1QYe6vqu4gWYytZOccLouFw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
-      '@babel/types': 7.22.5
+      '@babel/types': 7.22.11
     dev: true
 
   /balanced-match@1.0.2:
@@ -3323,14 +3323,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /clipboard@2.0.11:
-    resolution: {integrity: sha512-C+0bbOqkezLIsmWSvlsXS0Q0bmkugu7jcfMIACB+RDEntIzQIkdr148we28AfSloQLRdZlYL/QYyrq05j/3Faw==}
-    dependencies:
-      good-listener: 1.2.2
-      select: 1.1.2
-      tiny-emitter: 2.1.0
-    dev: false
-
   /color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -3411,7 +3403,7 @@ packages:
     resolution: {integrity: sha512-vCrqcSIq4//Gx74TXXCGnHpulY1dskqLTFGDmhrGxzeXL8lF8kvXv6mpNWlJj1uD4DW23D4ljAqbY4RRaaUZIw==}
     dependencies:
       '@babel/parser': 7.22.7
-      '@babel/types': 7.22.5
+      '@babel/types': 7.22.11
     dev: true
 
   /convert-source-map@1.9.0:
@@ -3600,10 +3592,6 @@ packages:
   /delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
-    dev: false
-
-  /delegate@3.2.0:
-    resolution: {integrity: sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==}
     dev: false
 
   /destr@2.0.1:
@@ -4575,12 +4563,6 @@ packages:
       merge2: 1.4.1
       slash: 3.0.0
     dev: true
-
-  /good-listener@1.2.2:
-    resolution: {integrity: sha512-goW1b+d9q/HIwbVYZzZ6SsTr4IgE+WA44A0GmPIQstuOrgsFcT7VEJ48nmr9GaRtNu0XTKacFLGnBPAM6Afouw==}
-    dependencies:
-      delegate: 3.2.0
-    dev: false
 
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -5936,10 +5918,6 @@ packages:
     resolution: {integrity: sha512-lEV5VB8BUKTo/AfktXJcy+JeXns26ylbMkIUco8CYREsQijuz4mrXres2Q+vMLdwkuLxJdIPQ8IlCIxLYm71Yw==}
     dev: false
 
-  /select@1.1.2:
-    resolution: {integrity: sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==}
-    dev: false
-
   /semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
@@ -6244,10 +6222,6 @@ packages:
   /text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
     dev: true
-
-  /tiny-emitter@2.1.0:
-    resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
-    dev: false
 
   /titleize@3.0.0:
     resolution: {integrity: sha512-KxVu8EYHDPBdUYdKZdKtU2aj2XfEx9AfjXxE/Aj0vT06w2icA09Vus1rh6eSu1y01akYg6BjIK/hxyLJINoMLQ==}
@@ -6908,7 +6882,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@babel/parser': 7.22.7
-      '@babel/types': 7.22.5
+      '@babel/types': 7.22.11
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5
     dev: true

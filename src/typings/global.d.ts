@@ -21,3 +21,7 @@ declare namespace Expose {
     instance: import('@better-scroll/core').BScrollInstance
   }
 }
+
+declare namespace NaiveUI {
+  type ThemeColor = 'default' | 'primary' | 'info' | 'success' | 'warning' | 'error'
+}
