@@ -1,4 +1,3 @@
-// @ts-ignore
 import pkg from '~/package.json'
 
 /** npm依赖包版本信息 */
