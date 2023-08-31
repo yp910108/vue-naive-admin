@@ -20,18 +20,18 @@ export function parsePathToName(path: string) {
 export function transformMenus(routeData: Route[], prefix: string = '/') {
   const menus: MenuOption[] = []
   for (const { title, path, icon, children } of routeData) {
-    const fullpath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
-    const name = parsePathToName(fullpath)
+    const routePath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
+    const name = parsePathToName(routePath)
     const menu: MenuOption = {
       key: name,
       label: title,
-      routePath: fullpath
+      routePath
     }
     if (icon) {
       menu.icon = () => h(IconRender, { icon })
     }
     if (children && children.length) {
-      menu.children = transformMenus(children, fullpath)
+      menu.children = transformMenus(children, routePath)
     }
     menus.push(menu)
   }

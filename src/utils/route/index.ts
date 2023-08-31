@@ -83,28 +83,28 @@ export function transformRoutes(routeData: Route[]) {
   const transform = (routeData: Route[], prefix: string = '') => {
     for (const { path, layout, redirect, props, children, ...rest } of routeData) {
       if (isExternal(path)) continue
-      const fullpath = combineURL(prefix, path)
-      const pagePath = removeParamsFromPath(fullpath)
-      const name = parsePathToName(fullpath)
+      const routePath = combineURL(prefix, path)
+      const pagePath = removeParamsFromPath(routePath)
+      const name = parsePathToName(routePath)
       if (children && children.length) {
         const firstPathNotExternal = getFirstPathNotExternal(children)
         if (!firstPathNotExternal) continue
         const route: RouteRecordRaw = {
-          path: fullpath,
+          path: routePath,
           name,
-          redirect: redirect ?? `/${combineURL(fullpath, firstPathNotExternal)}`
+          redirect: redirect ?? `/${combineURL(routePath, firstPathNotExternal)}`
         }
         if (layout === 'blank') {
           blankLayoutRoute.children.push(route)
         } else {
           basicLayoutRoute.children.push(route)
         }
-        transform(children, fullpath)
+        transform(children, routePath)
       } else {
         const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
         const component = getNamedView(view, name)
         const route: RouteRecordRaw = {
-          path: fullpath,
+          path: routePath,
           name,
           props,
           component,
