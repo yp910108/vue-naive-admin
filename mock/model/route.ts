@@ -217,7 +217,7 @@ export const routeModel: Record<RoleType, Route[]> = {
               children: [
                 {
                   title: '三级菜单',
-                  path: 'second-new/third',
+                  path: 'third',
                   icon: 'menu'
                 }
               ]
