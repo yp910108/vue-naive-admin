@@ -1,21 +1,6 @@
-import type { Schema } from '../typing'
-
-const locale: Schema = {
+const locale = {
   system: {
     title: 'SoybeanAdmin'
-  },
-  common: {
-    add: 'Add',
-    addSuccess: 'Add Success',
-    edit: 'Edit',
-    editSuccess: 'Edit Success',
-    delete: 'Delete',
-    deleteSuccess: 'Delete Success',
-    batchDelete: 'Batch Delete',
-    confirm: 'Confirm',
-    cancel: 'Cancel',
-    pleaseCheckValue: 'Please check the value is valid',
-    action: 'Action'
   },
   layout: {
     settingDrawer: {

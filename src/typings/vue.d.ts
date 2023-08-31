@@ -2,6 +2,6 @@ import 'vue'
 
 declare module 'vue' {
   interface ComponentCustomProperties {
-    $translate: import('../locales').T
+    $translate: typeof import('../locales').$translate
   }
 }
