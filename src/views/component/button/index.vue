@@ -44,7 +44,7 @@ interface ButtonDetail {
   id: number
   props: ButtonProps & { href?: string; target?: string }
   label?: string
-  icon?: string
+  icon?: Icon.IconName
 }
 
 interface ButtonExample {

@@ -115,11 +115,11 @@ const rules: Record<keyof FormModel, FormItemRule | FormItemRule[]> = {
 function createDefaultFormModel(): FormModel {
   return {
     userName: '',
-    age: null,
-    gender: null,
+    age: 0,
+    gender: '0',
     phone: '',
-    email: null,
-    userStatus: null
+    email: '',
+    status: '1'
   }
 }
 
