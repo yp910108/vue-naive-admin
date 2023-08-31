@@ -14,8 +14,6 @@
 import { watch } from 'vue'
 import { useImageVerify } from './hooks'
 
-defineOptions({ name: 'ImageVerify' })
-
 interface Props {
   code?: string
 }

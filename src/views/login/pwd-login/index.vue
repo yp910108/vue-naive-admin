@@ -68,11 +68,20 @@ const model = reactive({
 })
 
 const rules: FormRules = {
+  userName: {
+    required: true,
+    message: window.$translate('login.form.userNameRequired'),
+    trigger: 'input'
+  },
   password: [
-    { required: true, message: '请输入密码' },
+    {
+      required: true,
+      message: window.$translate('login.form.passwordRequired'),
+      trigger: 'input'
+    },
     {
       pattern: REGEXP_PWD,
-      message: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
+      message: window.$translate('login.form.passwordValid'),
       trigger: 'input'
     }
   ]

@@ -41,6 +41,19 @@ export const zhCN = {
       phoneNotEmpty: '手机号不能为空！',
       phoneInvalid: '手机号码格式错误！',
       phoneSuccess: '验证码发送成功！'
+    },
+    form: {
+      userNameRequired: '请输入用户名',
+      passwordRequired: '请输入密码',
+      passwordValid: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
+      confirmPasswordRequired: '请输入确认密码',
+      confirmPasswordInvalid: '输入的值与密码不一致',
+      phoneRequired: '请输入手机号码',
+      phoneInvalid: '手机号码格式错误',
+      codeRequired: '请输入验证码',
+      codeInvalid: '验证码格式错误',
+      imgCodeRequired: '请输入图片验证码',
+      imgCodeInvalid: '图片验证码不正确'
     }
   }
 }

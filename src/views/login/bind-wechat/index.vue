@@ -42,12 +42,20 @@ const model = reactive({
 
 const rules = {
   phone: [
-    { required: true, message: '请输入手机号码' },
-    { pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input' }
+    { required: true, message: window.$translate('login.form.phoneRequired'), trigger: 'input' },
+    {
+      pattern: REGEXP_PHONE,
+      message: window.$translate('login.form.phoneInvalid'),
+      trigger: 'input'
+    }
   ],
   code: [
-    { required: true, message: '请输入验证码' },
-    { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
+    { required: true, message: window.$translate('login.form.codeRequired') },
+    {
+      pattern: REGEXP_CODE_SIX,
+      message: window.$translate('login.form.codeInvalid'),
+      trigger: 'input'
+    }
   ]
 }
 

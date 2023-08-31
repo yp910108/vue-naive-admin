@@ -61,23 +61,35 @@ const model = reactive({
 
 const rules: FormRules = {
   phone: [
-    { required: true, message: '请输入手机号码' },
-    { pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input' }
+    { required: true, message: window.$translate('login.form.phoneRequired'), trigger: 'input' },
+    {
+      pattern: REGEXP_PHONE,
+      message: window.$translate('login.form.phoneInvalid'),
+      trigger: 'input'
+    }
   ],
   code: [
-    { required: true, message: '请输入验证码' },
-    { pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input' }
+    { required: true, message: window.$translate('login.form.codeRequired'), trigger: 'input' },
+    {
+      pattern: REGEXP_CODE_SIX,
+      message: window.$translate('login.form.codeInvalid'),
+      trigger: 'input'
+    }
   ],
   pwd: [
-    { required: true, message: '请输入密码' },
+    { required: true, message: window.$translate('login.form.passwordRequired'), trigger: 'input' },
     {
       pattern: REGEXP_PWD,
-      message: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
+      message: window.$translate('login.form.passwordValid'),
       trigger: 'input'
     }
   ],
   confirmPwd: [
-    { required: true, message: '请输入确认密码' },
+    {
+      required: true,
+      message: window.$translate('login.form.confirmPasswordRequired'),
+      trigger: 'input'
+    },
     {
       validator: (rule, value) => {
         if (!(value.trim() === '') && value !== model.pwd) {
@@ -85,7 +97,7 @@ const rules: FormRules = {
         }
         return Promise.resolve()
       },
-      message: '输入的值与密码不一致',
+      message: window.$translate('login.form.confirmPasswordInvalid'),
       trigger: 'input'
     }
   ]

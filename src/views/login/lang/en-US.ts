@@ -39,8 +39,21 @@ export const enUS = {
       initLabel: 'Get verification code',
       countingLabel: 'seconds get it again',
       phoneNotEmpty: 'The phone number cannot be empty',
-      phoneInvalid: 'The mobile phone number format is incorrect',
+      phoneInvalid: 'The phone number format is incorrect',
       phoneSuccess: 'Verification code sent successfully'
+    },
+    form: {
+      userNameRequired: 'Please enter user name',
+      passwordRequired: 'Please enter password',
+      passwordValid: 'The password must be 6-18 digits/characters/symbols, at least 2 combinations',
+      confirmPasswordRequired: 'Please confirm password',
+      confirmPasswordInvalid: 'The new value is inconsistent with the old value',
+      phoneRequired: 'Please enter phone number',
+      phoneInvalid: 'The phone number format is incorrect',
+      codeRequired: 'Please enter verification code',
+      codeInvalid: 'The verification code is incorrect',
+      imgCodeRequired: 'Please enter iamge verification code',
+      imgCodeInvalid: 'The image verification code is incorrect'
     }
   }
 }
