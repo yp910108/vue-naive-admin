@@ -11,7 +11,7 @@ const fallbackLocale: Lang = 'enUS'
 const i18n = createI18n({
   locale,
   fallbackLocale,
-  messages,
+  messages: { ...messages },
   legacy: false
 })
 
