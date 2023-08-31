@@ -1,4 +1,4 @@
-const locale = {
+export const zhCN = {
   system: {
     title: 'Soybean 管理系统'
   },
@@ -128,5 +128,3 @@ const locale = {
     }
   }
 }
-
-export default locale

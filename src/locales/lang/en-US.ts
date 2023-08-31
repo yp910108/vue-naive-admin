@@ -1,4 +1,4 @@
-const locale = {
+export const enUS = {
   system: {
     title: 'SoybeanAdmin'
   },
@@ -128,5 +128,3 @@ const locale = {
     }
   }
 }
-
-export default locale

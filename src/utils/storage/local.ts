@@ -1,4 +1,4 @@
-import type { Lang } from '@/locales/typing'
+import type { Lang } from '@/locales'
 import { decrypto, encrypto } from '../crypto'
 import type { MultiTab, UserInfo } from '@/store'
 

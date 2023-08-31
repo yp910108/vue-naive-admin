@@ -20,10 +20,10 @@ type Option = {
   key: Lang
 }
 
-const language = ref<Lang>(localStg.get('lang') ?? 'zh-CN')
+const language = ref<Lang>(localStg.get('lang') ?? 'zhCN')
 const options: Option[] = [
-  { label: '中文', key: 'zh-CN' },
-  { label: 'English', key: 'en' }
+  { label: '中文', key: 'zhCN' },
+  { label: 'English', key: 'enUS' }
 ]
 const handleSelect = (key: Lang) => {
   language.value = key
