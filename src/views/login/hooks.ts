@@ -50,15 +50,13 @@ export function useSmsCode() {
   const loading = ref(false)
   const { counts, start, isCounting } = useCountDown(60)
 
-  const initLabel = $translate('login.smsCode.initLabel')
-  const countingLabel = (second: number) => `${second} ${$translate('login.smsCode.countingLabel')}`
   const label = computed(() => {
-    let text = initLabel
+    let text = $translate('login.smsCode.initLabel')
     if (loading.value) {
       text = ''
     }
     if (isCounting.value) {
-      text = countingLabel(counts.value)
+      text = `${counts.value} ${$translate('login.smsCode.countingLabel')}`
     }
     return text
   })
