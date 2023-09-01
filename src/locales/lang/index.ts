@@ -1,3 +1,4 @@
+import { merge } from 'lodash-es'
 import { zhCN } from './zh-CN'
 import { enUS } from './en-US'
 
@@ -10,10 +11,10 @@ const messages = { zhCN, enUS }
 for (const key in modules) {
   const { zhCN, enUS } = modules[key] as Partial<Record<Lang, object>>
   if (zhCN) {
-    messages.zhCN = { ...messages.zhCN, ...zhCN }
+    messages.zhCN = merge(messages.zhCN, zhCN)
   }
   if (enUS) {
-    messages.enUS = { ...messages.enUS, ...enUS }
+    messages.enUS = merge(messages.enUS, enUS)
   }
 }
 

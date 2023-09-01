@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash-es'
 import { settings } from '@/settings'
 import { getColorPalette, sessionStg } from '@/utils'
 
@@ -10,7 +9,7 @@ export function initSettings() {
   const primaryColor = sessionStg.get('primaryColor') ?? settings.primaryColor
   const infoColor = settings.isCustomizeInfoColor ? settings.otherColor.info : primaryColor
   const otherColor = { ...settings.otherColor, info: infoColor }
-  return cloneDeep({ ...settings, primaryColor, otherColor })
+  return { ...settings, primaryColor, otherColor }
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'

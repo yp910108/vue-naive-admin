@@ -17,20 +17,20 @@
     :width="330"
     @mask-click="appStore.closeSettingDrawer"
   >
-    <n-drawer-content :title="$translate('layout.settingDrawer.title')" :native-scrollbar="false">
-      <dark-mode />
+    <n-drawer-content :title="$translate('layout.settings.title')" :native-scrollbar="false">
+      <theme-mode />
       <layout-mode />
-      <color-select />
+      <!-- <color-select />
       <page-func />
       <page-view />
-      <theme-config />
+      <theme-config /> -->
     </n-drawer-content>
   </n-drawer>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store'
-import DarkMode from './dark-mode.vue'
+import ThemeMode from './theme-mode.vue'
 import LayoutMode from './layout-mode.vue'
 import ColorSelect from './color-select/index.vue'
 import PageFunc from './page-func.vue'

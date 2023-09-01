@@ -1,7 +1,7 @@
 <template>
   <hover-container
-    tooltip-content="github"
     class="w-40px h-full"
+    :tooltip-content="$translate('layout.header.githubSite.tooltip')"
     :inverted="theme.header.inverted"
     @click="handleClickLink"
   >

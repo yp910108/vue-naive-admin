@@ -1,6 +1,6 @@
 <template>
   <n-divider title-placement="center">
-    {{ $translate('layout.settingDrawer.layoutModelTitle') }}
+    {{ $translate('layout.settings.layoutMode.title') }}
   </n-divider>
   <n-space justify="space-around" class="px-12px" :wrap="true" :size="24">
     <div
@@ -71,6 +71,9 @@ const placement: Placement = {
   horizontal: 'bottom',
   'horizontal-mix': 'bottom-end'
 }
+
+const modeList = $translate('layout.settings.layoutMode.modeList')
+console.log(modeList)
 </script>
 
 <style scoped lang="scss">
