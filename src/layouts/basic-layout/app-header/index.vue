@@ -16,7 +16,7 @@
       <git-hub-site />
       <full-screen />
       <theme-mode />
-      <toggle-lang />
+      <lang-select with-hover-container />
       <system-message />
       <user-avatar />
     </div>
@@ -35,7 +35,6 @@ import Search from './search/index.vue'
 import GitHubSite from './github-site.vue'
 import FullScreen from './full-screen.vue'
 import ThemeMode from './theme-mode.vue'
-import ToggleLang from './toggle-lang.vue'
 import SystemMessage from './system-message/index.vue'
 import UserAvatar from './user-avatar.vue'
 import { useMobile } from '../hooks'

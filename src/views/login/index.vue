@@ -5,6 +5,7 @@
       :dark="theme.darkMode"
       @update:dark="setDarkMode"
     />
+    <lang-select container-class="absolute right-37px top-13px z-3" />
     <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm">
       <div class="w-300px sm:w-360px">
         <header class="flex-y-center justify-between">

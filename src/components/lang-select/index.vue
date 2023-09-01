@@ -1,8 +1,15 @@
 <template>
   <n-dropdown trigger="hover" :options="options" :value="language" @select="handleSelect">
-    <hover-container class="w-40px h-full" :inverted="theme.header.inverted">
-      <icon-language class="text-18px outline-transparent" />
+    <hover-container
+      v-if="withHoverContainer"
+      :class="['p11px', containerClass]"
+      :inverted="theme.header.inverted"
+    >
+      <icon-language class="text-18px" />
     </hover-container>
+    <div v-else :class="['cursor-pointer p11px', containerClass]">
+      <icon-language class="text-18px" />
+    </div>
   </n-dropdown>
 </template>
 
@@ -12,6 +19,13 @@ import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import { localStg } from '@/utils'
 import { setLocale, type Lang } from '@/locales'
+
+interface Props {
+  withHoverContainer?: boolean
+  containerClass?: string
+}
+
+defineProps<Props>()
 
 const { theme } = storeToRefs(useThemeStore())
 
