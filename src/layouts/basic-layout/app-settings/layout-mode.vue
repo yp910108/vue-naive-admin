@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { PopoverPlacement } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import type { Settings } from '@/settings'
@@ -75,7 +76,7 @@ const placement: Placement = {
   'horizontal-mix': 'bottom-end'
 }
 
-const modeList: OptionWithKey<LayoutMode>[] = [
+const modeList = computed<OptionWithKey<LayoutMode>[]>(() => [
   {
     value: 'vertical',
     label: $translate('layout.settings.layoutMode.mode.vertical')
@@ -92,7 +93,7 @@ const modeList: OptionWithKey<LayoutMode>[] = [
     value: 'horizontal-mix',
     label: $translate('layout.settings.layoutMode.mode.horizontalMix')
   }
-]
+])
 </script>
 
 <style scoped lang="scss">

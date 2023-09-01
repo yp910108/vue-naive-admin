@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { Settings } from '@/settings'
 import type { OptionWithKey } from '@/utils'
@@ -61,12 +62,12 @@ type PageAnimateMode = Settings['page']['animateMode']
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-const tabModeList: OptionWithKey<TabMode>[] = [
+const tabModeList = computed<OptionWithKey<TabMode>[]>(() => [
   { value: 'chrome', label: $translate('layout.settings.pageView.tabMode.chrome') },
   { value: 'button', label: $translate('layout.settings.pageView.tabMode.button') }
-]
+])
 
-const pageAnimateModeList: OptionWithKey<PageAnimateMode>[] = [
+const pageAnimateModeList = computed<OptionWithKey<PageAnimateMode>[]>(() => [
   { value: 'fade-slide', label: $translate('layout.settings.pageView.pageAnimateMode.fadeSlide') },
   { value: 'fade', label: $translate('layout.settings.pageView.pageAnimateMode.fade') },
   {
@@ -76,5 +77,5 @@ const pageAnimateModeList: OptionWithKey<PageAnimateMode>[] = [
   { value: 'fade-scale', label: $translate('layout.settings.pageView.pageAnimateMode.fadeScale') },
   { value: 'zoom-fade', label: $translate('layout.settings.pageView.pageAnimateMode.zoomFade') },
   { value: 'zoom-out', label: $translate('layout.settings.pageView.pageAnimateMode.zoomOut') }
-]
+])
 </script>

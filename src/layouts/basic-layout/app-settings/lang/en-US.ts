@@ -14,10 +14,10 @@ export const enUS = {
       layoutMode: {
         title: 'Layout mode',
         mode: {
-          vertical: '左侧菜单模式',
-          verticalMix: '左侧菜单混合模式',
-          horizontal: '顶部菜单模式',
-          horizontalMix: '顶部菜单混合模式'
+          vertical: 'Left menu mode',
+          verticalMix: 'Left menu mix mode',
+          horizontal: 'Top menu mode',
+          horizontalMix: 'Top menu Mix mode'
         }
       },
       colorSelect: {

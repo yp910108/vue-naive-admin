@@ -90,6 +90,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { Settings } from '@/settings'
 import type { OptionWithKey } from '@/utils'
@@ -102,7 +103,7 @@ type HorizontalMenuPosition = Settings['menu']['horizontalPosition']
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-const scrollModeList: OptionWithKey<ScrollMode>[] = [
+const scrollModeList = computed<OptionWithKey<ScrollMode>[]>(() => [
   {
     value: 'wrapper',
     label: $translate('layout.settings.pageFunc.scrollMode.wrapper')
@@ -111,9 +112,9 @@ const scrollModeList: OptionWithKey<ScrollMode>[] = [
     value: 'content',
     label: $translate('layout.settings.pageFunc.scrollMode.content')
   }
-]
+])
 
-const menuHorizontalPositionList: OptionWithKey<HorizontalMenuPosition>[] = [
+const menuHorizontalPositionList = computed<OptionWithKey<HorizontalMenuPosition>[]>(() => [
   {
     value: 'flex-start',
     label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexStart')
@@ -126,5 +127,5 @@ const menuHorizontalPositionList: OptionWithKey<HorizontalMenuPosition>[] = [
     value: 'flex-end',
     label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexEnd')
   }
-]
+])
 </script>
