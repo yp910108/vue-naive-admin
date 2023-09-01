@@ -35,11 +35,11 @@
       </n-button>
       <div class="flex-y-center justify-between">
         <n-button class="flex-1" :block="true" @click="toLoginModule('code-login')">
-          {{ loginModuleLabels['code-login'] }}
+          {{ $translate('login.codeLogin.title') }}
         </n-button>
         <div class="w-12px"></div>
         <n-button class="flex-1" :block="true" @click="toLoginModule('register')">
-          {{ loginModuleLabels.register }}
+          {{ $translate('login.register.title') }}
         </n-button>
       </div>
     </n-space>
@@ -52,7 +52,6 @@ import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
 import { REGEXP_PWD } from '@/constants'
 import { useAuthStore } from '@/store'
-import { loginModuleLabels } from '../constant'
 import { useToLoginModule } from '../hooks'
 import OtherAccount from './other-account.vue'
 

@@ -15,7 +15,7 @@
           </n-gradient-text>
         </header>
         <main class="pt-24px">
-          <h3 class="text-18px text-primary font-medium">{{ activeType.label }}</h3>
+          <h3 class="text-18px text-primary font-medium">{{ $translate(activeType.label) }}</h3>
           <div class="pt-24px">
             <transition name="fade-slide" mode="out-in" appear>
               <component :is="activeType.component" />
@@ -34,7 +34,6 @@ import type { Component } from 'vue'
 import { getColorPalette, mixColor } from '@/utils'
 import { useThemeStore } from '@/store'
 import type { LoginModule } from './typing'
-import { loginModuleLabels } from './constant'
 import LoginBg from './login-bg/index.vue'
 import PwdLogin from './pwd-login/index.vue'
 import CodeLogin from './code-login/index.vue'
@@ -67,11 +66,11 @@ interface LoginType {
 }
 
 const types: LoginType[] = [
-  { key: 'pwd-login', label: loginModuleLabels['pwd-login'], component: PwdLogin },
-  { key: 'code-login', label: loginModuleLabels['code-login'], component: CodeLogin },
-  { key: 'register', label: loginModuleLabels.register, component: Register },
-  { key: 'reset-pwd', label: loginModuleLabels['reset-pwd'], component: ResetPwd },
-  { key: 'bind-wechat', label: loginModuleLabels['bind-wechat'], component: BindWechat }
+  { key: 'pwd-login', label: 'login.pwdLogin.title', component: PwdLogin },
+  { key: 'code-login', label: 'login.codeLogin.title', component: CodeLogin },
+  { key: 'register', label: 'login.register.title', component: Register },
+  { key: 'reset-pwd', label: 'login.resetPwd.title', component: ResetPwd },
+  { key: 'bind-wechat', label: 'login.bindWeChat.title', component: BindWechat }
 ]
 
 const activeType = computed(() => {

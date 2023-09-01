@@ -10,7 +10,7 @@
         type="primary"
         @click="login(item.userName, item.password)"
       >
-        {{ item.label }}
+        {{ $translate(item.label) }}
       </n-button>
     </n-space>
   </n-space>
@@ -18,7 +18,6 @@
 
 <script lang="ts" setup>
 import type { RoleType } from '@/store'
-import { userRoleLabels } from './constant'
 
 interface Emits {
   (e: 'login', param: { userName: string; password: string }): void
@@ -36,19 +35,19 @@ interface Account {
 const accounts: Account[] = [
   {
     key: 'super',
-    label: userRoleLabels.super,
+    label: 'login.pwdLogin.superAdmin',
     userName: 'Super',
     password: 'super123'
   },
   {
     key: 'admin',
-    label: userRoleLabels.admin,
+    label: 'login.pwdLogin.admin',
     userName: 'Admin',
     password: 'admin123'
   },
   {
     key: 'user',
-    label: userRoleLabels.user,
+    label: 'login.pwdLogin.user',
     userName: 'User01',
     password: 'user01123'
   }
