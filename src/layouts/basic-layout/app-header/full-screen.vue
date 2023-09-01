@@ -1,7 +1,7 @@
 <template>
   <hover-container
-    tooltip-content="全屏"
     class="w-40px h-full"
+    :tooltip-content="$translate('layout.header.themeMode.tooltip')"
     :inverted="theme.header.inverted"
     @click="toggle"
   >

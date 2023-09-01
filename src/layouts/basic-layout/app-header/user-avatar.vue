@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { h } from 'vue'
+import { computed, h } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
 import { IconRender } from '@/utils'
@@ -19,19 +19,27 @@ import { useAuthStore, useThemeStore } from '@/store'
 const authStore = useAuthStore()
 const { theme } = storeToRefs(useThemeStore())
 
-const options: DropdownOption[] = [
-  { label: '用户中心', key: 'user-center', icon: () => h(IconRender, { icon: 'user-avatar' }) },
+const options = computed<DropdownOption[]>(() => [
+  {
+    label: $translate('layout.header.user.dropdown.userCenter'),
+    key: 'user-center',
+    icon: () => h(IconRender, { icon: 'user-avatar' })
+  },
   { type: 'divider', key: 'divider' },
-  { label: '退出登录', key: 'logout', icon: () => h(IconRender, { icon: 'logout' }) }
-]
+  {
+    label: $translate('layout.header.user.dropdown.logout'),
+    key: 'logout',
+    icon: () => h(IconRender, { icon: 'logout' })
+  }
+])
 
 const handleDropdown = (optionKey: string) => {
   if (optionKey === 'logout') {
     window.$dialog.info({
-      title: '提示',
-      content: '您确定要退出登录吗？',
-      positiveText: '确定',
-      negativeText: '取消',
+      title: $translate('layout.header.user.logoutDialog.title'),
+      content: $translate('layout.header.user.logoutDialog.content'),
+      positiveText: $translate('layout.header.user.logoutDialog.action.confirm'),
+      negativeText: $translate('layout.header.user.logoutDialog.action.cancel'),
       onPositiveClick: () => {
         authStore.logout()
       }

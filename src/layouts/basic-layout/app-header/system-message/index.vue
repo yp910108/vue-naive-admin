@@ -2,8 +2,8 @@
   <n-popover class="!p-0" trigger="click" placement="bottom">
     <template #trigger>
       <hover-container
-        tooltip-content="消息通知"
         class="relative w-40px h-full"
+        :tooltip-content="$translate('layout.header.systemMessage.tooltip')"
         :inverted="theme.header.inverted"
       >
         <icon-notification-line class="text-18px" />
@@ -43,18 +43,20 @@
       </n-tab-pane>
     </n-tabs>
     <div v-if="showAction" class="flex border-t border-$n-divider-color cursor-pointer">
-      <div class="flex-1 text-center py-10px" @click="handleClear">清空</div>
+      <div class="flex-1 text-center py-10px" @click="handleClear">
+        {{ $translate('layout.header.systemMessage.tabs.action.clear') }}
+      </div>
       <div
         class="flex-1 text-center py-10px border-l border-$n-divider-color"
         @click="handleAllRead"
       >
-        全部已读
+        {{ $translate('layout.header.systemMessage.tabs.action.allRead') }}
       </div>
       <div
         class="flex-1 text-center py-10px border-l border-$n-divider-color"
         @click="handleLoadMore"
       >
-        查看更多
+        {{ $translate('layout.header.systemMessage.tabs.action.loadMore') }}
       </div>
     </div>
   </n-popover>
@@ -72,10 +74,10 @@ const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 
-const tabData = ref<MessageTab[]>([
+const tabData = computed<MessageTab[]>(() => [
   {
     key: 1,
-    name: '通知',
+    name: $translate('layout.header.systemMessage.tabs.title.notice'),
     badgeProps: { type: 'warning' },
     list: [
       { id: 1, icon: 'message-3-line', title: '你收到了5条新消息', date: '2022-06-17' },
@@ -108,7 +110,7 @@ const tabData = ref<MessageTab[]>([
   },
   {
     key: 2,
-    name: '消息',
+    name: $translate('layout.header.systemMessage.tabs.title.message'),
     badgeProps: { type: 'error' },
     list: [
       {
@@ -150,7 +152,7 @@ const tabData = ref<MessageTab[]>([
   },
   {
     key: 3,
-    name: '待办',
+    name: $translate('layout.header.systemMessage.tabs.title.todo'),
     badgeProps: { type: 'info' },
     list: [
       {

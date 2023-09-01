@@ -10,11 +10,18 @@ import {
   generateTypeStrs
 } from './utils'
 import type { Prefix, Exported } from './typing'
-import { exclude } from './exclude'
 
-// https://docs.iconify.design/articles/cleaning-up-icons/#parsing-an-entire-icon-set
-// https://docs.iconify.design/tools/tools2/export/json.html
-export default function icon(): PluginOption {
+/**
+ * https://docs.iconify.design/articles/cleaning-up-icons/#parsing-an-entire-icon-set
+ * https://docs.iconify.design/tools/tools2/export/json.html
+ */
+
+/**
+ * 压缩、生成 Icon 组件
+ * @param options
+ * - parseColor 是否去除颜色（将颜色转化为 currentColor）
+ */
+export default function icons(options: { parseColor?: boolean } = {}): PluginOption {
   return {
     name: 'icon',
     async buildStart() {
@@ -29,18 +36,19 @@ export default function icon(): PluginOption {
           iconSet.remove(name)
           return
         }
-        if (exclude.includes(name)) return
         try {
           cleanupSVG(svg)
-          const whiteColor = stringToColor('white')
-          await parseColors(svg, {
-            defaultColor: 'currentColor',
-            callback: (_, colorStr, color) => {
-              return !color || isEmptyColor(color) || compareColors(color, whiteColor!)
-                ? colorStr
-                : 'currentColor'
-            }
-          })
+          if (options.parseColor) {
+            const whiteColor = stringToColor('white')
+            await parseColors(svg, {
+              defaultColor: 'currentColor',
+              callback: (_, colorStr, color) => {
+                return !color || isEmptyColor(color) || compareColors(color, whiteColor!)
+                  ? colorStr
+                  : 'currentColor'
+              }
+            })
+          }
           runSVGO(svg)
         } catch (err) {
           console.error(`Error parsing ${name}:`, err)

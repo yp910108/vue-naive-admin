@@ -1,7 +1,7 @@
 <template>
   <hover-container
     class="w-40px h-full"
-    tooltip-content="搜索"
+    :tooltip-content="$translate('layout.header.search.tooltip')"
     :inverted="theme.header.inverted"
     @click="handleSearch"
   >

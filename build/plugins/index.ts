@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import unocss from 'unocss/vite'
-import icon from './icon'
+import icons from './icons'
 import components from './components'
 import compress from './compress'
 import mock from './mock'
@@ -15,8 +15,8 @@ export function setupVitePlugins(env: ImportMetaEnv) {
     vueJsx(),
     vueDevTools(),
     unocss(),
+    icons(),
     components(),
-    icon(),
     mock(env)
   ]
 
