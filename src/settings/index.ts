@@ -1,6 +1,7 @@
 import type { Settings } from './typing'
 import settingsJson from './settings.json'
+import colors from './colors.json'
 
-export const settings = settingsJson as Settings
 export * from './typing'
-export * from './color'
+export const settings = settingsJson as Settings
+export { colors }

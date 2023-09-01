@@ -4,7 +4,7 @@
   </n-divider>
   <n-space justify="space-around" class="px-12px" :wrap="true" :size="24">
     <div
-      v-for="item in theme.layout.modeList"
+      v-for="item in modeList"
       :key="item.value"
       :class="[
         'border-2px rounded-6px cursor-pointer hover:border-primary',
@@ -58,12 +58,15 @@
 import type { PopoverPlacement } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import type { Settings } from '@/settings'
+import type { OptionWithKey } from '@/utils'
 import { useThemeStore } from '@/store'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-type Placement = Record<Settings['layout']['mode'], PopoverPlacement>
+type LayoutMode = Settings['layout']['mode']
+
+type Placement = Record<LayoutMode, PopoverPlacement>
 
 const placement: Placement = {
   vertical: 'bottom-start',
@@ -72,8 +75,24 @@ const placement: Placement = {
   'horizontal-mix': 'bottom-end'
 }
 
-const modeList = $translate('layout.settings.layoutMode.modeList')
-console.log(modeList)
+const modeList: OptionWithKey<LayoutMode>[] = [
+  {
+    value: 'vertical',
+    label: $translate('layout.settings.layoutMode.mode.vertical')
+  },
+  {
+    value: 'vertical-mix',
+    label: $translate('layout.settings.layoutMode.mode.verticalMix')
+  },
+  {
+    value: 'horizontal',
+    label: $translate('layout.settings.layoutMode.mode.horizontal')
+  },
+  {
+    value: 'horizontal-mix',
+    label: $translate('layout.settings.layoutMode.mode.horizontalMix')
+  }
+]
 </script>
 
 <style scoped lang="scss">

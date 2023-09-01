@@ -20,10 +20,10 @@
     <n-drawer-content :title="$translate('layout.settings.title')" :native-scrollbar="false">
       <theme-mode />
       <layout-mode />
-      <!-- <color-select />
+      <color-select />
       <page-func />
       <page-view />
-      <theme-config /> -->
+      <theme-config />
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -32,7 +32,7 @@
 import { useAppStore } from '@/store'
 import ThemeMode from './theme-mode.vue'
 import LayoutMode from './layout-mode.vue'
-import ColorSelect from './color-select/index.vue'
+import ColorSelect from './color-select.vue'
 import PageFunc from './page-func.vue'
 import PageView from './page-view.vue'
 import ThemeConfig from './theme-config.vue'

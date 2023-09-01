@@ -1,37 +1,37 @@
 <template>
   <n-divider title-placement="center">
-    {{ $translate('layout.settingDrawer.pageFunctionsTitle') }}
+    {{ $translate('layout.settings.pageFunc.title') }}
   </n-divider>
   <n-space vertical size="large">
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.scrollMode') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.scrollMode.title') }}</span>
       <n-select
         class="w-120px"
         size="small"
         :value="theme.scrollMode"
-        :options="theme.scrollModeList"
+        :options="scrollModeList"
         @update:value="themeStore.setScrollMode"
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.fixedHeaderAndTab') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.fixedHeaderAndTab') }}</span>
       <n-switch
         :value="theme.fixedHeaderAndTab"
         @update:value="themeStore.setIsFixedHeaderAndTab"
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.menu.horizontalPosition') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.menuHorizontalPosition.title') }}</span>
       <n-select
         class="w-120px"
         size="small"
         :value="theme.menu.horizontalPosition"
-        :options="theme.menu.horizontalPositionList"
+        :options="menuHorizontalPositionList"
         @update:value="themeStore.setHorizontalMenuPosition"
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.header.height') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.headerHeight') }}</span>
       <n-input-number
         class="w-120px"
         size="small"
@@ -41,7 +41,7 @@
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.tab.height') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.tabHeight') }}</span>
       <n-input-number
         class="w-120px"
         size="small"
@@ -51,11 +51,11 @@
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.tab.isCache') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.tabIsCache') }}</span>
       <n-switch :value="theme.tab.isCache" @update:value="themeStore.setTabIsCache" />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.sider.width') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.siderWidth') }}</span>
       <n-input-number
         class="w-120px"
         size="small"
@@ -65,7 +65,7 @@
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.sider.mixWidth') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.siderMixWidth') }}</span>
       <n-input-number
         class="w-120px"
         size="small"
@@ -75,15 +75,15 @@
       />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.footer.visible') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.footerVisible') }}</span>
       <n-switch :value="theme.footer.visible" @update:value="themeStore.setFooterVisible" />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.footer.fixed') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.footerFixed') }}</span>
       <n-switch :value="theme.footer.fixed" @update:value="themeStore.setFooterIsFixed" />
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settingDrawer.footer.right') }}</span>
+      <span>{{ $translate('layout.settings.pageFunc.footerRight') }}</span>
       <n-switch :value="theme.footer.right" @update:value="themeStore.setFooterIsRight" />
     </div>
   </n-space>
@@ -91,8 +91,40 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import type { Settings } from '@/settings'
+import type { OptionWithKey } from '@/utils'
 import { useThemeStore } from '@/store'
+
+type ScrollMode = Settings['scrollMode']
+
+type HorizontalMenuPosition = Settings['menu']['horizontalPosition']
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
+
+const scrollModeList: OptionWithKey<ScrollMode>[] = [
+  {
+    value: 'wrapper',
+    label: $translate('layout.settings.pageFunc.scrollMode.wrapper')
+  },
+  {
+    value: 'content',
+    label: $translate('layout.settings.pageFunc.scrollMode.content')
+  }
+]
+
+const menuHorizontalPositionList: OptionWithKey<HorizontalMenuPosition>[] = [
+  {
+    value: 'flex-start',
+    label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexStart')
+  },
+  {
+    value: 'center',
+    label: $translate('layout.settings.pageFunc.menuHorizontalPosition.center')
+  },
+  {
+    value: 'flex-end',
+    label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexEnd')
+  }
+]
 </script>

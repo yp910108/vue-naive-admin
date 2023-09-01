@@ -1,13 +1,13 @@
 <template>
   <n-divider title-placement="center">
-    {{ $translate('layout.settingDrawer.themeConfiguration.title') }}
+    {{ $translate('layout.settings.themeConfig.title') }}
   </n-divider>
   <n-space vertical>
     <n-button type="primary" block @click="handleCopy">
-      {{ $translate('layout.settingDrawer.themeConfiguration.copy') }}
+      {{ $translate('layout.settings.themeConfig.copy') }}
     </n-button>
     <n-button type="warning" block @click="handleResetConfig">
-      {{ $translate('layout.settingDrawer.themeConfiguration.reset') }}
+      {{ $translate('layout.settings.themeConfig.reset') }}
     </n-button>
   </n-space>
 </template>
@@ -30,15 +30,15 @@ const handleCopy = async () => {
   }
   await copy(JSON.stringify(theme, null, '\t'))
   window.$dialog.info({
-    title: window.$translate('layout.settingDrawer.themeConfiguration.operateSuccess'),
-    content: window.$translate('layout.settingDrawer.themeConfiguration.copySuccess'),
-    positiveText: window.$translate('layout.settingDrawer.themeConfiguration.confirmCopy'),
+    title: window.$translate('layout.settings.themeConfig.operateSuccess'),
+    content: window.$translate('layout.settings.themeConfig.copySuccess'),
+    positiveText: window.$translate('layout.settings.themeConfig.confirmCopy'),
     icon: () => h(IconRender, { icon: 'success-filled' })
   })
 }
 
 const handleResetConfig = () => {
   themeStore.reset()
-  window.$message.success(window.$translate('layout.settingDrawer.themeConfiguration.resetSuccess'))
+  window.$message.success(window.$translate('layout.settings.themeConfig.resetSuccess'))
 }
 </script>

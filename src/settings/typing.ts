@@ -1,5 +1,3 @@
-import type { OptionWithKey } from '@/utils'
-
 /**
  * 布局模式
  * - vertical 左侧菜单模式
@@ -21,10 +19,6 @@ interface Layout {
    * 布局模式
    */
   mode: LayoutMode
-  /**
-   * 布局模式列表
-   */
-  modeList: OptionWithKey<LayoutMode>[]
 }
 
 /**
@@ -103,10 +97,6 @@ interface Tab {
    */
   mode: TabMode
   /**
-   * 多页签风格列表
-   */
-  modeList: OptionWithKey<TabMode>[]
-  /**
    * 开启多页签缓存
    */
   isCache: boolean
@@ -158,10 +148,6 @@ interface Menu {
    * 水平模式的菜单的位置
    */
   horizontalPosition: HorizontalMenuPosition
-  /**
-   * 水平模式的菜单的位置列表
-   */
-  horizontalPositionList: OptionWithKey<HorizontalMenuPosition>[]
 }
 
 /**
@@ -199,7 +185,13 @@ interface Footer {
  * - zoom-fade: 渐变
  * - zoom-out: 闪现
  */
-type AnimateMode = 'fade-slide' | 'fade' | 'fade-bottom' | 'fade-scale' | 'zoom-fade' | 'zoom-out'
+type PageAnimateMode =
+  | 'fade-slide'
+  | 'fade'
+  | 'fade-bottom'
+  | 'fade-scale'
+  | 'zoom-fade'
+  | 'zoom-out'
 
 /**
  * 页面样式
@@ -212,11 +204,7 @@ interface Page {
   /**
    * 动画类型
    */
-  animateMode: AnimateMode
-  /**
-   * 动画类型列表
-   */
-  animateModeList: OptionWithKey<AnimateMode>[]
+  animateMode: PageAnimateMode
 }
 
 /**
@@ -248,17 +236,9 @@ export interface Settings {
    */
   scrollMode: ScrollMode
   /**
-   * 滚动模式列表
-   */
-  scrollModeList: OptionWithKey<ScrollMode>[]
-  /**
    * 主颜色
    */
   primaryColor: string
-  /**
-   * 主颜色列表
-   */
-  primaryColorList: string[]
   /**
    * 其他颜色
    */
