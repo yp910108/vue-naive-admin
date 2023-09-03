@@ -6,7 +6,6 @@
     // fix for vue-i18n
     "moduleResolution": "Node",
     "skipLibCheck": false,
-    // "composite": true,
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
