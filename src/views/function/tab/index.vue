@@ -13,6 +13,10 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 function handleToTabDetail() {
-  router.push({ name: 'FunctionTabDetail', query: { name: 'abc' }, hash: '#DEMO_HASH' })
+  router.push({
+    name: 'FunctionTabDetail',
+    query: { name: 'abc' },
+    hash: '#DEMO_HASH'
+  })
 }
 </script>

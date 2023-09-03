@@ -66,7 +66,11 @@ function setTableData(data: Row[]) {
 async function getTableData() {
   loading.value = true
   const data = (await fetchUserList()) ?? []
-  const list = data.map((item, index) => ({ ...item, index: index + 1, key: item.id }))
+  const list = data.map((item, index) => ({
+    ...item,
+    index: index + 1,
+    key: item.id
+  }))
   setTimeout(() => {
     setTableData(list)
     loading.value = false

@@ -6,7 +6,11 @@
     <div ref="bsWrapper" class="flex-1-hidden h-full">
       <better-scroll
         ref="bsScroll"
-        :options="{ scrollX: true, scrollY: false, click: !!deviceInfo.device.type }"
+        :options="{
+          scrollX: true,
+          scrollY: false,
+          click: !!deviceInfo.device.type
+        }"
       >
         <tabs @scroll="handleTabsScroll" />
       </better-scroll>

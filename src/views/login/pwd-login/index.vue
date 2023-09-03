@@ -73,8 +73,16 @@ const rules: FormRules = {
     trigger: 'input'
   },
   password: [
-    { required: true, message: $translate('login.form.passwordRequired'), trigger: 'input' },
-    { pattern: REGEXP_PWD, message: $translate('login.form.passwordValid'), trigger: 'input' }
+    {
+      required: true,
+      message: $translate('login.form.passwordRequired'),
+      trigger: 'input'
+    },
+    {
+      pattern: REGEXP_PWD,
+      message: $translate('login.form.passwordValid'),
+      trigger: 'input'
+    }
   ]
 }
 

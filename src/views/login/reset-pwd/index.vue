@@ -59,7 +59,11 @@ const model = reactive({
 
 const rules: FormRules = {
   phone: [
-    { required: true, message: $translate('login.form.phoneRequired'), trigger: 'input' },
+    {
+      required: true,
+      message: $translate('login.form.phoneRequired'),
+      trigger: 'input'
+    },
     {
       pattern: REGEXP_PHONE,
       message: $translate('login.form.phoneInvalid'),
@@ -67,15 +71,31 @@ const rules: FormRules = {
     }
   ],
   code: [
-    { required: true, message: $translate('login.form.codeRequired'), trigger: 'input' },
-    { pattern: REGEXP_CODE_SIX, message: $translate('login.form.codeInvalid'), trigger: 'input' }
+    {
+      required: true,
+      message: $translate('login.form.codeRequired'),
+      trigger: 'input'
+    },
+    {
+      pattern: REGEXP_CODE_SIX,
+      message: $translate('login.form.codeInvalid'),
+      trigger: 'input'
+    }
   ],
   password: [
     { required: true, message: $translate('login.form.passwordRequired') },
-    { pattern: REGEXP_PWD, message: $translate('login.form.passwordValid'), trigger: 'input' }
+    {
+      pattern: REGEXP_PWD,
+      message: $translate('login.form.passwordValid'),
+      trigger: 'input'
+    }
   ],
   confirmPwd: [
-    { required: true, message: $translate('login.form.confirmPasswordRequired'), trigger: 'input' },
+    {
+      required: true,
+      message: $translate('login.form.confirmPasswordRequired'),
+      trigger: 'input'
+    },
     {
       validator: (rule, value) => {
         if (!(value.trim() === '') && value !== model.pwd) {

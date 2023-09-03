@@ -13,6 +13,17 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        $schema: 'https://json.schemastore.org/prettierrc',
+        semi: false,
+        tabWidth: 2,
+        singleQuote: true,
+        printWidth: 100,
+        trailingComma: 'none'
+      }
+    ],
     'vue/multi-word-component-names': 0
   }
 }

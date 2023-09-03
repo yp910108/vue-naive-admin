@@ -10,7 +10,9 @@
         ></div>
       </div>
     </div>
-    <h2 class="font-500 text-28px text-#646464">{{ $translate('system.title') }}</h2>
+    <h2 class="font-500 text-28px text-#646464">
+      {{ $translate('system.title') }}
+    </h2>
   </div>
 </template>
 

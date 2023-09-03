@@ -80,7 +80,12 @@ const tabData = computed<MessageTab[]>(() => [
     name: $translate('layout.header.systemMessage.tabs.title.notice'),
     badgeProps: { type: 'warning' },
     list: [
-      { id: 1, icon: 'message-3-line', title: '你收到了5条新消息', date: '2022-06-17' },
+      {
+        id: 1,
+        icon: 'message-3-line',
+        title: '你收到了5条新消息',
+        date: '2022-06-17'
+      },
       {
         id: 4,
         icon: 'message-3-line',

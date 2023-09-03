@@ -1,7 +1,9 @@
 <template>
   <div
     class="relative h-full transition-width duration-300 ease-in-out"
-    :style="{ width: appStore.mixSiderFixed ? `${theme.sider.mixChildMenuWidth}px` : '0px' }"
+    :style="{
+      width: appStore.mixSiderFixed ? `${theme.sider.mixChildMenuWidth}px` : '0px'
+    }"
   >
     <dark-mode-container
       class="drawer-shadow absolute-lt flex-col-stretch h-full nowrap-hidden"
@@ -14,7 +16,9 @@
         class="header-height flex-y-center justify-between"
         :style="{ height: `${theme.header.height}px` }"
       >
-        <h2 class="text-primary pl-8px text-16px font-bold">{{ $translate('system.title') }}</h2>
+        <h2 class="text-primary pl-8px text-16px font-bold">
+          {{ $translate('system.title') }}
+        </h2>
         <div
           class="px-8px text-16px text-gray-600 cursor-pointer"
           @click="appStore.toggleMixSiderFixed"

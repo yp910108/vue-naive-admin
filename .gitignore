@@ -20,6 +20,7 @@ coverage
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
@@ -29,3 +30,5 @@ coverage
 
 /src/typings/components.d.ts
 /src/typings/icon.d.ts
+
+pnpm-lock.yaml

@@ -8,7 +8,10 @@
     <div
       :class="[
         'flex-center flex-col py-12px rounded-2px bg-transparent transition-colors duration-300 ease-in-out',
-        { 'text-primary !bg-primary_active': item.key === activeKey, 'text-primary': isHover }
+        {
+          'text-primary !bg-primary_active': item.key === activeKey,
+          'text-primary': isHover
+        }
       ]"
     >
       <icon v-if="Icon" :class="[isMini ? 'text-16px' : 'text-20px']" />

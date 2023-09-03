@@ -63,19 +63,40 @@ const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
 const tabModeList = computed<OptionWithKey<TabMode>[]>(() => [
-  { value: 'chrome', label: $translate('layout.settings.pageView.tabMode.chrome') },
-  { value: 'button', label: $translate('layout.settings.pageView.tabMode.button') }
+  {
+    value: 'chrome',
+    label: $translate('layout.settings.pageView.tabMode.chrome')
+  },
+  {
+    value: 'button',
+    label: $translate('layout.settings.pageView.tabMode.button')
+  }
 ])
 
 const pageAnimateModeList = computed<OptionWithKey<PageAnimateMode>[]>(() => [
-  { value: 'fade-slide', label: $translate('layout.settings.pageView.pageAnimateMode.fadeSlide') },
-  { value: 'fade', label: $translate('layout.settings.pageView.pageAnimateMode.fade') },
+  {
+    value: 'fade-slide',
+    label: $translate('layout.settings.pageView.pageAnimateMode.fadeSlide')
+  },
+  {
+    value: 'fade',
+    label: $translate('layout.settings.pageView.pageAnimateMode.fade')
+  },
   {
     value: 'fade-bottom',
     label: $translate('layout.settings.pageView.pageAnimateMode.fadeBottom')
   },
-  { value: 'fade-scale', label: $translate('layout.settings.pageView.pageAnimateMode.fadeScale') },
-  { value: 'zoom-fade', label: $translate('layout.settings.pageView.pageAnimateMode.zoomFade') },
-  { value: 'zoom-out', label: $translate('layout.settings.pageView.pageAnimateMode.zoomOut') }
+  {
+    value: 'fade-scale',
+    label: $translate('layout.settings.pageView.pageAnimateMode.fadeScale')
+  },
+  {
+    value: 'zoom-fade',
+    label: $translate('layout.settings.pageView.pageAnimateMode.zoomFade')
+  },
+  {
+    value: 'zoom-out',
+    label: $translate('layout.settings.pageView.pageAnimateMode.zoomOut')
+  }
 ])
 </script>

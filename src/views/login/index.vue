@@ -15,7 +15,9 @@
           </n-gradient-text>
         </header>
         <main class="pt-24px">
-          <h3 class="text-18px text-primary font-medium">{{ $translate(activeType.label) }}</h3>
+          <h3 class="text-18px text-primary font-medium">
+            {{ $translate(activeType.label) }}
+          </h3>
           <div class="pt-24px">
             <transition name="fade-slide" mode="out-in" appear>
               <component :is="activeType.component" />
@@ -70,7 +72,11 @@ const types: LoginType[] = [
   { key: 'code-login', label: 'login.codeLogin.title', component: CodeLogin },
   { key: 'register', label: 'login.register.title', component: Register },
   { key: 'reset-pwd', label: 'login.resetPwd.title', component: ResetPwd },
-  { key: 'bind-wechat', label: 'login.bindWeChat.title', component: BindWechat }
+  {
+    key: 'bind-wechat',
+    label: 'login.bindWeChat.title',
+    component: BindWechat
+  }
 ]
 
 const activeType = computed(() => {

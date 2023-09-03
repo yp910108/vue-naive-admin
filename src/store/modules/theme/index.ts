@@ -19,7 +19,10 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const naiveThemeOverrides = computed<GlobalThemeOverrides>(() => {
     const { primaryColor, otherColor } = theme.value
-    const themeColors = getThemeColors({ primary: primaryColor, ...otherColor })
+    const themeColors = getThemeColors({
+      primary: primaryColor,
+      ...otherColor
+    })
     return {
       common: {
         fontWeightStrong: '600',

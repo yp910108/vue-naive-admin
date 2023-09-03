@@ -63,15 +63,35 @@ const imgCode = ref('')
 
 const rules: FormRules = {
   phone: [
-    { required: true, message: $translate('login.form.phoneRequired'), trigger: 'input' },
-    { pattern: REGEXP_PHONE, message: $translate('login.form.phoneInvalid'), trigger: 'input' }
+    {
+      required: true,
+      message: $translate('login.form.phoneRequired'),
+      trigger: 'input'
+    },
+    {
+      pattern: REGEXP_PHONE,
+      message: $translate('login.form.phoneInvalid'),
+      trigger: 'input'
+    }
   ],
   code: [
-    { required: true, message: $translate('login.form.codeRequired'), trigger: 'input' },
-    { pattern: REGEXP_CODE_SIX, message: $translate('login.form.codeInvalid'), trigger: 'input' }
+    {
+      required: true,
+      message: $translate('login.form.codeRequired'),
+      trigger: 'input'
+    },
+    {
+      pattern: REGEXP_CODE_SIX,
+      message: $translate('login.form.codeInvalid'),
+      trigger: 'input'
+    }
   ],
   imgCode: [
-    { required: true, message: $translate('login.form.imgCodeRequired'), trigger: 'input' },
+    {
+      required: true,
+      message: $translate('login.form.imgCodeRequired'),
+      trigger: 'input'
+    },
     {
       validator: (rule, value) => {
         if (!(value.trim() === '') && value !== imgCode.value) {
