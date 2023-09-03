@@ -3,7 +3,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "[html][css][scss][jsonc][markdown]": {
+  "[html][css][scss][json][jsonc][markdown]": {
     "editor.formatOnSave": true
   },
   "editor.tabSize": 2
