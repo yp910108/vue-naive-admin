@@ -1,5 +1,5 @@
 export const zhCN = {
   system: {
-    title: 'Soybean 管理系统'
+    title: 'Vue Naive Admin'
   }
 }

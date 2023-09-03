@@ -14,6 +14,8 @@ export function generateComponentStr(
   width?: number,
   height?: number
 ) {
+  const svgLeft = icon.left ?? 0
+  const svgTop = icon.top ?? 0
   const svgWidth = icon.width ?? width ?? 0
   const svgHeight = icon.height ?? height ?? 0
   const name = camelize(`${prefix}-${key}`)
@@ -24,7 +26,7 @@ export default defineComponent({
   name: '${name}',
   render() {
     return (
-      <svg viewBox="0 0 ${svgWidth} ${svgHeight}" width="1em" height="1em">
+      <svg viewBox="${svgLeft} ${svgTop} ${svgWidth} ${svgHeight}" width="1em" height="1em">
         ${icon.body}
       </svg>
     )

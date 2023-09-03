@@ -1,5 +1,5 @@
 export const enUS = {
   system: {
-    title: 'SoybeanAdmin'
+    title: 'Vue Naive Admin'
   }
 }

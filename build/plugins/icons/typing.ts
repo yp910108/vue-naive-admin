@@ -2,6 +2,8 @@ export type Prefix = 'icon'
 
 export interface Icon {
   body: string
+  left?: number
+  top?: number
   width?: number
   height?: number
 }

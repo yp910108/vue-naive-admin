@@ -12,16 +12,6 @@ interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
 
   /**
-   * 项目标题
-   */
-  readonly VITE_APP_TITLE: string
-
-  /**
-   * 项目描述
-   */
-  readonly VITE_APP_DESC: string
-
-  /**
    * 是否 hash 路由模式
    */
   readonly VITE_HASH_ROUTE?: 'Y' | 'N'

@@ -84,7 +84,6 @@ export { default as IconKeyboardReturn } from './components/icon-keyboard-return
 export { default as IconLanguage } from './components/icon-language'
 export { default as IconLineOutlined } from './components/icon-line-outlined'
 export { default as IconLogo } from './components/icon-logo'
-export { default as IconLogoFill } from './components/icon-logo-fill'
 export { default as IconLogout } from './components/icon-logout'
 export { default as IconMacFill } from './components/icon-mac-fill'
 export { default as IconMap } from './components/icon-map'

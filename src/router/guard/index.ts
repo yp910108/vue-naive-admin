@@ -8,7 +8,7 @@ export function createRouterGuard(router: Router) {
     return await createPermissionGuard(to)
   })
   router.afterEach((to) => {
-    useTitle(to.meta.title)
+    useTitle(`${to.meta.title} - ${import.meta.env.VITE_APP_NAME}`)
     window.$loadingBar.finish()
   })
 }

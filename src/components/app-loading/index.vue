@@ -1,6 +1,6 @@
 <template>
   <div class="fixed-center flex-col">
-    <system-logo class="text-128px text-primary" />
+    <icon-logo class="text-128px text-primary" />
     <div class="w-56px h-56px my-36px">
       <div class="relative h-full animate-spin">
         <div
