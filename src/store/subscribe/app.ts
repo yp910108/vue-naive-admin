@@ -12,8 +12,7 @@ export default function subscribeAppStore() {
   const update = () => {
     if (app.contentFull && !isFullscreen.value) {
       toggle()
-    }
-    if (!app.contentFull && isFullscreen.value) {
+    } else if (!app.contentFull && isFullscreen.value) {
       toggle()
     }
   }
