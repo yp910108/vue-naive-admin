@@ -8,7 +8,6 @@
         'chrome-tab_active_dark': darkMode && active
       }
     ]"
-    :style="cssVars"
   >
     <div class="absolute left-0 top-0 -z-1 w-full h-full pointer-events-none chrome-tab__bg">
       <svg style="width: 100%; height: 100%">
@@ -47,26 +46,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { transformColorWithOpacity } from '@/utils'
-import { useThemeStore } from '@/store'
 import type { Emits, TabProps } from './typing'
 
 defineProps<TabProps>()
 
 const emit = defineEmits<Emits>()
-
-const { theme } = storeToRefs(useThemeStore())
-
-const cssVars = computed(() => {
-  const primaryColor = theme.value.primaryColor
-  return {
-    '--primary-color': primaryColor,
-    '--primary-color-1': transformColorWithOpacity(theme.value.primaryColor, 0.1, '#fff'),
-    '--primary-color-2': transformColorWithOpacity(theme.value.primaryColor, 0.3, '#000')
-  }
-})
 </script>
 
 <style scoped lang="scss">
@@ -77,7 +61,7 @@ const cssVars = computed(() => {
   .icon-close:hover {
     font-size: 12px;
     background-color: #9ca3af;
-    color: #ffffff;
+    color: #fff;
   }
   &:hover {
     z-index: 9;
