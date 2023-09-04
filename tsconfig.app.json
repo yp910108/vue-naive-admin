@@ -8,8 +8,8 @@
     "skipLibCheck": false,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     },
     "types": ["naive-ui/volar"]
   }

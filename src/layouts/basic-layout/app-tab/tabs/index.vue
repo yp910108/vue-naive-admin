@@ -6,9 +6,10 @@
       :key="tab.key"
       :mode="theme.tab.mode"
       :dark-mode="theme.darkMode"
+      :icon="tab.icon"
+      :title="tab.title"
       :active="tabStore.activeTab?.key === tab.key"
-      :active-color="theme.primaryColor"
-      :closable="closeable(tab)"
+      :closeable="closeable(tab)"
       @click="handleClick(tab)"
       @close="handleClose(tab)"
       @contextmenu.prevent="handleContextMenu($event, tab)"
@@ -26,8 +27,9 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { PageTab } from '@soybeanjs/vue-materials'
+// import { PageTab } from '@soybeanjs/vue-materials'
 import { useRouteStore, useTabStore, useThemeStore, type MultiTab } from '@/store'
+import PageTab from './page-tab/index.vue'
 import ContextMenu from './context-menu.vue'
 
 interface Emits {
