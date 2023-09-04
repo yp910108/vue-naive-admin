@@ -10,6 +10,9 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { useElementSize } from '@vueuse/core'
 import BScroll, { type Options } from '@better-scroll/core'
+import MouseWheel from '@better-scroll/mouse-wheel'
+
+BScroll.use(MouseWheel)
 
 defineOptions({ name: 'BetterScroll' })
 
@@ -29,12 +32,15 @@ const isScrollY = computed(() => props.options.scrollY)
 
 const initBetterScroll = () => {
   if (!bsWrap.value) return
-  instance.value = new BScroll(bsWrap.value, props.options)
+  instance.value = new BScroll(bsWrap.value, {
+    ...props.options,
+    mouseWheel: true
+  })
 }
 
-const { width: wrapWidth } = useElementSize(bsWrap)
-const { width, height } = useElementSize(bsContent)
-watch([() => wrapWidth.value, () => width.value, () => height.value], () => {
+const { width: wrapWidth, height: wrapHeight } = useElementSize(bsWrap)
+const { width: contentWidth, height: contentHeight } = useElementSize(bsContent)
+watch([wrapWidth, wrapHeight, contentWidth, contentHeight], () => {
   if (instance.value) {
     instance.value.refresh()
   }
