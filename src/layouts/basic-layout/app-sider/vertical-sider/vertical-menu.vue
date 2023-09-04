@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import type { MenuOption as NaiveMenuOption } from 'naive-ui'
 import { isExternal } from '@/utils'
 import { useAppStore, useMenuStore, useThemeStore, type MenuOption } from '@/store'

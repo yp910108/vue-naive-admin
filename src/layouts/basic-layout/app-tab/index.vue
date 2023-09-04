@@ -21,8 +21,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useElementBounding } from '@vueuse/core'
 import { useTabStore, useThemeStore } from '@/store'
 import { useDeviceInfo } from './hooks'

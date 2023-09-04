@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useAppStore, useMenuStore, useThemeStore, type MenuOption } from '@/store'
 import Logo from '../../components/logo.vue'
 import MixMenuItem from './mix-menu-item.vue'

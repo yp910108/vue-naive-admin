@@ -1,6 +1,6 @@
 import { ref } from 'vue'
-import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
+import { defineStore } from 'pinia'
 import { login as postLogin, fetchUserInfo } from './service'
 import { localStg } from '@/utils'
 import { useRouteStore } from '../route'

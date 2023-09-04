@@ -24,8 +24,8 @@
 
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { PageTab } from '@soybeanjs/vue-materials'
 import { useRouteStore, useTabStore, useThemeStore, type MultiTab } from '@/store'
 import ContextMenu from './context-menu.vue'
