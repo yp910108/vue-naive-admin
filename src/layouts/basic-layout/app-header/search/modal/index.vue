@@ -40,11 +40,11 @@
 import { ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { onKeyStroke, useDebounceFn } from '@vueuse/core'
+import { isExternal } from '@/utils'
 import { useMenuStore, type SearchMenuOption } from '@/store'
 import { useMobile } from '../../../hooks'
 import Result from './result.vue'
 import SearchFooter from './footer.vue'
-import { isExternal } from '@/utils'
 
 const router = useRouter()
 

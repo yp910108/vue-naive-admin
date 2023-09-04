@@ -28,6 +28,7 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import Logo from '../components/logo.vue'
+import { useMobile } from '../hooks'
 import MenuCollapse from './menu-collapse.vue'
 import Breadcrumb from './breadcrumb/index.vue'
 import HeaderMenu from './header-menu.vue'
@@ -37,7 +38,6 @@ import FullScreen from './full-screen.vue'
 import ThemeMode from './theme-mode.vue'
 import SystemMessage from './system-message/index.vue'
 import UserAvatar from './user-avatar.vue'
-import { useMobile } from '../hooks'
 
 defineOptions({ name: 'AppHeader' })
 

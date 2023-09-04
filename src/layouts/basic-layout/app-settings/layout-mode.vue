@@ -56,8 +56,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PopoverPlacement } from 'naive-ui'
 import { storeToRefs } from 'pinia'
+import type { PopoverPlacement } from 'naive-ui'
 import type { Settings } from '@/settings'
 import type { OptionWithKey } from '@/utils'
 import { useThemeStore } from '@/store'

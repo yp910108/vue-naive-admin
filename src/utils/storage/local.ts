@@ -1,6 +1,6 @@
 import type { Lang } from '@/locales'
-import { decrypto, encrypto } from '../crypto'
 import type { MultiTab, UserInfo } from '@/store'
+import { decrypto, encrypto } from '../crypto'
 
 interface LocalStorage {
   token?: string

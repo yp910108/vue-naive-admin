@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { settings } from '@/settings'
-import { $translate } from '@/locales'
 import { sessionStg, getRgbOfColor } from '@/utils'
+import { $translate } from '@/locales'
 
 defineOptions({ name: 'AppLoading' })
 

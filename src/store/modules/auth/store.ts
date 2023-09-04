@@ -1,10 +1,10 @@
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { defineStore } from 'pinia'
-import { login as postLogin, fetchUserInfo } from './service'
 import { localStg } from '@/utils'
 import { useRouteStore } from '../route'
 import { useTabStore } from '../tab'
+import { login as postLogin, fetchUserInfo } from './service'
 
 export const useAuthStore = defineStore('auth-store', () => {
   const router = useRouter()

@@ -16,9 +16,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useThemeStore } from '@/store'
 import { localStg } from '@/utils'
 import { setLocale, type Lang } from '@/locales'
+import { useThemeStore } from '@/store'
 
 interface Props {
   withHoverContainer?: boolean

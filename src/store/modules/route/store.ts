@@ -1,11 +1,11 @@
 import { ref, type Ref } from 'vue'
-import { defineStore } from 'pinia'
 import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
+import { defineStore } from 'pinia'
 import { NO_MENU_MSG, transformRoutes } from '@/utils'
 import { router, constantRoutes } from '@/router'
-import { fetchUserRoutes } from './service'
 import { useAuthStore } from '../auth'
 import { useMenuStore } from '../menu'
+import { fetchUserRoutes } from './service'
 
 export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()

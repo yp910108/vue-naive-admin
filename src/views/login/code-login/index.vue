@@ -42,10 +42,10 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
-import { useAuthStore } from '@/store'
 import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/constants'
-import ImageVerify from './image-verify/index.vue'
+import { useAuthStore } from '@/store'
 import { useSmsCode, useToLoginModule } from '../hooks'
+import ImageVerify from './image-verify/index.vue'
 
 const auth = useAuthStore()
 const { toLoginModule } = useToLoginModule()

@@ -22,8 +22,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useThemeStore, type SearchMenuOption } from '@/store'
 import { storeToRefs } from 'pinia'
+import { useThemeStore, type SearchMenuOption } from '@/store'
 
 interface Props {
   value?: string
