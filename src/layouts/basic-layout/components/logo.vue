@@ -1,6 +1,6 @@
 <template>
   <router-link to="/" class="flex-center w-full nowrap-hidden">
-    <icon-logo class="text-26px text-primary" />
+    <icon-logo class="text-22px text-primary" />
     <h2
       v-show="showTitle"
       class="pl-8px text-16px font-bold text-primary transition duration-300 ease-in-out"
