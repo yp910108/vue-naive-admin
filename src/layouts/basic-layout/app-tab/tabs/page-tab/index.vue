@@ -1,28 +1,59 @@
 <template>
-  <component :is="activeTab" v-bind="restProps" @close="emit('close')" :style="cssVars" />
+  <component
+    :is="activeTab"
+    :darkMode="props.darkMode"
+    :active="props.active"
+    @close="emit('close')"
+    :style="cssVars"
+  >
+    <template #icon>
+      <svg-icon v-if="icon" :icon="icon" class="inline-block align-text-bottom text-16px" />
+    </template>
+    <slot>
+      {{ title }}
+    </slot>
+    <template #close>
+      <div
+        v-if="closeable"
+        class="relative inline-flex justify-center items-center w-16px h-16px text-14px rd-50% icon-close"
+        @click.stop="emit('close')"
+      >
+        <icon-close-outlined />
+      </div>
+    </template>
+  </component>
 </template>
 
 <script setup lang="ts">
 import { computed, type Component } from 'vue'
 import { storeToRefs } from 'pinia'
+import type { Settings } from '@/settings'
 import { addColorAlpha, transformColorWithOpacity } from '@/utils'
 import { useThemeStore } from '@/store'
 import ChromeTab from './chrome-tab.vue'
 import ButtonTab from './button-tab.vue'
-import type { Emits, Props, TabMode } from './typing'
+
+type TabMode = Settings['tab']['mode']
+
+interface Props {
+  mode?: TabMode
+  darkMode?: boolean
+  icon?: Icon.IconName
+  title?: string
+  active?: boolean
+  closeable?: boolean
+}
 
 const props = withDefaults(defineProps<Props>(), {
   mode: 'chrome',
   closeable: true
 })
 
-const emit = defineEmits<Emits>()
+interface Emits {
+  (e: 'close'): void
+}
 
-const restProps = computed(() => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { mode, ...restProps } = props
-  return restProps
-})
+const emit = defineEmits<Emits>()
 
 type Components = Record<TabMode, Component>
 

@@ -9,30 +9,25 @@
       }
     ]"
   >
-    <svg-icon v-if="icon" :icon="icon" class="inline-block align-text-bottom text-16px" />
-    {{ title }}
-    <div
-      v-if="closeable"
-      class="relative inline-flex justify-center items-center w-16px h-16px text-14px rd-50% icon-close"
-      @click.stop="emit('close')"
-    >
-      <icon-close-outlined />
-    </div>
+    <slot name="icon"></slot>
+    <slot></slot>
+    <slot name="close"></slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Emits, TabProps } from './typing'
+export interface Props {
+  darkMode?: boolean
+  active?: boolean
+}
 
-defineProps<TabProps>()
-
-const emit = defineEmits<Emits>()
+defineProps<Props>()
 </script>
 
 <style scoped lang="scss">
 .button-tab {
   border-color: #e5e7eb;
-  .icon-close:hover {
+  :deep(.icon-close):hover {
     font-size: 12px;
     background-color: var(--primary-color);
     color: #fff;
@@ -48,7 +43,7 @@ const emit = defineEmits<Emits>()
   }
   &.button-tab_dark {
     border-color: #ffffff3d;
-    .icon-close {
+    :deep(.icon-close) {
       &:hover {
         color: #000;
       }

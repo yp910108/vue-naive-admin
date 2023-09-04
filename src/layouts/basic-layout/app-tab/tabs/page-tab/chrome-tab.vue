@@ -32,25 +32,20 @@
         </g>
       </svg>
     </div>
-    <svg-icon v-if="icon" :icon="icon" class="inline-block align-text-bottom text-16px" />
-    {{ title }}
-    <div
-      v-if="closeable"
-      class="relative inline-flex justify-center items-center w-16px h-16px text-14px rd-50% icon-close"
-      @click.stop="emit('close')"
-    >
-      <icon-close-outlined />
-    </div>
+    <slot name="icon"></slot>
+    <slot></slot>
+    <slot name="close"></slot>
     <div class="absolute right-7px w-1px h-16px bg-#1f2225 chrome-tab-divider"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { Emits, TabProps } from './typing'
+export interface Props {
+  darkMode?: boolean
+  active?: boolean
+}
 
-defineProps<TabProps>()
-
-const emit = defineEmits<Emits>()
+defineProps<Props>()
 </script>
 
 <style scoped lang="scss">
@@ -58,7 +53,7 @@ const emit = defineEmits<Emits>()
   .chrome-tab__bg {
     color: transparent;
   }
-  .icon-close:hover {
+  :deep(.icon-close):hover {
     font-size: 12px;
     background-color: #9ca3af;
     color: #fff;
@@ -78,7 +73,7 @@ const emit = defineEmits<Emits>()
     .chrome-tab__bg {
       color: var(--primary-color-1);
     }
-    .icon-close:hover {
+    :deep(.icon-close):hover {
       background-color: var(--primary-color);
     }
     .chrome-tab-divider {
@@ -93,7 +88,7 @@ const emit = defineEmits<Emits>()
         }
       }
     }
-    .icon-close:hover {
+    :deep(.icon-close):hover {
       color: #000;
     }
     .chrome-tab-divider {
