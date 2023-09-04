@@ -1,6 +1,5 @@
 import { ref } from 'vue'
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { defineStore, storeToRefs } from 'pinia'
 import { localStg } from '@/utils'
 import { useRouteStore } from '../route'

@@ -1,7 +1,6 @@
 import { effectScope, onScopeDispose, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useOsTheme } from 'naive-ui'
-import type { GlobalThemeOverrides } from 'naive-ui'
+import { useOsTheme, type GlobalThemeOverrides } from 'naive-ui'
 import { kebabCase } from 'lodash-es'
 import { getColorPalettes, getRgbOfColor } from '@/utils'
 import { useThemeStore } from '../modules'

@@ -1,5 +1,4 @@
-import axios from 'axios'
-import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/store'
 import { localStg } from '../storage'
 import type { BackendResultConfig, ContentType } from './typing'

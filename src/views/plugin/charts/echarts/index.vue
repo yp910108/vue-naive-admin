@@ -25,8 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { onUnmounted, ref } from 'vue'
-import type { Ref } from 'vue'
+import { onUnmounted, ref, type Ref } from 'vue'
 import { graphic } from 'echarts'
 import { type ECOption, useEcharts } from '@/hooks'
 

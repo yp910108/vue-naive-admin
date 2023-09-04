@@ -1,5 +1,4 @@
-import { nextTick, effectScope, onScopeDispose, ref, watch } from 'vue'
-import type { ComputedRef, Ref } from 'vue'
+import { nextTick, effectScope, onScopeDispose, ref, watch, type ComputedRef, type Ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import * as echarts from 'echarts/core'
 import {
@@ -9,16 +8,14 @@ import {
   PictorialBarChart,
   PieChart,
   RadarChart,
-  ScatterChart
-} from 'echarts/charts'
-import type {
-  BarSeriesOption,
-  GaugeSeriesOption,
-  LineSeriesOption,
-  PictorialBarSeriesOption,
-  PieSeriesOption,
-  RadarSeriesOption,
-  ScatterSeriesOption
+  ScatterChart,
+  type BarSeriesOption,
+  type GaugeSeriesOption,
+  type LineSeriesOption,
+  type PictorialBarSeriesOption,
+  type PieSeriesOption,
+  type RadarSeriesOption,
+  type ScatterSeriesOption
 } from 'echarts/charts'
 import {
   DatasetComponent,
@@ -27,15 +24,13 @@ import {
   TitleComponent,
   ToolboxComponent,
   TooltipComponent,
-  TransformComponent
-} from 'echarts/components'
-import type {
-  DatasetComponentOption,
-  GridComponentOption,
-  LegendComponentOption,
-  TitleComponentOption,
-  ToolboxComponentOption,
-  TooltipComponentOption
+  TransformComponent,
+  type DatasetComponentOption,
+  type GridComponentOption,
+  type LegendComponentOption,
+  type TitleComponentOption,
+  type ToolboxComponentOption,
+  type TooltipComponentOption
 } from 'echarts/components'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'

@@ -25,6 +25,12 @@ module.exports = {
         trailingComma: 'none'
       }
     ],
+    'import/no-duplicates': [
+      'error',
+      {
+        'prefer-inline': true
+      }
+    ],
     'import/order': [
       'error',
       {

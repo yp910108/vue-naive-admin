@@ -16,8 +16,7 @@
 
 <script setup lang="tsx">
 import { onMounted, ref } from 'vue'
-import { NSpace, NButton, NPopconfirm } from 'naive-ui'
-import type { DataTableColumn } from 'naive-ui'
+import { NSpace, NButton, NPopconfirm, type DataTableColumn } from 'naive-ui'
 import { getRandomInteger } from './helper'
 
 interface DataSource {

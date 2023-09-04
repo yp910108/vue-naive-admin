@@ -1,6 +1,5 @@
-import { colord, extend } from 'colord'
+import { colord, extend, type AnyColor, type HsvColor } from 'colord'
 import mixPlugin from 'colord/plugins/mix'
-import type { AnyColor, HsvColor } from 'colord'
 
 extend([mixPlugin])
 
