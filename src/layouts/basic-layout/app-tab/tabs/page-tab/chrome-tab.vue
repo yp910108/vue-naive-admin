@@ -46,6 +46,16 @@ export interface Props {
 }
 
 defineProps<Props>()
+
+type SlotFn = () => any
+type Slots = {
+  icon?: SlotFn
+  default?: SlotFn
+  close?: SlotFn
+}
+defineSlots<Slots>()
+
+// empty comment: hack for highlight
 </script>
 
 <style scoped lang="scss">

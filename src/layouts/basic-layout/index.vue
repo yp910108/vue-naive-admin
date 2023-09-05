@@ -1,5 +1,5 @@
 <template>
-  <admin-layout
+  <app-layout
     :mode="mode"
     :is-mobile="isMobile"
     :scroll-mode="theme.scrollMode"
@@ -12,7 +12,7 @@
     :header-height="theme.header.height"
     :tab-visible="theme.tab.visible"
     :tab-height="theme.tab.height"
-    :full-content="appStore.contentFull"
+    :content-full="appStore.contentFull"
     :content-class="appStore.disableMainXScroll ? 'overflow-x-hidden' : ''"
     :footer-visible="theme.footer.visible"
     :fixed-footer="theme.footer.fixed"
@@ -32,17 +32,17 @@
     <template #footer>
       <app-footer />
     </template>
-  </admin-layout>
+  </app-layout>
   <n-back-top :key="theme.scrollMode" :listen-to="`#${appStore.scrollElId}`" class="z-100" />
   <app-settings />
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { AdminLayout } from '@soybeanjs/vue-materials'
 import { useAppStore, useThemeStore } from '@/store'
 import AppContent from '../components/app-content/index.vue'
 import { useMobile, useLayout } from './hooks'
+import AppLayout from './app-layout/index.vue'
 import AppHeader from './app-header/index.vue'
 import AppSider from './app-sider/index.vue'
 import AppTab from './app-tab/index.vue'
