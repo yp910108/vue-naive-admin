@@ -32,9 +32,16 @@ export const routeModel: Route[] = [
         title: 'naive 文档',
         path: 'naive',
         icon: 'naiveui'
-      },
+      }
+    ]
+  },
+  {
+    title: '外部链接',
+    path: 'external-link',
+    icon: 'external-link',
+    children: [
       {
-        title: '项目地址（外链）',
+        title: '项目地址',
         path: 'https://github.com/yp910108/vue-naive-admin',
         icon: 'logo'
       }

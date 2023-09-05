@@ -83,25 +83,25 @@ const tabData = computed<MessageTab[]>(() => [
       {
         id: 1,
         icon: 'message-3-line',
-        title: '你收到了5条新消息',
+        title: '你收到了 5 条新消息',
         date: '2022-06-17'
       },
       {
         id: 4,
         icon: 'message-3-line',
-        title: 'Soybean Admin 1.0.0 版本正在筹备中',
+        title: 'Vue Naive Admin 1.0.0 版本正在筹备中',
         date: '2022-06-17'
       },
       {
         id: 2,
         icon: 'message-3-line',
-        title: 'Soybean Admin 0.9.6 版本发布了',
+        title: 'Vue Naive Admin 0.9.6 版本发布了',
         date: '2022-06-16'
       },
       {
         id: 3,
         icon: 'message-3-line',
-        title: 'Soybean Admin 0.9.5 版本发布了',
+        title: 'Vue Naive Admin 0.9.5 版本发布了',
         date: '2022-06-07'
       },
       {
@@ -122,35 +122,35 @@ const tabData = computed<MessageTab[]>(() => [
         id: 1,
         title: '项目动态',
         icon: 'avatar',
-        description: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！',
+        description: 'Admin 刚才把工作台页面随便写了一些，凑合能看了！',
         date: '2021-11-07 22:45:32'
       },
       {
         id: 2,
         title: '项目动态',
         icon: 'avatar',
-        description: 'Soybean 正在忙于为soybean-admin写项目说明文档！',
+        description: 'Admin 正在忙于为 vue-naive-admin 写项目说明文档！',
         date: '2021-11-03 20:33:31'
       },
       {
         id: 3,
         title: '项目动态',
         icon: 'avatar',
-        description: 'Soybean 准备为soybean-admin 1.0的发布做充分的准备工作！',
+        description: 'Admin 准备为 vue-naive-admin 1.0的发布做充分的准备工作！',
         date: '2021-10-31 22:43:12'
       },
       {
         id: 4,
         title: '项目动态',
         icon: 'avatar',
-        description: '@yanbowe 向soybean-admin提交了一个bug，多标签栏不会自适应。',
+        description: '@yanbowe 向 vue-naive-admin 提交了一个 bug，多标签栏不会自适应。',
         date: '2021-10-27 10:24:54'
       },
       {
         id: 5,
         title: '项目动态',
         icon: 'avatar',
-        description: 'Soybean 在2021年5月28日创建了开源项目soybean-admin！',
+        description: 'Admin 在 2021年5月28 日创建了开源项目 vue-naive-admin！',
         date: '2021-05-28 22:22:22'
       }
     ]
