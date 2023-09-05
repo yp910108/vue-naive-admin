@@ -43,7 +43,6 @@
         </n-button>
       </div>
     </n-space>
-    <other-account @login="handleLoginOtherAccount" />
   </n-form>
 </template>
 
@@ -53,7 +52,6 @@ import type { FormInst, FormRules } from 'naive-ui'
 import { REGEXP_PWD } from '@/constants'
 import { useAuthStore } from '@/store'
 import { useToLoginModule } from '../hooks'
-import OtherAccount from './other-account.vue'
 
 const authStore = useAuthStore()
 const { login } = useAuthStore()
@@ -62,8 +60,8 @@ const { toLoginModule } = useToLoginModule()
 const formRef = ref<HTMLElement & FormInst>()
 
 const model = reactive({
-  userName: 'Soybean',
-  password: 'soybean123'
+  userName: 'Admin',
+  password: 'abc123'
 })
 
 const rules: FormRules = {
@@ -93,11 +91,6 @@ const handleSubmit = async () => {
 
   const { userName, password } = model
 
-  login(userName, password)
-}
-
-const handleLoginOtherAccount = (param: { userName: string; password: string }) => {
-  const { userName, password } = param
   login(userName, password)
 }
 </script>

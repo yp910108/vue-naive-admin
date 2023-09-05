@@ -44,8 +44,7 @@ export const enUS = {
         siderWidth: 'Sidebar expanded width',
         siderMixWidth: 'Left hybrid sidebar expanded width',
         footerVisible: 'Show footer',
-        footerFixed: 'Fixed footer',
-        footerRight: 'Footer to the right'
+        footerFixed: 'Fixed footer'
       },
       pageView: {
         title: 'Page view',

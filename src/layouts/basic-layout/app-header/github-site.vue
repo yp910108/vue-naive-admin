@@ -16,6 +16,6 @@ import { useThemeStore } from '@/store'
 const { theme } = storeToRefs(useThemeStore())
 
 const handleClickLink = () => {
-  window.open('https://github.com/honghuangdc/soybean-admin', '_blank')
+  window.open('https://github.com/yp910108/vue-naive-admin', '_blank')
 }
 </script>

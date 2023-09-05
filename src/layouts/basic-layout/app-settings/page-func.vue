@@ -82,10 +82,6 @@
       <span>{{ $translate('layout.settings.pageFunc.footerFixed') }}</span>
       <n-switch :value="theme.footer.fixed" @update:value="themeStore.setFooterIsFixed" />
     </div>
-    <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settings.pageFunc.footerRight') }}</span>
-      <n-switch :value="theme.footer.right" @update:value="themeStore.setFooterIsRight" />
-    </div>
   </n-space>
 </template>
 

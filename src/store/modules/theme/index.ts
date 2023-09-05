@@ -120,10 +120,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.footer.fixed = isFixed
   }
 
-  const setFooterIsRight = (right: boolean) => {
-    theme.value.footer.right = right
-  }
-
   const setHeaderCrumbVisible = (visible: boolean) => {
     theme.value.header.crumb.visible = visible
   }
@@ -179,7 +175,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     setMixSiderWidth,
     setFooterVisible,
     setFooterIsFixed,
-    setFooterIsRight,
     setHeaderCrumbVisible,
     setHeaderCrumbIconVisible,
     setTabVisible,

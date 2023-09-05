@@ -13,7 +13,6 @@
   "dependencies": {
     "@better-scroll/core": "2.5.1",
     "@better-scroll/mouse-wheel": "2.5.1",
-    "@soybeanjs/vue-materials": "0.2.0",
     "@types/lodash-es": "4.17.8",
     "@vueuse/core": "10.3.0",
     "axios": "1.4.0",

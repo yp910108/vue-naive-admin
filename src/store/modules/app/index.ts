@@ -1,6 +1,5 @@
 import { nextTick, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { LAYOUT_SCROLL_EL_ID } from '@soybeanjs/vue-materials'
 import { scrollTo } from '@/utils'
 import { useCacheStore } from '../cache'
 
@@ -10,7 +9,7 @@ export const useAppStore = defineStore('app-store', () => {
   /**
    * 滚动元素的 id
    */
-  const scrollElId = ref(LAYOUT_SCROLL_EL_ID)
+  const scrollElId = ref('__SCROLL_EL_ID__')
 
   /**
    * 主体内容是否全屏

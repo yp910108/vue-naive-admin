@@ -14,7 +14,6 @@ export const zhCN = {
       title: '密码登录',
       rememberMe: '记住我',
       forgetPassword: '忘记密码？',
-      otherAccountLogin: '其他账号登录',
       superAdmin: '超级管理员',
       admin: '管理员',
       user: '普通用户'

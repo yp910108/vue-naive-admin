@@ -14,7 +14,6 @@ export const enUS = {
       title: 'Password Login',
       rememberMe: 'Remember me',
       forgetPassword: 'Forget password?',
-      otherAccountLogin: 'Other Account Login',
       superAdmin: 'Super Administrator',
       admin: 'Administrator',
       user: 'Ordinary User'

@@ -44,8 +44,7 @@ export const zhCN = {
         siderWidth: '侧边栏展开宽度',
         siderMixWidth: '左侧混合侧边栏展开宽度',
         footerVisible: '显示底部',
-        footerFixed: '固定底部',
-        footerRight: '底部居右'
+        footerFixed: '固定底部'
       },
       pageView: {
         title: '界面显示',

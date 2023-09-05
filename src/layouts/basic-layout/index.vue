@@ -16,7 +16,6 @@
     :content-class="appStore.disableMainXScroll ? 'overflow-x-hidden' : ''"
     :footer-visible="theme.footer.visible"
     :fixed-footer="theme.footer.fixed"
-    :right-footer="theme.footer.right"
     @click-mobile-sider-mask="appStore.setSiderCollapse(true)"
   >
     <template #sider>

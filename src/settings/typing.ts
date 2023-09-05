@@ -163,10 +163,6 @@ interface Footer {
    */
   fixed: boolean
   /**
-   * 底部是否居右（顶部混合菜单模式有效）
-   */
-  right: boolean
-  /**
    * 底部高度
    */
   height: number

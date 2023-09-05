@@ -13,6 +13,7 @@
         v-if="showSider"
         :class="[
           'absolute left-0 top-0 h-full transition-all-300 layout-sider',
+          siderClass,
           {
             collapsed: siderCollapse
           }
@@ -87,7 +88,7 @@
           :class="[
             'flex-shrink-0 transition-all-300 layout-footer',
             footerClass,
-            { ':soy: absolute left-0 bottom-0 w-full': fixedFooter }
+            { 'absolute left-0 bottom-0 w-full': fixedFooter }
           ]"
         >
           <slot name="footer"></slot>
@@ -145,7 +146,7 @@ type Slots = {
 }
 const slots = defineSlots<Slots>()
 
-const cssVars = createLayoutCssVars(props)
+const cssVars = computed(() => createLayoutCssVars(props))
 
 const isVertical = computed(() => props.mode === 'vertical')
 const isHorizontal = computed(() => props.mode === 'horizontal')
@@ -164,6 +165,13 @@ const showFooter = computed(() => !props.contentFull && props.footerVisible && s
 const fixedHeaderAndTab = computed(
   () => props.fixedTop || (isHorizontal.value && isWrapperScroll.value)
 )
+
+const siderClass = computed(() => {
+  if (props.mode === 'horizontal') {
+    return 'sider-padding-top'
+  }
+  return ''
+})
 
 const headerClass = computed(() => {
   if (isVertical.value && showSider.value) {
@@ -205,6 +213,9 @@ const handleClickMask = () => {
   &.collapsed {
     width: var(--sider-collapsed-width);
   }
+}
+.sider-padding-top {
+  padding-top: var(--header-height);
 }
 
 .layout-mobile-sider {

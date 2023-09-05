@@ -38,7 +38,6 @@ export interface LayoutProps {
   footerVisible?: boolean
   fixedFooter?: boolean
   footerHeight?: number
-  rightFooter?: boolean
 
   maxZIndex?: number
 }
