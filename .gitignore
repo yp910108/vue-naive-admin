@@ -30,5 +30,3 @@ coverage
 
 /src/typings/components.d.ts
 /src/typings/icon.d.ts
-
-pnpm-lock.yaml
