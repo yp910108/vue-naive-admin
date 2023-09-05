@@ -58,6 +58,7 @@
     "vite-plugin-compression": "0.5.1",
     "vite-plugin-mock": "2.9.8",
     "vite-plugin-pwa": "0.16.4",
+    "vite-plugin-svg-components": "0.0.1",
     "vite-plugin-vue-devtools": "1.0.0-rc.2",
     "vue-tsc": "1.8.6"
   }
