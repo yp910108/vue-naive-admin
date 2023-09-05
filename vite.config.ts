@@ -5,7 +5,7 @@ import { setupVitePlugins, setupViteProxy } from './build'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd()) as ImportMetaEnv
   return {
-    base: env.BASE_URL,
+    base: env.VITE_BASE_URL,
     plugins: setupVitePlugins(env),
     resolve: {
       alias: {
