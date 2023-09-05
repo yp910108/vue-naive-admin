@@ -139,7 +139,7 @@ export function useEcharts(
       initialSize.width = newWidth
       initialSize.height = newHeight
       if (newWidth === 0 && newHeight === 0) {
-        // 节点被删除 将chart置为空
+        // 节点被删除 将 chart 置为空
         chart = null
       }
       if (canRender()) {

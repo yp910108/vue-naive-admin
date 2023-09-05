@@ -1,4 +1,4 @@
-import { effectScope, onScopeDispose, watch } from 'vue'
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useOsTheme, type GlobalThemeOverrides } from 'naive-ui'
 import { kebabCase } from 'lodash-es'
@@ -35,32 +35,24 @@ export default function subscribeThemeStore() {
   const { theme, naiveThemeOverrides } = storeToRefs(themeStore)
   const osTheme = useOsTheme()
 
-  const scope = effectScope()
+  watch(
+    osTheme,
+    (newVal) => {
+      const isDark = newVal === 'dark'
+      if (theme.value.followSystemTheme) {
+        themeStore.setDarkMode(isDark)
+      }
+    },
+    { immediate: true }
+  )
 
-  scope.run(() => {
-    watch(
-      osTheme,
-      (newVal) => {
-        const isDark = newVal === 'dark'
-        if (theme.value.followSystemTheme) {
-          themeStore.setDarkMode(isDark)
-        }
-      },
-      { immediate: true }
-    )
-
-    watch(
-      naiveThemeOverrides,
-      (newValue) => {
-        if (newValue.common) {
-          addThemeCssVarsToHtml(newValue.common)
-        }
-      },
-      { immediate: true }
-    )
-  })
-
-  onScopeDispose(() => {
-    scope.stop()
-  })
+  watch(
+    naiveThemeOverrides,
+    (newValue) => {
+      if (newValue.common) {
+        addThemeCssVarsToHtml(newValue.common)
+      }
+    },
+    { immediate: true }
+  )
 }
