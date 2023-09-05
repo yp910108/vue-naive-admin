@@ -1,4 +1,4 @@
-import type { Icon, Prefix } from './typing'
+import type { Icon } from './typing'
 
 const camelizeRE = /-(\w)/g
 export function camelize(str: string) {
@@ -8,7 +8,7 @@ export function camelize(str: string) {
 }
 
 export function generateComponentStr(
-  prefix: Prefix,
+  prefix: string,
   key: string,
   icon: Icon,
   width?: number,
@@ -38,12 +38,12 @@ export default defineComponent({
 `
 }
 
-export function generateImportStr(prefix: Prefix, key: string) {
+export function generateImportStr(prefix: string, key: string) {
   const name = camelize(`${prefix}-${key}`)
   return `export { default as ${name} } from './components/${prefix}-${key}'\n`
 }
 
-export function generateComponentNameTypeStr(prefix: Prefix, key: string) {
+export function generateComponentNameTypeStr(prefix: string, key: string) {
   const name = camelize(`${prefix}-${key}`)
   return `\t\t| '${name}'\n`
 }

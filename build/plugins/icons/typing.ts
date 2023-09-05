@@ -1,4 +1,9 @@
-export type Prefix = 'icon'
+export interface Options {
+  source?: string
+  dts?: string
+  prefix?: string
+  parseColor?: boolean
+}
 
 export interface Icon {
   body: string
@@ -9,7 +14,7 @@ export interface Icon {
 }
 
 export interface Exported {
-  prefix: Prefix
+  prefix: string
   icons: {
     [prop: string]: Icon
   }
