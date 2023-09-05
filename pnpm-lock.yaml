@@ -143,7 +143,7 @@ devDependencies:
     specifier: 0.16.4
     version: 0.16.4(vite@4.4.6)(workbox-build@7.0.0)(workbox-window@7.0.0)
   vite-plugin-svg-components:
-    specifier: ^0.0.1
+    specifier: 0.0.1
     version: registry.npmjs.org/vite-plugin-svg-components@0.0.1
   vite-plugin-vue-devtools:
     specifier: 1.0.0-rc.2
