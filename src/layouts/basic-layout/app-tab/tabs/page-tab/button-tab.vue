@@ -31,7 +31,7 @@ type Slots = {
 }
 defineSlots<Slots>()
 
-// empty comment: hack for highlight
+// comment: hack for highlight
 </script>
 
 <style scoped lang="scss">
