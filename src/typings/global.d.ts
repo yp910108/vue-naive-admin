@@ -13,14 +13,6 @@ interface Window {
 
 declare const $translate: typeof import('../locales').$translate
 
-interface ViewTransition {
-  ready: Promise<void>
-}
-
-interface Document {
-  startViewTransition?: (callback: () => Promise<void> | void) => ViewTransition
-}
-
 /**
  * vue 的 defineExpose 导出的类型
  */

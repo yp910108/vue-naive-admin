@@ -44,10 +44,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.followSystemTheme = visible
   }
 
-  const setIsCustomizeDarkModeTransition = (isCustomize: boolean) => {
-    theme.value.isCustomizeDarkModeTransition = isCustomize
-  }
-
   const setSiderInverted = (isInverted: boolean) => {
     theme.value.sider.inverted = isInverted
   }
@@ -159,7 +155,6 @@ export const useThemeStore = defineStore('theme-store', () => {
     naiveThemeOverrides,
     setDarkMode,
     setFollowSystemTheme,
-    setIsCustomizeDarkModeTransition,
     setSiderInverted,
     setHeaderInverted,
     setFooterInverted,

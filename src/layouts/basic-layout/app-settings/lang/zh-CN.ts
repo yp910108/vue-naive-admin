@@ -6,7 +6,6 @@ export const zhCN = {
         title: '主题模式',
         darkMode: '深色主题',
         followSystemTheme: '跟随系统',
-        isCustomizeDarkModeTransition: '自定义暗黑主题动画过渡',
         siderInverted: '侧边栏深色',
         headerInverted: '头部深色',
         footerInverted: '底部深色'

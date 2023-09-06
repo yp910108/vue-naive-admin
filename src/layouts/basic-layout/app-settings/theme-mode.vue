@@ -26,20 +26,6 @@
       </n-switch>
     </div>
     <div class="flex-y-center justify-between">
-      <span>{{ $translate('layout.settings.themeMode.isCustomizeDarkModeTransition') }}</span>
-      <n-switch
-        :value="theme.isCustomizeDarkModeTransition"
-        @update:value="themeStore.setIsCustomizeDarkModeTransition"
-      >
-        <template #checked>
-          <svg-icon icon="ic:baseline-do-not-disturb" class="text-14px text-white" />
-        </template>
-        <template #unchecked>
-          <svg-icon icon="ic:round-hdr-auto" class="text-14px text-white" />
-        </template>
-      </n-switch>
-    </div>
-    <div class="flex-y-center justify-between">
       <span>{{ $translate('layout.settings.themeMode.siderInverted') }}</span>
       <n-switch :value="theme.sider.inverted" @update:value="themeStore.setSiderInverted" />
     </div>

@@ -220,10 +220,6 @@ export interface Settings {
    */
   followSystemTheme: boolean
   /**
-   * 自定义暗黑动画过渡
-   */
-  isCustomizeDarkModeTransition: boolean
-  /**
    * 布局样式
    */
   layout: Layout

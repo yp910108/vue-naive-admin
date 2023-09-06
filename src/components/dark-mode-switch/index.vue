@@ -12,7 +12,6 @@ defineOptions({ name: 'DarkModeSwitch' })
 
 interface Props {
   dark?: boolean
-  customizeTransition?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,54 +33,7 @@ const darkMode = computed({
   }
 })
 
-const handleSwitch = async (event: MouseEvent) => {
-  if (!props.customizeTransition || !document.startViewTransition) {
-    darkMode.value = !darkMode.value
-    return
-  }
-
-  const x = event.clientX
-  const y = event.clientY
-
-  const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
-
-  const transition = document.startViewTransition(() => {
-    darkMode.value = !darkMode.value
-  })
-
-  await transition.ready
-
-  const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
-
-  document.documentElement.animate(
-    {
-      clipPath: darkMode.value ? clipPath : [...clipPath].reverse()
-    },
-    {
-      duration: 300,
-      easing: 'ease-in',
-      pseudoElement: darkMode.value ? '::view-transition-new(root)' : '::view-transition-old(root)'
-    }
-  )
+const handleSwitch = async () => {
+  darkMode.value = !darkMode.value
 }
 </script>
-
-<style>
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 9999;
-}
-::view-transition-new(root) {
-  z-index: 1;
-}
-.dark::view-transition-old(root) {
-  z-index: 1;
-}
-.dark::view-transition-new(root) {
-  z-index: 9999;
-}
-</style>

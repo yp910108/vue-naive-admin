@@ -6,7 +6,6 @@ export const enUS = {
         title: 'Theme mode',
         darkMode: 'Dark mode',
         followSystemTheme: 'Follow the system',
-        isCustomizeDarkModeTransition: 'Custom dark theme animation transition',
         siderInverted: 'Dark sidebar',
         headerInverted: 'Dark header',
         footerInverted: 'Dark footer'

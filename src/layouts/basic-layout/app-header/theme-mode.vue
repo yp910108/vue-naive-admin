@@ -7,7 +7,6 @@
     <dark-mode-switch
       class="wh-full"
       :dark="theme.darkMode"
-      :customize-transition="theme.isCustomizeDarkModeTransition"
       @update:dark="themeStore.setDarkMode"
     />
   </hover-container>
