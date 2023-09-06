@@ -23,8 +23,8 @@
           class="px-8px text-16px text-gray-600 cursor-pointer"
           @click="appStore.toggleMixSiderFixed"
         >
-          <icon-pin-off v-if="appStore.mixSiderFixed" />
-          <icon-pin v-else />
+          <svg-icon v-if="appStore.mixSiderFixed" icon="mdi:pin-off" />
+          <svg-icon v-else icon="mdi:pin" />
         </div>
       </header>
       <n-scrollbar class="flex-1-hidden">
