@@ -10,7 +10,7 @@ export interface MessageList {
   /**
    * 消息 icon
    */
-  icon?: Icon.IconName
+  icon?: string
   /**
    * 消息标题
    */

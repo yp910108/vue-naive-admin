@@ -63,39 +63,39 @@ const options = computed<Option[]>(() => [
   {
     label: '内容全屏',
     key: 'full-content',
-    icon: () => h(IconRender, { icon: 'fullscreen' })
+    icon: () => h(IconRender, { icon: 'gridicons:fullscreen' })
   },
   {
     label: '重新加载',
     key: 'reload-current',
     disabled: props.tab?.key !== tabStore.activeTab?.key,
-    icon: () => h(IconRender, { icon: 'reload-outlined' })
+    icon: () => h(IconRender, { icon: 'ant-design:reload-outlined' })
   },
   {
     label: '关闭',
     key: 'close-current',
     disabled: !props.closable,
-    icon: () => h(IconRender, { icon: 'close-outlined' })
+    icon: () => h(IconRender, { icon: 'ant-design:close-outlined' })
   },
   {
     label: '关闭左侧',
     key: 'close-left',
-    icon: () => h(IconRender, { icon: 'format-horizontal-align-left' })
+    icon: () => h(IconRender, { icon: 'mdi:format-horizontal-align-left' })
   },
   {
     label: '关闭右侧',
     key: 'close-right',
-    icon: () => h(IconRender, { icon: 'format-horizontal-align-right' })
+    icon: () => h(IconRender, { icon: 'mdi:format-horizontal-align-right' })
   },
   {
     label: '关闭其他',
     key: 'close-other',
-    icon: () => h(IconRender, { icon: 'column-width-outlined' })
+    icon: () => h(IconRender, { icon: 'ant-design:column-width-outlined' })
   },
   {
     label: '关闭所有',
     key: 'close-all',
-    icon: () => h(IconRender, { icon: 'line-outlined' })
+    icon: () => h(IconRender, { icon: 'ant-design:line-outlined' })
   }
 ])
 

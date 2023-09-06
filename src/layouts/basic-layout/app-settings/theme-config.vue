@@ -33,7 +33,7 @@ const handleCopy = async () => {
     title: window.$translate('layout.settings.themeConfig.operateSuccess'),
     content: window.$translate('layout.settings.themeConfig.copySuccess'),
     positiveText: window.$translate('layout.settings.themeConfig.confirmCopy'),
-    icon: () => h(IconRender, { icon: 'success-filled' })
+    icon: () => h(IconRender, { icon: 'ep:success-filled' })
   })
 }
 

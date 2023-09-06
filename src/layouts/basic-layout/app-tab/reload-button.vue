@@ -5,7 +5,7 @@
     class="w-64px h-full"
     @click="handleRefresh"
   >
-    <icon-refresh :class="['text-22px', { 'animate-spin': loading }]" />
+    <svg-icon icon="mdi:refresh" :class="['text-22px', { 'animate-spin': loading }]" />
   </hover-container>
 </template>
 

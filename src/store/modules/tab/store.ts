@@ -52,7 +52,9 @@ export const useTabStore = defineStore('tab-store', () => {
   const clearOtherTabs = (currentTab: MultiTab) => {
     const rootTab = getTabByRoute(routeStore.rootRoute)
     const restTabs = tabs.value.filter(({ key }) => currentTab.key === key)
-    restTabs.unshift(rootTab)
+    if (!hasTab(tabs.value, rootTab)) {
+      restTabs.unshift(rootTab)
+    }
     tabs.value = restTabs
     if (!hasTab(tabs.value, activeTab.value!)) {
       pushLastTab()

@@ -7,10 +7,10 @@
       <span>{{ $translate('layout.settings.themeMode.darkMode') }}</span>
       <n-switch :value="theme.darkMode" @update:value="themeStore.setDarkMode">
         <template #checked>
-          <icon-white-balance-sunny class="text-14px text-white" />
+          <svg-icon icon="mdi:white-balance-sunny" class="text-14px text-white" />
         </template>
         <template #unchecked>
-          <icon-moon-waning-crescent class="text-14px text-white" />
+          <svg-icon icon="mdi:moon-waning-crescent" class="text-14px text-white" />
         </template>
       </n-switch>
     </div>
@@ -18,10 +18,10 @@
       <span>{{ $translate('layout.settings.themeMode.followSystemTheme') }}</span>
       <n-switch :value="theme.followSystemTheme" @update:value="themeStore.setFollowSystemTheme">
         <template #checked>
-          <icon-baseline-do-not-disturb class="text-14px text-white" />
+          <svg-icon icon="ic:baseline-do-not-disturb" class="text-14px text-white" />
         </template>
         <template #unchecked>
-          <icon-round-hdr-auto class="text-14px text-white" />
+          <svg-icon icon="ic:round-hdr-auto" class="text-14px text-white" />
         </template>
       </n-switch>
     </div>
@@ -32,10 +32,10 @@
         @update:value="themeStore.setIsCustomizeDarkModeTransition"
       >
         <template #checked>
-          <icon-baseline-do-not-disturb class="text-14px text-white" />
+          <svg-icon icon="ic:baseline-do-not-disturb" class="text-14px text-white" />
         </template>
         <template #unchecked>
-          <icon-round-hdr-auto class="text-14px text-white" />
+          <svg-icon icon="ic:round-hdr-auto" class="text-14px text-white" />
         </template>
       </n-switch>
     </div>

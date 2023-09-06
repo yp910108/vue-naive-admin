@@ -5,7 +5,7 @@
     :inverted="theme.header.inverted"
     @click="handleSearch"
   >
-    <icon-search class="text-20px" />
+    <svg-icon icon="uil:search" class="text-20px" />
     <modal ref="modalRef" />
   </hover-container>
 </template>

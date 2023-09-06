@@ -4,41 +4,41 @@ export const routeModel: Route[] = [
   {
     title: '仪表盘',
     path: 'dashboard',
-    icon: 'monitor-dashboard',
+    icon: 'mdi:monitor-dashboard',
     children: [
       {
         title: '分析页',
         path: 'analysis',
-        icon: 'analysis'
+        icon: 'icon-park-outline:analysis'
       },
       {
         title: '工作台',
         path: 'workbench',
-        icon: 'workbench'
+        icon: 'icon-park-outline:workbench'
       }
     ]
   },
   {
     title: '文档',
     path: 'document',
-    icon: 'file-document-multiple-outline',
+    icon: 'mdi:file-document-multiple-outline',
     children: [
       {
         title: 'vue 文档',
         path: 'vue',
-        icon: 'vue'
+        icon: 'logos:vue'
       },
       {
         title: 'naive 文档',
         path: 'naive',
-        icon: 'naiveui'
+        icon: 'logos:naiveui'
       }
     ]
   },
   {
     title: '外部链接',
     path: 'external-link',
-    icon: 'external-link',
+    icon: 'mdi:external-link',
     children: [
       {
         title: '项目地址',
@@ -50,61 +50,61 @@ export const routeModel: Route[] = [
   {
     title: '功能',
     path: 'function',
-    icon: 'all-application',
+    icon: 'icon-park-outline:all-application',
     children: [
       {
         title: 'Tab 页签',
         path: 'tab',
-        icon: 'round-tab'
+        icon: 'ic:round-tab'
       }
     ]
   },
   {
     title: '异常页',
     path: 'exception',
-    icon: 'exception-outlined',
+    icon: 'ant-design:exception-outlined',
     children: [
       {
         title: '异常页 403',
         path: '403',
-        icon: 'baseline-block'
+        icon: 'ic:baseline-block'
       },
       {
         title: '异常页 404',
         path: '404',
-        icon: 'baseline-web-asset-off'
+        icon: 'ic:baseline-web-asset-off'
       },
       {
         title: '异常页 500',
         path: '500',
-        icon: 'baseline-wifi-off'
+        icon: 'ic:baseline-wifi-off'
       }
     ]
   },
   {
     title: '多级菜单',
     path: 'multi-menu',
-    icon: 'menu',
+    icon: 'ic:round-menu',
     children: [
       {
         title: '一级菜单',
         path: 'first',
-        icon: 'menu',
+        icon: 'ic:round-menu',
         children: [
           {
             title: '二级菜单',
             path: 'second',
-            icon: 'menu'
+            icon: 'ic:round-menu'
           },
           {
             title: '二级菜单（有子菜单）',
             path: 'second-new',
-            icon: 'menu',
+            icon: 'ic:round-menu',
             children: [
               {
                 title: '三级菜单',
                 path: 'third',
-                icon: 'menu'
+                icon: 'ic:round-menu'
               }
             ]
           }
@@ -115,6 +115,6 @@ export const routeModel: Route[] = [
   {
     title: '关于',
     path: 'about',
-    icon: 'book-information-24-regular'
+    icon: 'fluent:book-information-24-regular'
   }
 ]

@@ -2,7 +2,7 @@
   <n-card :bordered="false" class="rounded-8px shadow-sm">
     <div class="flex-y-center justify-between">
       <div class="flex-y-center">
-        <icon-avatar class="text-70px" />
+        <svg-icon icon="avatar" class="text-70px" />
         <div class="pl-12px">
           <h3 class="text-18px font-semibold">
             早安，{{ auth.userInfo?.userName }}, 今天又是充满活力的一天！

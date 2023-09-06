@@ -15,7 +15,11 @@
       @contextmenu.prevent="handleContextMenu($event, tab)"
     >
       <template #prefix>
-        <svg-icon :icon="tab.icon" class="inline-block align-text-bottom text-16px" />
+        <svg-icon
+          v-if="tab.icon"
+          :icon="tab.icon"
+          class="inline-block align-text-bottom text-16px"
+        />
       </template>
       {{ tab.title }}
     </PageTab>

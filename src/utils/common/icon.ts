@@ -1,9 +1,9 @@
 import { h, type FunctionalComponent, type StyleValue } from 'vue'
-import * as icons from '@/icons'
-import { camelize } from './camelize'
+import { Icon } from '@iconify/vue'
+import ids from 'virtual:svg-icons-names'
 
 export interface IconProps {
-  icon?: Icon.IconName
+  icon: string
   fontSize?: number
   color?: string
 }
@@ -11,14 +11,10 @@ export interface IconProps {
 export const IconRender: FunctionalComponent<IconProps> = (props) => {
   const { icon, fontSize, color } = props
 
-  const iconName = (icon ? `Icon${camelize(icon, true)}` : '') as Icon.IconComponentName
-
   const style: StyleValue = {}
 
   if (!icon) {
     console.warn('没有传递图标名称，请确保给 icon 传递有效值！')
-  } else if (!Object.keys(icons).includes(iconName)) {
-    console.warn(`图标 ${icon} 不存在！`)
   }
 
   if (color) {
@@ -29,7 +25,23 @@ export const IconRender: FunctionalComponent<IconProps> = (props) => {
     style.fontSize = `${fontSize}px`
   }
 
-  return h(icons[iconName], { style })
+  if (ids.includes(icon)) {
+    return h(
+      'svg',
+      {
+        'aria-hidden': true,
+        width: '1em',
+        height: '1em',
+        style
+      },
+      h('use', {
+        'xlink:href': `#${icon}`,
+        fill: 'currentColor'
+      })
+    )
+  } else {
+    return h(Icon, { icon, style })
+  }
 }
 
 IconRender.props = ['icon', 'fontSize', 'color']

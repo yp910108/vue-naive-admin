@@ -16,7 +16,7 @@ interface Props {
   /**
    * 图标
    */
-  icon: Icon.IconName
+  icon: string
   /**
    * 图标颜色
    */

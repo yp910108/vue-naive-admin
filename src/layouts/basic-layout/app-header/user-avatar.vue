@@ -1,7 +1,7 @@
 <template>
   <n-dropdown :options="options" @select="handleDropdown">
     <hover-container class="px-12px" :inverted="theme.header.inverted">
-      <icon-avatar class="text-32px" />
+      <svg-icon icon="avatar" class="text-32px" />
       <span class="pl-8px text-16px font-medium">
         {{ authStore.userInfo?.userName }}
       </span>
@@ -23,13 +23,13 @@ const options = computed<DropdownOption[]>(() => [
   {
     label: $translate('layout.header.user.dropdown.userCenter'),
     key: 'user-center',
-    icon: () => h(IconRender, { icon: 'user-avatar' })
+    icon: () => h(IconRender, { icon: 'carbon:user-avatar' })
   },
   { type: 'divider', key: 'divider' },
   {
     label: $translate('layout.header.user.dropdown.logout'),
     key: 'logout',
-    icon: () => h(IconRender, { icon: 'logout' })
+    icon: () => h(IconRender, { icon: 'carbon:logout' })
   }
 ])
 

@@ -5,7 +5,7 @@ export type MultiTab = {
   key: string
   title: string
   routePath: string
-  icon?: Icon.IconName
+  icon?: string
   scrollPosition: {
     left: number
     top: number

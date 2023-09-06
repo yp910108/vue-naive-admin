@@ -9,7 +9,7 @@
         :style="{ backgroundColor: color }"
         @click="themeStore.setPrimaryColor(color)"
       >
-        <icon-outline-check v-if="color === theme.primaryColor" class="text-white" />
+        <svg-icon v-if="color === theme.primaryColor" icon="ic:outline-check" class="text-white" />
       </div>
     </n-grid-item>
   </n-grid>

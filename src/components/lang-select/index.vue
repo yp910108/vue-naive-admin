@@ -5,10 +5,10 @@
       :class="['p11px', containerClass]"
       :inverted="theme.header.inverted"
     >
-      <icon-language class="text-18px" />
+      <svg-icon icon="cil:language" class="text-18px" />
     </hover-container>
     <div v-else :class="['cursor-pointer p11px', containerClass]">
-      <icon-language class="text-18px" />
+      <svg-icon icon="cil:language" class="text-18px" />
     </div>
   </n-dropdown>
 </template>

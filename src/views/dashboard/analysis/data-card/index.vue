@@ -29,7 +29,7 @@ interface CardData {
   value: number
   unit: string
   colors: [string, string]
-  icon: Icon.IconName
+  icon: string
 }
 
 const cardData: CardData[] = [
@@ -39,7 +39,7 @@ const cardData: CardData[] = [
     value: 1000000,
     unit: '',
     colors: ['#ec4786', '#b955a4'],
-    icon: 'bar-chart-outlined'
+    icon: 'ant-design:bar-chart-outlined'
   },
   {
     id: 'amount',
@@ -47,7 +47,7 @@ const cardData: CardData[] = [
     value: 234567.89,
     unit: '$',
     colors: ['#865ec0', '#5144b4'],
-    icon: 'money-collect-outlined'
+    icon: 'ant-design:money-collect-outlined'
   },
   {
     id: 'download',
@@ -55,7 +55,7 @@ const cardData: CardData[] = [
     value: 666666,
     unit: '',
     colors: ['#56cdf3', '#719de3'],
-    icon: 'document-download'
+    icon: 'carbon:document-download'
   },
   {
     id: 'trade',
@@ -63,7 +63,7 @@ const cardData: CardData[] = [
     value: 999999,
     unit: '',
     colors: ['#fcbc25', '#f68057'],
-    icon: 'trademark-circle-outlined'
+    icon: 'ant-design:trademark-circle-outlined'
   }
 ]
 </script>

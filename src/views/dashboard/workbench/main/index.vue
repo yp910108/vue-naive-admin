@@ -19,7 +19,7 @@
           <n-list>
             <n-list-item v-for="item in activity" :key="item.id">
               <template #prefix>
-                <icon-avatar class="text-48px" />
+                <svg-icon icon="avatar" class="text-48px" />
               </template>
               <n-thing :title="item.content" :description="item.time" />
             </n-list-item>
@@ -38,7 +38,7 @@
         </n-card>
         <n-card title="创意" :bordered="false" size="small" class="rounded-8px shadow-sm">
           <div class="flex-center h-380px">
-            <icon-banner class="text-400px sm:text-320px text-primary" />
+            <svg-icon icon="banner" class="text-400px sm:text-320px text-primary" />
           </div>
         </n-card>
       </n-space>
@@ -56,7 +56,7 @@ interface Technology {
   description: string
   author: string
   site: string
-  icon: Icon.IconName
+  icon: string
   iconColor?: string
 }
 
@@ -67,7 +67,7 @@ const technology: Technology[] = [
     description: '一套用于构建用户界面的渐进式框架',
     author: '尤雨溪 - Evan You',
     site: 'https://v3.cn.vuejs.org/',
-    icon: 'vue'
+    icon: 'logos:vue'
   },
   {
     id: 1,
@@ -75,7 +75,7 @@ const technology: Technology[] = [
     description: 'JavaScript类型的超集，它可以编译成纯JavaScript',
     author: '微软 - Microsoft',
     site: 'https://www.typescriptlang.org/',
-    icon: 'typescript-icon'
+    icon: 'logos:typescript-icon'
   },
   {
     id: 2,
@@ -83,7 +83,7 @@ const technology: Technology[] = [
     description: '下一代前端开发与构建工具',
     author: '尤雨溪 - Evan You',
     site: 'https://vitejs.cn/',
-    icon: 'vitejs'
+    icon: 'logos:vitejs'
   },
   {
     id: 3,
@@ -91,7 +91,7 @@ const technology: Technology[] = [
     description: '一个 Vue 3 组件库',
     author: '图森未来 - TuSimple',
     site: 'https://www.naiveui.com/zh-CN/os-theme',
-    icon: 'naiveui'
+    icon: 'logos:naiveui'
   },
   {
     id: 4,
@@ -99,7 +99,7 @@ const technology: Technology[] = [
     description: '下一代实用优先的CSS框架',
     author: 'Anthony Fu',
     site: 'https://uno.antfu.me/?s=',
-    icon: 'unocss'
+    icon: 'logos:unocss'
   },
   {
     id: 5,
@@ -107,7 +107,7 @@ const technology: Technology[] = [
     description: 'vue状态管理框架，支持vue2、vue3',
     author: 'Posva',
     site: 'https://pinia.esm.dev/',
-    icon: 'pineapple'
+    icon: 'noto:pineapple'
   }
 ]
 
@@ -148,16 +148,16 @@ const activity: Activity[] = [
 interface Shortcuts {
   id: number
   label: string
-  icon: Icon.IconName
+  icon: string
   iconColor: string
 }
 
 const shortcuts: Shortcuts[] = [
-  { id: 0, label: '主控台', icon: 'mac-fill', iconColor: '#409eff' },
-  { id: 1, label: '系统管理', icon: 'outline-settings', iconColor: '#7238d1' },
-  { id: 2, label: '权限管理', icon: 'family-tree', iconColor: '#f56c6c' },
-  { id: 3, label: '组件', icon: 'app-store-24-filled', iconColor: '#19a2f1' },
-  { id: 4, label: '表格', icon: 'table-large', iconColor: '#fab251' },
-  { id: 5, label: '图表', icon: 'chart-areaspline', iconColor: '#8aca6b' }
+  { id: 0, label: '主控台', icon: 'mdi:desktop-mac-dashboard', iconColor: '#409eff' },
+  { id: 1, label: '系统管理', icon: 'ic:outline-settings', iconColor: '#7238d1' },
+  { id: 2, label: '权限管理', icon: 'mdi:family-tree', iconColor: '#f56c6c' },
+  { id: 3, label: '组件', icon: 'fluent:app-store-24-filled', iconColor: '#19a2f1' },
+  { id: 4, label: '表格', icon: 'mdi:table-large', iconColor: '#fab251' },
+  { id: 5, label: '图表', icon: 'mdi:chart-areaspline', iconColor: '#8aca6b' }
 ]
 </script>

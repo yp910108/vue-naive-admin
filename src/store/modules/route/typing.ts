@@ -17,7 +17,7 @@ export type Route = {
   /**
    * 图标名称
    */
-  icon?: Icon.IconName
+  icon?: string
   /**
    * 当前路由需要选中的菜单（需要填写完整路径）
    */

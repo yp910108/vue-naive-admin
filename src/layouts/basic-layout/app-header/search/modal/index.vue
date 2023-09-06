@@ -16,7 +16,7 @@
         @input="handleSearch"
       >
         <template #prefix>
-          <icon-search class="text-15px text-#c2c2c2" />
+          <svg-icon icon="uil:search" class="text-15px text-#c2c2c2" />
         </template>
       </n-input>
       <n-button v-if="isMobile" type="primary" ghost @click="hide">

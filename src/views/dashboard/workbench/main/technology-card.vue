@@ -35,7 +35,7 @@ interface Props {
   /**
    * 技术图标
    */
-  icon: Icon.IconName
+  icon: string
   /**
    * 图标颜色
    */

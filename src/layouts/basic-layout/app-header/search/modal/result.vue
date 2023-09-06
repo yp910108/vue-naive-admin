@@ -14,7 +14,7 @@
       >
         <component v-if="item.icon" :is="item.icon" />
         <span class="flex-1 ml-5px">{{ item.label }}</span>
-        <icon-enter-outlined class="icon text-20px p-2px mr-3px" />
+        <svg-icon icon="ant-design:enter-outlined" class="icon text-20px p-2px mr-3px" />
       </div>
     </div>
   </n-scrollbar>

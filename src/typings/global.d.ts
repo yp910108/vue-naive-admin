@@ -1,3 +1,8 @@
+declare module 'virtual:svg-icons-names' {
+  const ids: string[]
+  export default ids
+}
+
 interface Window {
   $dialog: import('naive-ui').DialogProviderInst
   $loadingBar: import('naive-ui').LoadingBarProviderInst

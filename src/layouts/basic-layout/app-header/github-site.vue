@@ -5,7 +5,7 @@
     :inverted="theme.header.inverted"
     @click="handleClickLink"
   >
-    <icon-github class="text-20px" />
+    <svg-icon icon="mdi:github" class="text-20px" />
   </hover-container>
 </template>
 

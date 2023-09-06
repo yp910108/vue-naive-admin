@@ -6,7 +6,7 @@
         :tooltip-content="$translate('layout.header.systemMessage.tooltip')"
         :inverted="theme.header.inverted"
       >
-        <icon-notification-line class="text-18px" />
+        <svg-icon icon="clarity:notification-line" class="text-18px" />
         <n-badge
           :value="count"
           :max="99"
@@ -82,31 +82,31 @@ const tabData = computed<MessageTab[]>(() => [
     list: [
       {
         id: 1,
-        icon: 'message-3-line',
+        icon: 'ri:message-3-line',
         title: '你收到了 5 条新消息',
         date: '2022-06-17'
       },
       {
         id: 4,
-        icon: 'message-3-line',
+        icon: 'ri:message-3-line',
         title: 'Vue Naive Admin 1.0.0 版本正在筹备中',
         date: '2022-06-17'
       },
       {
         id: 2,
-        icon: 'message-3-line',
+        icon: 'ri:message-3-line',
         title: 'Vue Naive Admin 0.9.6 版本发布了',
         date: '2022-06-16'
       },
       {
         id: 3,
-        icon: 'message-3-line',
+        icon: 'ri:message-3-line',
         title: 'Vue Naive Admin 0.9.5 版本发布了',
         date: '2022-06-07'
       },
       {
         id: 5,
-        icon: 'message-3-line',
+        icon: 'ri:message-3-line',
         title:
           '测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题',
         date: '2022-06-17'
@@ -162,7 +162,7 @@ const tabData = computed<MessageTab[]>(() => [
     list: [
       {
         id: 1,
-        icon: 'calendar-todo-line',
+        icon: 'ri:calendar-todo-line',
         title: '缓存主题配置',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -171,7 +171,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 2,
-        icon: 'calendar-todo-line',
+        icon: 'ri:calendar-todo-line',
         title: '添加锁屏组件、全局Iframe组件',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -180,7 +180,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 3,
-        icon: 'calendar-todo-line',
+        icon: 'ri:calendar-todo-line',
         title: '示例页面完善',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -189,7 +189,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 4,
-        icon: 'calendar-todo-line',
+        icon: 'ri:calendar-todo-line',
         title: '表单、表格示例',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -198,7 +198,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 5,
-        icon: 'calendar-todo-line',
+        icon: 'ri:calendar-todo-line',
         title: '性能优化(优化递归函数)',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -207,7 +207,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 6,
-        icon: 'calendar-todo-line',
+        icon: 'ri:calendar-todo-line',
         title: '精简版(新分支thin)',
         description: '任务正在计划中',
         date: '2022-06-17',

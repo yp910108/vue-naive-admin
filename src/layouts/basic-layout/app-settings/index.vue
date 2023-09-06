@@ -8,8 +8,12 @@
     ]"
     @click="appStore.toggleSettingDrawerVisible"
   >
-    <icon-close-outlined v-if="appStore.settingDrawerVisible" class="text-24px" />
-    <icon-setting-outlined v-else class="text-24px" />
+    <svg-icon
+      v-if="appStore.settingDrawerVisible"
+      icon="ant-design:close-outlined"
+      class="text-24px"
+    />
+    <svg-icon v-else icon="ant-design:setting-outlined" class="text-24px" />
   </n-button>
   <n-drawer
     display-directive="show"

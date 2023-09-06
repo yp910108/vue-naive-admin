@@ -10,7 +10,7 @@
         <n-thing :class="['px-15px', { 'opacity-30': item.isRead }]">
           <template #avatar>
             <n-avatar v-if="item.avatar" :src="item.avatar" />
-            <svg-icon v-else class="text-34px text-primary" :icon="item.icon" />
+            <svg-icon v-else-if="item.icon" class="text-34px text-primary" :icon="item.icon" />
           </template>
           <template #header>
             <n-ellipsis :line-clamp="1">

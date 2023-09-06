@@ -18,7 +18,7 @@
         class="relative inline-flex justify-center items-center w-16px h-16px text-14px rd-50% icon-close"
         @click.stop="emit('close')"
       >
-        <icon-close-outlined />
+        <svg-icon icon="ant-design:close-outlined" />
       </div>
     </template>
   </component>
@@ -38,7 +38,7 @@ type TabMode = Settings['tab']['mode']
 interface Props {
   mode?: TabMode
   darkMode?: boolean
-  icon?: Icon.IconName
+  icon?: string
   title?: string
   active?: boolean
   closeable?: boolean
