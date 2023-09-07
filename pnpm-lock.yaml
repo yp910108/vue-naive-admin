@@ -14,9 +14,6 @@ dependencies:
   '@iconify/vue':
     specifier: 4.1.1
     version: 4.1.1(vue@3.3.4)
-  '@types/lodash-es':
-    specifier: 4.17.8
-    version: 4.17.8
   '@vueuse/core':
     specifier: 10.3.0
     version: 10.3.0(vue@3.3.4)
@@ -73,6 +70,9 @@ devDependencies:
   '@types/crypto-js':
     specifier: 4.1.1
     version: 4.1.1
+  '@types/lodash-es':
+    specifier: 4.17.8
+    version: 4.17.8
   '@types/mockjs':
     specifier: 1.0.7
     version: 1.0.7
@@ -1949,11 +1949,9 @@ packages:
     resolution: {integrity: sha512-euY3XQcZmIzSy7YH5+Unb3b2X12Wtk54YWINBvvGQ5SmMvwb11JQskGsfkH/5HXK77Kr8GF0wkVDIxzAisWtog==}
     dependencies:
       '@types/lodash': 4.14.197
-    dev: false
 
   /@types/lodash@4.14.197:
     resolution: {integrity: sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==}
-    dev: false
 
   /@types/mockjs@1.0.7:
     resolution: {integrity: sha512-OCxXz6hEaJOVpRwuJMiVY5a6LtJcih+br9gwB/Q8ooOBikvk5FpBQ31OlNimXo3EqKha1Z7PFBni+q9m+8NCWg==}
