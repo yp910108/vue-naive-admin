@@ -6,10 +6,11 @@ import { getColorPalette, sessionStg } from '@/utils'
  * @returns
  */
 export function initSettings() {
-  const primaryColor = sessionStg.get('primaryColor') ?? settings.primaryColor
-  const infoColor = settings.isCustomizeInfoColor ? settings.otherColor.info : primaryColor
-  const otherColor = { ...settings.otherColor, info: infoColor }
-  return { ...settings, primaryColor, otherColor }
+  const _settings = sessionStg.get('settings') ?? settings
+  const primaryColor = _settings.primaryColor
+  const infoColor = _settings.isCustomizeInfoColor ? _settings.otherColor.info : primaryColor
+  const otherColor = { ..._settings.otherColor, info: infoColor }
+  return { ..._settings, primaryColor, otherColor }
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'

@@ -28,7 +28,7 @@ const handleCopy = async () => {
   if (!isSupported) {
     return window.$message.error('您的浏览器不支持 Clipboard API')
   }
-  await copy(JSON.stringify(theme, null, '\t'))
+  await copy(JSON.stringify(theme.value, null, '\t'))
   window.$dialog.info({
     title: window.$translate('layout.settings.themeConfig.operateSuccess'),
     content: window.$translate('layout.settings.themeConfig.copySuccess'),

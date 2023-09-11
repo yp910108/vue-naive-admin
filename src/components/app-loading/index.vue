@@ -31,9 +31,9 @@ const loadingClses = [
 ]
 
 function addPrimaryColorCssVar() {
-  const primaryColor = sessionStg.get('primaryColor') ?? settings.primaryColor
+  const _settings = sessionStg.get('settings') ?? settings
 
-  const { r, g, b } = getRgbOfColor(primaryColor)
+  const { r, g, b } = getRgbOfColor(_settings.primaryColor)
 
   document.documentElement.style.setProperty('--primary-color', `${r}, ${g}, ${b}`)
 }

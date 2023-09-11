@@ -2,7 +2,6 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme, type GlobalThemeOverrides } from 'naive-ui'
 import type { Settings } from '@/settings'
-import { sessionStg } from '@/utils'
 import {
   addDarkClassToDocument,
   getThemeColors,
@@ -61,7 +60,6 @@ export const useThemeStore = defineStore('theme-store', () => {
   }
 
   const setPrimaryColor = (primaryColor: string) => {
-    sessionStg.set('primaryColor', primaryColor)
     theme.value.primaryColor = primaryColor
     if (!theme.value.isCustomizeInfoColor) {
       theme.value.otherColor.info = primaryColor

@@ -2,7 +2,8 @@ import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useOsTheme, type GlobalThemeOverrides } from 'naive-ui'
 import { kebabCase } from 'lodash-es'
-import { getColorPalettes, getRgbOfColor } from '@/utils'
+import { useEventListener } from '@vueuse/core'
+import { getColorPalettes, getRgbOfColor, sessionStg } from '@/utils'
 import { useThemeStore } from '../modules'
 
 type ThemeVars = Exclude<GlobalThemeOverrides['common'], undefined>
@@ -55,4 +56,8 @@ export default function subscribeThemeStore() {
     },
     { immediate: true }
   )
+
+  useEventListener(window, 'beforeunload', () => {
+    sessionStg.set('settings', theme.value)
+  })
 }

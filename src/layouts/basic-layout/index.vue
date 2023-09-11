@@ -33,7 +33,7 @@
     </template>
   </app-layout>
   <n-back-top :key="theme.scrollMode" :listen-to="`#${appStore.scrollElId}`" class="z-100" />
-  <app-settings />
+  <app-settings v-if="settingsAble" />
 </template>
 
 <script setup lang="ts">
@@ -55,6 +55,8 @@ const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 const { mode, siderVisible, siderWidth, siderCollapsedWidth } = useLayout()
+
+const settingsAble = import.meta.env.DEV || import.meta.env.VITE_PROD_APP_SETTINGS === 'Y'
 </script>
 
 <style lang="scss">

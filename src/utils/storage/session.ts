@@ -1,7 +1,8 @@
+import type { Settings } from '@/settings'
 import { decrypto, encrypto } from '../crypto'
 
 interface SessionStorage {
-  primaryColor?: string
+  settings?: Settings
 }
 
 function createSessionStorage<T extends SessionStorage>() {
