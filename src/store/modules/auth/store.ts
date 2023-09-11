@@ -29,7 +29,6 @@ export const useAuthStore = defineStore('auth-store', () => {
     const _userInfo = await fetchUserInfo()
     localStg.set('userInfo', _userInfo)
     userInfo.value = _userInfo
-    await routeStore.initAuthRoutes()
   }
 
   const login = async (userName: string, password: string) => {
@@ -39,6 +38,7 @@ export const useAuthStore = defineStore('auth-store', () => {
       localStg.set('token', _token)
       token.value = _token
       await getUserInfo()
+      await routeStore.initRoutes()
       loginLoading.value = false
       window.$notification.success({
         title: $translate('login.loginSuccess'),

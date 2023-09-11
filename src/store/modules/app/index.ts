@@ -47,17 +47,6 @@ export const useAppStore = defineStore('app-store', () => {
   }
 
   /**
-   * 项目配置的抽屉可见状态
-   */
-  const settingDrawerVisible = ref(false)
-  const closeSettingDrawer = () => {
-    settingDrawerVisible.value = false
-  }
-  const toggleSettingDrawerVisible = () => {
-    settingDrawerVisible.value = !settingDrawerVisible.value
-  }
-
-  /**
    * 获取滚动区域的滚动位置信息
    */
   const getScrollInfo = () => {
@@ -98,10 +87,6 @@ export const useAppStore = defineStore('app-store', () => {
 
     disableMainXScroll,
     setDisableMainXScroll,
-
-    settingDrawerVisible,
-    closeSettingDrawer,
-    toggleSettingDrawerVisible,
 
     getScrollInfo,
 

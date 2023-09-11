@@ -35,8 +35,6 @@ export const REQUEST_TIMEOUT_CODE = 'ECONNABORTED'
  */
 export const REQUEST_TIMEOUT_MSG = '请求超时～'
 
-export const NO_MENU_MSG = '用户没有菜单权限~'
-
 /**
  * 请求失败各种状态的错误信息
  */

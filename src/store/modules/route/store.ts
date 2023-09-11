@@ -1,7 +1,7 @@
 import { ref, type Ref } from 'vue'
 import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import { defineStore } from 'pinia'
-import { NO_MENU_MSG, transformRoutes } from '@/utils'
+import { transformRoutes } from '@/utils'
 import { router, constantRoutes } from '@/router'
 import { useAuthStore } from '../auth'
 import { useMenuStore } from '../menu'
@@ -11,7 +11,7 @@ export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()
   const menuStore = useMenuStore()
 
-  const isInitAuthRoutes = ref(false)
+  const isInitRoutes = ref(false)
   const rootRoute = ref<RouteRecordNormalized>()
 
   const setRootRoute = () => {
@@ -42,18 +42,19 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   const reset = () => {
-    isInitAuthRoutes.value = false
+    isInitRoutes.value = false
     clearRoutes()
     initConstantRoutes()
     menuStore.reset()
   }
 
-  const initDynamicRoutes = async () => {
+  const initRoutes = async () => {
     const userInfo = authStore.userInfo
 
     const data = await fetchUserRoutes(userInfo?.userId ?? '')
 
     if (!data || !data.length) {
+      const NO_MENU_MSG = '用户没有菜单权限~'
       window.$message.error(NO_MENU_MSG)
       return Promise.reject(new Error(NO_MENU_MSG))
     }
@@ -61,17 +62,14 @@ export const useRouteStore = defineStore('route-store', () => {
     clearRoutes()
     setRoutes(transformRoutes([...constantRoutes, ...(data ?? [])]))
     menuStore.setMenus(data ?? [])
-  }
 
-  const initAuthRoutes = async () => {
-    await initDynamicRoutes()
-    isInitAuthRoutes.value = true
+    isInitRoutes.value = true
   }
 
   return {
-    isInitAuthRoutes,
+    isInitRoutes,
     rootRoute: rootRoute as Ref<RouteRecordNormalized>,
     reset,
-    initAuthRoutes
+    initRoutes
   }
 })
