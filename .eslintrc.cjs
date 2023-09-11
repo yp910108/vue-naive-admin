@@ -108,11 +108,6 @@ module.exports = {
             position: 'before'
           },
           {
-            pattern: '@/icons',
-            group: 'internal',
-            position: 'before'
-          },
-          {
             pattern: '@/layouts',
             group: 'internal',
             position: 'before'

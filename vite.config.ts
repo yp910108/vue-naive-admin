@@ -21,11 +21,11 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
-    optimizeDeps: {
-      include: ['@better-scroll/core', '@better-scroll/mouse-wheel', 'echarts']
-    },
     server: {
       proxy: setupViteProxy()
+    },
+    optimizeDeps: {
+      include: ['@better-scroll/core', '@better-scroll/mouse-wheel', 'echarts']
     },
     build: {
       reportCompressedSize: false
