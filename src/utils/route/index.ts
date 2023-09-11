@@ -17,7 +17,8 @@ export function removeParamsFromPath(path: string) {
  * @param path
  */
 export function parsePathToName(path: string) {
-  return camelize(removeParamsFromPath(path).replace(/\//g, '-'), true)
+  path = removeParamsFromPath(path).replace(/\//g, '-')
+  return camelize(path, true)
 }
 
 type Lazy<T> = () => Promise<T>
