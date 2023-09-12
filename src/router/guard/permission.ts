@@ -3,10 +3,10 @@ import { INVALID_CODE, localStg, type RequestError } from '@/utils'
 import { useAuthStore, useRouteStore } from '@/store'
 
 export async function createPermissionGuard(to: RouteLocationNormalized) {
-  const isLogin = localStg.get('token')
+  const token = localStg.get('token')
   const authStore = useAuthStore()
   const routeStore = useRouteStore()
-  if (isLogin) {
+  if (token) {
     if (to.name === 'Login') {
       return { name: 'Root' }
     } else {
