@@ -3,7 +3,7 @@ export type ContentType =
   | 'application/x-www-form-urlencoded'
   | 'multipart/form-data'
 
-export interface BackendResultConfig {
+export interface BackendConfig {
   codeKey: string
   dataKey: string
   messageKey: string

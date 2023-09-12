@@ -1,26 +1,24 @@
 import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/store'
 import { localStg } from '../storage'
-import type { BackendResultConfig, ContentType } from './typing'
+import type { BackendConfig, ContentType } from './typing'
 import { INVALID_CODE } from './constant'
 import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
 
 export default class CustomAxiosInstance {
   instance: AxiosInstance
 
-  backendConfig: BackendResultConfig
+  backendConfig: BackendConfig
 
-  constructor(
-    axiosConfig: AxiosRequestConfig,
-    backendConfig: BackendResultConfig = {
+  constructor(axiosConfig: AxiosRequestConfig, backendConfig?: Partial<BackendConfig>) {
+    const defaultBackendConfig = {
       codeKey: 'code',
       dataKey: 'data',
       messageKey: 'message',
       successCode: 200
     }
-  ) {
     this.instance = axios.create(axiosConfig)
-    this.backendConfig = backendConfig
+    this.backendConfig = { ...defaultBackendConfig, ...backendConfig }
     this.setInterceptor()
   }
 
