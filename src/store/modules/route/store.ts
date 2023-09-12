@@ -5,7 +5,7 @@ import { transformRoutes } from '@/utils'
 import { router, constantRoutes } from '@/router'
 import { useAuthStore } from '../auth'
 import { useMenuStore } from '../menu'
-import { fetchUserRoutes } from './service'
+import { fetchAuthRoutes } from './service'
 
 export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()
@@ -51,7 +51,7 @@ export const useRouteStore = defineStore('route-store', () => {
   const initRoutes = async () => {
     const userInfo = authStore.userInfo
 
-    const data = await fetchUserRoutes(userInfo?.userId ?? '')
+    const data = await fetchAuthRoutes(userInfo?.userId ?? '')
 
     if (!data || !data.length) {
       const NO_MENU_MSG = '用户没有菜单权限~'

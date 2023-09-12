@@ -6,5 +6,5 @@ import { mockRequest } from '@/utils'
  * @returns - 返回 boolean 值表示是否发送成功
  */
 export function fetchSmsCode(phone: string) {
-  return mockRequest.post<boolean>('/getSmsCode', { phone })
+  return mockRequest.get<boolean>('/getSmsCode', { params: { phone } })
 }

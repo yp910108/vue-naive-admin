@@ -8,7 +8,7 @@ const ERROR_PARAM_MSG = '参数校验失败！'
 const apis: MockMethod[] = [
   {
     url: '/mock/getSmsCode',
-    method: 'post',
+    method: 'get',
     response: () => {
       return {
         code: 200,

@@ -3,8 +3,8 @@ import { routeModel } from '../model/route'
 
 const apis: MockMethod[] = [
   {
-    url: '/mock/getUserRoutes',
-    method: 'post',
+    url: '/mock/getAuthRoutes',
+    method: 'get',
     // rawResponse: (_, res) => {
     //   res.setHeader('Content-Type', 'text/plain')
     //   res.statusCode = 401

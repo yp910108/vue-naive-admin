@@ -6,6 +6,6 @@ import type { Route } from './typing'
  * @param userId
  * @returns
  */
-export function fetchUserRoutes(userId: string) {
-  return mockRequest.post<Route[]>('/getUserRoutes', { userId })
+export function fetchAuthRoutes(userId: string) {
+  return mockRequest.get<Route[]>('/getAuthRoutes', { params: { userId } })
 }
