@@ -5,6 +5,8 @@ import type { BackendConfig, ContentType } from './typing'
 import { INVALID_CODE } from './constant'
 import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
 
+const controller = new AbortController()
+
 export default class CustomAxiosInstance {
   instance: AxiosInstance
 
@@ -29,6 +31,7 @@ export default class CustomAxiosInstance {
         config.headers.Authorization = localStg.get('token') ?? ''
         config.data = transformRequestData(config.data, contentType)
       }
+      config.signal = controller.signal
       return config
     })
     this.instance.interceptors.response.use(
@@ -58,6 +61,7 @@ export default class CustomAxiosInstance {
           if (status === 304) {
             return data
           } else if (status === 401) {
+            controller.abort()
             const authStore = useAuthStore()
             authStore.logout()
           }

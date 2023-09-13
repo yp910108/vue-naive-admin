@@ -7,6 +7,8 @@ import {
   ERROR_STATUS,
   NETWORK_ERROR_CODE,
   NETWORK_ERROR_MSG,
+  REQUEST_CANCELED_CODE,
+  REQUEST_CANCELED_MSG,
   REQUEST_TIMEOUT_CODE,
   REQUEST_TIMEOUT_MSG
 } from '../constant'
@@ -70,6 +72,9 @@ export function handleAxiosError(axiosError: AxiosError) {
   ) {
     error.code = REQUEST_TIMEOUT_CODE
     error.message = REQUEST_TIMEOUT_MSG
+  } else if (axiosError.code === REQUEST_CANCELED_CODE) {
+    error.code = REQUEST_CANCELED_CODE
+    error.message = REQUEST_CANCELED_MSG
   } else if (
     // 请求失败的错误
     axiosError.response

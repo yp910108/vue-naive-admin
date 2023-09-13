@@ -36,6 +36,15 @@ export const REQUEST_TIMEOUT_CODE = 'ECONNABORTED'
 export const REQUEST_TIMEOUT_MSG = '请求超时～'
 
 /**
+ * 请求取消的错误 code
+ */
+export const REQUEST_CANCELED_CODE = 'ERR_CANCELED'
+/**
+ * 请求取消的错误文本
+ */
+export const REQUEST_CANCELED_MSG = ''
+
+/**
  * 请求失败各种状态的错误信息
  */
 export const ERROR_STATUS = {
