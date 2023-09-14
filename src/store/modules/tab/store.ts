@@ -77,7 +77,7 @@ export const useTabStore = defineStore('tab-store', () => {
     tab.scrollPosition = scrollPosition
   }
 
-  const initTabStore = () => {
+  const init = () => {
     const rootTab = getTabByRoute(routeStore.rootRoute)
     const currentTab = getTabByRoute(route)
     if (theme.value.tab.isCache) {
@@ -121,7 +121,7 @@ export const useTabStore = defineStore('tab-store', () => {
 
     setScrollPosition,
 
-    initTabStore,
+    init,
 
     reset
   }

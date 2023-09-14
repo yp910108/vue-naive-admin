@@ -2,7 +2,7 @@ import { ref, type Ref } from 'vue'
 import type { RouteRecordNormalized, RouteRecordRaw } from 'vue-router'
 import { defineStore } from 'pinia'
 import { transformRoutes } from '@/utils'
-import { router, constantRoutes } from '@/router'
+import { router, constantRouteData } from '@/router'
 import { useAuthStore } from '../auth'
 import { useMenuStore } from '../menu'
 import { fetchAuthRoutes } from './service'
@@ -11,7 +11,7 @@ export const useRouteStore = defineStore('route-store', () => {
   const authStore = useAuthStore()
   const menuStore = useMenuStore()
 
-  const isInitRoutes = ref(false)
+  const isInit = ref(false)
   const rootRoute = ref<RouteRecordNormalized>()
 
   const setRootRoute = () => {
@@ -31,7 +31,7 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   const initConstantRoutes = () => {
-    setRoutes(transformRoutes(constantRoutes))
+    setRoutes(transformRoutes(constantRouteData))
   }
 
   const clearRoutes = () => {
@@ -42,13 +42,13 @@ export const useRouteStore = defineStore('route-store', () => {
   }
 
   const reset = () => {
-    isInitRoutes.value = false
+    isInit.value = false
     clearRoutes()
     initConstantRoutes()
     menuStore.reset()
   }
 
-  const initRoutes = async () => {
+  const init = async () => {
     const userInfo = authStore.userInfo
 
     const routeData = await fetchAuthRoutes(userInfo?.userId ?? '')
@@ -59,17 +59,17 @@ export const useRouteStore = defineStore('route-store', () => {
       return Promise.reject(new Error(NO_MENU_MSG))
     }
 
-    isInitRoutes.value = true
+    isInit.value = true
 
     clearRoutes()
-    setRoutes(transformRoutes([...constantRoutes, ...routeData]))
+    setRoutes(transformRoutes([...constantRouteData, ...routeData]))
     menuStore.setMenus(routeData)
   }
 
   return {
-    isInitRoutes,
+    isInit,
     rootRoute: rootRoute as Ref<RouteRecordNormalized>,
     reset,
-    initRoutes
+    init
   }
 })

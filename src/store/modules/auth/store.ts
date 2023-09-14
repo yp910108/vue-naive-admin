@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth-store', () => {
       localStg.set('token', _token)
       token.value = _token
       await getUserInfo()
-      await routeStore.initRoutes()
+      await routeStore.init()
       loginLoading.value = false
       window.$notification.success({
         title: $translate('login.loginSuccess'),

@@ -5,12 +5,12 @@ import type { Settings } from '@/settings'
 import {
   addDarkClassToDocument,
   getThemeColors,
-  initSettings,
+  initTheme,
   removeDarkClassFromDocument
 } from './helper'
 
 export const useThemeStore = defineStore('theme-store', () => {
-  const theme = ref<Settings>(initSettings())
+  const theme = ref<Settings>(initTheme())
 
   const naiveTheme = computed(() => {
     return theme.value.darkMode ? darkTheme : undefined
@@ -143,7 +143,7 @@ export const useThemeStore = defineStore('theme-store', () => {
   }
 
   const reset = () => {
-    theme.value = initSettings()
+    theme.value = initTheme()
     setDarkMode(theme.value.darkMode)
   }
 

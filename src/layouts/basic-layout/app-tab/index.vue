@@ -60,7 +60,7 @@ watch(route, (newVal) => {
   tabStore.setActiveTab(newTab)
 })
 
-onMounted(tabStore.initTabStore)
+onMounted(tabStore.init)
 </script>
 
 <style scoped>

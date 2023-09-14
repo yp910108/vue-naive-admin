@@ -5,7 +5,7 @@ import { getColorPalette, sessionStg } from '@/utils'
  * 初始化主题配置
  * @returns
  */
-export function initSettings() {
+export function initTheme() {
   const _settings = sessionStg.get('settings') ?? settings
   const primaryColor = _settings.primaryColor
   const infoColor = _settings.isCustomizeInfoColor ? _settings.otherColor.info : primaryColor
