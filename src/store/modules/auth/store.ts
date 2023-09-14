@@ -59,11 +59,11 @@ export const useAuthStore = defineStore('auth-store', () => {
     const redirect = route.fullPath
     // 设置 500 毫秒延迟，避免页面出现空白
     reset(500)
-    router.push({ name: 'Login', query: { redirect } })
     setTimeout(() => {
       routeStore.reset()
       tabStore.reset()
     }, 500)
+    router.push({ name: 'Login', query: { redirect } })
   }
 
   return {

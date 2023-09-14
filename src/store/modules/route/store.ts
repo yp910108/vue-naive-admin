@@ -59,11 +59,11 @@ export const useRouteStore = defineStore('route-store', () => {
       return Promise.reject(new Error(NO_MENU_MSG))
     }
 
+    isInitRoutes.value = true
+
     clearRoutes()
     setRoutes(transformRoutes([...constantRoutes, ...routeData]))
     menuStore.setMenus(routeData)
-
-    isInitRoutes.value = true
   }
 
   return {

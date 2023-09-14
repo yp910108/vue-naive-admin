@@ -105,7 +105,6 @@ export const useTabStore = defineStore('tab-store', () => {
   const reset = () => {
     tabs.value = []
     activeTab.value = undefined
-    localStg.set('tabs', undefined)
   }
 
   return {
