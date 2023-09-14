@@ -1,6 +1,6 @@
 import { h } from 'vue'
 import { camelize, combineURL, isExternal, IconRender } from '@/utils'
-import type { Route } from '../route'
+import type { RouteData } from '../route'
 import type { MenuOption, SearchMenuOption } from './typing'
 
 /**
@@ -17,7 +17,7 @@ export function parsePathToName(path: string) {
  * @param routeData
  * @param prefix
  */
-export function transformMenus(routeData: Route[], prefix: string = '/') {
+export function transformMenus(routeData: RouteData[], prefix: string = '/') {
   const menus: MenuOption[] = []
   for (const { title, path, icon, children } of routeData) {
     const routePath = isExternal(path) ? path : `/${combineURL(prefix, path)}`

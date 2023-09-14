@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import { computed, type Component } from 'vue'
+import { useRoute } from 'vue-router'
 import { getColorPalette, mixColor } from '@/utils'
 import { useThemeStore } from '@/store'
 import type { LoginModule } from './typing'
@@ -42,11 +43,7 @@ import BindWechat from './bind-wechat/index.vue'
 import ResetPwd from './reset-pwd/index.vue'
 import Register from './register/index.vue'
 
-interface Props {
-  module: LoginModule
-}
-
-const props = defineProps<Props>()
+const route = useRoute()
 
 const { theme, setDarkMode } = useThemeStore()
 
@@ -79,7 +76,7 @@ const types: LoginType[] = [
 ]
 
 const activeType = computed(() => {
-  const { module } = props
+  const { module } = route.params
   const active = types.find((item) => item.key === module)
   return active ?? types[0]
 })

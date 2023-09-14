@@ -1,6 +1,6 @@
-import type { Route } from '@/store'
+import type { RouteData } from '@/store'
 
-export const routeModel: Route[] = [
+export const routeModel: RouteData[] = [
   {
     title: '仪表盘',
     path: 'dashboard',

@@ -1,5 +1,5 @@
 import { mockRequest } from '@/utils'
-import type { Route } from './typing'
+import type { RouteData } from './typing'
 
 /**
  * 获取用户路由数据
@@ -7,5 +7,5 @@ import type { Route } from './typing'
  * @returns
  */
 export function fetchAuthRoutes(userId: string) {
-  return mockRequest.get<Route[]>('/getAuthRoutes', { params: { userId } })
+  return mockRequest.get<RouteData[]>('/getAuthRoutes', { params: { userId } })
 }

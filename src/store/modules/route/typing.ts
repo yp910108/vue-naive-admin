@@ -5,7 +5,10 @@
  */
 type LayoutType = 'blank' | 'basic'
 
-export type Route = {
+/**
+ * 路由数据格式
+ */
+export interface RouteData {
   /**
    * 路由/菜单/面包屑/document.title 标题
    */
@@ -45,5 +48,5 @@ export type Route = {
   /**
    * 子路由
    */
-  children?: Route[]
-} & Omit<import('vue-router').RouteRecordRaw, 'path' | 'redirect' | 'children'>
+  children?: RouteData[]
+}

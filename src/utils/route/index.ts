@@ -1,5 +1,5 @@
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
-import type { Route } from '@/store'
+import type { RouteData } from '@/store'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
 import { camelize, combineURL, isExternal } from '../common'
@@ -44,7 +44,7 @@ function getNamedView(view: Lazy<ModuleComponent>, name: string) {
  * 获取第一个不为外部链接的 path
  * @param routeData
  */
-function getFirstPathNotExternal(routeData: Route[]) {
+function getFirstPathNotExternal(routeData: RouteData[]) {
   for (const { path } of routeData) {
     if (!isExternal(path)) {
       return path
@@ -56,7 +56,7 @@ function getFirstPathNotExternal(routeData: Route[]) {
  * 转换路由
  * @param routeData
  */
-export function transformRoutes(routeData: Route[]) {
+export function transformRoutes(routeData: RouteData[]) {
   const rootRoute = {
     name: 'Root',
     path: '/'
@@ -81,8 +81,8 @@ export function transformRoutes(routeData: Route[]) {
 
   const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
 
-  const transform = (routeData: Route[], prefix: string = '') => {
-    for (const { path, layout, redirect, props, children, ...rest } of routeData) {
+  const transform = (routeData: RouteData[], prefix: string = '') => {
+    for (const { path, layout, redirect, children, ...rest } of routeData) {
       if (isExternal(path)) continue
       const routePath = combineURL(prefix, path)
       const pagePath = removeParamsFromPath(routePath)
@@ -107,7 +107,6 @@ export function transformRoutes(routeData: Route[]) {
         const route: RouteRecordRaw = {
           path: routePath,
           name,
-          props,
           component,
           meta: { ...rest }
         }
