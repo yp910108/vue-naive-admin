@@ -1,7 +1,7 @@
 <template>
   <n-button :text="true" class="h-36px" @click="app.toggleSiderCollapse">
-    <icon-left v-if="app.siderCollapse" icon="ph:caret-double-right-bold" class="text-16px" />
-    <icon-right v-else icon="ph:caret-double-left-bold" class="text-16px" />
+    <icon-right v-if="app.siderCollapse" icon="ph:caret-double-right-bold" class="text-16px" />
+    <icon-left v-else icon="ph:caret-double-left-bold" class="text-16px" />
   </n-button>
 </template>
 

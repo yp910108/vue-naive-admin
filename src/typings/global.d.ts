@@ -12,7 +12,3 @@ interface Window {
 }
 
 declare const $translate: typeof import('../locales').$translate
-
-declare namespace NaiveUI {
-  type ThemeColor = 'default' | 'primary' | 'info' | 'success' | 'warning' | 'error'
-}
