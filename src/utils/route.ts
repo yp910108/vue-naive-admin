@@ -2,7 +2,8 @@ import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import type { RouteData } from '@/store'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
-import { camelize, combineURL, isExternal } from '../common'
+import { camelize } from './camelize'
+import { combineURL, isExternal } from './url'
 
 /**
  * /login/:module => /login
