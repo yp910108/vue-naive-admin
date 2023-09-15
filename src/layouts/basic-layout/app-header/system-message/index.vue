@@ -6,7 +6,7 @@
         :tooltip-content="$translate('layout.header.systemMessage.tooltip')"
         :inverted="theme.header.inverted"
       >
-        <svg-icon icon="clarity:notification-line" class="text-18px" />
+        <icon-notification class="text-18px" />
         <n-badge
           :value="count"
           :max="99"
@@ -68,13 +68,14 @@ import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import { useMobile } from '../../hooks'
 import type { MessageTab } from './typing'
-import MessageList from './message-list.vue'
+import IconNotification from './icon-notification.vue'
+import MessageList from './message-list/index.vue'
 
 const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
 
-const tabData = computed<MessageTab[]>(() => [
+const tabData = ref<MessageTab[]>([
   {
     key: 1,
     name: $translate('layout.header.systemMessage.tabs.title.notice'),
@@ -82,31 +83,31 @@ const tabData = computed<MessageTab[]>(() => [
     list: [
       {
         id: 1,
-        icon: 'ri:message-3-line',
+        icon: 'message',
         title: '你收到了 5 条新消息',
         date: '2022-06-17'
       },
       {
         id: 4,
-        icon: 'ri:message-3-line',
+        icon: 'message',
         title: 'Vue Naive Admin 1.0.0 版本正在筹备中',
         date: '2022-06-17'
       },
       {
         id: 2,
-        icon: 'ri:message-3-line',
+        icon: 'message',
         title: 'Vue Naive Admin 0.9.6 版本发布了',
         date: '2022-06-16'
       },
       {
         id: 3,
-        icon: 'ri:message-3-line',
+        icon: 'message',
         title: 'Vue Naive Admin 0.9.5 版本发布了',
         date: '2022-06-07'
       },
       {
         id: 5,
-        icon: 'ri:message-3-line',
+        icon: 'message',
         title:
           '测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题测试超长标题',
         date: '2022-06-17'
@@ -162,7 +163,7 @@ const tabData = computed<MessageTab[]>(() => [
     list: [
       {
         id: 1,
-        icon: 'ri:calendar-todo-line',
+        icon: 'todo',
         title: '缓存主题配置',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -171,7 +172,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 2,
-        icon: 'ri:calendar-todo-line',
+        icon: 'todo',
         title: '添加锁屏组件、全局Iframe组件',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -180,7 +181,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 3,
-        icon: 'ri:calendar-todo-line',
+        icon: 'todo',
         title: '示例页面完善',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -189,7 +190,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 4,
-        icon: 'ri:calendar-todo-line',
+        icon: 'todo',
         title: '表单、表格示例',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -198,7 +199,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 5,
-        icon: 'ri:calendar-todo-line',
+        icon: 'todo',
         title: '性能优化(优化递归函数)',
         description: '任务正在计划中',
         date: '2022-06-17',
@@ -207,7 +208,7 @@ const tabData = computed<MessageTab[]>(() => [
       },
       {
         id: 6,
-        icon: 'ri:calendar-todo-line',
+        icon: 'todo',
         title: '精简版(新分支thin)',
         description: '任务正在计划中',
         date: '2022-06-17',

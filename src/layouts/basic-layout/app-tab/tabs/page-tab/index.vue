@@ -7,7 +7,7 @@
     :style="cssVars"
   >
     <template #icon>
-      <svg-icon v-if="icon" :icon="icon" class="inline-block align-text-bottom text-16px" />
+      <component v-if="icon" :is="Icons[icon]" class="inline-block align-text-bottom text-16px" />
     </template>
     <slot>
       {{ title }}
@@ -18,7 +18,7 @@
         class="relative inline-flex justify-center items-center w-16px h-16px text-14px rd-50% icon-close"
         @click.stop="emit('close')"
       >
-        <svg-icon icon="ant-design:close-outlined" />
+        <icon-close />
       </div>
     </template>
   </component>
@@ -30,8 +30,10 @@ import { storeToRefs } from 'pinia'
 import type { Settings } from '@/settings'
 import { addColorAlpha, transformColorWithOpacity } from '@/utils'
 import { useThemeStore } from '@/store'
+import Icons from '@/components/icons'
 import ChromeTab from './chrome-tab.vue'
 import ButtonTab from './button-tab.vue'
+import IconClose from './icon-close.vue'
 
 type TabMode = Settings['tab']['mode']
 

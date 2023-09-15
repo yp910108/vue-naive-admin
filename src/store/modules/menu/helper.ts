@@ -1,5 +1,6 @@
 import { h } from 'vue'
-import { camelize, combineURL, isExternal, IconRender } from '@/utils'
+import { camelize, combineURL, isExternal } from '@/utils'
+import Icons from '@/components/icons'
 import type { RouteData } from '../route'
 import type { MenuOption, SearchMenuOption } from './typing'
 
@@ -28,7 +29,11 @@ export function transformMenus(routeData: RouteData[], prefix: string = '/') {
       routePath
     }
     if (icon) {
-      menu.icon = () => h(IconRender, { icon })
+      if (Icons[icon]) {
+        menu.icon = () => h(Icons[icon])
+      } else {
+        console.warn(`图标 ${icon} 不存在！`)
+      }
     }
     if (children && children.length) {
       menu.children = transformMenus(children, routePath)

@@ -13,16 +13,7 @@
       @click="handleClick(tab)"
       @close="handleClose(tab)"
       @contextmenu.prevent="handleContextMenu($event, tab)"
-    >
-      <template #prefix>
-        <svg-icon
-          v-if="tab.icon"
-          :icon="tab.icon"
-          class="inline-block align-text-bottom text-16px"
-        />
-      </template>
-      {{ tab.title }}
-    </PageTab>
+    />
   </div>
   <context-menu v-bind="contextMenuProps" @update:visible="handleDropdownVisible" />
 </template>
@@ -33,7 +24,7 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useRouteStore, useTabStore, useThemeStore, type MultiTab } from '@/store'
 import PageTab from './page-tab/index.vue'
-import ContextMenu from './context-menu.vue'
+import ContextMenu from './context-menu/index.vue'
 
 interface Emits {
   (e: 'scroll', clientX: number): void

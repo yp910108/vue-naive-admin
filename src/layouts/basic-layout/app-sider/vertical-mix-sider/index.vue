@@ -29,8 +29,8 @@ import { storeToRefs } from 'pinia'
 import { useAppStore, useMenuStore, useThemeStore, type MenuOption } from '@/store'
 import Logo from '../../components/logo.vue'
 import MixMenuItem from './mix-menu-item.vue'
-import MixMenuDrawer from './mix-menu-drawer.vue'
-import MixMenuCollapse from './mix-menu-collapse.vue'
+import MixMenuDrawer from './mix-menu-drawer/index.vue'
+import MixMenuCollapse from './mix-menu-collapse/index.vue'
 
 const route = useRoute()
 const router = useRouter()

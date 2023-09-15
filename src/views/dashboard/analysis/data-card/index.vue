@@ -5,7 +5,7 @@
         <gradient-bg class="h-100px" :start-color="item.colors[0]" :end-color="item.colors[1]">
           <h3 class="text-16px">{{ item.title }}</h3>
           <div class="flex justify-between pt-12px">
-            <svg-icon :icon="item.icon" class="text-32px" />
+            <component :is="iconComponents[item.icon]" class="text-32px" />
             <count-to
               :prefix="item.unit"
               :start-value="1"
@@ -20,8 +20,13 @@
 </template>
 
 <script setup lang="ts">
+import type { Component } from 'vue'
 import CountTo from '../components/count-to/index.vue'
 import GradientBg from './gradient-bg.vue'
+import IconChart from './icon-chart.vue'
+import IconMoney from './icon-money.vue'
+import IconDownload from './icon-download.vue'
+import IconTrademark from './icon-trademark.vue'
 
 interface CardData {
   id: string
@@ -39,7 +44,7 @@ const cardData: CardData[] = [
     value: 1000000,
     unit: '',
     colors: ['#ec4786', '#b955a4'],
-    icon: 'ant-design:bar-chart-outlined'
+    icon: 'chart'
   },
   {
     id: 'amount',
@@ -47,7 +52,7 @@ const cardData: CardData[] = [
     value: 234567.89,
     unit: '$',
     colors: ['#865ec0', '#5144b4'],
-    icon: 'ant-design:money-collect-outlined'
+    icon: 'money'
   },
   {
     id: 'download',
@@ -55,7 +60,7 @@ const cardData: CardData[] = [
     value: 666666,
     unit: '',
     colors: ['#56cdf3', '#719de3'],
-    icon: 'carbon:document-download'
+    icon: 'download'
   },
   {
     id: 'trade',
@@ -63,7 +68,16 @@ const cardData: CardData[] = [
     value: 999999,
     unit: '',
     colors: ['#fcbc25', '#f68057'],
-    icon: 'ant-design:trademark-circle-outlined'
+    icon: 'trademark'
   }
 ]
+
+type Components = Record<string, Component>
+
+const iconComponents: Components = {
+  chart: IconChart,
+  money: IconMoney,
+  download: IconDownload,
+  trademark: IconTrademark
+}
 </script>

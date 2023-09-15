@@ -2,7 +2,7 @@
   <n-card :bordered="false" class="rounded-8px shadow-sm">
     <div class="flex-y-center justify-between">
       <div class="flex-y-center">
-        <svg-icon icon="avatar" class="text-70px" />
+        <icon-avatar class="text-70px" />
         <div class="pl-12px">
           <h3 class="text-18px font-semibold">
             早安，{{ auth.userInfo?.userName }}, 今天又是充满活力的一天！
@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/store'
+import IconAvatar from './component/icon-avatar.vue'
 
 const auth = useAuthStore()
 

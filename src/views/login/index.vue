@@ -9,7 +9,7 @@
     <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm">
       <div class="w-300px sm:w-360px">
         <header class="flex-y-center justify-between">
-          <svg-icon icon="logo" class="text-64px text-primary" />
+          <icon-logo class="text-64px text-primary" />
           <n-gradient-text type="primary" :size="28">
             {{ $translate('system.title') }}
           </n-gradient-text>

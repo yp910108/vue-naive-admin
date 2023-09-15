@@ -5,7 +5,7 @@
     :inverted="theme.header.inverted"
     @click="handleSearch"
   >
-    <svg-icon icon="uil:search" class="text-20px" />
+    <icon-search class="text-20px" />
     <modal ref="modalRef" />
   </hover-container>
 </template>
@@ -14,6 +14,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
+import IconSearch from './component/icon-search.vue'
 import Modal from './modal/index.vue'
 
 const { theme } = storeToRefs(useThemeStore())

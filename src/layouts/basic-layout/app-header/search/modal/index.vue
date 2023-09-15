@@ -16,7 +16,7 @@
         @input="handleSearch"
       >
         <template #prefix>
-          <svg-icon icon="uil:search" class="text-15px text-#c2c2c2" />
+          <icon-search class="text-15px text-#c2c2c2" />
         </template>
       </n-input>
       <n-button v-if="isMobile" type="primary" ghost @click="hide">
@@ -43,8 +43,9 @@ import { onKeyStroke, useDebounceFn } from '@vueuse/core'
 import { isExternal } from '@/utils'
 import { useMenuStore, type SearchMenuOption } from '@/store'
 import { useMobile } from '../../../hooks'
-import Result from './result.vue'
-import SearchFooter from './footer.vue'
+import IconSearch from '../component/icon-search.vue'
+import Result from './result/index.vue'
+import SearchFooter from './footer/index.vue'
 
 const router = useRouter()
 

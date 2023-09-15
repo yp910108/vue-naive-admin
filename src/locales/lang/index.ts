@@ -4,12 +4,12 @@ import { enUS } from './en-US'
 
 export type Lang = keyof typeof messages
 
-const modules = import.meta.glob('../../**/lang/index.ts', { eager: true })
+const langs = import.meta.glob('../../**/lang/index.ts', { eager: true })
 
 const messages = { zhCN, enUS }
 
-for (const key in modules) {
-  const { zhCN, enUS } = modules[key] as Partial<Record<Lang, object>>
+for (const key in langs) {
+  const { zhCN, enUS } = langs[key] as Partial<Record<Lang, object>>
   if (zhCN) {
     messages.zhCN = merge(messages.zhCN, zhCN)
   }
