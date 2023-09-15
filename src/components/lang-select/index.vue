@@ -19,6 +19,8 @@ import { storeToRefs } from 'pinia'
 import { localStg } from '@/utils'
 import { setLocale, type Lang } from '@/locales'
 import { useThemeStore } from '@/store'
+import { HoverContainer } from '@/components'
+import IconLanguage from './icon-language.vue'
 
 interface Props {
   withHoverContainer?: boolean

@@ -13,6 +13,7 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAppStore } from '@/store'
+import { HoverContainer } from '@/components'
 import IconRefresh from './icon-refresh.vue'
 
 const route = useRoute()

@@ -14,6 +14,7 @@
 import { storeToRefs } from 'pinia'
 import { useFullscreen } from '@vueuse/core'
 import { useThemeStore } from '@/store'
+import { HoverContainer } from '@/components'
 import IconFullscreen from './icon-fullscreen.vue'
 import IconFullscreenExit from './icon-fullscreen-exit.vue'
 

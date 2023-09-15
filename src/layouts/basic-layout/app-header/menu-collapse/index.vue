@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAppStore, useThemeStore } from '@/store'
+import { HoverContainer } from '@/components'
 import IconFold from './icon-fold.vue'
 import IconUnfold from './icon-unfold.vue'
 

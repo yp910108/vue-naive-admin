@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
+import { HoverContainer } from '@/components'
 import IconGithub from './icon-github.vue'
 
 const { theme } = storeToRefs(useThemeStore())

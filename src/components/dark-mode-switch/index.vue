@@ -7,6 +7,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import IconSunny from './icon-sunny.vue'
+import IconMoon from './icon-moon.vue'
 
 defineOptions({ name: 'DarkModeSwitch' })
 

@@ -113,7 +113,7 @@ module.exports = {
             position: 'before'
           },
           {
-            pattern: '@/components/*',
+            pattern: '@/components',
             group: 'internal',
             position: 'before'
           },

@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
+import { DarkModeSwitch, HoverContainer } from '@/components'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)

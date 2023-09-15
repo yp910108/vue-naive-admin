@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import IconLogo from './icon-logo.vue'
+
 interface Props {
   showTitle?: boolean
 }

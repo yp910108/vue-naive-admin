@@ -12,6 +12,10 @@
 </template>
 
 <script setup lang="ts">
+import IconNoPermission from './icon-no-permission.vue'
+import IconNotFound from './icon-not-found.vue'
+import IconServiceError from './icon-service-error.vue'
+
 defineOptions({ name: 'ExceptionBase' })
 
 type ExceptionType = '403' | '404' | '500'

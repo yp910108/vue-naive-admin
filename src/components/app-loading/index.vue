@@ -20,6 +20,7 @@
 import { settings } from '@/settings'
 import { sessionStg, getRgbOfColor } from '@/utils'
 import { $translate } from '@/locales'
+import IconLogo from './icon-logo.vue'
 
 defineOptions({ name: 'AppLoading' })
 

@@ -27,6 +27,7 @@
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
+import { DarkModeContainer, LangSelect } from '@/components'
 import Logo from '../components/logo.vue'
 import { useMobile } from '../hooks'
 import MenuCollapse from './menu-collapse/index.vue'

@@ -1,6 +1,6 @@
 import { h } from 'vue'
 import { camelize, combineURL, isExternal } from '@/utils'
-import Icons from '@/components/icons'
+import { Icons } from '@/components'
 import type { RouteData } from '../route'
 import type { MenuOption, SearchMenuOption } from './typing'
 

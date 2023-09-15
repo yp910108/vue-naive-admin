@@ -13,6 +13,7 @@
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAppStore, useThemeStore } from '@/store'
+import { DarkModeContainer } from '@/components'
 import Logo from '../../components/logo.vue'
 import VerticalMenu from './vertical-menu.vue'
 

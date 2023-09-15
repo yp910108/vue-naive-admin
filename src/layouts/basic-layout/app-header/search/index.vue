@@ -14,6 +14,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
+import { HoverContainer } from '@/components'
 import IconSearch from './component/icon-search.vue'
 import Modal from './modal/index.vue'
 

@@ -13,15 +13,6 @@ interface Window {
 
 declare const $translate: typeof import('../locales').$translate
 
-/**
- * vue 的 defineExpose 导出的类型
- */
-declare namespace Expose {
-  interface BetterScroll {
-    instance: import('@better-scroll/core').BScrollInstance
-  }
-}
-
 declare namespace NaiveUI {
   type ThemeColor = 'default' | 'primary' | 'info' | 'success' | 'warning' | 'error'
 }

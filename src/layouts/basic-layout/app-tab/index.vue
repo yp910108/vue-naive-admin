@@ -24,7 +24,9 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useElementBounding } from '@vueuse/core'
+import type { BScrollInstance } from '@better-scroll/core'
 import { useTabStore, useThemeStore } from '@/store'
+import { BetterScroll, DarkModeContainer } from '@/components'
 import { useDeviceInfo } from './hooks'
 import Tabs from './tabs/index.vue'
 import ReloadButton from './reload-button/index.vue'
@@ -38,7 +40,7 @@ const deviceInfo = useDeviceInfo()
 const bsWrapper = ref<HTMLElement>()
 const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper)
 
-const bsScroll = ref<Expose.BetterScroll>()
+const bsScroll = ref<BScrollInstance>()
 
 const { theme } = storeToRefs(useThemeStore())
 
