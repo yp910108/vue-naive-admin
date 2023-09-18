@@ -2,11 +2,11 @@ import { merge } from 'lodash-es'
 import { zhCN } from './zhCN'
 import { enUS } from './enUS'
 
-export type Lang = keyof typeof messages
-
 const langs = import.meta.glob('../../**/lang/index.ts', { eager: true })
 
 const messages = { zhCN, enUS }
+
+export type Lang = keyof typeof messages
 
 for (const key in langs) {
   const { zhCN, enUS } = langs[key] as Partial<Record<Lang, object>>

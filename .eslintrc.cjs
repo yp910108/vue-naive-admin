@@ -43,6 +43,11 @@ module.exports = {
             position: 'before'
           },
           {
+            pattern: 'vue-i18n',
+            group: 'external',
+            position: 'before'
+          },
+          {
             pattern: 'vue-router',
             group: 'external',
             position: 'before'
