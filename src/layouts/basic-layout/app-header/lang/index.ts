@@ -1,2 +1,2 @@
-export * from './zh-CN'
-export * from './en-US'
+export * from './zhCN'
+export * from './enUS'

@@ -1,6 +1,6 @@
 import { merge } from 'lodash-es'
-import { zhCN } from './zh-CN'
-import { enUS } from './en-US'
+import { zhCN } from './zhCN'
+import { enUS } from './enUS'
 
 export type Lang = keyof typeof messages
 
