@@ -56,6 +56,11 @@ export const routeModel: RouteData[] = [
         title: 'Tab 页签',
         path: 'tab',
         icon: 'function-tab'
+      },
+      {
+        title: 'table 查询表格',
+        path: 'table',
+        icon: 'table'
       }
     ]
   },
