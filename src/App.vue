@@ -1,6 +1,7 @@
 <template>
   <n-config-provider
     abstract
+    inline-theme-disabled
     :locale="naiveLocale"
     :date-locale="naiveDateLocale"
     :theme="naiveTheme"
