@@ -1,7 +1,7 @@
 import { computed, onScopeDispose, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { REGEXP_PHONE } from '@/constants'
-import type { LoginModule } from './typing'
+import type { LoginModule } from './typings'
 import { fetchSmsCode } from './service'
 
 export const useToLoginModule = () => {

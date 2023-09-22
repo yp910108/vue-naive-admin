@@ -1,5 +1,5 @@
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import type { BackendConfig } from './typing'
+import type { BackendConfig } from './typings'
 import CustomAxiosInstance from './instance'
 
 type RequestMethod = 'get' | 'post' | 'put' | 'delete'

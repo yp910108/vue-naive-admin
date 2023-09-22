@@ -1,5 +1,5 @@
 import { mockRequest } from '@/utils'
-import type { RouteData } from './typing'
+import type { RouteData } from './typings'
 
 /**
  * 获取用户路由数据

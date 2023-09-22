@@ -1,4 +1,4 @@
-import type { DatePickerType } from '../typing'
+import type { DatePickerType } from '../typings'
 
 type Size = 's' | 'm' | 'l'
 

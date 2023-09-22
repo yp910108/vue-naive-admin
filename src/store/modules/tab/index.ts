@@ -1,2 +1,2 @@
-export * from './typing'
+export * from './typings'
 export * from './store'

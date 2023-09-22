@@ -41,7 +41,7 @@
 </template>
 <script setup lang="ts">
 import type { Component } from 'vue'
-import type { MessageList } from '../typing'
+import type { MessageList } from '../typings'
 import IconAvatar from './icon-avatar.vue'
 import IconMessage from './icon-message.vue'
 import IconTodo from './icon-todo.vue'

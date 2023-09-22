@@ -1,5 +1,5 @@
 import type { RouteLocationNormalizedLoaded, RouteRecordNormalized } from 'vue-router'
-import type { MultiTab } from './typing'
+import type { MultiTab } from './typings'
 
 function hasFullPath(
   route: RouteLocationNormalizedLoaded | RouteRecordNormalized

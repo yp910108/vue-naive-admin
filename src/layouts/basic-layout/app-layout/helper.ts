@@ -1,4 +1,4 @@
-import type { LayoutProps } from './typing'
+import type { LayoutProps } from './typings'
 
 export function createLayoutCssVars(props: LayoutProps) {
   const maxZIndex = props.maxZIndex!

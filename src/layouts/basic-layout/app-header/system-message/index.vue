@@ -68,7 +68,7 @@ import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import { HoverContainer, LoadingEmpty } from '@/components'
 import { useMobile } from '../../hooks'
-import type { MessageTab } from './typing'
+import type { MessageTab } from './typings'
 import IconNotification from './icon-notification.vue'
 import MessageList from './message-list/index.vue'
 

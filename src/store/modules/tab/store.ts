@@ -5,7 +5,7 @@ import { localStg } from '@/utils'
 import { useRouteStore } from '../route'
 import { useThemeStore } from '../theme'
 import { getTabByRoute, hasTab } from './utils'
-import type { MultiTab } from './typing'
+import type { MultiTab } from './typings'
 
 export const useTabStore = defineStore('tab-store', () => {
   const route = useRoute()

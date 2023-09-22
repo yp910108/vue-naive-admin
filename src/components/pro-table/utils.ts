@@ -1,4 +1,4 @@
-import type { SearchColumn, TableColumn } from './typing'
+import type { SearchColumn, TableColumn } from './typings'
 
 export function filterSearchColumns(columns: TableColumn[]) {
   const _columns = columns.filter((column) => {

@@ -1,5 +1,5 @@
 import type { AxiosError } from 'axios'
-import type { RequestError } from '../typing'
+import type { RequestError } from '../typings'
 import {
   DEFAULT_REQUEST_ERROR_CODE,
   DEFAULT_REQUEST_ERROR_MSG,
@@ -11,7 +11,7 @@ import {
   REQUEST_CANCELED_MSG,
   REQUEST_TIMEOUT_CODE,
   REQUEST_TIMEOUT_MSG
-} from '../constant'
+} from '../constants'
 
 const errorMsgStack = new Map<string | number, string>([]) // 错误消息栈，防止同一错误出现两次
 

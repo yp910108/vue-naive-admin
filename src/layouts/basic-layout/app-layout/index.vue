@@ -104,9 +104,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID } from './constant'
+import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID } from './constants'
 import { createLayoutCssVars } from './helper'
-import type { LayoutProps } from './typing'
+import type { LayoutProps } from './typings'
 
 const props = withDefaults(defineProps<LayoutProps>(), {
   mode: 'vertical',

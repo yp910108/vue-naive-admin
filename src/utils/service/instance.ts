@@ -1,8 +1,8 @@
 import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/store'
 import { localStg } from '../storage'
-import type { BackendConfig, ContentType } from './typing'
-import { INVALID_CODE } from './constant'
+import type { BackendConfig, ContentType } from './typings'
+import { INVALID_CODE } from './constants'
 import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
 
 const controller = new AbortController()

@@ -66,8 +66,8 @@
 import { ref, computed } from 'vue'
 import { NGrid } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
-import type { SearchColumn } from '../typing'
-import { SIZE, COLS, DATE_PICKER_TYPES } from './constant'
+import type { SearchColumn } from '../typings'
+import { SIZE, COLS, DATE_PICKER_TYPES } from './constants'
 import IconDown from './icon-down.vue'
 
 interface Props {

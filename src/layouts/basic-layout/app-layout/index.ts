@@ -1,4 +1,4 @@
 import AppLayout from './index.vue'
 
 export default AppLayout
-export * from './constant'
+export * from './constants'

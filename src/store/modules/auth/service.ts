@@ -1,5 +1,5 @@
 import { mockRequest } from '@/utils'
-import type { UserInfo } from './typing'
+import type { UserInfo } from './typings'
 
 /**
  * 登录

@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { SearchColumn, TableColumn } from './typing'
+import type { SearchColumn, TableColumn } from './typings'
 import { filterSearchColumns } from './utils'
 import Search from './search/index.vue'
 

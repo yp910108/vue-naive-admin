@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { camelize, combineURL, isExternal } from '@/utils'
 import { Icons } from '@/components'
 import type { RouteData } from '../route'
-import type { MenuOption, SearchMenuOption } from './typing'
+import type { MenuOption, SearchMenuOption } from './typings'
 
 /**
  * 通过路径获取组件名称
