@@ -4,7 +4,7 @@ import { defineStore, storeToRefs } from 'pinia'
 import { localStg } from '@/utils'
 import { useRouteStore } from '../route'
 import { useThemeStore } from '../theme'
-import { getTabByRoute, hasTab } from './util'
+import { getTabByRoute, hasTab } from './utils'
 import type { MultiTab } from './typing'
 
 export const useTabStore = defineStore('tab-store', () => {

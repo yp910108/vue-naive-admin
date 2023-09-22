@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import type { SearchColumn, TableColumn } from './typing'
-import { filterSearchColumns } from './util'
+import { filterSearchColumns } from './utils'
 import Search from './search/index.vue'
 
 interface Props {
