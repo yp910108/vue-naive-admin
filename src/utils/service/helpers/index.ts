@@ -1,2 +1,2 @@
 export * from './transform'
-export * from './message'
+export * from './error'

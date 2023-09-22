@@ -7,7 +7,7 @@ import {
   getThemeColors,
   initTheme,
   removeDarkClassFromDocument
-} from './helper'
+} from './util'
 
 export const useThemeStore = defineStore('theme-store', () => {
   const theme = ref<Settings>(initTheme())

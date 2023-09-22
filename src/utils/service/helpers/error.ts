@@ -32,7 +32,7 @@ function hasErrorMsg(error: RequestError) {
  * @param error
  * @returns
  */
-export function showErrorMsg(error: RequestError) {
+function showErrorMsg(error: RequestError) {
   if (!error.message || hasErrorMsg(error)) return
 
   addErrorMsg(error)
