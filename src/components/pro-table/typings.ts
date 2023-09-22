@@ -9,40 +9,41 @@ import type {
 
 export type DatePickerType = DatePickerProps['type']
 
-type ColumnInput = {
+type InputColumn = {
   searchType?: 'input'
   searchOptions?: never
 }
-type ColumnInputNumber = {
+type InputNumberColumn = {
   searchType?: 'input-number'
   searchOptions?: never
 }
-type ColumnSelect = {
+type SelectColumn = {
   searchType?: 'select'
   searchOptions?: SelectOption[]
 }
-type ColumnTreeSelect = {
+type TreeSelectColumn = {
   searchType?: 'tree-select'
   searchOptions?: TreeSelectOption[]
 }
-type ColumnCascader = {
+type CascaderColumn = {
   searchType?: 'cascader'
   searchOptions?: CascaderOption[]
 }
-type ColumnDatePicker = {
+type DatePickerColumn = {
   searchType?: DatePickerType
   searchOptions?: never
 }
-type CommonColumn = {
+type CommonColumn = (
+  | InputColumn
+  | InputNumberColumn
+  | SelectColumn
+  | TreeSelectColumn
+  | CascaderColumn
+  | DatePickerColumn
+) & {
   searchSpan?: 1 | 2 | 3 | 4
-} & (
-  | ColumnInput
-  | ColumnInputNumber
-  | ColumnSelect
-  | ColumnTreeSelect
-  | ColumnCascader
-  | ColumnDatePicker
-)
+  searchDefaultValue?: unknown
+}
 
 export type TableColumn<T = unknown> = DataTableColumn<T> &
   CommonColumn & {

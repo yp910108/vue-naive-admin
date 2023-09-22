@@ -1,4 +1,5 @@
 <template>
+  {{ form }}
   <n-form :model="form" label-placement="left" :label-width="105" :show-feedback="false">
     <n-grid
       ref="gridRef"
@@ -68,20 +69,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, toRef } from 'vue'
 import { NGrid } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
 import type { SearchColumn } from '../typings'
 import { SIZE, COLS, DATE_PICKER_TYPES } from './constants'
+import { useForm } from './hooks'
 import IconDown from './icon-down.vue'
 
 interface Props {
   columns: SearchColumn[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-const form = ref<any>({})
+const { form } = useForm(toRef(props, 'columns'))
 
 const collapsed = ref(true)
 const collapsedRows = ref(1)

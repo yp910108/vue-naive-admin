@@ -3,6 +3,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { CascaderOption, TreeSelectOption } from 'naive-ui'
 import { transformObjectToOption } from '@/utils'
 import { ProTable, type ProTableColumn } from '@/components'
@@ -121,10 +122,16 @@ const deptOptions: TreeSelectOption[] = [
   }
 ]
 
-const columns: ProTableColumn<RowData>[] = [
+const columns = ref<ProTableColumn<RowData>[]>([
   { type: 'selection' },
   { title: '用户姓名', key: 'label' },
-  { title: '用户性别', key: 'sex', searchType: 'select', searchOptions: sexOptions },
+  {
+    title: '用户性别',
+    key: 'sex',
+    searchType: 'select',
+    searchOptions: sexOptions,
+    searchDefaultValue: '2'
+  },
   { title: '年龄', key: 'age', searchType: 'input-number' },
   { title: '出生日期', key: 'birthDate', searchType: 'daterange' },
   { title: '政治面貌', key: 'politics', searchType: 'select', searchOptions: politicsOptions },
@@ -132,5 +139,5 @@ const columns: ProTableColumn<RowData>[] = [
   { title: '所属组织', key: 'dept', searchType: 'tree-select', searchOptions: deptOptions },
   { title: '上级领导', key: 'leader', hideInSearch: true },
   { title: '备注', key: 'remark', hideInSearch: true }
-]
+])
 </script>
