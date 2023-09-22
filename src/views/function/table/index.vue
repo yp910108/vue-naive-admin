@@ -1,156 +1,136 @@
 <template>
-  <n-space vertical class="h-full" :size="16" :wrap-item="false">
-    <n-card class="flex-shrink-0 shadow-sm" :bordered="false">
-      <n-form :model="form" label-placement="left" :label-width="105" :show-feedback="false">
-        <n-grid :x-gap="24" :y-gap="20">
-          <n-form-item-gi label="规则名称" :span="8">
-            <n-input v-model:value="form.ruleName" clearable />
-          </n-form-item-gi>
-          <n-form-item-gi label="描述" :span="8">
-            <n-input v-model:value="form.desc" clearable />
-          </n-form-item-gi>
-          <n-form-item-gi label="服务调用次数" :span="8">
-            <n-input-number v-model:value="form.num" clearable />
-          </n-form-item-gi>
-          <n-form-item-gi label="状态" :span="8">
-            <n-select v-model:value="form.status" clearable :options="generalOptions" />
-          </n-form-item-gi>
-          <n-form-item-gi label="上次调度时间" :span="8">
-            <n-date-picker
-              v-model:formatted-value="form.lastTime"
-              type="datetime"
-              value-format="yyyy-MM-dd HH:mm:ss"
-              clearable
-            />
-          </n-form-item-gi>
-          <n-form-item-gi class="action" :span="8">
-            <n-space>
-              <n-button>重 置</n-button>
-              <n-button type="primary">查 询</n-button>
-              <n-button type="primary" text icon-placement="right">
-                收起
-                <template #icon>
-                  <icon-down class="rotate-180deg" />
-                </template>
-              </n-button>
-            </n-space>
-          </n-form-item-gi>
-        </n-grid>
-      </n-form>
-    </n-card>
-    <n-card
-      class="flex-1 h-0 shadow-sm"
-      :content-style="{ display: 'flex', flexDirection: 'column', height: 0 }"
-      :bordered="false"
-    >
-      <n-space
-        justify="space-between"
-        class="flex-shrink-0 items-center"
-        :size="20"
-        :wrap-item="false"
-      >
-        <n-h4 class="m-0">查询表格</n-h4>
-        <n-space class="items-center" :wrap-item="false">
-          <n-button type="primary">新 建</n-button>
-          <icon-refresh class="font-size-18px cursor-pointer" />
-          <icon-column-height class="font-size-18px cursor-pointer" />
-          <icon-setting class="font-size-18px cursor-pointer" />
-        </n-space>
-      </n-space>
-      <n-data-table
-        flex-height
-        class="flex-1 mt-16px h-0"
-        :bordered="false"
-        :row-key="(row) => row.address"
-        :columns="columns"
-        :data="data"
-        :pagination="{
-          pageSlot: 7,
-          pageSize: 20,
-          prefix: ({ startIndex, endIndex, itemCount }) =>
-            `第 ${startIndex + 1}-${endIndex + 1} 条/总共 ${itemCount} 条`,
-          showSizePicker: true,
-          pageSizes: [10, 20, 50, 100]
-        }"
-      />
-    </n-card>
-  </n-space>
+  <pro-table :columns="columns" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { DataTableColumns } from 'naive-ui'
-import IconDown from './icon-down.vue'
-import IconRefresh from './icon-refresh.vue'
-import IconColumnHeight from './icon-column-height.vue'
-import IconSetting from './icon-setting.vue'
+import type { CascaderOption, TreeSelectOption } from 'naive-ui'
+import { transformObjectToOption } from '@/utils'
+import { ProTable, type ProTableColumn } from '@/components'
 
-const form = ref({
-  ruleName: '',
-  desc: '',
-  num: null,
-  lastTime: null,
-  status: null
-})
+type Sex = '1' | '2'
 
-const generalOptions = ['groode', 'veli good', 'emazing', 'lidiculous'].map((v) => ({
-  label: v,
-  value: v
-}))
+type Politics = '1' | '2' | '3'
 
 type RowData = {
-  key: number
-  name: string
-  age: string
+  id: string
+  label: string
+  sex: Sex
+  age: number
+  birthDate: string
+  politics: Politics
   address: string
+  dept: string
+  leader: string
+  remark: string
 }
 
-const createColumns = (): DataTableColumns<RowData> => [
+const SEX: Record<Sex, string> = {
+  '1': '男',
+  '2': '女'
+}
+const sexOptions = transformObjectToOption(SEX)
+
+const politics: Record<Politics, string> = {
+  '1': '党员',
+  '2': '团员',
+  '3': '群众'
+}
+const politicsOptions = transformObjectToOption(politics)
+
+const addressOptions: CascaderOption[] = [
   {
-    type: 'selection',
-    disabled(row) {
-      return row.name === 'Edward King 3'
-    }
+    value: '10001',
+    label: '山东省',
+    children: [
+      {
+        value: '1000101',
+        label: '济南市',
+        children: [
+          {
+            value: '100010101',
+            label: '高新区'
+          },
+          {
+            value: '100010102',
+            label: '历城区'
+          }
+        ]
+      }
+    ]
   },
   {
-    title: 'Name',
-    key: 'name'
-  },
-  {
-    title: 'Age',
-    key: 'age'
-  },
-  {
-    title: 'Address',
-    key: 'address'
+    value: '10002',
+    label: '北京市',
+    children: [
+      {
+        value: '1000201',
+        label: '东城区'
+      },
+      {
+        value: '1000202',
+        label: '西城区'
+      }
+    ]
   }
 ]
 
-const columns = createColumns()
+const deptOptions: TreeSelectOption[] = [
+  {
+    key: '10001',
+    label: '开发部',
+    children: [
+      {
+        key: '1000101',
+        label: '开发一部'
+      },
+      {
+        key: '1000102',
+        label: '开发二部'
+      },
+      {
+        key: '1000103',
+        label: '开发三部'
+      },
+      {
+        key: '1000104',
+        label: '开发四部'
+      },
+      {
+        key: '1000105',
+        label: '开发五部'
+      }
+    ]
+  },
+  {
+    key: '10002',
+    label: '人力资源部',
+    children: [
+      {
+        key: '1000201',
+        label: '人力资源部一部'
+      },
+      {
+        key: '1000202',
+        label: '人力资源部二部'
+      },
+      {
+        key: '1000203',
+        label: '人力资源部三部'
+      }
+    ]
+  }
+]
 
-const data = Array.from({ length: 100 }).map((_, index) => ({
-  name: `Edward King ${index}`,
-  age: 32,
-  address: `London, Park Lane no. ${index}`
-}))
+const columns: ProTableColumn<RowData>[] = [
+  { type: 'selection' },
+  { title: '用户姓名', key: 'label' },
+  { title: '用户性别', key: 'sex', searchType: 'select', searchOptions: sexOptions },
+  { title: '年龄', key: 'age', searchType: 'input-number' },
+  { title: '出生日期', key: 'birthDate', searchType: 'date' },
+  { title: '政治面貌', key: 'politics', searchType: 'select', searchOptions: politicsOptions },
+  { title: '家庭住址', key: 'address', searchType: 'cascader', searchOptions: addressOptions },
+  { title: '所属组织', key: 'dept', searchType: 'tree-select', searchOptions: deptOptions },
+  { title: '上级领导', key: 'leader', hideInSearch: true },
+  { title: '备注', key: 'remark', hideInSearch: true }
+]
 </script>
-
-<style scoped lang="scss">
-.n-grid {
-  .n-form-item {
-    .n-form-item-blank {
-      .n-date-picker,
-      .n-input-number {
-        width: 100%;
-      }
-    }
-  }
-  :deep(.action) {
-    .n-form-item {
-      .n-form-item-blank {
-        justify-content: flex-end;
-      }
-    }
-  }
-}
-</style>
