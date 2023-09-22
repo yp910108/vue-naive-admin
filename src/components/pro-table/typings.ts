@@ -33,13 +33,16 @@ type ColumnDatePicker = {
   searchType?: DatePickerType
   searchOptions?: never
 }
-type CommonColumn =
+type CommonColumn = {
+  searchSpan?: 1 | 2 | 3 | 4
+} & (
   | ColumnInput
   | ColumnInputNumber
   | ColumnSelect
   | ColumnTreeSelect
   | ColumnCascader
   | ColumnDatePicker
+)
 
 export type TableColumn<T = unknown> = DataTableColumn<T> &
   CommonColumn & {

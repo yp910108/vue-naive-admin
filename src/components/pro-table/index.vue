@@ -13,7 +13,18 @@ import { filterSearchColumns } from './utils'
 import Search from './search/index.vue'
 
 interface Props {
+  /**
+   * 是否显示搜索栏
+   */
   showSearch?: boolean
+  /**
+   * 列、搜索表单配置相关
+   * - searchSpan 搜索项占用的列
+   * - searchType 搜索项的组件类型
+   * - searchOptions 搜索项组件对应的选项内容，当 searchType 为 select、tree-select、cascader 时有效
+   * - hideInSearch 列是否在搜索栏中显示
+   * - hideInTable 列是否在表格中显示
+   */
   columns: TableColumn<any>[]
 }
 

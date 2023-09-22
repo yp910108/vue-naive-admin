@@ -8,7 +8,12 @@
       :collapsed="collapsed"
       :collapsed-rows="collapsedRows"
     >
-      <n-form-item-gi v-for="column of columns" :key="column.key" :label="column.title" :span="1">
+      <n-form-item-gi
+        v-for="column of columns"
+        :key="column.key"
+        :label="column.title"
+        :span="column.searchSpan"
+      >
         <n-input v-if="column.searchType === 'input'" v-model:value="form[column.key]" clearable />
         <n-input-number
           v-else-if="column.searchType === 'input-number'"

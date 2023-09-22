@@ -126,7 +126,7 @@ const columns: ProTableColumn<RowData>[] = [
   { title: '用户姓名', key: 'label' },
   { title: '用户性别', key: 'sex', searchType: 'select', searchOptions: sexOptions },
   { title: '年龄', key: 'age', searchType: 'input-number' },
-  { title: '出生日期', key: 'birthDate', searchType: 'date' },
+  { title: '出生日期', key: 'birthDate', searchType: 'daterange' },
   { title: '政治面貌', key: 'politics', searchType: 'select', searchOptions: politicsOptions },
   { title: '家庭住址', key: 'address', searchType: 'cascader', searchOptions: addressOptions },
   { title: '所属组织', key: 'dept', searchType: 'tree-select', searchOptions: deptOptions },
