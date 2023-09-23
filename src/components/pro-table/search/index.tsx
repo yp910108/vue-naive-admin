@@ -19,75 +19,6 @@ import { useForm } from './hooks'
 import IconDown from './icon-down'
 import styles from './index.module.scss'
 
-const renderField = (form: Ref<any>, { key, searchType, searchOptions }: SearchColumn) => {
-  if (searchType === 'input') {
-    return (
-      <NInput
-        value={form.value[key]}
-        clearable
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  } else if (searchType === 'input-number') {
-    return (
-      <NInputNumber
-        value={form.value[key]}
-        clearable
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  } else if (searchType === 'select') {
-    return (
-      <NSelect
-        value={form.value[key]}
-        filterable
-        clearable
-        options={searchOptions}
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  } else if (searchType === 'tree-select') {
-    return (
-      <NTreeSelect
-        value={form.value[key]}
-        filterable
-        clearable
-        default-expand-all
-        options={searchOptions}
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  } else if (searchType === 'cascader') {
-    return (
-      <NCascader
-        value={form.value[key]}
-        filterable
-        clearable
-        check-strategy="child"
-        options={searchOptions}
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  } else if (DATE_PICKER_TYPES.includes(searchType)) {
-    return (
-      <NDatePicker
-        value={form.value[key]}
-        type={searchType}
-        clearable
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  } else {
-    return (
-      <NInput
-        value={form.value[key]}
-        clearable
-        onUpdateValue={(newVal) => (form.value[key] = newVal)}
-      />
-    )
-  }
-}
-
 export default defineComponent({
   props: {
     columns: {
@@ -111,6 +42,75 @@ export default defineComponent({
       const { width } = entry.contentRect
       collapsedRows.value = width <= SIZE.s ? 2 : 1
     })
+
+    const renderField = (form: Ref<any>, { key, searchType, searchOptions }: SearchColumn) => {
+      if (searchType === 'input') {
+        return (
+          <NInput
+            value={form.value[key]}
+            clearable
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      } else if (searchType === 'input-number') {
+        return (
+          <NInputNumber
+            value={form.value[key]}
+            clearable
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      } else if (searchType === 'select') {
+        return (
+          <NSelect
+            value={form.value[key]}
+            filterable
+            clearable
+            options={searchOptions}
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      } else if (searchType === 'tree-select') {
+        return (
+          <NTreeSelect
+            value={form.value[key]}
+            filterable
+            clearable
+            default-expand-all
+            options={searchOptions}
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      } else if (searchType === 'cascader') {
+        return (
+          <NCascader
+            value={form.value[key]}
+            filterable
+            clearable
+            check-strategy="child"
+            options={searchOptions}
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      } else if (DATE_PICKER_TYPES.includes(searchType)) {
+        return (
+          <NDatePicker
+            value={form.value[key]}
+            type={searchType}
+            clearable
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      } else {
+        return (
+          <NInput
+            value={form.value[key]}
+            clearable
+            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+          />
+        )
+      }
+    }
 
     return () => (
       <NForm
