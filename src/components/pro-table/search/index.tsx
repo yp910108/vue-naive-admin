@@ -2,6 +2,7 @@ import { defineComponent, toRef, type PropType, ref, computed, type Ref } from '
 import {
   NButton,
   NCascader,
+  NDatePicker,
   NForm,
   NFormItemGi,
   NGrid,
@@ -13,14 +14,20 @@ import {
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
 import type { SearchColumn } from '../typings'
-import { COLS, SIZE } from './constants'
+import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
 import IconDown from './icon-down'
 import styles from './index.module.scss'
 
 const renderField = (form: Ref<any>, { key, searchType, searchOptions }: SearchColumn) => {
   if (searchType === 'input') {
-    return <NInput value={form.value[key]} onUpdateValue={(newVal) => (form.value[key] = newVal)} />
+    return (
+      <NInput
+        value={form.value[key]}
+        clearable
+        onUpdateValue={(newVal) => (form.value[key] = newVal)}
+      />
+    )
   } else if (searchType === 'input-number') {
     return (
       <NInputNumber
@@ -61,8 +68,23 @@ const renderField = (form: Ref<any>, { key, searchType, searchOptions }: SearchC
         onUpdateValue={(newVal) => (form.value[key] = newVal)}
       />
     )
+  } else if (DATE_PICKER_TYPES.includes(searchType)) {
+    return (
+      <NDatePicker
+        value={form.value[key]}
+        type={searchType}
+        clearable
+        onUpdateValue={(newVal) => (form.value[key] = newVal)}
+      />
+    )
   } else {
-    return <NInput value={form.value[key]} onUpdateValue={(newVal) => (form.value[key] = newVal)} />
+    return (
+      <NInput
+        value={form.value[key]}
+        clearable
+        onUpdateValue={(newVal) => (form.value[key] = newVal)}
+      />
+    )
   }
 }
 
