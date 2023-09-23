@@ -10,7 +10,7 @@
 import { computed } from 'vue'
 import type { SearchColumn, TableColumn } from './typings'
 import { filterSearchColumns } from './utils'
-import Search from './search/index.vue'
+import Search from './search'
 
 interface Props {
   /**

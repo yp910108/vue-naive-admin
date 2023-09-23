@@ -1,4 +1,4 @@
-<template>
+const IconDown = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
     <path
       fill="none"
@@ -9,4 +9,6 @@
       d="m8 13l8 8l8-8"
     />
   </svg>
-</template>
+)
+
+export default IconDown as any

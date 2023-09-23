@@ -1,0 +1,15 @@
+.pro-table-search {
+  :global {
+    .n-date-picker,
+    .n-input-number {
+      width: 100%;
+    }
+    .pro-table-search__action {
+      .n-form-item {
+        .n-form-item-blank {
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+}
