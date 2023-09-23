@@ -99,7 +99,7 @@ export default defineComponent({
         class={styles['pro-table-search']}
       >
         <NGrid
-          ref="gridRef"
+          ref={gridRef}
           xGap={24}
           yGap={20}
           cols={COLS}
