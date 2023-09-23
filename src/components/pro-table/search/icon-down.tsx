@@ -1,4 +1,6 @@
-const IconDown = () => (
+import type { AllowedComponentProps, FunctionalComponent } from 'vue'
+
+const IconDown: FunctionalComponent<AllowedComponentProps> = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
     <path
       fill="none"
@@ -11,4 +13,4 @@ const IconDown = () => (
   </svg>
 )
 
-export default IconDown as any
+export default IconDown
