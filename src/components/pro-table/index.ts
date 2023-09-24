@@ -1,4 +1,4 @@
-import ProTable from './index.vue'
+import ProTable from './main'
 
 export default ProTable
 export { ProTable }
