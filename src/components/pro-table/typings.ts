@@ -1,7 +1,9 @@
+import type { VNodeChild } from 'vue'
 import type {
   CascaderOption,
   DataTableBaseColumn,
   DataTableColumn,
+  DataTableColumnKey,
   DatePickerProps,
   SelectOption,
   TreeSelectOption
@@ -43,6 +45,7 @@ type CommonColumn = (
 ) & {
   searchSpan?: 1 | 2 | 3 | 4
   searchDefaultValue?: unknown
+  renderSearch?: (form: any, key: DataTableColumnKey) => VNodeChild
 }
 
 export type TableColumn<T = unknown> = DataTableColumn<T> &

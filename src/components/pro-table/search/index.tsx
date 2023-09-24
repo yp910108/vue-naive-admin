@@ -43,7 +43,13 @@ export default defineComponent({
       collapsedRows.value = width <= SIZE.s ? 2 : 1
     })
 
-    const renderField = (form: Ref<any>, { key, searchType, searchOptions }: SearchColumn) => {
+    const renderField = (
+      form: Ref<any>,
+      { key, renderSearch, searchType, searchOptions }: SearchColumn
+    ) => {
+      if (renderSearch) {
+        return renderSearch(form.value, key)
+      }
       if (searchType === 'input') {
         return (
           <NInput

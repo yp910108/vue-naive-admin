@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { CascaderOption, TreeSelectOption } from 'naive-ui'
+import { ref, h } from 'vue'
+import { NInputNumber, type CascaderOption, type TreeSelectOption } from 'naive-ui'
 import { transformObjectToOption } from '@/utils'
 import { ProTable, type ProTableColumn } from '@/components'
 
@@ -132,7 +132,17 @@ const columns = ref<ProTableColumn<RowData>[]>([
     searchOptions: sexOptions,
     searchDefaultValue: '2'
   },
-  { title: '年龄', key: 'age', searchType: 'input-number' },
+  {
+    title: '年龄',
+    key: 'age',
+    renderSearch: (form, key) =>
+      h(NInputNumber, {
+        value: form[key],
+        clearable: true,
+        onUpdateValue: (newVal) => (form[key] = newVal)
+      }),
+    searchDefaultValue: 10
+  },
   { title: '出生日期', key: 'birthDate', searchType: 'daterange' },
   { title: '政治面貌', key: 'politics', searchType: 'select', searchOptions: politicsOptions },
   { title: '家庭住址', key: 'address', searchType: 'cascader', searchOptions: addressOptions },
