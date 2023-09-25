@@ -34,6 +34,9 @@ const Search = defineComponent({
     columns: {
       type: Array as PropType<SearchColumn[]>,
       required: true
+    },
+    onSearch: {
+      type: Function as PropType<(form: any) => void>
     }
   },
   setup(props, { expose }) {
@@ -128,6 +131,11 @@ const Search = defineComponent({
       }
     }
 
+    const handleSearch = () => {
+      const { onSearch } = props
+      if (onSearch) onSearch(form.value)
+    }
+
     const setSearchValues = (fields: { [key: DataTableColumnKey]: any }) => {
       for (const prop of Object.keys(fields)) {
         setForm(prop, fields[prop])
@@ -165,7 +173,9 @@ const Search = defineComponent({
           <NFormItemGi suffix span={1} class="pro-table-search__action">
             <NSpace wrapItem={false}>
               <NButton>重 置</NButton>
-              <NButton type="primary">查 询</NButton>
+              <NButton type="primary" onClick={handleSearch}>
+                查 询
+              </NButton>
               <NButton
                 type="primary"
                 text

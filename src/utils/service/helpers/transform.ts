@@ -1,10 +1,6 @@
 import { stringify } from 'qs'
 import type { ContentType } from '../typings'
-import { toRawType } from '../../raw-type'
-
-export function isFile<T extends File>(value: T | unknown): value is T {
-  return toRawType(value) === 'File'
-}
+import { isFile } from '../../typeof'
 
 async function transformFile(formData: FormData, key: string, file: File[] | File) {
   if (Array.isArray(file)) {

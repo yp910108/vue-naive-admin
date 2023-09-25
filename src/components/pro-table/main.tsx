@@ -1,5 +1,6 @@
 import { computed, defineComponent, ref, type PropType } from 'vue'
 import { NButton, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
+import { transformObjectFalsy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type { SearchColumn, TableColumn } from './typings'
 import { filterSearchColumns } from './utils'
@@ -35,12 +36,20 @@ const ProTable = defineComponent({
       type: Array as PropType<TableColumn<any>[]>,
       required: true
     },
-    data: {
-      type: Array as PropType<Record<string, any>[]>,
-      required: true
+    onSearch: {
+      type: Function as PropType<(form: any) => void>
     }
   },
   setup(props, { attrs, expose }) {
+    const className = computed(() => attrs.class)
+
+    const style = computed(() => attrs.style)
+
+    const restAttrs = computed(() => {
+      const { class: _class, style: _style, ...restAttrs } = attrs
+      return restAttrs
+    })
+
     const searchRef = ref<InstanceType<typeof Search>>()
 
     const columns = computed(() => {
@@ -54,6 +63,11 @@ const ProTable = defineComponent({
 
     const searchColumns = computed<SearchColumn[]>(() => filterSearchColumns(props.columns))
 
+    const handleSearch = (form: any) => {
+      const { onSearch } = props
+      if (onSearch) onSearch(transformObjectFalsy(form))
+    }
+
     const exposedMethods: ExposedMethods = {
       setSearchValue: (...args) => searchRef.value?.setSearchValue?.(...args),
       setSearchValues: (...args) => searchRef.value?.setSearchValues?.(...args),
@@ -65,10 +79,16 @@ const ProTable = defineComponent({
     expose(exposedMethods)
 
     return () => (
-      <NSpace vertical size={16} wrapItem={false} class="h-full">
+      <NSpace
+        vertical
+        size={16}
+        wrapItem={false}
+        class={['h-full', className.value]}
+        style={style.value}
+      >
         {props.showSearch && searchColumns.value.length ? (
           <NCard bordered={false} class="flex-shrink-0 shadow-sm">
-            <Search ref={searchRef} columns={searchColumns.value} />
+            <Search ref={searchRef} columns={searchColumns.value} onSearch={handleSearch} />
           </NCard>
         ) : undefined}
         <NCard
@@ -94,7 +114,6 @@ const ProTable = defineComponent({
             flexHeight
             rowKey={(row) => row.id}
             columns={columns.value}
-            data={props.data}
             pagination={{
               pageSlot: 7,
               pageSize: 10,
@@ -104,7 +123,7 @@ const ProTable = defineComponent({
               pageSizes: [10, 20, 50, 100]
             }}
             class="flex-1 mt-16px h-0"
-            {...attrs}
+            {...restAttrs.value}
           />
         </NCard>
       </NSpace>

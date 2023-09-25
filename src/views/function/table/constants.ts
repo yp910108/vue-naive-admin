@@ -2,13 +2,13 @@ import type { CascaderOption, TreeSelectOption } from 'naive-ui'
 import { transformObjectToOption } from '@/utils'
 import type { Politics, Sex } from './typings'
 
-const SEX: Record<Sex, string> = {
+export const sex: Record<Sex, string> = {
   '1': '男',
   '2': '女'
 }
-export const sexOptions = transformObjectToOption(SEX)
+export const sexOptions = transformObjectToOption(sex)
 
-const politics: Record<Politics, string> = {
+export const politics: Record<Politics, string> = {
   '1': '党员',
   '2': '团员',
   '3': '群众'

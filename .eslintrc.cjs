@@ -136,6 +136,10 @@ module.exports = {
         pathGroupsExcludedImportTypes: []
       }
     ],
-    'vue/multi-word-component-names': 0
+    'vue/multi-word-component-names': 0,
+    '@typescript-eslint/no-unused-vars': [
+      'warn',
+      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }
+    ]
   }
 }

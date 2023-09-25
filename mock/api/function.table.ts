@@ -30,7 +30,7 @@ const apis: MockMethod[] = [
       })
       let { data } = response
       if (age) {
-        data = data.filter((item: any) => item.age === age)
+        data = data.filter((item: any) => item.age === +age)
       }
       if (startBirthDate && endBirthDate) {
         data = data.filter(

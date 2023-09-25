@@ -1,13 +1,26 @@
 <template>
-  <pro-table ref="tableRef" :columns="columns" :data="tableData" />
+  <pro-table
+    ref="tableRef"
+    :columns="columns"
+    :data="tableData"
+    :loading="loading"
+    @search="handleSearch"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, h, onMounted } from 'vue'
 import { NInputNumber } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
-import type { RowData } from './typings'
-import { addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
+import type { FetchListParams, RowData } from './typings'
+import {
+  sex,
+  addressOptions,
+  deptOptions,
+  politicsOptions,
+  sexOptions,
+  politics
+} from './constants'
 import { fetchList } from './service'
 
 const columns = ref<ProTableColumn<RowData>[]>([
@@ -18,7 +31,8 @@ const columns = ref<ProTableColumn<RowData>[]>([
     key: 'sex',
     searchType: 'select',
     searchOptions: sexOptions,
-    searchDefaultValue: '2'
+    searchDefaultValue: '1',
+    render: (row) => sex[row.sex]
   },
   {
     title: '年龄',
@@ -27,26 +41,43 @@ const columns = ref<ProTableColumn<RowData>[]>([
       h(NInputNumber, {
         value: form[key],
         clearable: true,
+        min: 1,
+        max: 100,
+        precision: 0,
         onUpdateValue: (newVal) => (form[key] = newVal)
-      }),
-    searchDefaultValue: 10
+      })
   },
   { title: '出生日期', key: 'birthDate', searchType: 'daterange' },
-  { title: '政治面貌', key: 'politics', searchType: 'select', searchOptions: politicsOptions },
-  { title: '家庭住址', key: 'address', searchType: 'cascader', searchOptions: addressOptions },
-  { title: '所属组织', key: 'dept', searchType: 'tree-select', searchOptions: deptOptions },
-  { title: '上级领导', key: 'leader', hideInSearch: true },
+  {
+    title: '政治面貌',
+    key: 'politics',
+    searchType: 'select',
+    searchOptions: politicsOptions,
+    render: (row) => politics[row.politics]
+  },
+  { title: '家庭住址', key: 'addressName', searchType: 'cascader', searchOptions: addressOptions },
+  { title: '所属组织', key: 'deptName', searchType: 'tree-select', searchOptions: deptOptions },
+  { title: '上级领导', key: 'leaderName', hideInSearch: true },
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
 
+const loading = ref(false)
 const page = ref(1)
-const pageSize = ref(10)
+const pageSize = ref(20)
+const querys = ref<FetchListParams>()
 
 const tableData = ref<RowData[]>([])
 
 const fetch = async () => {
-  const data = await fetchList({ page: page.value, pageSize: pageSize.value })
+  loading.value = true
+  const data = await fetchList({ ...querys.value, page: page.value, pageSize: pageSize.value })
   tableData.value = data ?? []
+  loading.value = false
+}
+
+const handleSearch = (form: FetchListParams) => {
+  querys.value = form
+  fetch()
 }
 
 onMounted(fetch)

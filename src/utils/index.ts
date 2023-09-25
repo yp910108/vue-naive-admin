@@ -1,4 +1,4 @@
-export * from './raw-type'
+export * from './typeof'
 export * from './crypto'
 export * from './camelize'
 export * from './color'
