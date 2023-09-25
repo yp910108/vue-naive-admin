@@ -1,5 +1,5 @@
 <template>
-  <pro-table ref="tableRef" :columns="columns" />
+  <pro-table ref="tableRef" :columns="columns" :data="[]" />
 </template>
 
 <script setup lang="ts">
@@ -8,6 +8,7 @@ import { NInputNumber } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
 import type { Politics, Sex } from './typings'
 import { addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
+import { fetchList } from './service'
 
 type RowData = {
   id: string
@@ -51,11 +52,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
 
-const tableRef = ref<InstanceType<typeof ProTable>>()
-
-setTimeout(() => {
-  tableRef.value?.setSearchValue('dept', '1000102')
-  // tableRef.value?.setSearchValues({ politics: '2', dept: '1000102' })
-  // tableRef.value?.reset()
-}, 3000)
+fetchList({}).then((res) => {
+  console.log(res)
+})
 </script>

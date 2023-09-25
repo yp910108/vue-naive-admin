@@ -163,7 +163,7 @@ const Search = defineComponent({
             </NFormItemGi>
           ))}
           <NFormItemGi suffix span={1} class="pro-table-search__action">
-            <NSpace>
+            <NSpace wrapItem={false}>
               <NButton>重 置</NButton>
               <NButton type="primary">查 询</NButton>
               <NButton
