@@ -1,9 +1,13 @@
 import { stringify } from 'qs'
 import type { ContentType } from '../typings'
-import { isArray, isFile } from '../../typeof'
+import { toRawType } from '../../raw-type'
+
+export function isFile<T extends File>(value: T | unknown): value is T {
+  return toRawType(value) === 'File'
+}
 
 async function transformFile(formData: FormData, key: string, file: File[] | File) {
-  if (isArray(file)) {
+  if (Array.isArray(file)) {
     const promises = file.map((item) => {
       formData.append(key, item)
       return true
@@ -19,7 +23,7 @@ function handleFormData(data: Record<string, any>) {
   const entries = Object.entries(data)
 
   for (const [key, value] of entries) {
-    const isFileType = isFile(value) || (isArray(value) && value.length && isFile(value[0]))
+    const isFileType = isFile(value) || (Array.isArray(value) && value.length && isFile(value[0]))
 
     if (isFileType) {
       transformFile(formData, key, value)

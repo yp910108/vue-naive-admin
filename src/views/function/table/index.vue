@@ -1,31 +1,18 @@
 <template>
-  <pro-table ref="tableRef" :columns="columns" :data="[]" />
+  <pro-table ref="tableRef" :columns="columns" :data="tableData" />
 </template>
 
 <script setup lang="ts">
-import { ref, h } from 'vue'
+import { ref, h, onMounted } from 'vue'
 import { NInputNumber } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
-import type { Politics, Sex } from './typings'
+import type { RowData } from './typings'
 import { addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
 import { fetchList } from './service'
 
-type RowData = {
-  id: string
-  label: string
-  sex: Sex
-  age: number
-  birthDate: string
-  politics: Politics
-  address: string
-  dept: string
-  leader: string
-  remark: string
-}
-
 const columns = ref<ProTableColumn<RowData>[]>([
   { type: 'selection' },
-  { title: '用户姓名', key: 'label' },
+  { title: '用户姓名', key: 'name' },
   {
     title: '用户性别',
     key: 'sex',
@@ -52,7 +39,15 @@ const columns = ref<ProTableColumn<RowData>[]>([
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
 
-fetchList({}).then((res) => {
-  console.log(res)
-})
+const page = ref(1)
+const pageSize = ref(10)
+
+const tableData = ref<RowData[]>([])
+
+const fetch = async () => {
+  const data = await fetchList({ page: page.value, pageSize: pageSize.value })
+  tableData.value = data ?? []
+}
+
+onMounted(fetch)
 </script>

@@ -14,6 +14,7 @@ interface ProTableExpose {
 }
 
 const ProTable = defineComponent({
+  inheritAttrs: false,
   props: {
     /**
      * 是否显示搜索栏
@@ -39,8 +40,17 @@ const ProTable = defineComponent({
       required: true
     }
   },
-  setup(props, { expose }) {
+  setup(props, { attrs, expose }) {
     const searchRef = ref<InstanceType<typeof Search>>()
+
+    const columns = computed(() => {
+      return props.columns.map((column) => {
+        const _ellipsis = column.ellipsis
+        const ellipsis =
+          typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
+        return { ...column, ellipsis }
+      })
+    })
 
     const searchColumns = computed<SearchColumn[]>(() => filterSearchColumns(props.columns))
 
@@ -82,9 +92,8 @@ const ProTable = defineComponent({
           </NSpace>
           <NDataTable
             flexHeight
-            singleLine={false}
-            rowKey={(row) => row.address}
-            columns={props.columns}
+            rowKey={(row) => row.id}
+            columns={columns.value}
             data={props.data}
             pagination={{
               pageSlot: 7,
@@ -95,6 +104,7 @@ const ProTable = defineComponent({
               pageSizes: [10, 20, 50, 100]
             }}
             class="flex-1 mt-16px h-0"
+            {...attrs}
           />
         </NCard>
       </NSpace>
@@ -102,4 +112,4 @@ const ProTable = defineComponent({
   }
 })
 
-export default ProTable as typeof ProTable & ProTableExpose
+export default ProTable as typeof ProTable & ProTableExpose & typeof NDataTable
