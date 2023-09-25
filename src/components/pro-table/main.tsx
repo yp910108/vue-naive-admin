@@ -1,10 +1,18 @@
-import { computed, defineComponent, type PropType } from 'vue'
+import { computed, defineComponent, ref, type PropType } from 'vue'
 import { NCard, NSpace } from 'naive-ui'
-import Search from './search'
+import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type { SearchColumn, TableColumn } from './typings'
 import { filterSearchColumns } from './utils'
 
-export default defineComponent({
+type ExposedMethods = SearchExposedMethods & {
+  reset: () => void
+}
+
+interface ProTableExpose {
+  new (): ExposedMethods
+}
+
+const ProTable = defineComponent({
   props: {
     /**
      * 是否显示搜索栏
@@ -26,17 +34,31 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, { expose }) {
+    const searchRef = ref<InstanceType<typeof Search>>()
+
     const searchColumns = computed<SearchColumn[]>(() => filterSearchColumns(props.columns))
+
+    const exposedMethods: ExposedMethods = {
+      setSearchValue: (...args) => searchRef.value?.setSearchValue?.(...args),
+      setSearchValues: (...args) => searchRef.value?.setSearchValues?.(...args),
+      reset: () => {
+        console.log('reset...')
+      }
+    }
+
+    expose(exposedMethods)
 
     return () => (
       <NSpace vertical class="h-full" size={16} wrapItem={false}>
         <NCard class="flex-shrink-0 shadow-sm" bordered={false}>
           {props.showSearch && searchColumns.value.length ? (
-            <Search columns={searchColumns.value} />
+            <Search ref={searchRef} columns={searchColumns.value} />
           ) : undefined}
         </NCard>
       </NSpace>
     )
   }
 })
+
+export default ProTable as typeof ProTable & ProTableExpose

@@ -10,7 +10,8 @@ import {
   NInputNumber,
   NSelect,
   NSpace,
-  NTreeSelect
+  NTreeSelect,
+  type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
 import type { SearchColumn } from '../typings'
@@ -19,17 +20,26 @@ import { useForm } from './hooks'
 import IconDown from './icon-down'
 import styles from './index.module.scss'
 
-export default defineComponent({
+export interface ExposedMethods {
+  setSearchValue: (key: DataTableColumnKey, value: any) => void
+  setSearchValues: (fields: { [key: DataTableColumnKey]: any }) => void
+}
+
+interface SearchExpose {
+  new (): ExposedMethods
+}
+
+const Search = defineComponent({
   props: {
     columns: {
       type: Array as PropType<SearchColumn[]>,
       required: true
     }
   },
-  setup(props) {
+  setup(props, { expose }) {
     const columns = toRef(props, 'columns')
 
-    const { form } = useForm(columns)
+    const { form, setForm } = useForm(columns)
 
     const collapsed = ref(true)
     const collapsedRows = ref(1)
@@ -118,6 +128,19 @@ export default defineComponent({
       }
     }
 
+    const setSearchValues = (fields: { [key: DataTableColumnKey]: any }) => {
+      for (const prop of Object.keys(fields)) {
+        setForm(prop, fields[prop])
+      }
+    }
+
+    const exposedMethods: ExposedMethods = {
+      setSearchValue: setForm,
+      setSearchValues
+    }
+
+    expose(exposedMethods)
+
     return () => (
       <NForm
         model={form}
@@ -161,3 +184,5 @@ export default defineComponent({
     )
   }
 })
+
+export default Search as typeof Search & SearchExpose

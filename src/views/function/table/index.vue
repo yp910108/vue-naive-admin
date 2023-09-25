@@ -1,16 +1,13 @@
 <template>
-  <pro-table :columns="columns" />
+  <pro-table ref="tableRef" :columns="columns" />
 </template>
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
-import { NInputNumber, type CascaderOption, type TreeSelectOption } from 'naive-ui'
-import { transformObjectToOption } from '@/utils'
+import { NInputNumber } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
-
-type Sex = '1' | '2'
-
-type Politics = '1' | '2' | '3'
+import type { Politics, Sex } from './typings'
+import { addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
 
 type RowData = {
   id: string
@@ -24,103 +21,6 @@ type RowData = {
   leader: string
   remark: string
 }
-
-const SEX: Record<Sex, string> = {
-  '1': '男',
-  '2': '女'
-}
-const sexOptions = transformObjectToOption(SEX)
-
-const politics: Record<Politics, string> = {
-  '1': '党员',
-  '2': '团员',
-  '3': '群众'
-}
-const politicsOptions = transformObjectToOption(politics)
-
-const addressOptions: CascaderOption[] = [
-  {
-    value: '10001',
-    label: '山东省',
-    children: [
-      {
-        value: '1000101',
-        label: '济南市',
-        children: [
-          {
-            value: '100010101',
-            label: '高新区'
-          },
-          {
-            value: '100010102',
-            label: '历城区'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: '10002',
-    label: '北京市',
-    children: [
-      {
-        value: '1000201',
-        label: '东城区'
-      },
-      {
-        value: '1000202',
-        label: '西城区'
-      }
-    ]
-  }
-]
-
-const deptOptions: TreeSelectOption[] = [
-  {
-    key: '10001',
-    label: '开发部',
-    children: [
-      {
-        key: '1000101',
-        label: '开发一部'
-      },
-      {
-        key: '1000102',
-        label: '开发二部'
-      },
-      {
-        key: '1000103',
-        label: '开发三部'
-      },
-      {
-        key: '1000104',
-        label: '开发四部'
-      },
-      {
-        key: '1000105',
-        label: '开发五部'
-      }
-    ]
-  },
-  {
-    key: '10002',
-    label: '人力资源部',
-    children: [
-      {
-        key: '1000201',
-        label: '人力资源部一部'
-      },
-      {
-        key: '1000202',
-        label: '人力资源部二部'
-      },
-      {
-        key: '1000203',
-        label: '人力资源部三部'
-      }
-    ]
-  }
-]
 
 const columns = ref<ProTableColumn<RowData>[]>([
   { type: 'selection' },
@@ -150,4 +50,12 @@ const columns = ref<ProTableColumn<RowData>[]>([
   { title: '上级领导', key: 'leader', hideInSearch: true },
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
+
+const tableRef = ref<InstanceType<typeof ProTable>>()
+
+setTimeout(() => {
+  tableRef.value?.setSearchValue('dept', '1000102')
+  // tableRef.value?.setSearchValues({ politics: '2', dept: '1000102' })
+  // tableRef.value?.reset()
+}, 3000)
 </script>
