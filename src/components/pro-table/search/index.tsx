@@ -1,4 +1,4 @@
-import { defineComponent, toRef, type PropType, ref, computed, type Ref } from 'vue'
+import { defineComponent, toRef, type PropType, ref, computed, type Ref, onMounted } from 'vue'
 import {
   NButton,
   NCascader,
@@ -148,6 +148,8 @@ const Search = defineComponent({
     }
 
     expose(exposedMethods)
+
+    onMounted(handleSearch)
 
     return () => (
       <NForm

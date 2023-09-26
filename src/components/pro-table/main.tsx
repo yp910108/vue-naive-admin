@@ -1,5 +1,13 @@
 import { computed, defineComponent, ref, type PropType } from 'vue'
-import { NButton, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
+import {
+  NButton,
+  NCard,
+  NDataTable,
+  NH4,
+  NSpace,
+  type DataTableProps,
+  type PaginationProps
+} from 'naive-ui'
 import { transformObjectFalsy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type { SearchColumn, TableColumn } from './typings'
@@ -37,16 +45,49 @@ const ProTable = defineComponent({
       required: true
     },
     onSearch: {
-      type: Function as PropType<(form: any) => void>
+      type: Function as PropType<(params: any) => void>
+    },
+    'onUpdate:page': {
+      type: Function as PropType<(page: number) => void>
+    },
+    onUpdatePage: {
+      type: Function as PropType<(page: number) => void>
+    },
+    'onUpdate:pageSize': {
+      type: Function as PropType<(pageSize: number) => void>
+    },
+    onUpdatePageSize: {
+      type: Function as PropType<(pageSize: number) => void>
     }
   },
   setup(props, { attrs, expose }) {
-    const className = computed(() => attrs.class)
+    const wrapClassName = computed(() => attrs.class)
 
-    const style = computed(() => attrs.style)
+    const wrapStyle = computed(() => attrs.style)
+
+    const paginationRef = ref<PaginationProps>({
+      pageSlot: 7,
+      page: 1,
+      pageSize: 20,
+      itemCount: 0,
+      prefix: ({ startIndex, endIndex, itemCount }) =>
+        `第 ${startIndex + 1}-${endIndex + 1} 条/总共 ${itemCount} 条`,
+      showSizePicker: true,
+      pageSizes: [10, 20, 50, 100]
+    })
+
+    const pagination = computed({
+      get() {
+        const _pagination = (attrs as DataTableProps).pagination
+        return typeof _pagination === 'boolean'
+          ? _pagination // @ts-ignore
+          : { ...paginationRef.value, ..._pagination }
+      },
+      set() {}
+    })
 
     const restAttrs = computed(() => {
-      const { class: _class, style: _style, ...restAttrs } = attrs
+      const { class: _class, style: _style, pagination: _pagination, ...restAttrs } = attrs
       return restAttrs
     })
 
@@ -63,9 +104,14 @@ const ProTable = defineComponent({
 
     const searchColumns = computed<SearchColumn[]>(() => filterSearchColumns(props.columns))
 
-    const handleSearch = (form: any) => {
+    const handleSearch = (params: any) => {
       const { onSearch } = props
-      if (onSearch) onSearch(transformObjectFalsy(form))
+      const _params = transformObjectFalsy(params)
+      if (typeof pagination.value !== 'boolean') {
+        _params.page = pagination.value.page
+        _params.pageSize = pagination.value.pageSize
+      }
+      if (onSearch) onSearch(_params)
     }
 
     const exposedMethods: ExposedMethods = {
@@ -83,8 +129,8 @@ const ProTable = defineComponent({
         vertical
         size={16}
         wrapItem={false}
-        class={['h-full', className.value]}
-        style={style.value}
+        class={['h-full', wrapClassName.value]}
+        style={wrapStyle.value}
       >
         {props.showSearch && searchColumns.value.length ? (
           <NCard bordered={false} class="flex-shrink-0 shadow-sm">
@@ -110,18 +156,14 @@ const ProTable = defineComponent({
               <IconSetting class="font-size-18px cursor-pointer" />
             </NSpace>
           </NSpace>
+          {/* @ts-ignore */}
           <NDataTable
             flexHeight
+            // @ts-ignore
             rowKey={(row) => row.id}
             columns={columns.value}
-            pagination={{
-              pageSlot: 7,
-              pageSize: 10,
-              prefix: ({ startIndex, endIndex, itemCount }) =>
-                `第 ${startIndex + 1}-${endIndex + 1} 条/总共 ${itemCount} 条`,
-              showSizePicker: true,
-              pageSizes: [10, 20, 50, 100]
-            }}
+            // @ts-ignore
+            pagination={pagination.value}
             class="flex-1 mt-16px h-0"
             {...restAttrs.value}
           />

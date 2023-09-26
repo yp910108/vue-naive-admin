@@ -12,6 +12,7 @@ export const useMenuStore = defineStore('menu-store', () => {
   }
 
   const setMenus = (routeData: RouteData[]) => {
+    // @ts-ignore
     menus.value = transformMenus(routeData)
   }
 

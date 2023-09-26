@@ -4,12 +4,13 @@
     :columns="columns"
     :data="tableData"
     :loading="loading"
-    @search="handleSearch"
+    :pagination="pagination"
+    @search="fetch"
   />
 </template>
 
 <script setup lang="ts">
-import { ref, h, onMounted } from 'vue'
+import { ref, h } from 'vue'
 import { NInputNumber } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
 import type { FetchListParams, RowData } from './typings'
@@ -62,23 +63,20 @@ const columns = ref<ProTableColumn<RowData>[]>([
 ])
 
 const loading = ref(false)
-const page = ref(1)
-const pageSize = ref(20)
-const querys = ref<FetchListParams>()
+const pagination = ref({
+  page: 1,
+  pageSize: 30,
+  itemCount: 0,
+  pageSizes: [10, 20, 30, 50, 100]
+})
 
 const tableData = ref<RowData[]>([])
 
-const fetch = async () => {
+const fetch = async (params: FetchListParams) => {
   loading.value = true
-  const data = await fetchList({ ...querys.value, page: page.value, pageSize: pageSize.value })
-  tableData.value = data ?? []
+  const { total, list } = (await fetchList(params)) ?? {}
+  pagination.value.itemCount = total ?? 0
+  tableData.value = list ?? []
   loading.value = false
 }
-
-const handleSearch = (form: FetchListParams) => {
-  querys.value = form
-  fetch()
-}
-
-onMounted(fetch)
 </script>
