@@ -59,10 +59,10 @@ const Search = defineComponent({
 
     const renderField = (
       form: Ref<any>,
-      { key, renderSearch, searchType, searchOptions }: SearchColumn
+      { key, renderSearchField, searchType, searchOptions }: SearchColumn
     ) => {
-      if (renderSearch) {
-        return renderSearch(form.value, key)
+      if (renderSearchField) {
+        return renderSearchField(form.value, key)
       }
       if (searchType === 'input') {
         return (
@@ -175,7 +175,7 @@ const Search = defineComponent({
           collapsedRows={collapsedRows.value}
         >
           {columns.value.map((column) => (
-            <NFormItemGi key={column.key} label={column.title} span={column.searchSpan}>
+            <NFormItemGi key={column.key} label={column.label} span={column.searchSpan}>
               {renderField(form, column)}
             </NFormItemGi>
           ))}

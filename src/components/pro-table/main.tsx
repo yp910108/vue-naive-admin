@@ -10,8 +10,8 @@ import {
 } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
-import type { SearchColumn, TableColumn } from './typings'
-import { filterSearchColumns } from './utils'
+import type { ProTableColumn, TableColumn } from './typings'
+import { filterSearchColumns, filterTableColumns } from './utils'
 import { IconColumnHeight, IconRefresh, IconSetting } from './icons'
 
 type ExposedMethods = SearchExposedMethods & {
@@ -41,7 +41,7 @@ const ProTable = defineComponent({
      * - hideInTable 列是否在表格中显示
      */
     columns: {
-      type: Array as PropType<TableColumn<any>[]>,
+      type: Array as PropType<ProTableColumn<any>[]>,
       required: true
     },
     request: {
@@ -65,16 +65,16 @@ const ProTable = defineComponent({
 
     const searchRef = ref<InstanceType<typeof Search>>()
 
-    const columns = computed(() => {
-      return props.columns.map((column) => {
+    const searchColumns = computed(() => filterSearchColumns(props.columns))
+
+    const tableColumns = computed(() => {
+      return filterTableColumns(props.columns).map((column) => {
         const _ellipsis = column.ellipsis
         const ellipsis =
           typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
-        return { ...column, ellipsis }
+        return { align: 'center', ...column, ellipsis } as TableColumn
       })
     })
-
-    const searchColumns = computed<SearchColumn[]>(() => filterSearchColumns(props.columns))
 
     const params = ref<any>({})
 
@@ -212,7 +212,7 @@ const ProTable = defineComponent({
             loading={loading.value}
             // @ts-ignore
             rowKey={(row) => row.id}
-            columns={columns.value}
+            columns={tableColumns.value}
             data={data.value}
             // @ts-ignore
             pagination={pagination.value}

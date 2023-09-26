@@ -1,7 +1,6 @@
 import type { VNodeChild } from 'vue'
 import type {
   CascaderOption,
-  DataTableBaseColumn,
   DataTableColumn,
   DataTableColumnKey,
   DatePickerProps,
@@ -35,25 +34,28 @@ type DatePickerColumn = {
   searchType?: DatePickerType
   searchOptions?: never
 }
-type CommonColumn = (
+
+type FieldColumn =
   | InputColumn
   | InputNumberColumn
   | SelectColumn
   | TreeSelectColumn
   | CascaderColumn
   | DatePickerColumn
-) & {
+
+export type SearchColumn = FieldColumn & {
+  key: DataTableColumnKey
+  label?: string
   searchSpan?: 1 | 2 | 3 | 4
   searchDefaultValue?: unknown
-  renderSearch?: (form: any, key: DataTableColumnKey) => VNodeChild
+  renderSearchLabel?: (label: string) => VNodeChild
+  renderSearchField?: (form: any, key: DataTableColumnKey) => VNodeChild
 }
 
-export type TableColumn<T = unknown> = DataTableColumn<T> &
-  CommonColumn & {
+export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
+
+export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> &
+  Omit<SearchColumn, 'key' | 'label'> & {
     hideInSearch?: boolean
     hideInTable?: boolean
   }
-
-export type SearchColumn = Omit<DataTableBaseColumn, 'title'> & CommonColumn & { title?: string }
-
-export type ProTableColumn<T = unknown> = TableColumn<T>

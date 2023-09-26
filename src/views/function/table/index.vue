@@ -1,5 +1,5 @@
 <template>
-  <pro-table ref="tableRef" :columns="columns" :request="methodRequest" />
+  <pro-table ref="tableRef" :single-line="false" :columns="columns" :request="methodRequest" />
 </template>
 
 <script setup lang="ts">
@@ -31,7 +31,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
   {
     title: '年龄',
     key: 'age',
-    renderSearch: (form, key) =>
+    renderSearchField: (form, key) =>
       h(NInputNumber, {
         value: form[key],
         clearable: true,
@@ -49,8 +49,22 @@ const columns = ref<ProTableColumn<RowData>[]>([
     searchOptions: politicsOptions,
     render: (row) => politics[row.politics]
   },
-  { title: '家庭住址', key: 'addressName', searchType: 'cascader', searchOptions: addressOptions },
-  { title: '所属组织', key: 'deptName', searchType: 'tree-select', searchOptions: deptOptions },
+  {
+    title: '家庭住址',
+    key: 'addressId',
+    searchType: 'cascader',
+    searchOptions: addressOptions,
+    hideInTable: true
+  },
+  { title: '家庭住址', key: 'addressName', hideInSearch: true },
+  {
+    title: '所属组织',
+    key: 'deptId',
+    searchType: 'tree-select',
+    searchOptions: deptOptions,
+    hideInTable: true
+  },
+  { title: '所属组织', key: 'deptName', hideInSearch: true },
   { title: '上级领导', key: 'leaderName', hideInSearch: true },
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
