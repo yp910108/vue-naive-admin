@@ -7,7 +7,7 @@ export function useForm(columns: Ref<SearchColumn[]>) {
 
   const setDefaultForm = () => {
     for (const { key, searchDefaultValue } of columns.value) {
-      form.value[key] = searchDefaultValue
+      form.value[key] = searchDefaultValue ?? null
     }
   }
 

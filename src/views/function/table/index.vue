@@ -1,14 +1,5 @@
 <template>
-  <pro-table
-    ref="tableRef"
-    :columns="columns"
-    :pagination="{
-      page: 1,
-      pageSize: 30,
-      pageSizes: [10, 20, 30, 50, 100]
-    }"
-    :request="methodRequest"
-  />
+  <pro-table ref="tableRef" :columns="columns" :request="methodRequest" />
 </template>
 
 <script setup lang="ts">
@@ -64,7 +55,12 @@ const columns = ref<ProTableColumn<RowData>[]>([
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
 
-const methodRequest = async (params: FetchListParams) => {
+const methodRequest = async (params: FetchListParams & { birthDate?: [string, string] }) => {
+  if (params.birthDate && params.birthDate.length) {
+    params.startBirthDate = params.birthDate[0]
+    params.endBirthDate = params.birthDate[1]
+    delete params.birthDate
+  }
   const { total, list } = (await fetchList(params)) ?? {}
   return { itemCount: total, data: list }
 }

@@ -8,7 +8,7 @@ import {
   type DataTableProps,
   type PaginationProps
 } from 'naive-ui'
-import { transformObjectFalsy } from '@/utils'
+import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type { SearchColumn, TableColumn } from './typings'
 import { filterSearchColumns } from './utils'
@@ -87,8 +87,13 @@ const ProTable = defineComponent({
         page: 1,
         pageSize: 20,
         itemCount: 0,
-        prefix: ({ startIndex, endIndex, itemCount }) =>
-          `第 ${startIndex + 1}-${endIndex + 1} 条/总共 ${itemCount} 条`,
+        prefix: ({ startIndex, endIndex, itemCount }) => {
+          const strs = [`总共 ${itemCount} 条`]
+          if (endIndex > startIndex) {
+            strs.unshift(`第 ${startIndex + 1}-${endIndex + 1} 条`)
+          }
+          return strs.join('/')
+        },
         showSizePicker: true,
         pageSizes: [10, 20, 50, 100]
       }
@@ -142,7 +147,7 @@ const ProTable = defineComponent({
 
     const handleSearch = (_params: any) => {
       setPage(1)
-      params.value = transformObjectFalsy(_params)
+      params.value = transformObjectTruthy(_params)
       fetch()
     }
 

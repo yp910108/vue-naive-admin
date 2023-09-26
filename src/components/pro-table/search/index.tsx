@@ -115,10 +115,10 @@ const Search = defineComponent({
       } else if (DATE_PICKER_TYPES.includes(searchType)) {
         return (
           <NDatePicker
-            value={form.value[key]}
+            formattedValue={form.value[key]}
             type={searchType}
             clearable
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateFormattedValue={(newVal) => (form.value[key] = newVal)}
           />
         )
       } else {
