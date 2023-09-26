@@ -121,10 +121,14 @@ const ProTable = defineComponent({
       }
     }
 
-    const handleUpatePage = (page: number) => {
+    const setPage = (page: number) => {
       if (typeof pagination.value !== 'boolean') {
         pagination.value.page = page
       }
+    }
+
+    const handleUpatePage = (page: number) => {
+      setPage(page)
       fetch()
     }
 
@@ -132,18 +136,18 @@ const ProTable = defineComponent({
       if (typeof pagination.value !== 'boolean') {
         pagination.value.pageSize = pageSize
       }
-      handleUpatePage(1)
+      setPage(1)
       fetch()
     }
 
     const handleSearch = (_params: any) => {
-      handleUpatePage(1)
+      setPage(1)
       params.value = transformObjectFalsy(_params)
       fetch()
     }
 
     const reload = () => {
-      handleUpatePage(1)
+      setPage(1)
       fetch()
     }
 

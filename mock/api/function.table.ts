@@ -26,7 +26,7 @@ const apis: MockMethod[] = [
               deptName: '开发三部',
               leaderId: '2',
               leaderName: '张三',
-              remark: '@cparagraph'
+              'remark|1-3': '@csentence'
             }
           ]
         }
