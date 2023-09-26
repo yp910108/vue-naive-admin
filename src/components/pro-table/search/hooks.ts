@@ -17,5 +17,5 @@ export function useForm(columns: Ref<SearchColumn[]>) {
 
   watchEffect(setDefaultForm)
 
-  return { form, setForm }
+  return { form, setForm, resetForm: setDefaultForm }
 }

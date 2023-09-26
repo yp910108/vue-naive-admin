@@ -45,8 +45,9 @@ const apis: MockMethod[] = [
       for (const prop in rest) {
         list = list.filter((item: any) => item[prop].includes(rest[prop]))
       }
-      list = list.slice((page - 1) * pageSize, page * pageSize)
-      response.data.list = list
+      const _list = list.slice((page - 1) * pageSize, page * pageSize)
+      response.data.total = list.length
+      response.data.list = _list
       return response
     }
   }

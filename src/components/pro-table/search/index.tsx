@@ -21,6 +21,7 @@ import IconDown from './icon-down'
 import styles from './index.module.scss'
 
 export interface ExposedMethods {
+  reset: () => void
   setSearchValue: (key: DataTableColumnKey, value: any) => void
   setSearchValues: (fields: { [key: DataTableColumnKey]: any }) => void
 }
@@ -42,7 +43,7 @@ const Search = defineComponent({
   setup(props, { expose }) {
     const columns = toRef(props, 'columns')
 
-    const { form, setForm } = useForm(columns)
+    const { form, setForm, resetForm } = useForm(columns)
 
     const collapsed = ref(true)
     const collapsedRows = ref(1)
@@ -136,6 +137,11 @@ const Search = defineComponent({
       if (onSearch) onSearch(form.value)
     }
 
+    const handleReset = () => {
+      resetForm()
+      handleSearch()
+    }
+
     const setSearchValues = (fields: { [key: DataTableColumnKey]: any }) => {
       for (const prop of Object.keys(fields)) {
         setForm(prop, fields[prop])
@@ -143,6 +149,7 @@ const Search = defineComponent({
     }
 
     const exposedMethods: ExposedMethods = {
+      reset: handleReset,
       setSearchValue: setForm,
       setSearchValues
     }
@@ -174,7 +181,7 @@ const Search = defineComponent({
           ))}
           <NFormItemGi suffix span={1} class="pro-table-search__action">
             <NSpace wrapItem={false}>
-              <NButton>重 置</NButton>
+              <NButton onClick={handleReset}>重 置</NButton>
               <NButton type="primary" onClick={handleSearch}>
                 查 询
               </NButton>

@@ -15,7 +15,7 @@ import { filterSearchColumns } from './utils'
 import { IconColumnHeight, IconRefresh, IconSetting } from './icons'
 
 type ExposedMethods = SearchExposedMethods & {
-  reset: () => void
+  reload: () => void
 }
 
 interface ProTableExpose {
@@ -44,47 +44,19 @@ const ProTable = defineComponent({
       type: Array as PropType<TableColumn<any>[]>,
       required: true
     },
-    onSearch: {
-      type: Function as PropType<(params: any) => void>
-    },
-    'onUpdate:page': {
-      type: Function as PropType<(page: number) => void>
-    },
-    onUpdatePage: {
-      type: Function as PropType<(page: number) => void>
-    },
-    'onUpdate:pageSize': {
-      type: Function as PropType<(pageSize: number) => void>
-    },
-    onUpdatePageSize: {
-      type: Function as PropType<(pageSize: number) => void>
+    request: {
+      type: Function as PropType<
+        (params: any) => Promise<{
+          itemCount?: number
+          data?: any[]
+        }>
+      >
     }
   },
   setup(props, { attrs, expose }) {
     const wrapClassName = computed(() => attrs.class)
 
     const wrapStyle = computed(() => attrs.style)
-
-    const paginationRef = ref<PaginationProps>({
-      pageSlot: 7,
-      page: 1,
-      pageSize: 20,
-      itemCount: 0,
-      prefix: ({ startIndex, endIndex, itemCount }) =>
-        `第 ${startIndex + 1}-${endIndex + 1} 条/总共 ${itemCount} 条`,
-      showSizePicker: true,
-      pageSizes: [10, 20, 50, 100]
-    })
-
-    const pagination = computed({
-      get() {
-        const _pagination = (attrs as DataTableProps).pagination
-        return typeof _pagination === 'boolean'
-          ? _pagination // @ts-ignore
-          : { ...paginationRef.value, ..._pagination }
-      },
-      set() {}
-    })
 
     const restAttrs = computed(() => {
       const { class: _class, style: _style, pagination: _pagination, ...restAttrs } = attrs
@@ -104,22 +76,90 @@ const ProTable = defineComponent({
 
     const searchColumns = computed<SearchColumn[]>(() => filterSearchColumns(props.columns))
 
-    const handleSearch = (params: any) => {
-      const { onSearch } = props
-      const _params = transformObjectFalsy(params)
+    const params = ref<any>({})
+
+    const loading = ref(false)
+
+    const mergePagination = () => {
+      const _pagination = (attrs as DataTableProps).pagination
+      const pagination: PaginationProps = {
+        pageSlot: 7,
+        page: 1,
+        pageSize: 20,
+        itemCount: 0,
+        prefix: ({ startIndex, endIndex, itemCount }) =>
+          `第 ${startIndex + 1}-${endIndex + 1} 条/总共 ${itemCount} 条`,
+        showSizePicker: true,
+        pageSizes: [10, 20, 50, 100]
+      }
+      return typeof _pagination === 'boolean' ? _pagination : { ...pagination, ..._pagination }
+    }
+
+    const pagination = ref(mergePagination())
+
+    const data = ref<any[]>([])
+
+    const fetch = async () => {
+      const _params = { ...params.value }
       if (typeof pagination.value !== 'boolean') {
         _params.page = pagination.value.page
         _params.pageSize = pagination.value.pageSize
       }
-      if (onSearch) onSearch(_params)
+      const { request } = props
+      if (request) {
+        try {
+          loading.value = true
+          const { itemCount, data: _data } = (await request(_params)) ?? {}
+          loading.value = false
+          if (typeof pagination.value !== 'boolean') {
+            pagination.value.itemCount = itemCount ?? 0
+          }
+          data.value = _data ?? []
+        } catch (e) {
+          loading.value = false
+        }
+      }
+    }
+
+    const handleUpatePage = (page: number) => {
+      if (typeof pagination.value !== 'boolean') {
+        pagination.value.page = page
+      }
+      fetch()
+    }
+
+    const handleUpatePageSize = (pageSize: number) => {
+      if (typeof pagination.value !== 'boolean') {
+        pagination.value.pageSize = pageSize
+      }
+      handleUpatePage(1)
+      fetch()
+    }
+
+    const handleSearch = (_params: any) => {
+      handleUpatePage(1)
+      params.value = transformObjectFalsy(_params)
+      fetch()
+    }
+
+    const reload = () => {
+      handleUpatePage(1)
+      fetch()
+    }
+
+    const reset = () => {
+      if (searchRef.value) {
+        searchRef.value.reset()
+      } else {
+        reload()
+      }
     }
 
     const exposedMethods: ExposedMethods = {
-      setSearchValue: (...args) => searchRef.value?.setSearchValue?.(...args),
-      setSearchValues: (...args) => searchRef.value?.setSearchValues?.(...args),
-      reset: () => {
-        console.log('reset...')
-      }
+      reload,
+      reset,
+      setSearchValue: (...args) => searchRef.value?.setSearchValue(...args),
+      setSearchValues: (...args) => searchRef.value?.setSearchValues(...args)
     }
 
     expose(exposedMethods)
@@ -159,11 +199,16 @@ const ProTable = defineComponent({
           {/* @ts-ignore */}
           <NDataTable
             flexHeight
+            remote
+            loading={loading.value}
             // @ts-ignore
             rowKey={(row) => row.id}
             columns={columns.value}
+            data={data.value}
             // @ts-ignore
             pagination={pagination.value}
+            onUpdatePage={handleUpatePage}
+            onUpdatePageSize={handleUpatePageSize}
             class="flex-1 mt-16px h-0"
             {...restAttrs.value}
           />

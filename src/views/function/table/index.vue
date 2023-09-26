@@ -2,10 +2,12 @@
   <pro-table
     ref="tableRef"
     :columns="columns"
-    :data="tableData"
-    :loading="loading"
-    :pagination="pagination"
-    @search="fetch"
+    :pagination="{
+      page: 1,
+      pageSize: 30,
+      pageSizes: [10, 20, 30, 50, 100]
+    }"
+    :request="methodRequest"
   />
 </template>
 
@@ -62,21 +64,8 @@ const columns = ref<ProTableColumn<RowData>[]>([
   { title: '备注', key: 'remark', hideInSearch: true }
 ])
 
-const loading = ref(false)
-const pagination = ref({
-  page: 1,
-  pageSize: 30,
-  itemCount: 0,
-  pageSizes: [10, 20, 30, 50, 100]
-})
-
-const tableData = ref<RowData[]>([])
-
-const fetch = async (params: FetchListParams) => {
-  loading.value = true
+const methodRequest = async (params: FetchListParams) => {
   const { total, list } = (await fetchList(params)) ?? {}
-  pagination.value.itemCount = total ?? 0
-  tableData.value = list ?? []
-  loading.value = false
+  return { itemCount: total, data: list }
 }
 </script>
