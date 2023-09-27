@@ -1,14 +1,5 @@
 import { computed, defineComponent, ref, type PropType, type DefineComponent } from 'vue'
-import {
-  type PaginationProps,
-  NButton,
-  NCard,
-  NDataTable,
-  NH4,
-  NSpace,
-  NTooltip,
-  NDropdown
-} from 'naive-ui'
+import { type PaginationProps, NButton, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type {
@@ -19,9 +10,9 @@ import type {
   TablePagination,
   TableSize
 } from './typings'
-import { tableExcludeAttrKeys, tableSizeOptions } from './constants'
+import { tableExcludeAttrKeys } from './constants'
 import { filterSearchColumns, filterTableColumns } from './utils'
-import { IconSize, IconRefresh, IconSetting } from './icons'
+import { ColumnSettings, Refresh, SwitchSize } from './toolbar'
 
 type ExposedMethods = SearchExposedMethods & {
   reload: () => void
@@ -104,7 +95,7 @@ const ProTable = defineComponent({
     const searchColumns = computed(() => filterSearchColumns(props.columns))
 
     const tableSize = ref<TableSize>(props.defaultTableSize ?? 'medium')
-    const handleTableSizeSelect = (size: TableSize) => {
+    const handleUpdateTableSize = (size: TableSize) => {
       tableSize.value = size
     }
 
@@ -240,44 +231,9 @@ const ProTable = defineComponent({
             <NH4 class="m-0">{props.headerTitle}</NH4>
             <NSpace class="items-center" wrapItem={false}>
               <NButton type="primary">新 建</NButton>
-              <NTooltip>
-                {{
-                  default: () => '刷新',
-                  trigger: () => (
-                    <NButton text onClick={reload}>
-                      <IconRefresh class="font-size-18px cursor-pointer" />
-                    </NButton>
-                  )
-                }}
-              </NTooltip>
-              <NDropdown
-                trigger="click"
-                show-arrow
-                value={tableSize.value}
-                options={tableSizeOptions}
-                onSelect={handleTableSizeSelect}
-              >
-                <NTooltip>
-                  {{
-                    default: () => '密度',
-                    trigger: () => (
-                      <NButton text>
-                        <IconSize class="font-size-18px cursor-pointer" />
-                      </NButton>
-                    )
-                  }}
-                </NTooltip>
-              </NDropdown>
-              <NTooltip>
-                {{
-                  default: () => '列设置',
-                  trigger: () => (
-                    <NButton text>
-                      <IconSetting class="font-size-18px cursor-pointer" />
-                    </NButton>
-                  )
-                }}
-              </NTooltip>
+              <Refresh onRefresh={reload} />
+              <SwitchSize size={tableSize.value} onUpdateSize={handleUpdateTableSize} />
+              <ColumnSettings />
             </NSpace>
           </NSpace>
           {/* @ts-ignore */}
