@@ -48,14 +48,20 @@ export default defineComponent({
             <NScrollbar style={{ maxHeight: '300px' }}>
               <NCheckboxGroup class="py-8px">
                 <NSpace vertical size={3} wrapItem={false}>
-                  {props.columns.map(({ key, label }) => (
+                  {props.columns.map((column) => (
                     <NSpace
                       wrapItem={false}
                       align="center"
                       class="px-16px py-4px hover:bg-primary_1 cursor-pointer"
                     >
                       <IconDrag class="flex-shrink-0 font-size-18px" />
-                      <NCheckbox value={key} label={label} class="flex-1 w-0" />
+                      <NCheckbox value={column.key} class="flex-1 w-0">
+                        {typeof column.label === 'function'
+                          ? column.label(column)
+                          : column.renderSettingLabel
+                          ? column.renderSettingLabel(column.label)
+                          : column.label}
+                      </NCheckbox>
                     </NSpace>
                   ))}
                 </NSpace>

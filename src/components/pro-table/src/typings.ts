@@ -46,7 +46,7 @@ type FieldColumn =
 
 export type SearchColumn = FieldColumn & {
   key: DataTableColumnKey
-  label?: string
+  label?: string | ((column: SearchColumn) => VNodeChild)
   searchSpan?: 1 | 2 | 3 | 4
   searchDefaultValue?: unknown
   renderSearchLabel?: (label?: string) => VNodeChild
@@ -55,13 +55,15 @@ export type SearchColumn = FieldColumn & {
 
 export type SettingColumn = {
   key: DataTableColumnKey
-  label?: string
+  label?: string | ((column: SettingColumn) => VNodeChild)
+  renderSettingLabel?: (label?: string) => VNodeChild
 }
 
 export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
 
 export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> &
-  Omit<SearchColumn, 'key' | 'label'> & {
+  Omit<SearchColumn, 'key' | 'label'> &
+  Omit<SettingColumn, 'key' | 'label'> & {
     hideInSearch?: boolean
     hideInTable?: boolean
   }

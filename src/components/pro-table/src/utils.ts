@@ -14,11 +14,11 @@ const SEARCH_SPECIFIC_KEYS: SearchSpecificKey[] = [
 
 export function filterSearchColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter(
-    (column) => !column.type && !column.hideInSearch && typeof column.title === 'string'
+    (column) => !column.type && !column.hideInSearch
   ) as (DataTableBaseColumn & Omit<SearchColumn, 'label'>)[]
 
   return _columns.map((column) => {
-    const result: SearchColumn = { key: column.key, label: column.title as string }
+    const result: SearchColumn = { key: column.key, label: column.title }
     for (const key of SEARCH_SPECIFIC_KEYS) {
       result[key] = column[key] as any
     }
@@ -26,15 +26,19 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
   })
 }
 
+type SettingSpecificKey = Exclude<keyof SettingColumn, 'key' | 'label'>
+
+const SETTING_SPECIFIC_KEYS: SettingSpecificKey[] = ['renderSettingLabel']
+
 export function filterSettingColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter(
-    (column) => !column.type && !column.hideInTable && typeof column.title === 'string'
-  ) as (DataTableBaseColumn & Omit<SearchColumn, 'label'>)[]
+    (column) => !column.type && !column.hideInTable
+  ) as (DataTableBaseColumn & Omit<SettingColumn, 'label'>)[]
 
   return _columns.map((column) => {
-    const result: SettingColumn = {
-      key: column.key,
-      label: column.title as string
+    const result: SettingColumn = { key: column.key, label: column.title }
+    for (const key of SETTING_SPECIFIC_KEYS) {
+      result[key] = column[key] as any
     }
     return result
   })
@@ -47,6 +51,9 @@ export function filterTableColumns(columns: ProTableColumn[]): TableColumn[] {
     delete _column.hideInSearch
     delete _column.hideInTable
     for (const key of SEARCH_SPECIFIC_KEYS) {
+      delete _column[key]
+    }
+    for (const key of SETTING_SPECIFIC_KEYS) {
       delete _column[key]
     }
     return _column
