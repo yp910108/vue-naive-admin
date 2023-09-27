@@ -1,5 +1,5 @@
-import ProTable from './main'
+import ProTable from './src'
 
 export default ProTable
 export { ProTable }
-export * from './typings'
+export * from './src/typings'

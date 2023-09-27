@@ -250,9 +250,9 @@ const ProTable = defineComponent({
                   )
                 }}
               </NTooltip>
-
               <NDropdown
                 trigger="click"
+                show-arrow
                 value={tableSize.value}
                 options={tableSizeOptions}
                 onSelect={handleTableSizeSelect}
@@ -268,7 +268,6 @@ const ProTable = defineComponent({
                   }}
                 </NTooltip>
               </NDropdown>
-
               <NTooltip>
                 {{
                   default: () => '列设置',
