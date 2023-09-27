@@ -44,6 +44,9 @@ dependencies:
   qs:
     specifier: 6.11.2
     version: 6.11.2
+  sortablejs:
+    specifier: 1.15.0
+    version: 1.15.0
   ua-parser-js:
     specifier: 1.0.35
     version: 1.0.35
@@ -82,6 +85,9 @@ devDependencies:
   '@types/qs':
     specifier: 6.9.7
     version: 6.9.7
+  '@types/sortablejs':
+    specifier: 1.15.3
+    version: 1.15.3
   '@types/ua-parser-js':
     specifier: 0.7.36
     version: 0.7.36
@@ -1965,6 +1971,10 @@ packages:
 
   /@types/semver@7.5.1:
     resolution: {integrity: sha512-cJRQXpObxfNKkFAZbJl2yjWtJCqELQIdShsogr1d2MilP8dKD9TE/nEKHkJgUNHdGKCQaf9HbIynuV2csLGVLg==}
+    dev: true
+
+  /@types/sortablejs@1.15.3:
+    resolution: {integrity: sha512-v+zh6TZP/cLeMUK0MDx1onp8e7Jk2/4iTQ7sb/n80rTAvBm14yJkpOEfJdrTCkHiF7IZbPjxGX2NRJfogRoYIg==}
     dev: true
 
   /@types/trusted-types@2.0.3:
@@ -5523,6 +5533,10 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
     dev: true
+
+  /sortablejs@1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
+    dev: false
 
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

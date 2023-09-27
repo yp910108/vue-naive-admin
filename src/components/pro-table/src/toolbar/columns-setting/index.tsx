@@ -1,4 +1,4 @@
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, nextTick, ref, type PropType } from 'vue'
 import {
   NButton,
   NCheckbox,
@@ -9,9 +9,11 @@ import {
   NText,
   NTooltip
 } from 'naive-ui'
+import Sortable from 'sortablejs'
 import type { SettingColumn } from '../../typings'
 import IconSetting from './icon-setting'
 import IconDrag from './icon-drag'
+import styles from './index.module.scss'
 
 export default defineComponent({
   props: {
@@ -21,17 +23,37 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const sortable = ref<Sortable>()
+    const sortRef = ref<InstanceType<typeof NSpace>>()
+
+    const handleUpdateShow = (newVal: boolean) => {
+      if (newVal) {
+        nextTick(() => {
+          if (sortable.value) sortable.value.destroy()
+          const el = sortRef.value?.$el
+          sortable.value = Sortable.create(el, {
+            animation: 200,
+            easing: 'linear',
+            onEnd: ({ oldIndex, newIndex }) => {
+              console.log(oldIndex, newIndex)
+            }
+          })
+        })
+      }
+    }
+
     return () => (
       <NPopover
         trigger="click"
         placement="bottom-end"
-        class="w-200px"
+        class={['w-200px', styles['pro-table-columns-setting']]}
         headerStyle={{
           display: 'flex',
           justifyContent: 'space-between',
           padding: '10px 16px'
         }}
         contentStyle={{ padding: 0 }}
+        onUpdateShow={handleUpdateShow}
       >
         {{
           header: () => [
@@ -47,7 +69,7 @@ export default defineComponent({
           default: () => (
             <NScrollbar style={{ maxHeight: '300px' }}>
               <NCheckboxGroup class="py-8px">
-                <NSpace vertical size={3} wrapItem={false}>
+                <NSpace ref={sortRef} vertical size={3} wrapItem={false}>
                   {props.columns.map((column) => (
                     <NSpace
                       wrapItem={false}

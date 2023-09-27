@@ -32,7 +32,7 @@ const SETTING_SPECIFIC_KEYS: SettingSpecificKey[] = ['renderSettingLabel']
 
 export function filterSettingColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter(
-    (column) => !column.type && !column.hideInTable
+    (column) => !column.type && !column.hideInTable && !column.fixed
   ) as (DataTableBaseColumn & Omit<SettingColumn, 'label'>)[]
 
   return _columns.map((column) => {
