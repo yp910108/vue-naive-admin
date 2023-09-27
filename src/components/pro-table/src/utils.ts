@@ -1,5 +1,5 @@
 import type { DataTableBaseColumn } from 'naive-ui'
-import type { ProTableColumn, SearchColumn, TableColumn } from './typings'
+import type { ProTableColumn, SearchColumn, SettingColumn, TableColumn } from './typings'
 
 type SearchSpecificKey = Exclude<keyof SearchColumn, 'key' | 'label'>
 
@@ -21,6 +21,20 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
     const result: SearchColumn = { key: column.key, label: column.title as string }
     for (const key of SEARCH_SPECIFIC_KEYS) {
       result[key] = column[key] as any
+    }
+    return result
+  })
+}
+
+export function filterSettingColumns(columns: ProTableColumn[]) {
+  const _columns = columns.filter(
+    (column) => !column.type && !column.hideInTable && typeof column.title === 'string'
+  ) as (DataTableBaseColumn & Omit<SearchColumn, 'label'>)[]
+
+  return _columns.map((column) => {
+    const result: SettingColumn = {
+      key: column.key,
+      label: column.title as string
     }
     return result
   })

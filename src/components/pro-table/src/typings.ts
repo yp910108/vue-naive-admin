@@ -53,6 +53,11 @@ export type SearchColumn = FieldColumn & {
   renderSearchField?: (form: any, key: DataTableColumnKey) => VNodeChild
 }
 
+export type SettingColumn = {
+  key: DataTableColumnKey
+  label?: string
+}
+
 export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
 
 export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> &

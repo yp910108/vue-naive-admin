@@ -11,8 +11,8 @@ import type {
   TableSize
 } from './typings'
 import { tableExcludeAttrKeys } from './constants'
-import { filterSearchColumns, filterTableColumns } from './utils'
-import { ColumnSettings, Refresh, SwitchSize } from './toolbar'
+import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
+import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 
 type ExposedMethods = SearchExposedMethods & {
   reload: () => void
@@ -98,6 +98,8 @@ const ProTable = defineComponent({
     const handleUpdateTableSize = (size: TableSize) => {
       tableSize.value = size
     }
+
+    const settingColumns = computed(() => filterSettingColumns(props.columns))
 
     const tableColumns = computed(() => {
       return filterTableColumns(props.columns).map((column) => {
@@ -218,22 +220,23 @@ const ProTable = defineComponent({
           </NCard>
         ) : undefined}
         <NCard
+          bordered={false}
           class="flex-1 h-0 shadow-sm"
           contentStyle={{ display: 'flex', flexDirection: 'column', height: 0 }}
-          bordered={false}
         >
           <NSpace
             size={20}
             wrapItem={false}
+            align="center"
             justify="space-between"
-            class="flex-shrink-0 items-center"
+            class="flex-shrink-0 "
           >
             <NH4 class="m-0">{props.headerTitle}</NH4>
-            <NSpace class="items-center" wrapItem={false}>
+            <NSpace wrapItem={false}>
               <NButton type="primary">新 建</NButton>
               <Refresh onRefresh={reload} />
               <SwitchSize size={tableSize.value} onUpdateSize={handleUpdateTableSize} />
-              <ColumnSettings />
+              <ColumnsSetting columns={settingColumns.value} />
             </NSpace>
           </NSpace>
           {/* @ts-ignore */}
