@@ -175,8 +175,12 @@ const Search = defineComponent({
           collapsedRows={collapsedRows.value}
         >
           {columns.value.map((column) => (
-            <NFormItemGi key={column.key} label={column.label} span={column.searchSpan}>
-              {renderField(form, column)}
+            <NFormItemGi key={column.key} span={column.searchSpan}>
+              {{
+                default: () => renderField(form, column),
+                label: () =>
+                  column.renderSearchLabel ? column.renderSearchLabel(column.label) : column.label
+              }}
             </NFormItemGi>
           ))}
           <NFormItemGi suffix span={1} class="pro-table-search__action">

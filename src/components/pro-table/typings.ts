@@ -48,7 +48,7 @@ export type SearchColumn = FieldColumn & {
   label?: string
   searchSpan?: 1 | 2 | 3 | 4
   searchDefaultValue?: unknown
-  renderSearchLabel?: (label: string) => VNodeChild
+  renderSearchLabel?: (label?: string) => VNodeChild
   renderSearchField?: (form: any, key: DataTableColumnKey) => VNodeChild
 }
 

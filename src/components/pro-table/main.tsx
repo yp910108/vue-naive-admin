@@ -32,6 +32,10 @@ const ProTable = defineComponent({
       type: Boolean as PropType<Boolean>,
       default: true
     },
+    headerTitle: {
+      type: String,
+      default: '查询表格'
+    },
     /**
      * 列、搜索表单配置相关
      * - searchSpan 搜索项占用的列
@@ -197,7 +201,7 @@ const ProTable = defineComponent({
             justify="space-between"
             class="flex-shrink-0 items-center"
           >
-            <NH4 class="m-0">查询表格</NH4>
+            <NH4 class="m-0">{props.headerTitle}</NH4>
             <NSpace class="items-center" wrapItem={false}>
               <NButton type="primary">新 建</NButton>
               <IconRefresh class="font-size-18px cursor-pointer" />
