@@ -1,18 +1,27 @@
-import { computed, defineComponent, ref, type PropType } from 'vue'
+import { computed, defineComponent, ref, type PropType, type DefineComponent } from 'vue'
 import {
+  type PaginationProps,
   NButton,
   NCard,
   NDataTable,
   NH4,
   NSpace,
-  type DataTableProps,
-  type PaginationProps
+  NTooltip,
+  NDropdown
 } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
-import type { ProTableColumn, TableColumn } from './typings'
+import type {
+  ProTableColumn,
+  TableAttrs,
+  TableColumn,
+  TableLoading,
+  TablePagination,
+  TableSize
+} from './typings'
+import { tableExcludeAttrKeys, tableSizeOptions } from './constants'
 import { filterSearchColumns, filterTableColumns } from './utils'
-import { IconColumnHeight, IconRefresh, IconSetting } from './icons'
+import { IconSize, IconRefresh, IconSetting } from './icons'
 
 type ExposedMethods = SearchExposedMethods & {
   reload: () => void
@@ -35,6 +44,24 @@ const ProTable = defineComponent({
     headerTitle: {
       type: String,
       default: '查询表格'
+    },
+    /**
+     * 表格默认大小
+     */
+    defaultTableSize: {
+      type: String as PropType<TableSize>
+    },
+    /**
+     * 表格默认 loading 状态
+     */
+    defaultLoading: {
+      type: Boolean as PropType<TableLoading>
+    },
+    /**
+     * 表格默认分页信息
+     */
+    defaultPagination: {
+      type: Object as PropType<TablePagination>
     },
     /**
      * 列、搜索表单配置相关
@@ -63,13 +90,23 @@ const ProTable = defineComponent({
     const wrapStyle = computed(() => attrs.style)
 
     const restAttrs = computed(() => {
-      const { class: _class, style: _style, pagination: _pagination, ...restAttrs } = attrs
-      return restAttrs
+      const result: Record<string, any> = {}
+      for (const key of Object.keys(attrs)) {
+        if (!tableExcludeAttrKeys.includes(key)) {
+          result[key] = attrs[key]
+        }
+      }
+      return result
     })
 
     const searchRef = ref<InstanceType<typeof Search>>()
 
     const searchColumns = computed(() => filterSearchColumns(props.columns))
+
+    const tableSize = ref<TableSize>(props.defaultTableSize ?? 'medium')
+    const handleTableSizeSelect = (size: TableSize) => {
+      tableSize.value = size
+    }
 
     const tableColumns = computed(() => {
       return filterTableColumns(props.columns).map((column) => {
@@ -82,10 +119,10 @@ const ProTable = defineComponent({
 
     const params = ref<any>({})
 
-    const loading = ref(false)
+    const loading = ref(props.defaultLoading ?? false)
 
     const mergePagination = () => {
-      const _pagination = (attrs as DataTableProps).pagination
+      const _pagination = props.defaultPagination
       const pagination: PaginationProps = {
         pageSlot: 7,
         page: 1,
@@ -103,7 +140,6 @@ const ProTable = defineComponent({
       }
       return typeof _pagination === 'boolean' ? _pagination : { ...pagination, ..._pagination }
     }
-
     const pagination = ref(mergePagination())
 
     const data = ref<any[]>([])
@@ -204,15 +240,52 @@ const ProTable = defineComponent({
             <NH4 class="m-0">{props.headerTitle}</NH4>
             <NSpace class="items-center" wrapItem={false}>
               <NButton type="primary">新 建</NButton>
-              <IconRefresh class="font-size-18px cursor-pointer" />
-              <IconColumnHeight class="font-size-18px cursor-pointer" />
-              <IconSetting class="font-size-18px cursor-pointer" />
+              <NTooltip>
+                {{
+                  default: () => '刷新',
+                  trigger: () => (
+                    <NButton text onClick={reload}>
+                      <IconRefresh class="font-size-18px cursor-pointer" />
+                    </NButton>
+                  )
+                }}
+              </NTooltip>
+
+              <NDropdown
+                trigger="click"
+                value={tableSize.value}
+                options={tableSizeOptions}
+                onSelect={handleTableSizeSelect}
+              >
+                <NTooltip>
+                  {{
+                    default: () => '密度',
+                    trigger: () => (
+                      <NButton text>
+                        <IconSize class="font-size-18px cursor-pointer" />
+                      </NButton>
+                    )
+                  }}
+                </NTooltip>
+              </NDropdown>
+
+              <NTooltip>
+                {{
+                  default: () => '列设置',
+                  trigger: () => (
+                    <NButton text>
+                      <IconSetting class="font-size-18px cursor-pointer" />
+                    </NButton>
+                  )
+                }}
+              </NTooltip>
             </NSpace>
           </NSpace>
           {/* @ts-ignore */}
           <NDataTable
             flexHeight
             remote
+            size={tableSize.value}
             loading={loading.value}
             // @ts-ignore
             rowKey={(row) => row.id}
@@ -231,4 +304,4 @@ const ProTable = defineComponent({
   }
 })
 
-export default ProTable as typeof ProTable & ProTableExpose & typeof NDataTable
+export default ProTable as typeof ProTable & ProTableExpose & DefineComponent<TableAttrs>

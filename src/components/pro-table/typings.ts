@@ -3,6 +3,7 @@ import type {
   CascaderOption,
   DataTableColumn,
   DataTableColumnKey,
+  DataTableProps,
   DatePickerProps,
   SelectOption,
   TreeSelectOption
@@ -59,3 +60,15 @@ export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> &
     hideInSearch?: boolean
     hideInTable?: boolean
   }
+
+export type TableSize = NonNullable<DataTableProps['size']>
+export type TablePagination = NonNullable<DataTableProps['pagination']>
+export type TableLoading = NonNullable<DataTableProps['loading']>
+
+export type TableExcludeAttrs = {
+  size: TableSize
+  pagination: TablePagination
+  loading: TableLoading
+}
+
+export type TableAttrs = Omit<DataTableProps, keyof TableExcludeAttrs>
