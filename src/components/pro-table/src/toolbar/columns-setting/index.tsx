@@ -54,9 +54,8 @@ export default defineComponent({
                 newIndex === oldIndex
               )
                 return
-              const columns = [...props.columns]
-              const newOrder = columns[newIndex].order
-              const oldOrder = columns[oldIndex].order
+              const newOrder = props.columns[newIndex].order
+              const oldOrder = props.columns[oldIndex].order
               props.onUpdateColumnsOrder(newOrder!, oldOrder!)
             }
           })
