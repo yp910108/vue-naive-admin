@@ -1,6 +1,6 @@
 import type { TableExcludeAttrs } from './typings'
 
-const TABLE_EXCLUDE_ATTRS: Record<keyof TableExcludeAttrs, undefined> = {
+const TABLE_EXCLUDE_ATTRS: Record<TableExcludeAttrs, undefined> = {
   size: undefined,
   loading: undefined,
   pagination: undefined

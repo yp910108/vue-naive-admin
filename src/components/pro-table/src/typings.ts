@@ -10,76 +10,89 @@ import type {
 } from 'naive-ui'
 
 export type DatePickerType = DatePickerProps['type']
-
-type InputColumn = {
+type CommonInputColumn = {
+  type?: 'input'
+  options?: never
   searchType?: 'input'
   searchOptions?: never
 }
-type InputNumberColumn = {
+type CommonInputNumberColumn = {
+  type?: 'input-number'
+  options?: never
   searchType?: 'input-number'
   searchOptions?: never
 }
-type SelectColumn = {
+type CommonSelectColumn = {
+  type?: 'select'
+  options?: SelectOption[]
   searchType?: 'select'
   searchOptions?: SelectOption[]
 }
-type TreeSelectColumn = {
+type CommonTreeSelectColumn = {
+  type?: 'tree-select'
+  options?: TreeSelectOption[]
   searchType?: 'tree-select'
   searchOptions?: TreeSelectOption[]
 }
-type CascaderColumn = {
+type CommonCascaderColumn = {
+  type?: 'cascader'
+  options?: CascaderOption[]
   searchType?: 'cascader'
   searchOptions?: CascaderOption[]
 }
-type DatePickerColumn = {
+type CommonDatePickerColumn = {
+  type?: DatePickerType
+  options?: never
   searchType?: DatePickerType
   searchOptions?: never
 }
 
 type FieldColumn =
-  | InputColumn
-  | InputNumberColumn
-  | SelectColumn
-  | TreeSelectColumn
-  | CascaderColumn
-  | DatePickerColumn
-
-export type SearchExcludeKey = 'key' | 'title'
-
+  | Pick<CommonInputColumn, 'type' | 'options'>
+  | Pick<CommonInputNumberColumn, 'type' | 'options'>
+  | Pick<CommonSelectColumn, 'type' | 'options'>
+  | Pick<CommonTreeSelectColumn, 'type' | 'options'>
+  | Pick<CommonCascaderColumn, 'type' | 'options'>
+  | Pick<CommonDatePickerColumn, 'type' | 'options'>
 export type SearchColumn = FieldColumn & {
   key: DataTableColumnKey
-  title?: string | ((column: SearchColumn) => VNodeChild)
-  searchSpan?: 1 | 2 | 3 | 4
-  searchDefaultValue?: unknown
-  renderSearchLabel?: (label?: string) => VNodeChild
-  renderSearchField?: (prams: any, key: DataTableColumnKey) => VNodeChild
+  label?: string | ((column: SearchColumn) => VNodeChild)
+  span?: 1 | 2 | 3 | 4
+  defaultValue?: unknown
+  renderLabel?: (label?: string) => VNodeChild
+  renderField?: (prams: any, key: DataTableColumnKey) => VNodeChild
 }
-
-export type SettingExcludeKey = 'key' | 'title'
 
 export type SettingColumn = {
   key: DataTableColumnKey
-  title?: string | ((column: SettingColumn) => VNodeChild)
-  renderSettingLabel?: (label?: string) => VNodeChild
+  label?: string | ((column: SettingColumn) => VNodeChild)
+  renderLabel?: (label?: string) => VNodeChild
 }
-
-export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
-
-export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> &
-  Omit<SearchColumn, SearchExcludeKey> &
-  Omit<SettingColumn, SettingExcludeKey> & {
-    hideInSearch?: boolean
-    hideInTable?: boolean
-  }
 
 export type TableSize = NonNullable<DataTableProps['size']>
 export type TablePagination = NonNullable<DataTableProps['pagination']>
 export type TableLoading = NonNullable<DataTableProps['loading']>
 
-export type TableExcludeAttrs = {
-  size: TableSize
-  pagination: TablePagination
-  loading: TableLoading
-}
+export type TableExcludeAttrs = 'size' | 'loading' | 'pagination'
 
-export type TableAttrs = Omit<DataTableProps, keyof TableExcludeAttrs>
+export type TableAttrs = Omit<DataTableProps, TableExcludeAttrs>
+
+export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
+
+type SearchFieldColumn =
+  | Pick<CommonInputColumn, 'searchType' | 'searchOptions'>
+  | Pick<CommonInputNumberColumn, 'searchType' | 'searchOptions'>
+  | Pick<CommonSelectColumn, 'searchType' | 'searchOptions'>
+  | Pick<CommonTreeSelectColumn, 'searchType' | 'searchOptions'>
+  | Pick<CommonCascaderColumn, 'searchType' | 'searchOptions'>
+  | Pick<CommonDatePickerColumn, 'searchType' | 'searchOptions'>
+export type ProTableColumnSpecific = SearchFieldColumn & {
+  searchSpan?: SearchColumn['span']
+  searchDefaultValue?: SearchColumn['defaultValue']
+  renderSearchLabel?: SearchColumn['renderLabel']
+  renderSearchField?: SearchColumn['renderField']
+  renderSettingLabel?: SettingColumn['renderLabel']
+  hideInSearch?: boolean
+  hideInTable?: boolean
+}
+export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> & ProTableColumnSpecific

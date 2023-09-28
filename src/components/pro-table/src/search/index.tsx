@@ -57,14 +57,11 @@ const Search = defineComponent({
       collapsedRows.value = width <= SIZE.s ? 2 : 1
     })
 
-    const renderField = (
-      form: Ref<any>,
-      { key, renderSearchField, searchType, searchOptions }: SearchColumn
-    ) => {
-      if (renderSearchField) {
-        return renderSearchField(form.value, key)
+    const renderField = (form: Ref<any>, { key, renderField, type, options }: SearchColumn) => {
+      if (renderField) {
+        return renderField(form.value, key)
       }
-      if (searchType === 'input') {
+      if (type === 'input') {
         return (
           <NInput
             value={form.value[key]}
@@ -72,7 +69,7 @@ const Search = defineComponent({
             onUpdateValue={(newVal) => (form.value[key] = newVal)}
           />
         )
-      } else if (searchType === 'input-number') {
+      } else if (type === 'input-number') {
         return (
           <NInputNumber
             value={form.value[key]}
@@ -80,43 +77,43 @@ const Search = defineComponent({
             onUpdateValue={(newVal) => (form.value[key] = newVal)}
           />
         )
-      } else if (searchType === 'select') {
+      } else if (type === 'select') {
         return (
           <NSelect
             value={form.value[key]}
             filterable
             clearable
-            options={searchOptions}
+            options={options}
             onUpdateValue={(newVal) => (form.value[key] = newVal)}
           />
         )
-      } else if (searchType === 'tree-select') {
+      } else if (type === 'tree-select') {
         return (
           <NTreeSelect
             value={form.value[key]}
             filterable
             clearable
             default-expand-all
-            options={searchOptions}
+            options={options}
             onUpdateValue={(newVal) => (form.value[key] = newVal)}
           />
         )
-      } else if (searchType === 'cascader') {
+      } else if (type === 'cascader') {
         return (
           <NCascader
             value={form.value[key]}
             filterable
             clearable
             check-strategy="child"
-            options={searchOptions}
+            options={options}
             onUpdateValue={(newVal) => (form.value[key] = newVal)}
           />
         )
-      } else if (DATE_PICKER_TYPES.includes(searchType)) {
+      } else if (DATE_PICKER_TYPES.includes(type)) {
         return (
           <NDatePicker
             formattedValue={form.value[key]}
-            type={searchType}
+            type={type}
             clearable
             onUpdateFormattedValue={(newVal) => (form.value[key] = newVal)}
           />
@@ -175,15 +172,15 @@ const Search = defineComponent({
           collapsedRows={collapsedRows.value}
         >
           {columns.value.map((column) => (
-            <NFormItemGi key={column.key} span={column.searchSpan}>
+            <NFormItemGi key={column.key} span={column.span}>
               {{
                 default: () => renderField(form, column),
                 label: () =>
-                  typeof column.title === 'function'
-                    ? column.title(column)
-                    : column.renderSearchLabel
-                    ? column.renderSearchLabel(column.title)
-                    : column.title
+                  typeof column.label === 'function'
+                    ? column.label(column)
+                    : column.renderLabel
+                    ? column.renderLabel(column.label)
+                    : column.label
               }}
             </NFormItemGi>
           ))}

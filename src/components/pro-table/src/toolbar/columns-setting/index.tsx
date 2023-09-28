@@ -78,11 +78,11 @@ export default defineComponent({
                     >
                       <IconDrag class="flex-shrink-0 font-size-18px" />
                       <NCheckbox value={column.key} class="flex-1 w-0">
-                        {typeof column.title === 'function'
-                          ? column.title(column)
-                          : column.renderSettingLabel
-                          ? column.renderSettingLabel(column.title)
-                          : column.title}
+                        {typeof column.label === 'function'
+                          ? column.label(column)
+                          : column.renderLabel
+                          ? column.renderLabel(column.label)
+                          : column.label}
                       </NCheckbox>
                     </NSpace>
                   ))}

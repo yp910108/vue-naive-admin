@@ -1,63 +1,61 @@
 import type {
   ProTableColumn,
+  ProTableColumnSpecific,
   SearchColumn,
-  SearchExcludeKey,
   SettingColumn,
-  SettingExcludeKey,
   TableColumn
 } from './typings'
 
-type SearchSpecificKey = Exclude<keyof SearchColumn, SearchExcludeKey>
-const SEARCH_SPECIFIC_KEY: Record<SearchSpecificKey, undefined> = {
+export function filterSearchColumns(columns: ProTableColumn[]) {
+  const _columns = columns.filter((column) => !column.type && !column.hideInSearch)
+  return _columns.map((column) => {
+    const result: SearchColumn = {
+      key: (column as any).key,
+      label: (column as any).title,
+      span: column.searchSpan,
+      type: column.searchType as any,
+      options: column.searchOptions,
+      defaultValue: column.searchDefaultValue,
+      renderLabel: column.renderSearchLabel,
+      renderField: column.renderSearchField
+    }
+    return result
+  })
+}
+
+export function filterSettingColumns(columns: ProTableColumn[]) {
+  const _columns = columns.filter((column) => !column.type && !column.hideInTable && !column.fixed)
+  return _columns.map((column) => {
+    const result: SettingColumn = {
+      key: (column as any).key,
+      label: (column as any).title,
+      renderLabel: column.renderSettingLabel
+    }
+    return result
+  })
+}
+
+type ProTableColumnSpecificKey = keyof ProTableColumnSpecific
+const PROTABLE_COLUMN_SPECIFIC: Record<ProTableColumnSpecificKey, undefined> = {
   searchSpan: undefined,
   searchType: undefined,
   searchOptions: undefined,
   searchDefaultValue: undefined,
   renderSearchLabel: undefined,
-  renderSearchField: undefined
+  renderSearchField: undefined,
+  renderSettingLabel: undefined,
+  hideInSearch: undefined,
+  hideInTable: undefined
 }
-const SEARCH_SPECIFIC_KEYS = Object.keys(SEARCH_SPECIFIC_KEY) as SearchSpecificKey[]
-export function filterSearchColumns(columns: ProTableColumn[]) {
-  const _columns = columns.filter((column) => !column.type && !column.hideInSearch) as any[]
-
-  return _columns.map((column) => {
-    const result: SearchColumn = { key: column.key, title: column.title }
-    for (const key of SEARCH_SPECIFIC_KEYS) {
-      result[key] = column[key] as any
-    }
-    return result
-  })
-}
-
-type SettingSpecificKey = Exclude<keyof SettingColumn, SettingExcludeKey>
-const SETTING_SPECIFIC_KEY: Record<SettingSpecificKey, undefined> = {
-  renderSettingLabel: undefined
-}
-const SETTING_SPECIFIC_KEYS = Object.keys(SETTING_SPECIFIC_KEY) as SettingSpecificKey[]
-export function filterSettingColumns(columns: ProTableColumn[]) {
-  const _columns = columns.filter(
-    (column) => !column.type && !column.hideInTable && !column.fixed
-  ) as any[]
-
-  return _columns.map((column) => {
-    const result: SettingColumn = { key: column.key, title: column.title }
-    for (const key of SETTING_SPECIFIC_KEYS) {
-      result[key] = column[key] as any
-    }
-    return result
-  })
-}
+const PROTABLE_COLUMN_SPECIFIC_KEYS = Object.keys(
+  PROTABLE_COLUMN_SPECIFIC
+) as ProTableColumnSpecificKey[]
 
 export function filterTableColumns(columns: ProTableColumn[]): TableColumn[] {
   const _columns = columns.filter((column) => !column.hideInTable)
   return _columns.map((column) => {
     const _column = { ...column }
-    delete _column.hideInSearch
-    delete _column.hideInTable
-    for (const key of SEARCH_SPECIFIC_KEYS) {
-      delete _column[key]
-    }
-    for (const key of SETTING_SPECIFIC_KEYS) {
+    for (const key of PROTABLE_COLUMN_SPECIFIC_KEYS) {
       delete _column[key]
     }
     return _column
