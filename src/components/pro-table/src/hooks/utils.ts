@@ -25,16 +25,18 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
 
 export function filterSettingColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter((column) => !column.type && !column.hideInTable && !column.fixed)
-  return _columns.map((column) => {
-    const result: SettingColumn = {
-      key: (column as any).key,
-      label: (column as any).title,
-      visible: column.visible,
-      order: column.order,
-      renderLabel: column.renderSettingLabel
-    }
-    return result
-  })
+  return _columns
+    .map((column) => {
+      const result: SettingColumn = {
+        key: (column as any).key,
+        label: (column as any).title,
+        visible: column.visible,
+        order: column.order,
+        renderLabel: column.renderSettingLabel
+      }
+      return result
+    })
+    .sort((a, b) => a.order! - b.order!)
 }
 
 type ProTableColumnSpecificKey = keyof ProTableColumnSpecific

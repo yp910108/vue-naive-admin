@@ -29,6 +29,10 @@ export default defineComponent({
     onUpdateColumnsOrder: {
       type: Function as PropType<(newOrder: number, oldOrder: number) => void>,
       required: true
+    },
+    onResetColumns: {
+      type: Function as PropType<() => void>,
+      required: true
     }
   },
   setup(props) {
@@ -50,7 +54,7 @@ export default defineComponent({
                 newIndex === oldIndex
               )
                 return
-              const columns = [...props.columns].sort((a, b) => a.order! - b.order!)
+              const columns = [...props.columns]
               const newOrder = columns[newIndex].order
               const oldOrder = columns[oldIndex].order
               props.onUpdateColumnsOrder(newOrder!, oldOrder!)
@@ -100,7 +104,7 @@ export default defineComponent({
                 列展示/排序
               </NText>
             </NCheckbox>,
-            <NButton type="primary" text>
+            <NButton type="primary" text onClick={props.onResetColumns}>
               重置
             </NButton>
           ],
@@ -114,6 +118,7 @@ export default defineComponent({
                 <NSpace ref={sortRef} vertical size={3} wrapItem={false}>
                   {props.columns.map((column) => (
                     <NSpace
+                      key={column.key}
                       wrapItem={false}
                       align="center"
                       class="px-16px py-4px hover:bg-primary_1 cursor-pointer"

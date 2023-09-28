@@ -81,7 +81,8 @@ const ProTable = defineComponent({
       settingColumns,
       tableColumns,
       updateColumnsVisible,
-      updateColumnsOrder
+      updateColumnsOrder,
+      resetColumns
     } = useColumns(columns)
 
     const wrapClassName = computed(() => attrs.class)
@@ -235,6 +236,7 @@ const ProTable = defineComponent({
                 columns={settingColumns.value}
                 onUpdateColumnsVisible={updateColumnsVisible}
                 onUpdateColumnsOrder={updateColumnsOrder}
+                onResetColumns={resetColumns}
               />
             </NSpace>
           </NSpace>

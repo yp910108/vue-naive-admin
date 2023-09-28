@@ -51,5 +51,16 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
     currentColumn!.order = newOrder
   }
 
-  return { searchColumns, settingColumns, tableColumns, updateColumnsVisible, updateColumnsOrder }
+  const resetColumns = () => {
+    columns.value = getColumns(originColumns.value)
+  }
+
+  return {
+    searchColumns,
+    settingColumns,
+    tableColumns,
+    updateColumnsVisible,
+    updateColumnsOrder,
+    resetColumns
+  }
 }
