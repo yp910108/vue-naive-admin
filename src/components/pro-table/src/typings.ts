@@ -56,7 +56,7 @@ type FieldColumn =
   | Pick<CommonDatePickerColumn, 'type' | 'options'>
 export type SearchColumn = FieldColumn & {
   key: DataTableColumnKey
-  label?: string | ((column: SearchColumn) => VNodeChild)
+  label?: string | (() => VNodeChild)
   span?: 1 | 2 | 3 | 4
   defaultValue?: unknown
   renderLabel?: (label?: string) => VNodeChild
@@ -65,7 +65,9 @@ export type SearchColumn = FieldColumn & {
 
 export type SettingColumn = {
   key: DataTableColumnKey
-  label?: string | ((column: SettingColumn) => VNodeChild)
+  label?: string | (() => VNodeChild)
+  visible?: boolean
+  order?: number
   renderLabel?: (label?: string) => VNodeChild
 }
 
@@ -77,7 +79,10 @@ export type TableExcludeAttrs = 'size' | 'loading' | 'pagination'
 
 export type TableAttrs = Omit<DataTableProps, TableExcludeAttrs>
 
-export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
+export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T> & {
+  visible?: boolean
+  order?: number
+}
 
 type SearchFieldColumn =
   | Pick<CommonInputColumn, 'searchType' | 'searchOptions'>

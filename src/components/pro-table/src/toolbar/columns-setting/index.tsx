@@ -1,4 +1,4 @@
-import { defineComponent, nextTick, ref, type PropType } from 'vue'
+import { defineComponent, computed, nextTick, ref, type PropType } from 'vue'
 import {
   NButton,
   NCheckbox,
@@ -7,7 +7,8 @@ import {
   NScrollbar,
   NSpace,
   NText,
-  NTooltip
+  NTooltip,
+  type DataTableColumnKey
 } from 'naive-ui'
 import Sortable from 'sortablejs'
 import type { SettingColumn } from '../../typings'
@@ -19,6 +20,14 @@ export default defineComponent({
   props: {
     columns: {
       type: Array as PropType<SettingColumn[]>,
+      required: true
+    },
+    onUpdateColumnsVisible: {
+      type: Function as PropType<(keys: DataTableColumnKey[]) => void>,
+      required: true
+    },
+    onUpdateColumnsOrder: {
+      type: Function as PropType<(newOrder: number, oldOrder: number) => void>,
       required: true
     }
   },
@@ -35,10 +44,35 @@ export default defineComponent({
             animation: 200,
             easing: 'linear',
             onEnd: ({ oldIndex, newIndex }) => {
-              console.log(oldIndex, newIndex)
+              if (
+                typeof oldIndex === 'undefined' ||
+                typeof newIndex === 'undefined' ||
+                newIndex === oldIndex
+              )
+                return
+              const columns = [...props.columns].sort((a, b) => a.order! - b.order!)
+              const newOrder = columns[newIndex].order
+              const oldOrder = columns[oldIndex].order
+              props.onUpdateColumnsOrder(newOrder!, oldOrder!)
             }
           })
         })
+      }
+    }
+
+    const checked = computed(() => {
+      const visibleColumns = props.columns.filter(({ visible }) => visible)
+      return visibleColumns.map(({ key }) => key)
+    })
+
+    const checkedAll = computed(() => checked.value.length === props.columns.length)
+    const checkAllIndeterminate = computed(() => !checkedAll.value && !!checked.value.length)
+    const handleUpdateCheckedAll = (checked: boolean) => {
+      if (checked) {
+        const keys = props.columns.map(({ key }) => key)
+        props.onUpdateColumnsVisible(keys)
+      } else {
+        props.onUpdateColumnsVisible([])
       }
     }
 
@@ -57,7 +91,11 @@ export default defineComponent({
       >
         {{
           header: () => [
-            <NCheckbox>
+            <NCheckbox
+              checked={checkedAll.value}
+              indeterminate={checkAllIndeterminate.value}
+              onUpdateChecked={handleUpdateCheckedAll}
+            >
               <NText strong depth="1">
                 列展示/排序
               </NText>
@@ -68,7 +106,11 @@ export default defineComponent({
           ],
           default: () => (
             <NScrollbar style={{ maxHeight: '300px' }}>
-              <NCheckboxGroup class="py-8px">
+              <NCheckboxGroup
+                value={checked.value}
+                class="py-8px"
+                onUpdateValue={props.onUpdateColumnsVisible}
+              >
                 <NSpace ref={sortRef} vertical size={3} wrapItem={false}>
                   {props.columns.map((column) => (
                     <NSpace
@@ -79,7 +121,7 @@ export default defineComponent({
                       <IconDrag class="flex-shrink-0 font-size-18px" />
                       <NCheckbox value={column.key} class="flex-1 w-0">
                         {typeof column.label === 'function'
-                          ? column.label(column)
+                          ? column.label()
                           : column.renderLabel
                           ? column.renderLabel(column.label)
                           : column.label}

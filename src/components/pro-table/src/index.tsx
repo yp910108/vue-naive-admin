@@ -76,7 +76,13 @@ const ProTable = defineComponent({
   },
   setup(props, { attrs, expose }) {
     const columns = toRef(props, 'columns')
-    const { searchColumns, settingColumns, tableColumns } = useColumns(columns)
+    const {
+      searchColumns,
+      settingColumns,
+      tableColumns,
+      updateColumnsVisible,
+      updateColumnsOrder
+    } = useColumns(columns)
 
     const wrapClassName = computed(() => attrs.class)
 
@@ -225,7 +231,11 @@ const ProTable = defineComponent({
               <NButton type="primary">新 建</NButton>
               <Refresh onRefresh={reload} />
               <SwitchSize size={tableSize.value} onUpdateSize={handleUpdateTableSize} />
-              <ColumnsSetting columns={settingColumns.value} />
+              <ColumnsSetting
+                columns={settingColumns.value}
+                onUpdateColumnsVisible={updateColumnsVisible}
+                onUpdateColumnsOrder={updateColumnsOrder}
+              />
             </NSpace>
           </NSpace>
           {/* @ts-ignore */}

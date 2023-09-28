@@ -29,6 +29,8 @@ const columns = ref<ProTableColumn<RowData>[]>([
   {
     key: 'name',
     title: '用户姓名',
+    width: 100,
+    fixed: 'left',
     renderSearchLabel: (label) => [
       label,
       h(NTooltip, null, {

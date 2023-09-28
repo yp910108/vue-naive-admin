@@ -177,7 +177,7 @@ const Search = defineComponent({
                 default: () => renderField(form, column),
                 label: () =>
                   typeof column.label === 'function'
-                    ? column.label(column)
+                    ? column.label()
                     : column.renderLabel
                     ? column.renderLabel(column.label)
                     : column.label
