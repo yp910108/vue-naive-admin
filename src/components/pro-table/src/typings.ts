@@ -44,26 +44,30 @@ type FieldColumn =
   | CascaderColumn
   | DatePickerColumn
 
+export type SearchExcludeKey = 'key' | 'title'
+
 export type SearchColumn = FieldColumn & {
   key: DataTableColumnKey
-  label?: string | ((column: SearchColumn) => VNodeChild)
+  title?: string | ((column: SearchColumn) => VNodeChild)
   searchSpan?: 1 | 2 | 3 | 4
   searchDefaultValue?: unknown
   renderSearchLabel?: (label?: string) => VNodeChild
-  renderSearchField?: (form: any, key: DataTableColumnKey) => VNodeChild
+  renderSearchField?: (prams: any, key: DataTableColumnKey) => VNodeChild
 }
+
+export type SettingExcludeKey = 'key' | 'title'
 
 export type SettingColumn = {
   key: DataTableColumnKey
-  label?: string | ((column: SettingColumn) => VNodeChild)
+  title?: string | ((column: SettingColumn) => VNodeChild)
   renderSettingLabel?: (label?: string) => VNodeChild
 }
 
 export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T>
 
 export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> &
-  Omit<SearchColumn, 'key' | 'label'> &
-  Omit<SettingColumn, 'key' | 'label'> & {
+  Omit<SearchColumn, SearchExcludeKey> &
+  Omit<SettingColumn, SettingExcludeKey> & {
     hideInSearch?: boolean
     hideInTable?: boolean
   }

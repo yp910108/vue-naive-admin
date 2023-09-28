@@ -55,14 +55,14 @@ const columns = ref<ProTableColumn<RowData>[]>([
     title: '年龄',
     key: 'age',
     width: 80,
-    renderSearchField: (form, key) =>
+    renderSearchField: (params, key) =>
       h(NInputNumber, {
-        value: form[key],
+        value: params[key],
         clearable: true,
         min: 1,
         max: 100,
         precision: 0,
-        onUpdateValue: (newVal) => (form[key] = newVal)
+        onUpdateValue: (newVal) => (params[key] = newVal)
       })
   },
   { title: '出生日期', key: 'birthDate', width: 120, searchType: 'daterange' },

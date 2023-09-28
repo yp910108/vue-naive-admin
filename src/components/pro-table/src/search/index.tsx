@@ -179,11 +179,11 @@ const Search = defineComponent({
               {{
                 default: () => renderField(form, column),
                 label: () =>
-                  typeof column.label === 'function'
-                    ? column.label(column)
+                  typeof column.title === 'function'
+                    ? column.title(column)
                     : column.renderSearchLabel
-                    ? column.renderSearchLabel(column.label)
-                    : column.label
+                    ? column.renderSearchLabel(column.title)
+                    : column.title
               }}
             </NFormItemGi>
           ))}

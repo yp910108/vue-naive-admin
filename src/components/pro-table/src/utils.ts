@@ -1,7 +1,13 @@
-import type { DataTableBaseColumn } from 'naive-ui'
-import type { ProTableColumn, SearchColumn, SettingColumn, TableColumn } from './typings'
+import type {
+  ProTableColumn,
+  SearchColumn,
+  SearchExcludeKey,
+  SettingColumn,
+  SettingExcludeKey,
+  TableColumn
+} from './typings'
 
-type SearchSpecificKey = Exclude<keyof SearchColumn, 'key' | 'label'>
+type SearchSpecificKey = Exclude<keyof SearchColumn, SearchExcludeKey>
 const SEARCH_SPECIFIC_KEY: Record<SearchSpecificKey, undefined> = {
   searchSpan: undefined,
   searchType: undefined,
@@ -12,12 +18,10 @@ const SEARCH_SPECIFIC_KEY: Record<SearchSpecificKey, undefined> = {
 }
 const SEARCH_SPECIFIC_KEYS = Object.keys(SEARCH_SPECIFIC_KEY) as SearchSpecificKey[]
 export function filterSearchColumns(columns: ProTableColumn[]) {
-  const _columns = columns.filter(
-    (column) => !column.type && !column.hideInSearch
-  ) as (DataTableBaseColumn & Omit<SearchColumn, 'label'>)[]
+  const _columns = columns.filter((column) => !column.type && !column.hideInSearch) as any[]
 
   return _columns.map((column) => {
-    const result: SearchColumn = { key: column.key, label: column.title }
+    const result: SearchColumn = { key: column.key, title: column.title }
     for (const key of SEARCH_SPECIFIC_KEYS) {
       result[key] = column[key] as any
     }
@@ -25,7 +29,7 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
   })
 }
 
-type SettingSpecificKey = Exclude<keyof SettingColumn, 'key' | 'label'>
+type SettingSpecificKey = Exclude<keyof SettingColumn, SettingExcludeKey>
 const SETTING_SPECIFIC_KEY: Record<SettingSpecificKey, undefined> = {
   renderSettingLabel: undefined
 }
@@ -33,10 +37,10 @@ const SETTING_SPECIFIC_KEYS = Object.keys(SETTING_SPECIFIC_KEY) as SettingSpecif
 export function filterSettingColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter(
     (column) => !column.type && !column.hideInTable && !column.fixed
-  ) as (DataTableBaseColumn & Omit<SettingColumn, 'label'>)[]
+  ) as any[]
 
   return _columns.map((column) => {
-    const result: SettingColumn = { key: column.key, label: column.title }
+    const result: SettingColumn = { key: column.key, title: column.title }
     for (const key of SETTING_SPECIFIC_KEYS) {
       result[key] = column[key] as any
     }
