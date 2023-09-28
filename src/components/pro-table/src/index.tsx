@@ -10,7 +10,7 @@ import type {
   TablePagination,
   TableSize
 } from './typings'
-import { tableExcludeAttrKeys } from './constants'
+import { tableExcludeAttrsKeys } from './constants'
 import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 
@@ -83,7 +83,7 @@ const ProTable = defineComponent({
     const restAttrs = computed(() => {
       const result: Record<string, any> = {}
       for (const key of Object.keys(attrs)) {
-        if (!tableExcludeAttrKeys.includes(key)) {
+        if (!tableExcludeAttrsKeys.includes(key)) {
           result[key] = attrs[key]
         }
       }
