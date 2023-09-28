@@ -1,18 +1,17 @@
-import { computed, defineComponent, ref, type PropType, type DefineComponent } from 'vue'
+import { computed, defineComponent, ref, type PropType, type DefineComponent, toRef } from 'vue'
 import { type PaginationProps, NButton, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type {
   ProTableColumn,
   TableAttrs,
-  TableColumn,
   TableLoading,
   TablePagination,
   TableSize
 } from './typings'
 import { tableExcludeAttrsKeys } from './constants'
-import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
+import { useColumns } from './hooks'
 
 type ExposedMethods = SearchExposedMethods & {
   reload: () => void
@@ -76,6 +75,9 @@ const ProTable = defineComponent({
     }
   },
   setup(props, { attrs, expose }) {
+    const columns = toRef(props, 'columns')
+    const { searchColumns, settingColumns, tableColumns } = useColumns(columns)
+
     const wrapClassName = computed(() => attrs.class)
 
     const wrapStyle = computed(() => attrs.style)
@@ -92,23 +94,10 @@ const ProTable = defineComponent({
 
     const searchRef = ref<InstanceType<typeof Search>>()
 
-    const searchColumns = computed(() => filterSearchColumns(props.columns))
-
     const tableSize = ref<TableSize>(props.defaultTableSize ?? 'medium')
     const handleUpdateTableSize = (size: TableSize) => {
       tableSize.value = size
     }
-
-    const settingColumns = computed(() => filterSettingColumns(props.columns))
-
-    const tableColumns = computed(() => {
-      return filterTableColumns(props.columns).map((column) => {
-        const _ellipsis = column.ellipsis
-        const ellipsis =
-          typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
-        return { align: 'center', ...column, ellipsis } as TableColumn
-      })
-    })
 
     const params = ref<any>({})
 
