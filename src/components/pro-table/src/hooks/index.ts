@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import type { ProTableColumn, TableColumn } from './typings'
+import type { ProTableColumn, TableColumn } from '../typings'
 import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 
 export function useColumns(columns: Ref<ProTableColumn[]>) {
