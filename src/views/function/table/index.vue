@@ -1,11 +1,5 @@
 <template>
-  <pro-table
-    ref="tableRef"
-    :single-line="false"
-    :columns="columns"
-    :request="methodRequest"
-    :scroll-x="1200"
-  />
+  <pro-table ref="tableRef" :columns="columns" :request="methodRequest" :scroll-x="1200" />
 </template>
 
 <script setup lang="ts">

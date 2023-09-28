@@ -242,6 +242,7 @@ const ProTable = defineComponent({
           <NDataTable
             flexHeight
             remote
+            bordered={false}
             size={tableSize.value}
             loading={loading.value}
             // @ts-ignore
