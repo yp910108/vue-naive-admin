@@ -2,16 +2,15 @@ import type { DataTableBaseColumn } from 'naive-ui'
 import type { ProTableColumn, SearchColumn, SettingColumn, TableColumn } from './typings'
 
 type SearchSpecificKey = Exclude<keyof SearchColumn, 'key' | 'label'>
-
-const SEARCH_SPECIFIC_KEYS: SearchSpecificKey[] = [
-  'searchSpan',
-  'searchType',
-  'searchOptions',
-  'searchDefaultValue',
-  'renderSearchLabel',
-  'renderSearchField'
-]
-
+const SEARCH_SPECIFIC_KEY: Record<SearchSpecificKey, undefined> = {
+  searchSpan: undefined,
+  searchType: undefined,
+  searchOptions: undefined,
+  searchDefaultValue: undefined,
+  renderSearchLabel: undefined,
+  renderSearchField: undefined
+}
+const SEARCH_SPECIFIC_KEYS = Object.keys(SEARCH_SPECIFIC_KEY) as SearchSpecificKey[]
 export function filterSearchColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter(
     (column) => !column.type && !column.hideInSearch
@@ -27,9 +26,10 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
 }
 
 type SettingSpecificKey = Exclude<keyof SettingColumn, 'key' | 'label'>
-
-const SETTING_SPECIFIC_KEYS: SettingSpecificKey[] = ['renderSettingLabel']
-
+const SETTING_SPECIFIC_KEY: Record<SettingSpecificKey, undefined> = {
+  renderSettingLabel: undefined
+}
+const SETTING_SPECIFIC_KEYS = Object.keys(SETTING_SPECIFIC_KEY) as SettingSpecificKey[]
 export function filterSettingColumns(columns: ProTableColumn[]) {
   const _columns = columns.filter(
     (column) => !column.type && !column.hideInTable && !column.fixed
