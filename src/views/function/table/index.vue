@@ -14,12 +14,12 @@ import { NButton, NDivider, NInputNumber, NTooltip } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
 import type { FetchListParams, RowData } from './typings'
 import {
-  sex,
+  SEX,
   addressOptions,
   deptOptions,
   politicsOptions,
   sexOptions,
-  politics
+  POLITICS
 } from './constants'
 import { fetchList } from './service'
 import IconQuestion from './icon-question.vue'
@@ -49,7 +49,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
     searchType: 'select',
     searchOptions: sexOptions,
     searchDefaultValue: '1',
-    render: (row) => sex[row.sex]
+    render: (row) => SEX[row.sex]
   },
   {
     title: '年龄',
@@ -72,7 +72,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
     width: 100,
     searchType: 'select',
     searchOptions: politicsOptions,
-    render: (row) => politics[row.politics]
+    render: (row) => POLITICS[row.politics]
   },
   {
     title: '家庭住址',
