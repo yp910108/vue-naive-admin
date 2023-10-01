@@ -1,11 +1,17 @@
 <template>
-  <pro-table ref="tableRef" :columns="columns" :request="methodRequest" :scroll-x="1200" />
+  <pro-table
+    ref="tableRef"
+    :columns="columns"
+    :request="methodRequest"
+    :scroll-x="1200"
+    :render-search-options="renderSearchOptions"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NTooltip } from 'naive-ui'
-import { ProTable, type ProTableColumn } from '@/components'
+import { ProTable, type ProTableColumn, type RenderProTableSearchOptionsParams } from '@/components'
 import type { FetchListParams, RowData } from './typings'
 import {
   SEX,
@@ -111,6 +117,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
 ])
 
 const methodRequest = async (params: FetchListParams & { birthDate?: [string, string] }) => {
+  console.log(params)
   if (params.birthDate && params.birthDate.length) {
     params.startBirthDate = params.birthDate[0]
     params.endBirthDate = params.birthDate[1]
@@ -118,5 +125,20 @@ const methodRequest = async (params: FetchListParams & { birthDate?: [string, st
   }
   const { total, list } = (await fetchList(params)) ?? {}
   return { itemCount: total, data: list }
+}
+
+const renderSearchOptions = ({ vnodes }: RenderProTableSearchOptionsParams) => {
+  return [
+    vnodes.reverse(),
+    h(
+      NButton,
+      {
+        onClick: () => {
+          console.log('导出...')
+        }
+      },
+      { default: () => '导出' }
+    )
+  ]
 }
 </script>

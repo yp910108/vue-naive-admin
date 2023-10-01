@@ -1,20 +1,30 @@
-import { defineComponent, toRef, type PropType, ref, computed, type Ref, onMounted } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  toRef,
+  type PropType,
+  type Ref,
+  type VNodeChild
+} from 'vue'
 import {
   NButton,
   NCascader,
   NDatePicker,
   NForm,
-  NFormItemGi,
   NGrid,
   NInput,
   NInputNumber,
   NSelect,
   NSpace,
   NTreeSelect,
+  NGridItem,
+  NFormItem,
   type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
-import type { SearchColumn } from '../typings'
+import type { RenderSearchOptionsParams, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
 import IconDown from './icon-down'
@@ -30,11 +40,16 @@ interface SearchExpose {
   new (): ExposedMethods
 }
 
+type RenderSearchOptions = (searchOptionsParams: RenderSearchOptionsParams) => VNodeChild
+
 const Search = defineComponent({
   props: {
     columns: {
       type: Array as PropType<SearchColumn[]>,
       required: true
+    },
+    renderSearchOptions: {
+      type: Function as PropType<RenderSearchOptions>
     },
     onSearch: {
       type: Function as PropType<(form: any) => void>
@@ -172,37 +187,60 @@ const Search = defineComponent({
           collapsedRows={collapsedRows.value}
         >
           {columns.value.map((column) => (
-            <NFormItemGi key={column.key} span={column.span}>
-              {{
-                default: () => renderField(form, column),
-                label: () =>
-                  typeof column.label === 'function'
-                    ? column.label()
-                    : column.renderLabel
-                    ? column.renderLabel(column.label)
-                    : column.label
-              }}
-            </NFormItemGi>
-          ))}
-          <NFormItemGi suffix span={1} class="pro-table-search__action">
-            <NSpace wrapItem={false}>
-              <NButton onClick={handleReset}>重 置</NButton>
-              <NButton type="primary" onClick={handleSearch}>
-                查 询
-              </NButton>
-              <NButton
-                type="primary"
-                text
-                icon-placement="right"
-                onClick={() => (collapsed.value = !collapsed.value)}
-              >
+            <NGridItem key={column.key} span={column.span}>
+              <NFormItem>
                 {{
-                  default: () => (collapsed.value ? '展开' : '收起'),
-                  icon: () => <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
+                  default: () => renderField(form, column),
+                  label: () =>
+                    typeof column.label === 'function'
+                      ? column.label()
+                      : column.renderLabel
+                      ? column.renderLabel(column.label)
+                      : column.label
                 }}
-              </NButton>
-            </NSpace>
-          </NFormItemGi>
+              </NFormItem>
+            </NGridItem>
+          ))}
+          <NGridItem suffix span={1} class="pro-table-search__action">
+            {{
+              default: ({ overflow }: { overflow: boolean }) => {
+                return (
+                  <NFormItem>
+                    <NSpace wrapItem={false}>
+                      {props.renderSearchOptions
+                        ? props.renderSearchOptions({
+                            vnodes: [
+                              <NButton onClick={handleReset}>重 置</NButton>,
+                              <NButton type="primary" onClick={handleSearch}>
+                                查 询
+                              </NButton>
+                            ]
+                          })
+                        : [
+                            <NButton onClick={handleReset}>重 置</NButton>,
+                            <NButton type="primary" onClick={handleSearch}>
+                              查 询
+                            </NButton>
+                          ]}
+                      {overflow || !collapsed.value ? (
+                        <NButton
+                          type="primary"
+                          text
+                          icon-placement="right"
+                          onClick={() => (collapsed.value = !collapsed.value)}
+                        >
+                          {{
+                            default: () => (collapsed.value ? '展开' : '收起'),
+                            icon: () => <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
+                          }}
+                        </NButton>
+                      ) : undefined}
+                    </NSpace>
+                  </NFormItem>
+                )
+              }
+            }}
+          </NGridItem>
         </NGrid>
       </NForm>
     )

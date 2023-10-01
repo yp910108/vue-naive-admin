@@ -1,9 +1,20 @@
-import { computed, defineComponent, ref, type PropType, type DefineComponent, toRef } from 'vue'
+import {
+  computed,
+  defineComponent,
+  ref,
+  toRef,
+  onMounted,
+  type DefineComponent,
+  type PropType,
+  type VNodeChild
+} from 'vue'
 import { type PaginationProps, NButton, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type {
   ProTableColumn,
+  RenderSearchOptionsParams,
+  RenderSearchParams,
   TableAttrs,
   TableLoading,
   TablePagination,
@@ -21,15 +32,22 @@ interface ProTableExpose {
   new (): ExposedMethods
 }
 
+type Search = boolean | ((searchParams: RenderSearchParams) => VNodeChild)
+
+type RenderSearchOptions = (searchOptionsParams: RenderSearchOptionsParams) => VNodeChild
+
 const ProTable = defineComponent({
   inheritAttrs: false,
   props: {
     /**
      * 是否显示搜索栏
      */
-    showSearch: {
-      type: Boolean as PropType<Boolean>,
+    search: {
+      type: [Boolean, Function] as PropType<Search>,
       default: true
+    },
+    renderSearchOptions: {
+      type: Function as PropType<RenderSearchOptions>
     },
     headerTitle: {
       type: String,
@@ -51,7 +69,8 @@ const ProTable = defineComponent({
      * 表格默认分页信息
      */
     defaultPagination: {
-      type: Object as PropType<TablePagination>
+      type: [Boolean, Object] as PropType<TablePagination>,
+      default: () => ({})
     },
     /**
      * 列、搜索表单配置相关
@@ -174,7 +193,7 @@ const ProTable = defineComponent({
       fetch()
     }
 
-    const handleSearch = (_params: any) => {
+    const handleSearch = (_params?: any) => {
       setPage(1)
       params.value = transformObjectTruthy(_params)
       fetch()
@@ -202,6 +221,12 @@ const ProTable = defineComponent({
 
     expose(exposedMethods)
 
+    onMounted(() => {
+      if (!props.search || typeof props.search === 'function') {
+        handleSearch()
+      }
+    })
+
     return () => (
       <NSpace
         vertical
@@ -210,10 +235,19 @@ const ProTable = defineComponent({
         class={['h-full', wrapClassName.value]}
         style={wrapStyle.value}
       >
-        {props.showSearch && searchColumns.value.length ? (
-          <NCard bordered={false} class="flex-shrink-0 shadow-sm">
-            <Search ref={searchRef} columns={searchColumns.value} onSearch={handleSearch} />
-          </NCard>
+        {props.search ? (
+          typeof props.search === 'function' ? (
+            props.search({ onSearch: handleSearch })
+          ) : (
+            <NCard bordered={false} class="flex-shrink-0 shadow-sm">
+              <Search
+                ref={searchRef}
+                columns={searchColumns.value}
+                renderSearchOptions={props.renderSearchOptions}
+                onSearch={handleSearch}
+              />
+            </NCard>
+          )
         ) : undefined}
         <NCard
           bordered={false}

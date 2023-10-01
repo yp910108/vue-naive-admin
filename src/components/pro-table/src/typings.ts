@@ -9,6 +9,16 @@ import type {
   TreeSelectOption
 } from 'naive-ui'
 
+export type RenderSearchParams = {
+  onSearch: (params?: any) => void
+}
+export type RenderProTableSearchParams = RenderSearchParams
+
+export type RenderSearchOptionsParams = {
+  vnodes: [VNodeChild, VNodeChild]
+}
+export type RenderProTableSearchOptionsParams = RenderSearchOptionsParams
+
 export type DatePickerType = DatePickerProps['type']
 type CommonInputColumn = {
   type?: 'input'
