@@ -117,7 +117,6 @@ const columns = ref<ProTableColumn<RowData>[]>([
 ])
 
 const methodRequest = async (params: FetchListParams & { birthDate?: [string, string] }) => {
-  console.log(params)
   if (params.birthDate && params.birthDate.length) {
     params.startBirthDate = params.birthDate[0]
     params.endBirthDate = params.birthDate[1]
