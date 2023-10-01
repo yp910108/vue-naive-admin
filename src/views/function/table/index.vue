@@ -1,17 +1,18 @@
 <template>
   <pro-table
     ref="tableRef"
+    header-title="查询表格"
+    :render-toolbar="() => h(NButton, { type: 'primary' }, () => '新 建')"
     :columns="columns"
     :request="methodRequest"
     :scroll-x="1200"
-    :render-search-options="renderSearchOptions"
   />
 </template>
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NTooltip } from 'naive-ui'
-import { ProTable, type ProTableColumn, type RenderProTableSearchOptionsParams } from '@/components'
+import { ProTable, type ProTableColumn } from '@/components'
 import type { FetchListParams, RowData } from './typings'
 import {
   SEX,
@@ -124,20 +125,5 @@ const methodRequest = async (params: FetchListParams & { birthDate?: [string, st
   }
   const { total, list } = (await fetchList(params)) ?? {}
   return { itemCount: total, data: list }
-}
-
-const renderSearchOptions = ({ vnodes }: RenderProTableSearchOptionsParams) => {
-  return [
-    vnodes.reverse(),
-    h(
-      NButton,
-      {
-        onClick: () => {
-          console.log('导出...')
-        }
-      },
-      { default: () => '导出' }
-    )
-  ]
 }
 </script>

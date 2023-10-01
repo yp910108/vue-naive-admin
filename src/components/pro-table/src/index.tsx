@@ -50,8 +50,10 @@ const ProTable = defineComponent({
       type: Function as PropType<RenderSearchOptions>
     },
     headerTitle: {
-      type: String,
-      default: '查询表格'
+      type: [Boolean, String] as PropType<boolean | string>
+    },
+    renderToolbar: {
+      type: Function as PropType<() => VNodeChild>
     },
     /**
      * 表格默认大小
@@ -254,16 +256,12 @@ const ProTable = defineComponent({
           class="flex-1 h-0 shadow-sm"
           contentStyle={{ display: 'flex', flexDirection: 'column', height: 0 }}
         >
-          <NSpace
-            size={20}
-            wrapItem={false}
-            align="center"
-            justify="space-between"
-            class="flex-shrink-0 "
-          >
-            <NH4 class="m-0">{props.headerTitle}</NH4>
-            <NSpace wrapItem={false}>
-              <NButton type="primary">新 建</NButton>
+          <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0">
+            {props.headerTitle ? (
+              <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
+            ) : undefined}
+            <NSpace wrapItem={false} justify="end" class="flex-1 w-0">
+              {props.renderToolbar ? props.renderToolbar() : undefined}
               <Refresh onRefresh={reload} />
               <SwitchSize size={tableSize.value} onUpdateSize={handleUpdateTableSize} />
               <ColumnsSetting
