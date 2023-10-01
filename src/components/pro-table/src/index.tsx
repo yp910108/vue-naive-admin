@@ -8,7 +8,7 @@ import {
   type PropType,
   type VNodeChild
 } from 'vue'
-import { type PaginationProps, NButton, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
+import { type PaginationProps, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type {
