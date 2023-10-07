@@ -159,9 +159,9 @@ const Search = defineComponent({
     onMounted(handleSearch)
 
     const renderSearchAction = () => [
-      <NButton onClick={handleReset}>重 置</NButton>,
+      <NButton onClick={handleReset}>{$translate('proTable.searchAction.reset')}</NButton>,
       <NButton type="primary" onClick={handleSearch}>
-        查 询
+        {$translate('proTable.searchAction.query')}
       </NButton>
     ]
 
@@ -215,7 +215,10 @@ const Search = defineComponent({
                           onClick={() => (collapsed.value = !collapsed.value)}
                         >
                           {{
-                            default: () => (collapsed.value ? '展开' : '收起'),
+                            default: () =>
+                              collapsed.value
+                                ? $translate('proTable.searchAction.expand')
+                                : $translate('proTable.searchAction.collapse'),
                             icon: () => <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
                           }}
                         </NButton>

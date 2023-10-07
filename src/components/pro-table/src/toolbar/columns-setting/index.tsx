@@ -100,11 +100,11 @@ export default defineComponent({
               onUpdateChecked={handleUpdateCheckedAll}
             >
               <NText strong depth="1">
-                列展示/排序
+                {$translate('proTable.action.columnsSetting.popover.title')}
               </NText>
             </NCheckbox>,
             <NButton type="primary" text onClick={props.onResetColumns}>
-              重置
+              {$translate('proTable.action.columnsSetting.popover.action.reset')}
             </NButton>
           ],
           default: () => (
@@ -139,7 +139,7 @@ export default defineComponent({
           trigger: () => (
             <NTooltip>
               {{
-                default: () => '列设置',
+                default: () => $translate('proTable.action.columnsSetting.tooltip'),
                 trigger: () => (
                   <NButton text class="flex-shrink-0">
                     <IconSetting class="font-size-18px cursor-pointer" />

@@ -13,7 +13,7 @@ export default defineComponent({
     return () => (
       <NTooltip>
         {{
-          default: () => '刷新',
+          default: () => $translate('proTable.action.refresh'),
           trigger: () => (
             <NButton text class="flex-shrink-0" onClick={props.onRefresh}>
               <IconRefresh class="font-size-18px cursor-pointer" />

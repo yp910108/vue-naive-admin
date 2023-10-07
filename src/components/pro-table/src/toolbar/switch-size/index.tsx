@@ -26,7 +26,7 @@ export default defineComponent({
       >
         <NTooltip>
           {{
-            default: () => '密度',
+            default: () => $translate('proTable.action.size'),
             trigger: () => (
               <NButton text class="flex-shrink-0">
                 <IconSize class="font-size-18px cursor-pointer" />

@@ -167,11 +167,16 @@ const ProTable = defineComponent({
         pageSize: 20,
         itemCount: 0,
         prefix: ({ startIndex, endIndex, itemCount }) => {
-          const strs = [`总共 ${itemCount} 条`]
+          const strs = [$translate('proTable.pagination.total', { total: itemCount })]
           if (endIndex > startIndex) {
-            strs.unshift(`第 ${startIndex + 1}-${endIndex + 1} 条`)
+            strs.unshift(
+              $translate('proTable.pagination.startEnd', {
+                start: startIndex + 1,
+                end: endIndex + 1
+              })
+            )
           }
-          return strs.join('/')
+          return strs.join($translate('proTable.pagination.separator'))
         },
         showSizePicker: true,
         pageSizes: [10, 20, 50, 100]
