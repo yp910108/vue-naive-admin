@@ -15,7 +15,7 @@ export default defineComponent({
         {{
           default: () => '刷新',
           trigger: () => (
-            <NButton text onClick={props.onRefresh}>
+            <NButton text class="flex-shrink-0" onClick={props.onRefresh}>
               <IconRefresh class="font-size-18px cursor-pointer" />
             </NButton>
           )

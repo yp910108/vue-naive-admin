@@ -28,7 +28,7 @@ export default defineComponent({
           {{
             default: () => '密度',
             trigger: () => (
-              <NButton text>
+              <NButton text class="flex-shrink-0">
                 <IconSize class="font-size-18px cursor-pointer" />
               </NButton>
             )

@@ -14,10 +14,20 @@ export type RenderSearchParams = {
 }
 export type ProTableRenderSearchParams = RenderSearchParams
 
-export type RenderSearchOptionsParams = {
-  vnodes: [VNodeChild, VNodeChild]
+export type RenderSearchActionParams = {
+  vnodes: VNodeChild
 }
-export type ProTableRenderSearchOptionsParams = RenderSearchOptionsParams
+export type ProTableRenderSearchActionParams = RenderSearchActionParams
+
+export type RenderActionParams = {
+  vnodes: VNodeChild
+}
+export type ProTableRenderActionParams = RenderActionParams
+
+export type RenderContentParams = {
+  vnodes: VNodeChild
+}
+export type ProTableRenderContentParams = RenderContentParams
 
 export type DatePickerType = DatePickerProps['type']
 type CommonInputColumn = {

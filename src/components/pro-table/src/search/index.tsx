@@ -1,13 +1,4 @@
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  ref,
-  toRef,
-  type PropType,
-  type Ref,
-  type VNodeChild
-} from 'vue'
+import { computed, defineComponent, onMounted, ref, toRef, type PropType, type Ref } from 'vue'
 import {
   NButton,
   NCascader,
@@ -24,7 +15,8 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
-import type { RenderSearchOptionsParams, SearchColumn } from '../typings'
+import type { SearchColumn } from '../typings'
+import { searchAction } from '../props'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
 import IconDown from './icon-down'
@@ -40,17 +32,13 @@ interface SearchExpose {
   new (): ExposedMethods
 }
 
-type RenderSearchOptions = (searchOptionsParams: RenderSearchOptionsParams) => VNodeChild
-
 const Search = defineComponent({
   props: {
     columns: {
       type: Array as PropType<SearchColumn[]>,
       required: true
     },
-    renderSearchOptions: {
-      type: Function as PropType<RenderSearchOptions>
-    },
+    action: searchAction,
     onSearch: {
       type: Function as PropType<(form: any) => void>
     }
@@ -170,6 +158,13 @@ const Search = defineComponent({
 
     onMounted(handleSearch)
 
+    const renderSearchAction = () => [
+      <NButton onClick={handleReset}>重 置</NButton>,
+      <NButton type="primary" onClick={handleSearch}>
+        查 询
+      </NButton>
+    ]
+
     return () => (
       <NForm
         model={form}
@@ -207,21 +202,11 @@ const Search = defineComponent({
                 return (
                   <NFormItem>
                     <NSpace wrapItem={false}>
-                      {props.renderSearchOptions
-                        ? props.renderSearchOptions({
-                            vnodes: [
-                              <NButton onClick={handleReset}>重 置</NButton>,
-                              <NButton type="primary" onClick={handleSearch}>
-                                查 询
-                              </NButton>
-                            ]
-                          })
-                        : [
-                            <NButton onClick={handleReset}>重 置</NButton>,
-                            <NButton type="primary" onClick={handleSearch}>
-                              查 询
-                            </NButton>
-                          ]}
+                      {props.action
+                        ? typeof props.action === 'function'
+                          ? props.action({ vnodes: renderSearchAction() })
+                          : renderSearchAction()
+                        : undefined}
                       {overflow || !collapsed.value ? (
                         <NButton
                           type="primary"

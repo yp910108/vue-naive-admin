@@ -13,7 +13,8 @@ import { transformObjectTruthy } from '@/utils'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type {
   ProTableColumn,
-  RenderSearchOptionsParams,
+  RenderActionParams,
+  RenderContentParams,
   RenderSearchParams,
   TableAttrs,
   TableLoading,
@@ -21,8 +22,9 @@ import type {
   TableSize
 } from './typings'
 import { tableExcludeAttrsKeys } from './constants'
-import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 import { useColumns } from './hooks'
+import { searchAction } from './props'
+import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 
 type ExposedMethods = SearchExposedMethods & {
   reload: () => void
@@ -34,24 +36,46 @@ interface ProTableExpose {
 
 type Search = boolean | ((searchParams: RenderSearchParams) => VNodeChild)
 
-type RenderSearchOptions = (searchOptionsParams: RenderSearchOptionsParams) => VNodeChild
+type Action = boolean | ((actionParams: RenderActionParams) => VNodeChild)
+
+type RenderContent = (renderContentParams: RenderContentParams) => VNodeChild
 
 const ProTable = defineComponent({
   inheritAttrs: false,
   props: {
     /**
-     * 是否显示搜索栏
+     * 自定义渲染搜索栏，false 为不显示
      */
     search: {
       type: [Boolean, Function] as PropType<Search>,
       default: true
     },
-    renderSearchOptions: {
-      type: Function as PropType<RenderSearchOptions>
-    },
+    /**
+     * 自定义渲染搜索栏的操作按钮，false 为不显示
+     */
+    searchAction,
+    /**
+     * 表格头部标题
+     */
     headerTitle: {
       type: [Boolean, String] as PropType<boolean | string>
     },
+    /**
+     * 自定义渲染表格操作栏，false 为不显示
+     */
+    action: {
+      type: [Boolean, Function] as PropType<Action>,
+      default: true
+    },
+    /**
+     * 自定义渲染表格内容
+     */
+    renderContent: {
+      type: Function as PropType<RenderContent>
+    },
+    /**
+     * 自定义渲染 toolbar
+     */
     renderToolbar: {
       type: Function as PropType<() => VNodeChild>
     },
@@ -64,7 +88,7 @@ const ProTable = defineComponent({
     /**
      * 表格默认 loading 状态
      */
-    defaultLoading: {
+    defaultTableLoading: {
       type: Boolean as PropType<TableLoading>
     },
     /**
@@ -79,6 +103,10 @@ const ProTable = defineComponent({
      * - searchSpan 搜索项占用的列
      * - searchType 搜索项的组件类型
      * - searchOptions 搜索项组件对应的选项内容，当 searchType 为 select、tree-select、cascader 时有效
+     * - searchDefaultValue 搜索项默认的值
+     * - renderSearchLabel 自定义渲染搜索项的 label
+     * - renderSearchField 自定义渲染搜索项的 field
+     * - renderSettingLabel 自定义渲染列设置的 label
      * - hideInSearch 列是否在搜索栏中显示
      * - hideInTable 列是否在表格中显示
      */
@@ -129,7 +157,7 @@ const ProTable = defineComponent({
 
     const params = ref<any>({})
 
-    const loading = ref(props.defaultLoading ?? false)
+    const loading = ref(props.defaultTableLoading ?? false)
 
     const mergePagination = () => {
       const _pagination = props.defaultPagination
@@ -229,6 +257,37 @@ const ProTable = defineComponent({
       }
     })
 
+    const renderAction = () => [
+      <Refresh onRefresh={reload} />,
+      <SwitchSize size={tableSize.value} onUpdateSize={handleUpdateTableSize} />,
+      <ColumnsSetting
+        columns={settingColumns.value}
+        onUpdateColumnsVisible={updateColumnsVisible}
+        onUpdateColumnsOrder={updateColumnsOrder}
+        onResetColumns={resetColumns}
+      />
+    ]
+
+    const renderTable = () => (
+      // @ts-ignore
+      <NDataTable
+        flexHeight
+        remote
+        bordered={false}
+        size={tableSize.value}
+        loading={loading.value}
+        // @ts-ignore
+        rowKey={(row) => row.id}
+        columns={tableColumns.value}
+        data={data.value}
+        pagination={pagination.value}
+        onUpdatePage={handleUpatePage}
+        onUpdatePageSize={handleUpatePageSize}
+        class="flex-1 h-0"
+        {...restAttrs.value}
+      />
+    )
+
     return () => (
       <NSpace
         vertical
@@ -245,7 +304,7 @@ const ProTable = defineComponent({
               <Search
                 ref={searchRef}
                 columns={searchColumns.value}
-                renderSearchOptions={props.renderSearchOptions}
+                action={props.searchAction}
                 onSearch={handleSearch}
               />
             </NCard>
@@ -256,40 +315,20 @@ const ProTable = defineComponent({
           class="flex-1 h-0 shadow-sm"
           contentStyle={{ display: 'flex', flexDirection: 'column', height: 0 }}
         >
-          <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0">
+          <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0 mb-16px">
             {props.headerTitle ? (
               <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
             ) : undefined}
             <NSpace wrapItem={false} justify="end" class="flex-1 w-0">
               {props.renderToolbar ? props.renderToolbar() : undefined}
-              <Refresh onRefresh={reload} />
-              <SwitchSize size={tableSize.value} onUpdateSize={handleUpdateTableSize} />
-              <ColumnsSetting
-                columns={settingColumns.value}
-                onUpdateColumnsVisible={updateColumnsVisible}
-                onUpdateColumnsOrder={updateColumnsOrder}
-                onResetColumns={resetColumns}
-              />
+              {props.action
+                ? typeof props.action === 'function'
+                  ? props.action({ vnodes: renderAction() })
+                  : renderAction()
+                : undefined}
             </NSpace>
           </NSpace>
-          {/* @ts-ignore */}
-          <NDataTable
-            flexHeight
-            remote
-            bordered={false}
-            size={tableSize.value}
-            loading={loading.value}
-            // @ts-ignore
-            rowKey={(row) => row.id}
-            columns={tableColumns.value}
-            data={data.value}
-            // @ts-ignore
-            pagination={pagination.value}
-            onUpdatePage={handleUpatePage}
-            onUpdatePageSize={handleUpatePageSize}
-            class="flex-1 mt-16px h-0"
-            {...restAttrs.value}
-          />
+          {props.renderContent ? props.renderContent({ vnodes: renderTable() }) : renderTable()}
         </NCard>
       </NSpace>
     )

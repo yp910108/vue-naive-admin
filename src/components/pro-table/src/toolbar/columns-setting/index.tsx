@@ -141,7 +141,7 @@ export default defineComponent({
               {{
                 default: () => '列设置',
                 trigger: () => (
-                  <NButton text>
+                  <NButton text class="flex-shrink-0">
                     <IconSetting class="font-size-18px cursor-pointer" />
                   </NButton>
                 )
