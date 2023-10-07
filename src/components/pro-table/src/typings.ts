@@ -15,17 +15,17 @@ export type RenderSearchParams = {
 export type ProTableRenderSearchParams = RenderSearchParams
 
 export type RenderSearchActionParams = {
-  vnodes: VNodeChild
+  vnodes: VNodeChild[]
 }
 export type ProTableRenderSearchActionParams = RenderSearchActionParams
 
 export type RenderActionParams = {
-  vnodes: VNodeChild
+  vnodes: VNodeChild[]
 }
 export type ProTableRenderActionParams = RenderActionParams
 
 export type RenderContentParams = {
-  vnodes: VNodeChild
+  vnode: VNodeChild
 }
 export type ProTableRenderContentParams = RenderContentParams
 

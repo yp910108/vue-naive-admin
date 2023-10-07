@@ -315,20 +315,22 @@ const ProTable = defineComponent({
           class="flex-1 h-0 shadow-sm"
           contentStyle={{ display: 'flex', flexDirection: 'column', height: 0 }}
         >
-          <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0 mb-16px">
-            {props.headerTitle ? (
-              <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
-            ) : undefined}
-            <NSpace wrapItem={false} justify="end" class="flex-1 w-0">
-              {props.renderToolbar ? props.renderToolbar() : undefined}
-              {props.action
-                ? typeof props.action === 'function'
-                  ? props.action({ vnodes: renderAction() })
-                  : renderAction()
-                : undefined}
+          {props.headerTitle || props.renderToolbar || props.action ? (
+            <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0 mb-16px">
+              {props.headerTitle ? (
+                <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
+              ) : undefined}
+              <NSpace wrapItem={false} justify="end" class="flex-1 w-0">
+                {props.renderToolbar ? props.renderToolbar() : undefined}
+                {props.action
+                  ? typeof props.action === 'function'
+                    ? props.action({ vnodes: renderAction() })
+                    : renderAction()
+                  : undefined}
+              </NSpace>
             </NSpace>
-          </NSpace>
-          {props.renderContent ? props.renderContent({ vnodes: renderTable() }) : renderTable()}
+          ) : undefined}
+          {props.renderContent ? props.renderContent({ vnode: renderTable() }) : renderTable()}
         </NCard>
       </NSpace>
     )
