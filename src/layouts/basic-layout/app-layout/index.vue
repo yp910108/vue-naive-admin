@@ -105,7 +105,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { LAYOUT_MAX_Z_INDEX, LAYOUT_SCROLL_EL_ID } from './constants'
-import { createLayoutCssVars } from './helper'
+import { createLayoutCssVars } from './utils'
 import type { LayoutProps } from './typings'
 
 const props = withDefaults(defineProps<LayoutProps>(), {

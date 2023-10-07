@@ -1,6 +1,6 @@
 import { stringify } from 'qs'
-import type { ContentType } from '../typings'
 import { isFile } from '../../typeof'
+import type { ContentType } from '../typings'
 
 async function transformFile(formData: FormData, key: string, file: File[] | File) {
   if (Array.isArray(file)) {
