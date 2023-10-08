@@ -134,10 +134,6 @@ const ProTable = defineComponent({
       resetColumns
     } = useColumns(columns)
 
-    const wrapClassName = computed(() => attrs.class)
-
-    const wrapStyle = computed(() => attrs.style)
-
     const restAttrs = computed(() => {
       const result: Record<string, any> = {}
       for (const key of Object.keys(attrs)) {
@@ -298,8 +294,8 @@ const ProTable = defineComponent({
         vertical
         size={16}
         wrapItem={false}
-        class={['h-full', wrapClassName.value]}
-        style={wrapStyle.value}
+        class={['h-full', attrs.class]}
+        style={attrs.style}
       >
         {props.search ? (
           typeof props.search === 'function' ? (
@@ -317,7 +313,7 @@ const ProTable = defineComponent({
         ) : undefined}
         <NCard
           bordered={false}
-          class="flex-1 h-0 shadow-sm"
+          class="flex-grow h-0 shadow-sm"
           contentStyle={{ display: 'flex', flexDirection: 'column', height: 0 }}
         >
           {props.headerTitle || props.renderToolbar || props.action ? (
@@ -325,7 +321,7 @@ const ProTable = defineComponent({
               {props.headerTitle ? (
                 <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
               ) : undefined}
-              <NSpace wrapItem={false} justify="end" class="flex-1 w-0">
+              <NSpace wrapItem={false} justify="end" class="flex-grow w-0">
                 {props.renderToolbar ? props.renderToolbar() : undefined}
                 {props.action
                   ? typeof props.action === 'function'

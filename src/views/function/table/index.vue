@@ -1,19 +1,22 @@
 <template>
-  <pro-table
-    ref="tableRef"
-    header-title="查询表格"
-    :render-toolbar="() => h(NButton, { type: 'primary' }, () => '新 建')"
-    :columns="columns"
-    :request="methodRequest"
-    :scroll-x="1200"
-  />
+  <div>
+    <pro-table
+      ref="tableRef"
+      header-title="查询表格"
+      :render-toolbar="renderToolbar"
+      :columns="columns"
+      :request="methodRequest"
+      :scroll-x="1200"
+    />
+    <Operate ref="operateRef" @refresh="tableRef?.reload" />
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, h } from 'vue'
-import { NButton, NDivider, NGradientText, NInputNumber, NTooltip } from 'naive-ui'
+import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip } from 'naive-ui'
 import { ProTable, type ProTableColumn } from '@/components'
-import type { FetchListParams, RowData } from './typings'
+import type { FetchListParams, Row } from './typings'
 import {
   SEX,
   addressOptions,
@@ -22,10 +25,36 @@ import {
   sexOptions,
   POLITICS
 } from './constants'
-import { fetchList } from './service'
+import { fetchList, deleteItem } from './service'
 import IconQuestion from './icon-question.vue'
+import Operate from './operate.vue'
 
-const columns = ref<ProTableColumn<RowData>[]>([
+const tableRef = ref<InstanceType<typeof ProTable>>()
+
+const operateRef = ref<InstanceType<typeof Operate>>()
+
+const handleDelete = async ({ id }: Row) => {
+  try {
+    const instance = window.$message.loading('删除中，请稍后...', { duration: 0 })
+    await deleteItem(id!)
+    tableRef.value?.reload()
+    setTimeout(() => {
+      instance.destroy()
+      window.$message.success('删除成功')
+    }, 200)
+  } catch (e) {
+    // do nothing
+  }
+}
+
+const renderToolbar = () =>
+  h(
+    NButton,
+    { type: 'primary', onClick: operateRef.value?.show.bind(null, undefined) },
+    () => '新 建'
+  )
+
+const columns = ref<ProTableColumn<Row>[]>([
   { type: 'selection', fixed: 'left' },
   {
     key: 'name',
@@ -50,7 +79,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
     searchType: 'select',
     searchOptions: sexOptions,
     searchDefaultValue: '1',
-    render: (row) => SEX[row.sex]
+    render: (row) => SEX[row.sex!]
   },
   {
     key: 'age',
@@ -78,7 +107,7 @@ const columns = ref<ProTableColumn<RowData>[]>([
     width: 100,
     searchType: 'select',
     searchOptions: politicsOptions,
-    render: (row) => POLITICS[row.politics],
+    render: (row) => POLITICS[row.politics!],
     renderSettingLabel: (label) => h(NGradientText, { size: 14 }, { default: () => label })
   },
   {
@@ -109,10 +138,25 @@ const columns = ref<ProTableColumn<RowData>[]>([
     title: '操作',
     width: 110,
     fixed: 'right',
-    render: () => [
-      h(NButton, { type: 'primary', text: true }, { default: () => '修改' }),
+    render: (row) => [
+      h(
+        NButton,
+        {
+          type: 'primary',
+          text: true,
+          onClick: operateRef.value?.show.bind(null, row)
+        },
+        { default: () => '修改' }
+      ),
       h(NDivider, { vertical: true }),
-      h(NButton, { type: 'primary', text: true }, { default: () => '删除' })
+      h(
+        NPopconfirm,
+        { onPositiveClick: handleDelete.bind(null, row) },
+        {
+          default: () => '确认删除该条数据吗？',
+          trigger: () => h(NButton, { type: 'primary', text: true }, { default: () => '删除' })
+        }
+      )
     ]
   }
 ])

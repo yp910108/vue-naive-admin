@@ -7,13 +7,14 @@ export function setupDiscreteApis() {
   const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
 
   const configProviderProps = computed<ConfigProviderProps>(() => ({
+    inlineThemeDisabled: true,
     theme: naiveTheme.value,
     themeOverrides: naiveThemeOverrides.value
   }))
 
   const { message, notification, dialog, loadingBar } = createDiscreteApi(
     ['message', 'dialog', 'notification', 'loadingBar'],
-    { configProviderProps }
+    { configProviderProps, messageProviderProps: { containerStyle: { top: '35px' } } }
   )
 
   window.$message = message

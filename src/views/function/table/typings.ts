@@ -15,15 +15,23 @@ export interface FetchListParams {
   pageSize: number
 }
 
-export type RowData = {
-  id: string
-  label: string
-  sex: Sex
-  age: number
-  birthDate: string
-  politics: Politics
-  address: string
-  dept: string
-  leader: string
-  remark: string
+export type Row = {
+  id: number | null
+  name: string | null
+  sex: Sex | null
+  age: number | null
+  birthDate: string | null
+  politics: Politics | null
+  addressId: string | null
+  addressName: string | null
+  deptId: string | null
+  deptName: string | null
+  leaderId: string | null
+  leaderName: string | null
+  remark: string | null
 }
+
+export type Model = Pick<
+  Row,
+  'id' | 'name' | 'sex' | 'age' | 'birthDate' | 'politics' | 'addressId' | 'deptId' | 'remark'
+>

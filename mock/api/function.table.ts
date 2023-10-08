@@ -50,6 +50,68 @@ const apis: MockMethod[] = [
       response.data.list = _list
       return response
     }
+  },
+  {
+    url: '/mock/function/table/:id',
+    method: 'get',
+    response: () => {
+      const response = Mock.mock({
+        code: 200,
+        message: 'ok',
+        data: {
+          id: 1,
+          name: '江涛',
+          sex: '1',
+          age: 33,
+          birthDate: '1992-12-07',
+          politics: '2',
+          addressId: '1000202',
+          addressName: '北京市 / 西城区',
+          deptId: '1000103',
+          deptName: '开发三部',
+          leaderId: '2',
+          leaderName: '张三',
+          remark: '式等命安机文究不说真直它度命带统便。花与矿世土解白及太西来严。'
+        }
+      })
+      return response
+    }
+  },
+  {
+    url: '/mock/function/table',
+    method: 'post',
+    response: () => {
+      const response = Mock.mock({
+        code: 200,
+        message: 'ok',
+        data: null
+      })
+      return response
+    }
+  },
+  {
+    url: '/mock/function/table/:id',
+    method: 'patch',
+    response: () => {
+      const response = Mock.mock({
+        code: 200,
+        message: 'ok',
+        data: null
+      })
+      return response
+    }
+  },
+  {
+    url: '/mock/function/table/:id',
+    method: 'delete',
+    response: () => {
+      const response = Mock.mock({
+        code: 200,
+        message: 'ok',
+        data: null
+      })
+      return response
+    }
   }
 ]
 

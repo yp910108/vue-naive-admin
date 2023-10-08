@@ -123,7 +123,7 @@ export default defineComponent({
                       class="px-16px py-4px hover:bg-primary_1 cursor-pointer"
                     >
                       <IconDrag class="flex-shrink-0 font-size-18px" />
-                      <NCheckbox value={column.key} class="flex-1 w-0">
+                      <NCheckbox value={column.key} class="flex-grow w-0">
                         {typeof column.label === 'function'
                           ? column.label()
                           : column.renderLabel

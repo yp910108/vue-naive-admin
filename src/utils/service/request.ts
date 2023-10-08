@@ -2,7 +2,7 @@ import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import type { BackendConfig } from './typings'
 import CustomAxiosInstance from './instance'
 
-type RequestMethod = 'get' | 'post' | 'put' | 'delete'
+type RequestMethod = 'get' | 'post' | 'patch' | 'put' | 'delete'
 
 interface RequestParam {
   url: string
@@ -42,6 +42,10 @@ export function createRequest(
     return asyncRequest<T>({ url, method: 'post', data, config })
   }
 
+  function patch<T>(url: string, data?: any, config?: AxiosRequestConfig) {
+    return asyncRequest<T>({ url, method: 'patch', data, config })
+  }
+
   function put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
     return asyncRequest<T>({ url, method: 'put', data, config })
   }
@@ -50,5 +54,5 @@ export function createRequest(
     return asyncRequest<T>({ url, method: 'delete', config })
   }
 
-  return { get, post, put, delete: handleDelete }
+  return { get, post, patch, put, delete: handleDelete }
 }
