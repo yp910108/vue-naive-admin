@@ -16,6 +16,7 @@ import type {
   RenderActionParams,
   RenderContentParams,
   RenderSearchParams,
+  SearchAction,
   TableAttrs,
   TableLoading,
   TablePagination,
@@ -23,8 +24,8 @@ import type {
 } from './typings'
 import { tableExcludeAttrsKeys } from './constants'
 import { useColumns } from './hooks'
-import { searchAction } from './props'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
+import styles from './index.module.scss'
 
 type ExposedMethods = SearchExposedMethods & {
   reload: () => void
@@ -34,7 +35,13 @@ interface ProTableExpose {
   new (): ExposedMethods
 }
 
-type Search = boolean | ((searchParams: RenderSearchParams) => VNodeChild)
+type Search =
+  | boolean
+  | ((searchParams: RenderSearchParams) => VNodeChild)
+  | {
+      labelWidth?: string | number | 'auto'
+      action?: SearchAction
+    }
 
 type Action = boolean | ((actionParams: RenderActionParams) => VNodeChild)
 
@@ -45,15 +52,20 @@ const ProTable = defineComponent({
   props: {
     /**
      * 自定义渲染搜索栏，false 为不显示
+     * - labelWidth
+     * - action: 自定义渲染搜索栏的操作按钮，false 为不显示
      */
     search: {
-      type: [Boolean, Function] as PropType<Search>,
+      type: [Boolean, Function, Object] as PropType<Search>,
       default: true
     },
     /**
-     * 自定义渲染搜索栏的操作按钮，false 为不显示
+     * 查询条件和表格内容是否分段
      */
-    searchAction,
+    segmented: {
+      type: Boolean as PropType<boolean>,
+      default: true
+    },
     /**
      * 表格头部标题
      */
@@ -121,6 +133,9 @@ const ProTable = defineComponent({
           data?: any[]
         }>
       >
+    },
+    onAfterRequest: {
+      type: Function as PropType<(data: any[]) => void>
     }
   },
   setup(props, { attrs, expose }) {
@@ -199,6 +214,9 @@ const ProTable = defineComponent({
             pagination.value.itemCount = itemCount ?? 0
           }
           data.value = _data ?? []
+          if (props.onAfterRequest) {
+            props.onAfterRequest(data.value)
+          }
         } catch (e) {
           loading.value = false
         }
@@ -284,7 +302,7 @@ const ProTable = defineComponent({
         pagination={pagination.value}
         onUpdatePage={handleUpatePage}
         onUpdatePageSize={handleUpatePageSize}
-        class="flex-1 h-0"
+        class="flex-grow h-0"
         {...restAttrs.value}
       />
     )
@@ -292,20 +310,21 @@ const ProTable = defineComponent({
     return () => (
       <NSpace
         vertical
-        size={16}
+        size={props.segmented ? 16 : 0}
         wrapItem={false}
-        class={['h-full', attrs.class]}
+        class={['h-full', styles['pro-table'], attrs.class]}
         style={attrs.style}
       >
         {props.search ? (
           typeof props.search === 'function' ? (
             props.search({ onSearch: handleSearch })
           ) : (
-            <NCard bordered={false} class="flex-shrink-0 shadow-sm">
+            <NCard bordered={false} class="flex-shrink-0">
               <Search
                 ref={searchRef}
                 columns={searchColumns.value}
-                action={props.searchAction}
+                labelWidth={typeof props.search === 'object' ? props.search.labelWidth : undefined}
+                action={typeof props.search === 'object' ? props.search.action : undefined}
                 onSearch={handleSearch}
               />
             </NCard>
@@ -313,8 +332,13 @@ const ProTable = defineComponent({
         ) : undefined}
         <NCard
           bordered={false}
-          class="flex-grow h-0 shadow-sm"
-          contentStyle={{ display: 'flex', flexDirection: 'column', height: 0 }}
+          class="flex-grow h-0"
+          contentStyle={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: 0,
+            paddingTop: props.segmented ? '20px' : '10px'
+          }}
         >
           {props.headerTitle || props.renderToolbar || props.action ? (
             <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0 mb-16px">

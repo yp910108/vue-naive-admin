@@ -12,22 +12,20 @@ import type {
 export type RenderSearchParams = {
   onSearch: (params?: any) => void
 }
-export type ProTableRenderSearchParams = RenderSearchParams
 
 export type RenderSearchActionParams = {
   vnodes: VNodeChild[]
 }
-export type ProTableRenderSearchActionParams = RenderSearchActionParams
+
+export type SearchAction = boolean | ((actionParams: RenderSearchActionParams) => VNodeChild)
 
 export type RenderActionParams = {
   vnodes: VNodeChild[]
 }
-export type ProTableRenderActionParams = RenderActionParams
 
 export type RenderContentParams = {
   vnode: VNodeChild
 }
-export type ProTableRenderContentParams = RenderContentParams
 
 export type DatePickerType = DatePickerProps['type']
 type CommonInputColumn = {

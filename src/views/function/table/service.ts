@@ -1,6 +1,10 @@
 import { mockRequest } from '@/utils'
 import type { FetchListParams, Model, Row } from './typings'
 
+export function fetchUserList(params: FetchListParams) {
+  return mockRequest.get<{ total?: number; list?: Row[] }>('/function/user', { params })
+}
+
 export function fetchList(params: FetchListParams) {
   return mockRequest.get<{ total?: number; list?: Row[] }>('/function/table', { params })
 }

@@ -54,6 +54,14 @@
             default-expand-all
           />
         </n-form-item>
+        <n-form-item label="上级领导" path="leader">
+          <list-select
+            v-model:value="model.leader"
+            title="选择人员"
+            :columns="leaderColumns"
+            :request="leaderMethodRequest"
+          />
+        </n-form-item>
         <n-form-item label="备注" path="remark">
           <n-input v-model:value="model.remark" type="textarea" clearable :maxlength="2000" />
         </n-form-item>
@@ -71,12 +79,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, shallowRef } from 'vue'
-import type { FormInst, FormRules } from 'naive-ui'
+import { computed, h, ref, shallowRef } from 'vue'
+import { NInputNumber, type FormInst, type FormRules } from 'naive-ui'
 import { transformObjectTruthy } from '@/utils'
-import type { Model, Row } from './typings'
-import { addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
-import { fetchDetail, add, edit } from './service'
+import { ListSelect, type ProTableColumn } from '@/components'
+import type { BackendModel, FetchListParams, Model, Row } from './typings'
+import { SEX, addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
+import { fetchDetail, add, edit, fetchUserList } from './service'
 
 interface Emits {
   (e: 'refresh'): void
@@ -103,6 +112,7 @@ const defaultModel: Model = {
   politics: '3',
   addressId: null,
   deptId: null,
+  leader: null,
   remark: null
 }
 
@@ -121,6 +131,53 @@ const rules = ref<FormRules>({
   }
 })
 
+const leaderColumns = ref<ProTableColumn<Row>[]>([
+  { type: 'selection', multiple: false },
+  {
+    key: 'name',
+    title: '用户姓名',
+    width: 100
+  },
+  {
+    key: 'sex',
+    title: '用户性别',
+    width: 100,
+    searchType: 'select',
+    searchOptions: sexOptions,
+    render: (row) => SEX[row.sex!]
+  },
+  {
+    key: 'age',
+    title: '年龄',
+    width: 80,
+    renderSearchField: (params, key) =>
+      h(NInputNumber, {
+        value: params[key],
+        clearable: true,
+        min: 1,
+        max: 100,
+        precision: 0,
+        onUpdateValue: (newVal) => (params[key] = newVal)
+      })
+  },
+  {
+    key: 'birthDate',
+    title: '出生日期',
+    width: 120,
+    searchType: 'daterange'
+  }
+])
+
+const leaderMethodRequest = async (params: FetchListParams & { birthDate?: [string, string] }) => {
+  if (params.birthDate && params.birthDate.length) {
+    params.startBirthDate = params.birthDate[0]
+    params.endBirthDate = params.birthDate[1]
+    delete params.birthDate
+  }
+  const { total, list } = (await fetchUserList(params)) ?? {}
+  return { itemCount: total, data: list }
+}
+
 const setModel = async () => {
   try {
     spinning.value = true
@@ -132,6 +189,12 @@ const setModel = async () => {
       for (const key in model.value) {
         ;(model.value as any)[key] = (res as any)[key]
       }
+      if (res.leaderId && res.leaderName) {
+        model.value.leader = {
+          id: res.leaderId,
+          name: res.leaderName
+        }
+      }
     }
   } catch (e) {
     spinning.value = false
@@ -142,6 +205,11 @@ const handleSave = () => {
   formRef.value?.validate(async (errors) => {
     if (errors) return
     const params = transformObjectTruthy(model.value)
+    if (params?.leader) {
+      ;(params as BackendModel).leaderId = params.leader.id
+      ;(params as BackendModel).leaderName = params.leader.name
+      delete params.leader
+    }
     try {
       saveLoading.value = true
       if (isEdit.value) {

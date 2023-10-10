@@ -15,8 +15,7 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
-import type { SearchColumn } from '../typings'
-import { searchAction } from '../props'
+import type { SearchAction, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
 import IconDown from './icon-down'
@@ -38,7 +37,14 @@ const Search = defineComponent({
       type: Array as PropType<SearchColumn[]>,
       required: true
     },
-    action: searchAction,
+    labelWidth: {
+      type: [String, Number] as PropType<string | number | 'auto'>,
+      default: 105
+    },
+    action: {
+      type: [Boolean, Function] as PropType<SearchAction>,
+      default: true
+    },
     onSearch: {
       type: Function as PropType<(form: any) => void>
     }
@@ -169,7 +175,7 @@ const Search = defineComponent({
       <NForm
         model={form}
         labelPlacement="left"
-        labelWidth={105}
+        labelWidth={props.labelWidth}
         showFeedback={false}
         class={styles['pro-table-search']}
       >
