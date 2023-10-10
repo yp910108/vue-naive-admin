@@ -17,7 +17,7 @@ export const enUS = {
       githubSite: {
         tooltip: 'github'
       },
-      fullsSreen: {
+      fullSreen: {
         tooltip: 'full screen'
       },
       themeMode: {

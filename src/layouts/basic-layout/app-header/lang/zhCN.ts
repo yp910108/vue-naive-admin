@@ -17,7 +17,7 @@ export const zhCN = {
       githubSite: {
         tooltip: 'github'
       },
-      fullsSreen: {
+      fullSreen: {
         tooltip: '全屏'
       },
       themeMode: {
