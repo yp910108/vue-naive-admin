@@ -45,7 +45,6 @@ const menuStore = useMenuStore()
 const { theme } = storeToRefs(useThemeStore())
 
 const breadcrumbs = computed(() => {
-  // @ts-ignore
   return getBreadcrumbsNyRouteName(route.name as string, menuStore.menus)
 })
 

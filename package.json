@@ -7,7 +7,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --skipLibCheck",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
@@ -28,7 +28,7 @@
     "ua-parser-js": "1.0.35",
     "vfonts": "0.0.3",
     "vue": "3.3.4",
-    "vue-i18n": "9.2.2",
+    "vue-i18n": "9.5.0",
     "vue-router": "4.2.4"
   },
   "devDependencies": {

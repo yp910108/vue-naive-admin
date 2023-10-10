@@ -3,9 +3,6 @@
   "include": ["env.d.ts", "mock", "src/**/*"],
   "exclude": ["src/**/__tests__/*", "node_modules", "dist"],
   "compilerOptions": {
-    // hack for vue-i18n
-    "moduleResolution": "Node",
-    "skipLibCheck": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
