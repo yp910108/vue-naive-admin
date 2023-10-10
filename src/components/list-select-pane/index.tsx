@@ -1,8 +1,6 @@
 import { computed, defineComponent, ref, type PropType, type Ref } from 'vue'
-import { NButton, NModal, type DataTableColumnKey, NSpace } from 'naive-ui'
-import ProTable from '../../pro-table'
-import { modalExcludeAttrsKeys, proTableExcludeAttrsKeys } from './constants'
-import type { ModalAttrs } from './typings'
+import { NButton, NModal, type DataTableColumnKey, NSpace, type ModalProps } from 'naive-ui'
+import ProTable from '../pro-table'
 
 type Value = any | any[] | null
 
@@ -26,7 +24,7 @@ const ListSelectPane = defineComponent({
       default: '选择'
     },
     modalProps: {
-      type: Object as PropType<ModalAttrs>
+      type: Object as PropType<ModalProps>
     },
     valueField: {
       type: String as PropType<string>
@@ -61,29 +59,6 @@ const ListSelectPane = defineComponent({
         }
       }
     }
-
-    const restAttrs = computed(() => {
-      const result: Record<string, any> = {}
-      for (const key of Object.keys(attrs)) {
-        if (!proTableExcludeAttrsKeys.includes(key)) {
-          result[key] = attrs[key]
-        }
-      }
-      return result
-    })
-
-    const restModalAttrs = computed(() => {
-      const result: Record<string, unknown> = {}
-      const modalAttrs = props.modalProps as Record<string, any>
-      if (modalAttrs) {
-        for (const key of Object.keys(modalAttrs)) {
-          if (!modalExcludeAttrsKeys.includes(key)) {
-            result[key] = modalAttrs[key]
-          }
-        }
-      }
-      return result
-    })
 
     const confirmLoading = ref(false)
 
@@ -181,15 +156,15 @@ const ListSelectPane = defineComponent({
 
     return () => (
       <NModal
-        show={visible.value}
-        displayDirective="show"
         preset="card"
         title={props.title}
         maskClosable={false}
         style={{ width: '950px', height: '650px' }}
+        {...props.modalProps}
+        show={visible.value}
+        displayDirective="show"
         onUpdateShow={hide}
         onAfterLeave={handleAfterLeave}
-        {...restModalAttrs}
       >
         {{
           default: () => (
@@ -197,11 +172,11 @@ const ListSelectPane = defineComponent({
               ref={tableRef}
               segmented={false}
               action={false}
+              {...(attrs.value as any)}
               rowKey={(row) => row[rowKey.value]}
               checkedRowKeys={checkedRowKeys.value}
               onUpdateCheckedRowKeys={handleUpdateCheckedRowKeys}
               onAfterRequest={setCachedRows}
-              {...(restAttrs.value as any)}
             />
           ),
           footer: () => (

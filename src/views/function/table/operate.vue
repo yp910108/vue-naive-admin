@@ -4,67 +4,69 @@
     preset="card"
     :title="isEdit ? '修改用户' : '添加用户'"
     :mask-closable="false"
-    :style="{ width: '550px' }"
+    :style="{ width: '750px' }"
     @after-leave="handeAfterLeave"
   >
     <n-spin :show="spinning">
       <n-form ref="formRef" label-placement="left" label-width="80" :model="model" :rules="rules">
-        <n-form-item label="用户姓名" path="name">
-          <n-input v-model:value="model.name" clearable :maxlength="200" />
-        </n-form-item>
-        <n-form-item label="用户性别" path="sex">
-          <n-select v-model:value="model.sex" :options="sexOptions" clearable filterable />
-        </n-form-item>
-        <n-form-item label="年龄" path="age">
-          <n-input-number
-            v-model:value="model.age"
-            :min="1"
-            :max="100"
-            :precision="0"
-            clearable
-            class="w-full"
-          />
-        </n-form-item>
-        <n-form-item label="出生日期" path="birthDate">
-          <n-date-picker v-model:formatted-value="model.birthDate" clearable class="w-full" />
-        </n-form-item>
-        <n-form-item label="政治面貌" path="politics">
-          <n-select
-            v-model:value="model.politics"
-            :options="politicsOptions"
-            clearable
-            filterable
-          />
-        </n-form-item>
-        <n-form-item label="家庭住址" path="addressId">
-          <n-cascader
-            v-model:value="model.addressId"
-            :options="addressOptions"
-            check-strategy="child"
-            clearable
-            filterable
-          />
-        </n-form-item>
-        <n-form-item label="所属组织" path="deptId">
-          <n-tree-select
-            v-model:value="model.deptId"
-            :options="deptOptions"
-            clearable
-            filterable
-            default-expand-all
-          />
-        </n-form-item>
-        <n-form-item label="上级领导" path="leader">
-          <list-select
-            v-model:value="model.leader"
-            title="选择人员"
-            :columns="leaderColumns"
-            :request="leaderMethodRequest"
-          />
-        </n-form-item>
-        <n-form-item label="备注" path="remark">
-          <n-input v-model:value="model.remark" type="textarea" clearable :maxlength="2000" />
-        </n-form-item>
+        <n-grid :cols="2" :x-gap="24">
+          <n-form-item-gi label="用户姓名" path="name">
+            <n-input v-model:value="model.name" clearable :maxlength="200" />
+          </n-form-item-gi>
+          <n-form-item-gi label="用户性别" path="sex">
+            <n-select v-model:value="model.sex" :options="sexOptions" clearable filterable />
+          </n-form-item-gi>
+          <n-form-item-gi label="年龄" path="age">
+            <n-input-number
+              v-model:value="model.age"
+              :min="1"
+              :max="100"
+              :precision="0"
+              clearable
+              class="w-full"
+            />
+          </n-form-item-gi>
+          <n-form-item-gi label="出生日期" path="birthDate">
+            <n-date-picker v-model:formatted-value="model.birthDate" clearable class="w-full" />
+          </n-form-item-gi>
+          <n-form-item-gi label="政治面貌" path="politics">
+            <n-select
+              v-model:value="model.politics"
+              :options="politicsOptions"
+              clearable
+              filterable
+            />
+          </n-form-item-gi>
+          <n-form-item-gi label="家庭住址" path="addressId">
+            <n-cascader
+              v-model:value="model.addressId"
+              :options="addressOptions"
+              check-strategy="child"
+              clearable
+              filterable
+            />
+          </n-form-item-gi>
+          <n-form-item-gi label="所属组织" path="deptId">
+            <n-tree-select
+              v-model:value="model.deptId"
+              :options="deptOptions"
+              clearable
+              filterable
+              default-expand-all
+            />
+          </n-form-item-gi>
+          <n-form-item-gi label="上级领导" path="leader">
+            <list-select
+              v-model:value="model.leader"
+              title="选择人员"
+              :columns="leaderColumns"
+              :request="leaderMethodRequest"
+            />
+          </n-form-item-gi>
+          <n-form-item-gi :span="2" label="备注" path="remark">
+            <n-input v-model:value="model.remark" type="textarea" clearable :maxlength="2000" />
+          </n-form-item-gi>
+        </n-grid>
       </n-form>
     </n-spin>
     <template #footer>

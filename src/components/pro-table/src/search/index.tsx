@@ -181,11 +181,11 @@ const Search = defineComponent({
       >
         <NGrid
           ref={gridRef}
-          xGap={24}
-          yGap={20}
           cols={COLS}
           collapsed={collapsed.value}
           collapsedRows={collapsedRows.value}
+          xGap={24}
+          yGap={20}
         >
           {columns.value.map((column) => (
             <NGridItem key={column.key} span={column.span}>

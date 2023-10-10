@@ -1,9 +1,7 @@
 import { computed, defineComponent, inject, ref, watch, type PropType } from 'vue'
-import { NSelect, type DataTableColumnKey } from 'naive-ui'
+import { NSelect, type DataTableColumnKey, type SelectProps } from 'naive-ui'
 import { formItemInjectionKey } from 'naive-ui/es/_mixins/use-form-item'
-import ListSelectPane from '../../list-select-pane'
-import type { SelectAttrs } from './typings'
-import { selectExcludeAttrsKeys } from './constants'
+import ListSelectPane from '../list-select-pane'
 
 type Value = any | any[] | null
 
@@ -11,7 +9,7 @@ const ListSelect = defineComponent({
   inheritAttrs: false,
   props: {
     selectProps: {
-      type: Object as PropType<SelectAttrs>
+      type: Object as PropType<SelectProps>
     },
     valueField: {
       type: String as PropType<string>
@@ -23,19 +21,6 @@ const ListSelect = defineComponent({
   },
   setup(props, { attrs }) {
     const NFormItem = inject(formItemInjectionKey, null)
-
-    const restSelectAttrs = computed(() => {
-      const result: Record<string, any> = {}
-      const selectAttrs = props.selectProps as Record<string, any>
-      if (selectAttrs) {
-        for (const key of Object.keys(selectAttrs)) {
-          if (!selectExcludeAttrsKeys.includes(key)) {
-            result[key] = selectAttrs[key]
-          }
-        }
-      }
-      return result
-    })
 
     const paneRef = ref<InstanceType<typeof ListSelectPane>>()
 
@@ -100,16 +85,16 @@ const ListSelect = defineComponent({
     return () => (
       <>
         <NSelect
-          value={value.value}
-          multiple={multiple.value}
           labelField={props.labelField}
           valueField={rowKey.value}
-          options={options.value}
           clearable
+          {...(props.selectProps as any)}
+          value={value.value}
+          multiple={multiple.value}
+          options={options.value}
           show={false}
           onUpdateShow={handleUpdateShow}
           onUpdateValue={handleUpdateValue}
-          {...(restSelectAttrs as any)}
         />
         <ListSelectPane ref={paneRef} {...(attrs as any)} />
       </>
