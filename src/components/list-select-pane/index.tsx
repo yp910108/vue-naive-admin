@@ -172,7 +172,7 @@ const ListSelectPane = defineComponent({
               ref={tableRef}
               segmented={false}
               action={false}
-              {...(attrs.value as any)}
+              {...(attrs as any)}
               rowKey={(row) => row[rowKey.value]}
               checkedRowKeys={checkedRowKeys.value}
               onUpdateCheckedRowKeys={handleUpdateCheckedRowKeys}
