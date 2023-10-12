@@ -1,4 +1,4 @@
-import type { RouteComponent, RouteRecordRaw } from 'vue-router'
+import type { RouteComponent, RouteMeta, RouteRecordRaw } from 'vue-router'
 import type { RouteData } from '@/store'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
@@ -82,35 +82,37 @@ export function transformRoutes(routeData: RouteData[]) {
 
   const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
 
-  const transform = (routeData: RouteData[], prefix: string = '') => {
+  const transform = (routeData: RouteData[], prefix: string = '', parentMeta?: RouteMeta) => {
     for (const { path, layout, redirect, children, ...rest } of routeData) {
       if (isExternal(path)) continue
       const routePath = combineURL(prefix, path)
       const pagePath = removeParamsFromPath(routePath)
       const name = parsePathToName(routePath)
+      const meta = {
+        ...rest,
+        keepAlive: rest.keepAlive ?? parentMeta?.keepAlive,
+        activeMenu: rest.activeMenu ?? parentMeta?.activeMenu,
+        unsafeRoot: parentMeta?.unsafeRoot ?? rest.unsafeRoot
+      }
       if (children && children.length) {
         const firstPathNotExternal = getFirstPathNotExternal(children)
         if (!firstPathNotExternal) continue
         const route: RouteRecordRaw = {
           path: routePath,
           name,
-          redirect: redirect ?? `/${combineURL(routePath, firstPathNotExternal)}`
+          redirect: redirect ?? `/${combineURL(routePath, firstPathNotExternal)}`,
+          meta
         }
         if (layout === 'blank') {
           blankLayoutRoute.children.push(route)
         } else {
           basicLayoutRoute.children.push(route)
         }
-        transform(children, routePath)
+        transform(children, routePath, rest)
       } else {
         const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
         const component = getNamedView(view, name)
-        const route: RouteRecordRaw = {
-          path: routePath,
-          name,
-          component,
-          meta: { ...rest }
-        }
+        const route: RouteRecordRaw = { path: routePath, name, component, meta }
         if (route.meta?.activeMenu) {
           route.meta.activeMenu = parsePathToName(route.meta.activeMenu)
         }
@@ -125,13 +127,11 @@ export function transformRoutes(routeData: RouteData[]) {
 
   transform(routeData)
 
-  const visibleRoutes = basicLayoutRoute.children.filter(({ meta }) => !meta?.hide)
+  const safeRoutes = basicLayoutRoute.children.filter(({ meta }) => !meta?.unsafeRoot)
 
-  const redirectPath = visibleRoutes.length
-    ? `/${removeParamsFromPath(visibleRoutes[0].path)}`
-    : undefined
+  const rootPath = safeRoutes.length ? `/${removeParamsFromPath(safeRoutes[0].path)}` : undefined
 
-  rootRoute.redirect = redirectPath
+  rootRoute.redirect = rootPath
 
   return routes
 }

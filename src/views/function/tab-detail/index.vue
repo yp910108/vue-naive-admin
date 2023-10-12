@@ -19,6 +19,8 @@ const router = useRouter()
 function handleToTab() {
   router.back()
 }
-</script>
 
-<style scoped></style>
+if (!route.query.name) {
+  router.push({ name: 'Root' })
+}
+</script>

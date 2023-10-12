@@ -10,8 +10,8 @@ export const routeData: RouteData[] = [
   {
     title: 'Tab 详情',
     path: 'function/tab-detail',
-    icon: 'round-tab',
+    icon: 'function-tab',
     activeMenu: '/function/tab',
-    hide: true
+    unsafeRoot: true
   }
 ]

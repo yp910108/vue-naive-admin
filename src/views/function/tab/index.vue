@@ -15,8 +15,7 @@ const router = useRouter()
 function handleToTabDetail() {
   router.push({
     name: 'FunctionTabDetail',
-    query: { name: 'abc' },
-    hash: '#DEMO_HASH'
+    query: { name: 'abc' }
   })
 }
 </script>
