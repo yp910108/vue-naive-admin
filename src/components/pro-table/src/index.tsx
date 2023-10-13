@@ -8,8 +8,14 @@ import {
   type PropType,
   type VNodeChild
 } from 'vue'
-import { type PaginationProps, NCard, NDataTable, NH4, NSpace } from 'naive-ui'
-import { transformObjectTruthy } from '@/utils'
+import {
+  NCard,
+  NDataTable,
+  NH4,
+  NSpace,
+  type DataTableColumnKey,
+  type PaginationProps
+} from 'naive-ui'
 import Search, { type ExposedMethods as SearchExposedMethods } from './search'
 import type {
   ProTableColumn,
@@ -116,6 +122,7 @@ const ProTable = defineComponent({
      * - searchType 搜索项的组件类型
      * - searchOptions 搜索项组件对应的选项内容，当 searchType 为 select、tree-select、cascader 时有效
      * - searchDefaultValue 搜索项默认的值
+     * - onSearchChange 搜索项的值修改后调用的方法
      * - renderSearchLabel 自定义渲染搜索项的 label
      * - renderSearchField 自定义渲染搜索项的 field
      * - renderSettingLabel 自定义渲染列设置的 label
@@ -166,7 +173,7 @@ const ProTable = defineComponent({
       tableSize.value = size
     }
 
-    const params = ref<any>({})
+    const params = ref<Record<DataTableColumnKey, any>>()
 
     const loading = ref(props.defaultTableLoading ?? false)
 
@@ -242,9 +249,9 @@ const ProTable = defineComponent({
       fetch()
     }
 
-    const handleSearch = (_params?: any) => {
+    const handleSearch = (_params?: Record<DataTableColumnKey, any>) => {
       setPage(1)
-      params.value = transformObjectTruthy(_params)
+      params.value = _params
       fetch()
     }
 
@@ -264,6 +271,8 @@ const ProTable = defineComponent({
     const exposedMethods: ExposedMethods = {
       reload,
       reset,
+      getSearchValue: (...args) => searchRef.value?.getSearchValue(...args),
+      getSearchValues: (...args) => searchRef.value?.getSearchValues(...args)!,
       setSearchValue: (...args) => searchRef.value?.setSearchValue(...args),
       setSearchValues: (...args) => searchRef.value?.setSearchValues(...args)
     }

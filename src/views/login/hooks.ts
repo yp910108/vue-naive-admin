@@ -4,7 +4,7 @@ import { REGEXP_PHONE } from '@/constants'
 import type { LoginModule } from './typings'
 import { fetchSmsCode } from './service'
 
-export const useToLoginModule = () => {
+export function useToLoginModule() {
   const route = useRoute()
   const router = useRouter()
   const toLoginModule = (module: LoginModule) => {

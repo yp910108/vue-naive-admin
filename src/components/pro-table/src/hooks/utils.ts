@@ -16,6 +16,7 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
       type: column.searchType as any,
       options: column.searchOptions,
       defaultValue: column.searchDefaultValue,
+      onChange: column.onSearchChange,
       renderLabel: column.renderSearchLabel,
       renderField: column.renderSearchField
     }
@@ -45,6 +46,7 @@ const PROTABLE_COLUMN_SPECIFIC: Record<ProTableColumnSpecificKey, undefined> = {
   searchType: undefined,
   searchOptions: undefined,
   searchDefaultValue: undefined,
+  onSearchChange: undefined,
   renderSearchLabel: undefined,
   renderSearchField: undefined,
   renderSettingLabel: undefined,

@@ -1,14 +1,18 @@
-import { ref, type Ref, watchEffect } from 'vue'
+import { ref, watchEffect, type Ref } from 'vue'
 import type { DataTableColumnKey } from 'naive-ui'
 import type { SearchColumn } from '../typings'
 
 export function useForm(columns: Ref<SearchColumn[]>) {
-  const form = ref<any>({})
+  const form = ref<Record<DataTableColumnKey, any>>({})
 
   const setDefaultForm = () => {
     for (const { key, defaultValue } of columns.value) {
       form.value[key] = defaultValue ?? null
     }
+  }
+
+  const getForm = (key: DataTableColumnKey) => {
+    return form.value[key]
   }
 
   const setForm = (key: DataTableColumnKey, value: any) => {
@@ -17,5 +21,5 @@ export function useForm(columns: Ref<SearchColumn[]>) {
 
   watchEffect(setDefaultForm)
 
-  return { form, setForm, resetForm: setDefaultForm }
+  return { form, getForm, setForm, resetForm: setDefaultForm }
 }

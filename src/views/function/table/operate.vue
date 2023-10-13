@@ -87,7 +87,7 @@ import { transformObjectTruthy } from '@/utils'
 import { ListSelect, type ProTableColumn } from '@/components'
 import type { BackendModel, FetchListParams, Model, Row } from './typings'
 import { SEX, addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
-import { fetchDetail, add, edit, fetchUserList } from './service'
+import { fetchUserList, fetchDetail, add, edit } from './service'
 
 interface Emits {
   (e: 'refresh'): void

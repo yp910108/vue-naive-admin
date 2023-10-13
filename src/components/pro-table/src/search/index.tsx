@@ -15,6 +15,7 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
+import { transformObjectTruthy } from '@/utils'
 import type { SearchAction, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
@@ -23,8 +24,10 @@ import styles from './index.module.scss'
 
 export interface ExposedMethods {
   reset: () => void
+  getSearchValue: (key: DataTableColumnKey) => any
+  getSearchValues: (keys?: DataTableColumnKey[]) => Record<DataTableColumnKey, any>
   setSearchValue: (key: DataTableColumnKey, value: any) => void
-  setSearchValues: (fields: { [key: DataTableColumnKey]: any }) => void
+  setSearchValues: (fields: Record<DataTableColumnKey, any>) => void
 }
 
 interface SearchExpose {
@@ -52,7 +55,7 @@ const Search = defineComponent({
   setup(props, { expose }) {
     const columns = toRef(props, 'columns')
 
-    const { form, setForm, resetForm } = useForm(columns)
+    const { form, getForm, setForm, resetForm } = useForm(columns)
 
     const collapsed = ref(true)
     const collapsedRows = ref(1)
@@ -66,6 +69,14 @@ const Search = defineComponent({
       collapsedRows.value = width <= SIZE.s ? 2 : 1
     })
 
+    const handleUpdateValue = (key: DataTableColumnKey, newVal: any) => {
+      form.value[key] = newVal
+      const column = columns.value.find((column) => column.key === key)
+      if (column?.onChange) {
+        column.onChange(newVal)
+      }
+    }
+
     const renderField = (form: Ref<any>, { key, renderField, type, options }: SearchColumn) => {
       if (renderField) {
         return renderField(form.value, key)
@@ -75,7 +86,7 @@ const Search = defineComponent({
           <NInput
             value={form.value[key]}
             clearable
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
       } else if (type === 'input-number') {
@@ -83,7 +94,7 @@ const Search = defineComponent({
           <NInputNumber
             value={form.value[key]}
             clearable
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
       } else if (type === 'select') {
@@ -93,7 +104,7 @@ const Search = defineComponent({
             filterable
             clearable
             options={options}
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
       } else if (type === 'tree-select') {
@@ -104,7 +115,7 @@ const Search = defineComponent({
             clearable
             default-expand-all
             options={options}
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
       } else if (type === 'cascader') {
@@ -115,7 +126,7 @@ const Search = defineComponent({
             clearable
             check-strategy="child"
             options={options}
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
       } else if (DATE_PICKER_TYPES.includes(type)) {
@@ -132,7 +143,7 @@ const Search = defineComponent({
           <NInput
             value={form.value[key]}
             clearable
-            onUpdateValue={(newVal) => (form.value[key] = newVal)}
+            onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
       }
@@ -140,12 +151,21 @@ const Search = defineComponent({
 
     const handleSearch = () => {
       const { onSearch } = props
-      if (onSearch) onSearch(form.value)
+      if (onSearch) onSearch(transformObjectTruthy(form.value))
     }
 
     const handleReset = () => {
       resetForm()
       handleSearch()
+    }
+
+    const getSearchValues = (keys?: DataTableColumnKey[]) => {
+      const defaultKeys = columns.value.map(({ key }) => key)
+      const result: Record<DataTableColumnKey, any> = {}
+      for (const key of keys ?? defaultKeys) {
+        result[key] = getForm(key)
+      }
+      return transformObjectTruthy(result) ?? {}
     }
 
     const setSearchValues = (fields: { [key: DataTableColumnKey]: any }) => {
@@ -156,6 +176,8 @@ const Search = defineComponent({
 
     const exposedMethods: ExposedMethods = {
       reset: handleReset,
+      getSearchValue: getForm,
+      getSearchValues,
       setSearchValue: setForm,
       setSearchValues
     }

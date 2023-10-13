@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { useAppStore, useThemeStore } from '@/store'
 
-export const useMobile = () => {
+export function useMobile() {
   const appStore = useAppStore()
 
   const breakpoints = useBreakpoints(breakpointsTailwind)
@@ -23,7 +23,7 @@ export const useMobile = () => {
   return { isMobile }
 }
 
-export const useLayout = () => {
+export function useLayout() {
   const appStore = useAppStore()
   const { theme } = storeToRefs(useThemeStore())
 

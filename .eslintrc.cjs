@@ -63,6 +63,16 @@ module.exports = {
             position: 'before'
           },
           {
+            pattern: 'lodash-es',
+            group: 'external',
+            position: 'before'
+          },
+          {
+            pattern: '@vueuse/**',
+            group: 'external',
+            position: 'before'
+          },
+          {
             pattern: '@/plugins',
             group: 'internal',
             position: 'before'

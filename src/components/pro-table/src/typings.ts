@@ -77,8 +77,9 @@ export type SearchColumn = FieldColumn & {
   label?: string | (() => VNodeChild)
   span?: 1 | 2 | 3 | 4
   defaultValue?: unknown
+  onChange?: (value: any) => void
   renderLabel?: (label?: string) => VNodeChild
-  renderField?: (prams: any, key: DataTableColumnKey) => VNodeChild
+  renderField?: (params: any, key: DataTableColumnKey) => VNodeChild
 }
 
 export type SettingColumn = {
@@ -112,6 +113,7 @@ type SearchFieldColumn =
 export type ProTableColumnSpecific = SearchFieldColumn & {
   searchSpan?: SearchColumn['span']
   searchDefaultValue?: SearchColumn['defaultValue']
+  onSearchChange?: SearchColumn['onChange']
   renderSearchLabel?: SearchColumn['renderLabel']
   renderSearchField?: SearchColumn['renderField']
   renderSettingLabel?: SettingColumn['renderLabel']

@@ -138,6 +138,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     title: '操作',
     width: 110,
     fixed: 'right',
+    hideInSearch: true,
     render: (row) => [
       h(
         NButton,
