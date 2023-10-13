@@ -15,8 +15,8 @@ export interface FetchListParams {
   pageSize: number
 }
 
-export type Row = {
-  id: number | null
+export interface Row {
+  id?: number | null
   name?: string | null
   sex?: Sex | null
   age?: number | null

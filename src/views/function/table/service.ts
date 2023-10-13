@@ -1,5 +1,5 @@
 import { mockRequest } from '@/utils'
-import type { FetchListParams, Model, Row } from './typings'
+import type { BackendModel, FetchListParams, Row } from './typings'
 
 export function fetchUserList(params: FetchListParams) {
   return mockRequest.get<{ total?: number; list?: Row[] }>('/function/table-users', { params })
@@ -13,11 +13,11 @@ export function fetchDetail(id: number) {
   return mockRequest.get<Row>(`/function/table/${id}`)
 }
 
-export function add(data: Model) {
+export function add(data: BackendModel) {
   return mockRequest.post('/function/table', data)
 }
 
-export function edit(id: number, data: Model) {
+export function edit(id: number, data: BackendModel) {
   return mockRequest.patch(`/function/table/${id}`, data)
 }
 

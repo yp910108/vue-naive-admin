@@ -18,12 +18,12 @@ import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip }
 import { ProTable, type ProTableColumn } from '@/components'
 import type { FetchListParams, Row } from './typings'
 import {
+  POLITICS,
   SEX,
   addressOptions,
   deptOptions,
   politicsOptions,
-  sexOptions,
-  POLITICS
+  sexOptions
 } from './constants'
 import { fetchList, deleteItem } from './service'
 import IconQuestion from './icon-question.vue'
@@ -34,8 +34,8 @@ const tableRef = ref<InstanceType<typeof ProTable>>()
 const operateRef = ref<InstanceType<typeof Operate>>()
 
 const handleDelete = async ({ id }: Row) => {
+  const instance = window.$message.loading('删除中，请稍后...', { duration: 0 })
   try {
-    const instance = window.$message.loading('删除中，请稍后...', { duration: 0 })
     await deleteItem(id!)
     tableRef.value?.reload()
     setTimeout(() => {
@@ -43,7 +43,7 @@ const handleDelete = async ({ id }: Row) => {
       window.$message.success('删除成功')
     }, 200)
   } catch (e) {
-    // do nothing
+    instance.destroy()
   }
 }
 

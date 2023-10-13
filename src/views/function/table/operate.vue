@@ -106,7 +106,6 @@ const row = shallowRef<Row>()
 const isEdit = computed(() => !!row.value && !!Object.keys(row.value).length)
 
 const defaultModel: Model = {
-  id: null,
   name: null,
   sex: '1',
   age: null,
