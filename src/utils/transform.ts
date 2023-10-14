@@ -9,6 +9,16 @@ export function transformObjectToOption<T extends Record<string, any>>(obj: T) {
   })) as OptionWithKey<keyof T>[]
 }
 
+export function transformOptionToKeyValue(option?: OptionWithKey<string>[]) {
+  return option?.reduce(
+    (prev, curr) => {
+      prev[curr.value] = curr.label
+      return prev
+    },
+    {} as Record<string, string>
+  )
+}
+
 /**
  * 去除对象中为 falsy 或空数组的值
  * @param obj

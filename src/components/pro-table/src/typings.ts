@@ -42,21 +42,21 @@ type CommonInputNumberColumn = {
 }
 type CommonSelectColumn = {
   type?: 'select'
-  options?: SelectOption[]
+  options?: SelectOption[] | (() => SelectOption[] | undefined)
   searchType?: 'select'
-  searchOptions?: SelectOption[]
+  searchOptions?: SelectOption[] | (() => SelectOption[] | undefined)
 }
 type CommonTreeSelectColumn = {
   type?: 'tree-select'
-  options?: TreeSelectOption[]
+  options?: TreeSelectOption[] | (() => TreeSelectOption[] | undefined)
   searchType?: 'tree-select'
-  searchOptions?: TreeSelectOption[]
+  searchOptions?: TreeSelectOption[] | (() => TreeSelectOption[] | undefined)
 }
 type CommonCascaderColumn = {
   type?: 'cascader'
-  options?: CascaderOption[]
+  options?: CascaderOption[] | (() => CascaderOption[] | undefined)
   searchType?: 'cascader'
-  searchOptions?: CascaderOption[]
+  searchOptions?: CascaderOption[] | (() => CascaderOption[] | undefined)
 }
 type CommonDatePickerColumn = {
   type?: DatePickerType

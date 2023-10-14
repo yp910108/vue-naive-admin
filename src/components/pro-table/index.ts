@@ -7,10 +7,6 @@ import type {
   RenderSearchParams
 } from './src/typings'
 
-export default ProTable
-
-export { ProTable }
-
 export type ProTableRenderSearchParams = RenderSearchParams
 
 export type ProTableRenderSearchActionParams = RenderSearchActionParams
@@ -20,3 +16,7 @@ export type ProTableRenderActionParams = RenderActionParams
 export type ProTableRenderContentParams = RenderContentParams
 
 export type { ProTableColumn }
+
+export default ProTable
+
+export { ProTable }

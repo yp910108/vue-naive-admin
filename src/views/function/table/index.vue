@@ -13,21 +13,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, h } from 'vue'
+import { ref, h, computed } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip } from 'naive-ui'
+import { transformOptionToKeyValue } from '@/utils'
+import { useDict, type DictEnum } from '@/hooks'
 import { ProTable, type ProTableColumn } from '@/components'
 import type { FetchListParams, Row } from './typings'
-import {
-  POLITICS,
-  SEX,
-  addressOptions,
-  deptOptions,
-  politicsOptions,
-  sexOptions
-} from './constants'
+import { addressOptions, deptOptions } from './constants'
 import { fetchList, deleteItem } from './service'
 import IconQuestion from './icon-question.vue'
 import Operate from './operate.vue'
+
+const sexDict = useDict('sex')
+const politicsDict = useDict('politics')
+const sexKeyValue = computed(() => transformOptionToKeyValue(sexDict.value))
+const politicsKeyValue = computed(() => transformOptionToKeyValue(politicsDict.value))
 
 const tableRef = ref<InstanceType<typeof ProTable>>()
 
@@ -77,9 +77,9 @@ const columns = ref<ProTableColumn<Row>[]>([
     title: '用户性别',
     width: 100,
     searchType: 'select',
-    searchOptions: sexOptions,
-    searchDefaultValue: '1',
-    render: (row) => SEX[row.sex!]
+    searchOptions: () => sexDict.value,
+    searchDefaultValue: '1' as DictEnum['sex'],
+    render: (row) => sexKeyValue.value?.[row.sex!]
   },
   {
     key: 'age',
@@ -106,8 +106,8 @@ const columns = ref<ProTableColumn<Row>[]>([
     title: '政治面貌',
     width: 100,
     searchType: 'select',
-    searchOptions: politicsOptions,
-    render: (row) => POLITICS[row.politics!],
+    searchOptions: () => politicsDict.value,
+    render: (row) => politicsKeyValue.value?.[row.politics!],
     renderSettingLabel: (label) => h(NGradientText, { size: 14 }, { default: () => label })
   },
   {

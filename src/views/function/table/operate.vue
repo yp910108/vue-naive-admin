@@ -14,7 +14,7 @@
             <n-input v-model:value="model.name" clearable :maxlength="200" />
           </n-form-item-gi>
           <n-form-item-gi label="用户性别" path="sex">
-            <n-select v-model:value="model.sex" :options="sexOptions" clearable filterable />
+            <n-select v-model:value="model.sex" :options="sexDict" clearable filterable />
           </n-form-item-gi>
           <n-form-item-gi label="年龄" path="age">
             <n-input-number
@@ -30,12 +30,7 @@
             <n-date-picker v-model:formatted-value="model.birthDate" clearable class="w-full" />
           </n-form-item-gi>
           <n-form-item-gi label="政治面貌" path="politics">
-            <n-select
-              v-model:value="model.politics"
-              :options="politicsOptions"
-              clearable
-              filterable
-            />
+            <n-select v-model:value="model.politics" :options="politicsDict" clearable filterable />
           </n-form-item-gi>
           <n-form-item-gi label="家庭住址" path="addressId">
             <n-cascader
@@ -83,10 +78,11 @@
 <script setup lang="ts">
 import { computed, h, ref, shallowRef } from 'vue'
 import { NInputNumber, type FormInst, type FormRules } from 'naive-ui'
-import { transformObjectTruthy } from '@/utils'
+import { transformObjectTruthy, transformOptionToKeyValue } from '@/utils'
+import { useDict } from '@/hooks'
 import { ListSelect, type ProTableColumn } from '@/components'
 import type { BackendModel, FetchListParams, Model, Row } from './typings'
-import { SEX, addressOptions, deptOptions, politicsOptions, sexOptions } from './constants'
+import { addressOptions, deptOptions } from './constants'
 import { fetchUserList, fetchDetail, add, edit } from './service'
 
 interface Emits {
@@ -94,6 +90,10 @@ interface Emits {
 }
 
 const emit = defineEmits<Emits>()
+
+const sexDict = useDict('sex')
+const politicsDict = useDict('politics')
+const sexKeyValue = computed(() => transformOptionToKeyValue(sexDict.value))
 
 const spinning = ref(false)
 const saveLoading = ref(false)
@@ -144,8 +144,8 @@ const leaderColumns = ref<ProTableColumn<Row>[]>([
     title: '用户性别',
     width: 100,
     searchType: 'select',
-    searchOptions: sexOptions,
-    render: (row) => SEX[row.sex!]
+    searchOptions: () => sexDict.value,
+    render: (row) => sexKeyValue.value?.[row.sex!]
   },
   {
     key: 'age',

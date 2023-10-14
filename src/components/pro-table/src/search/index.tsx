@@ -81,6 +81,7 @@ const Search = defineComponent({
       if (renderField) {
         return renderField(form.value, key)
       }
+      const _options: any = typeof options === 'function' ? options() : options
       if (type === 'input') {
         return (
           <NInput
@@ -103,7 +104,7 @@ const Search = defineComponent({
             value={form.value[key]}
             filterable
             clearable
-            options={options}
+            options={_options}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
@@ -114,7 +115,7 @@ const Search = defineComponent({
             filterable
             clearable
             default-expand-all
-            options={options}
+            options={_options}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
@@ -125,7 +126,7 @@ const Search = defineComponent({
             filterable
             clearable
             check-strategy="child"
-            options={options}
+            options={_options}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
