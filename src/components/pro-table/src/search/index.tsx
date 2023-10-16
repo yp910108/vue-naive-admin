@@ -23,6 +23,7 @@ import IconDown from './icon-down'
 import styles from './index.module.scss'
 
 export interface ExposedMethods {
+  reload: () => void
   reset: () => void
   getSearchValue: (key: DataTableColumnKey) => any
   getSearchValues: (keys?: DataTableColumnKey[]) => Record<DataTableColumnKey, any>
@@ -176,6 +177,7 @@ const Search = defineComponent({
     }
 
     const exposedMethods: ExposedMethods = {
+      reload: handleSearch,
       reset: handleReset,
       getSearchValue: getForm,
       getSearchValues,

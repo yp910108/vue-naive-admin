@@ -33,9 +33,7 @@ import { useColumns } from './hooks'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 import styles from './index.module.scss'
 
-type ExposedMethods = SearchExposedMethods & {
-  reload: () => void
-}
+type ExposedMethods = SearchExposedMethods
 
 interface ProTableExpose {
   new (): ExposedMethods
@@ -138,7 +136,7 @@ const ProTable = defineComponent({
         (params: any) => Promise<{
           itemCount?: number
           data?: any[]
-        }>
+        } | void>
       >
     },
     onAfterRequest: {
@@ -257,7 +255,11 @@ const ProTable = defineComponent({
 
     const reload = () => {
       setPage(1)
-      fetch()
+      if (searchRef.value) {
+        searchRef.value.reload()
+      } else {
+        fetch()
+      }
     }
 
     const reset = () => {
