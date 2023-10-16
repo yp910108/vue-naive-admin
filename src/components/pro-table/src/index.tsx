@@ -33,7 +33,10 @@ import { useColumns } from './hooks'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 import styles from './index.module.scss'
 
-type ExposedMethods = SearchExposedMethods
+type ExposedMethods = SearchExposedMethods & {
+  setSearchDefaultValue: (key: DataTableColumnKey, value: any) => void
+  setSearchDefaultValues: (fields: Record<DataTableColumnKey, any>) => void
+}
 
 interface ProTableExpose {
   new (): ExposedMethods
@@ -270,9 +273,24 @@ const ProTable = defineComponent({
       }
     }
 
+    const setSearchDefaultValue = (key: DataTableColumnKey, value: any) => {
+      const column = props.columns.find((column) => (column as any).key === key)
+      if (column) {
+        column.searchDefaultValue = value
+      }
+    }
+
+    const setSearchDefaultValues = (fields: Record<DataTableColumnKey, any>) => {
+      for (const key of Object.keys(fields)) {
+        setSearchDefaultValue(key, fields[key])
+      }
+    }
+
     const exposedMethods: ExposedMethods = {
       reload,
       reset,
+      setSearchDefaultValue,
+      setSearchDefaultValues,
       getSearchValue: (...args) => searchRef.value?.getSearchValue(...args),
       getSearchValues: (...args) => searchRef.value?.getSearchValues(...args)!,
       setSearchValue: (...args) => searchRef.value?.setSearchValue(...args),

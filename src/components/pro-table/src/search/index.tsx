@@ -170,7 +170,7 @@ const Search = defineComponent({
       return transformObjectTruthy(result) ?? {}
     }
 
-    const setSearchValues = (fields: { [key: DataTableColumnKey]: any }) => {
+    const setSearchValues = (fields: Record<DataTableColumnKey, any>) => {
       for (const prop of Object.keys(fields)) {
         setForm(prop, fields[prop])
       }
