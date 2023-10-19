@@ -2,10 +2,9 @@ import type { MockMethod } from 'vite-plugin-mock'
 
 const apis: MockMethod[] = [
   {
-    url: '/mock/dict/:type',
+    url: '/mock/dict',
     method: 'get',
-    response: ({ url }) => {
-      const type = url.split('?')[1].split('=')[1]
+    response: ({ query }) => {
       const data: any = {
         sex: [
           { value: '1', label: '男' },
@@ -20,7 +19,7 @@ const apis: MockMethod[] = [
       return {
         code: 200,
         message: 'ok',
-        data: data[type]
+        data: data[query.type]
       }
     }
   }

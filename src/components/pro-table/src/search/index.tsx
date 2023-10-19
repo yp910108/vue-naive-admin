@@ -15,7 +15,7 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
-import { transformObjectTruthy } from '@/utils'
+import { removeInvalidValues } from '@/utils'
 import type { SearchAction, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
@@ -153,7 +153,7 @@ const Search = defineComponent({
 
     const handleSearch = () => {
       const { onSearch } = props
-      if (onSearch) onSearch(transformObjectTruthy(form.value))
+      if (onSearch) onSearch(removeInvalidValues(form.value))
     }
 
     const handleReset = () => {
@@ -167,7 +167,7 @@ const Search = defineComponent({
       for (const key of keys ?? defaultKeys) {
         result[key] = getForm(key)
       }
-      return transformObjectTruthy(result) ?? {}
+      return removeInvalidValues(result) ?? {}
     }
 
     const setSearchValues = (fields: Record<DataTableColumnKey, any>) => {
@@ -198,7 +198,6 @@ const Search = defineComponent({
 
     return () => (
       <NForm
-        model={form}
         labelPlacement="left"
         labelWidth={props.labelWidth}
         showFeedback={false}

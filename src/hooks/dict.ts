@@ -1,47 +1,19 @@
 import { ref, toRef } from 'vue'
 import { mockRequest } from '@/utils'
 
-export interface DictEnum {
-  /**
-   * 性别
-   * - 1 男
-   * - 2 女
-   */
-  sex: '1' | '2'
-  /**
-   * 政治面貌
-   * - 1 党员
-   * - 2 团员
-   * - 3 群众
-   */
-  politics: '1' | '2' | '3'
+function fetchDict(type: keyof Dict.Type) {
+  return mockRequest.get<Dict.Item[]>(`/dict`, { params: { type } })
 }
 
-type DictType = keyof DictEnum
-
-interface DictItem {
-  value: string
-  label: string
-}
-
-type Dict = {
-  [type in DictType]?: DictItem[]
-}
-
-function fetchDict(type: DictType) {
-  return mockRequest.get<DictItem[]>(`/dict/${type}`, { params: { type } })
-}
-
-const dict = ref<Dict>({})
+const dict = ref<Dict.Data>({})
 const existKeys: string[] = []
 
-export function useDict(type: DictType) {
+export function useDict(type: keyof Dict.Type) {
   if (!dict.value[type] && !existKeys.includes(type)) {
     existKeys.push(type)
     fetchDict(type).then((res) => {
       dict.value[type] = res
     })
   }
-
   return toRef(dict.value, type)
 }

@@ -1,22 +1,13 @@
 import ProTable from './src'
-import type {
-  ProTableColumn,
-  RenderActionParams,
-  RenderContentParams,
-  RenderSearchActionParams,
-  RenderSearchParams
-} from './src/typings'
-
-export type ProTableRenderSearchParams = RenderSearchParams
-
-export type ProTableRenderSearchActionParams = RenderSearchActionParams
-
-export type ProTableRenderActionParams = RenderActionParams
-
-export type ProTableRenderContentParams = RenderContentParams
-
-export type { ProTableColumn }
 
 export default ProTable
 
 export { ProTable }
+
+export type {
+  RenderSearchParams as ProTableRenderSearchParams,
+  RenderSearchActionParams as ProTableRenderSearchActionParams,
+  RenderActionParams as ProTableRenderActionParams,
+  RenderContentParams as ProTableRenderContentParams,
+  ProTableColumn
+} from './src/typings'

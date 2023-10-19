@@ -1,12 +1,10 @@
-import type { DictEnum } from '@/hooks'
-
 export interface FetchListParams {
   name?: string
-  sex?: DictEnum['sex']
+  sex?: Dict.Type['sex']
   age?: number
   startBirthDate?: string
   endBirthDate?: string
-  politics?: DictEnum['politics']
+  politics?: Dict.Type['politics']
   addressId?: string
   deptId?: string
   page: number
@@ -16,10 +14,10 @@ export interface FetchListParams {
 export interface Row {
   id?: number | null
   name?: string | null
-  sex?: DictEnum['sex'] | null
+  sex?: Dict.Type['sex'] | null
   age?: number | null
   birthDate?: string | null
-  politics?: DictEnum['politics'] | null
+  politics?: Dict.Type['politics'] | null
   addressId?: string | null
   addressName?: string | null
   deptId?: string | null

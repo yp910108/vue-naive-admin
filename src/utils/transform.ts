@@ -20,23 +20,14 @@ export function transformOptionToKeyValue(option?: OptionWithKey<string>[]) {
 }
 
 /**
- * 去除对象中为 falsy 或空数组的值
- * @param obj
+ * 去除对象/数组中的无效值。注意：{}（空对象）和 []（空数组）也会被去除
+ * @param source
  */
-export function transformObjectTruthy<T>(obj: T) {
-  if (Array.isArray(obj)) {
-    const result: any[] = []
-    for (const item of obj) {
-      const _item = transformObjectTruthy(item)
-      if (_item) {
-        result.push(_item)
-      }
-    }
-    return result.length ? (result as T) : undefined
-  } else if (isObject(obj)) {
+export function removeInvalidValues<T>(source: T) {
+  if (isObject(source)) {
     const result: Record<string, any> = {}
-    for (const key of Object.keys(obj)) {
-      const _val = transformObjectTruthy((obj as any)[key])
+    for (const key of Object.keys(source)) {
+      const _val = removeInvalidValues((source as any)[key])
       if (isObject(_val)) {
         if (Object.keys(_val).length) {
           result[key] = _val
@@ -52,7 +43,16 @@ export function transformObjectTruthy<T>(obj: T) {
       }
     }
     return Object.keys(result).length ? (result as T) : undefined
+  } else if (Array.isArray(source)) {
+    const result: any[] = []
+    for (const item of source) {
+      const _item = removeInvalidValues(item)
+      if (_item) {
+        result.push(_item)
+      }
+    }
+    return result.length ? (result as T) : undefined
   } else {
-    return obj
+    return source || source === 0 || source === false ? source : undefined
   }
 }

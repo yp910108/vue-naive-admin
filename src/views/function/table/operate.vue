@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import { computed, h, ref, shallowRef } from 'vue'
 import { NInputNumber, type FormInst, type FormRules } from 'naive-ui'
-import { transformObjectTruthy, transformOptionToKeyValue } from '@/utils'
+import { removeInvalidValues, transformOptionToKeyValue } from '@/utils'
 import { useDict } from '@/hooks'
 import { ListSelect, type ProTableColumn } from '@/components'
 import type { BackendModel, FetchListParams, Model, Row } from './typings'
@@ -205,7 +205,7 @@ const setModel = async () => {
 const handleSave = () => {
   formRef.value?.validate(async (errors) => {
     if (errors) return
-    const params = transformObjectTruthy(model.value)
+    const params = removeInvalidValues(model.value)
     if (params?.leader) {
       ;(params as BackendModel).leaderId = params.leader.id
       ;(params as BackendModel).leaderName = params.leader.name

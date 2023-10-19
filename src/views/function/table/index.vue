@@ -16,7 +16,7 @@
 import { ref, h, computed } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip } from 'naive-ui'
 import { transformOptionToKeyValue } from '@/utils'
-import { useDict, type DictEnum } from '@/hooks'
+import { useDict } from '@/hooks'
 import { ProTable, type ProTableColumn } from '@/components'
 import type { FetchListParams, Row } from './typings'
 import { addressOptions, deptOptions } from './constants'
@@ -78,7 +78,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     width: 100,
     searchType: 'select',
     searchOptions: () => sexDict.value,
-    searchDefaultValue: '1' as DictEnum['sex'],
+    searchDefaultValue: '1' as Dict.Type['sex'],
     render: (row) => sexKeyValue.value?.[row.sex!]
   },
   {
