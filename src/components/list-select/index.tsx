@@ -3,7 +3,7 @@ import { NSelect, type DataTableColumnKey, type SelectProps } from 'naive-ui'
 import { formItemInjectionKey } from 'naive-ui/es/_mixins/use-form-item'
 import ListSelectPane from '../list-select-pane'
 
-type Value = any | any[] | null
+type Value = Record<string, any> | Record<string, any>[] | null
 
 const ListSelect = defineComponent({
   inheritAttrs: false,
@@ -51,14 +51,14 @@ const ListSelect = defineComponent({
         if (multiple.value) {
           return _value.map((item: any) => item[rowKey.value])
         } else {
-          return _value[rowKey.value]
+          return (_value as Record<string, any>)[rowKey.value]
         }
       } else {
         return null
       }
     })
 
-    const handleUpdateValue = (newVal: Value) => {
+    const handleUpdateValue = (newVal: Value | null) => {
       const _attrs = attrs as any
       const _value = _attrs.value
       const _newVal = newVal
@@ -96,7 +96,12 @@ const ListSelect = defineComponent({
           onUpdateShow={handleUpdateShow}
           onUpdateValue={handleUpdateValue}
         />
-        <ListSelectPane ref={paneRef} {...(attrs as any)} />
+        <ListSelectPane
+          ref={paneRef}
+          {...(attrs as any)}
+          valueField={rowKey.value}
+          labelField={props.labelField}
+        />
       </>
     )
   }

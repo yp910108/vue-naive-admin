@@ -108,6 +108,11 @@ module.exports = {
             position: 'before'
           },
           {
+            pattern: '@/service',
+            group: 'internal',
+            position: 'before'
+          },
+          {
             pattern: '@/hooks',
             group: 'internal',
             position: 'before'
@@ -134,11 +139,6 @@ module.exports = {
           },
           {
             pattern: '@/views',
-            group: 'internal',
-            position: 'before'
-          },
-          {
-            pattern: '@/services',
             group: 'internal',
             position: 'before'
           }

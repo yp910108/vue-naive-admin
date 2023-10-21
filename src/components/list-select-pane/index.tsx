@@ -2,7 +2,7 @@ import { computed, defineComponent, ref, type PropType, type Ref } from 'vue'
 import { NButton, NModal, type DataTableColumnKey, NSpace, type ModalProps } from 'naive-ui'
 import ProTable from '../pro-table'
 
-type Value = any | any[] | null
+type Value = Record<string, any> | Record<string, any>[] | null
 
 interface ExposedMethods {
   value: Ref<Value>
@@ -14,7 +14,7 @@ interface ListSelectExpose {
   new (): ExposedMethods
 }
 
-type OnUpdateValue = (newVal: Value) => void
+type OnUpdateValue = (newVal: any) => void
 
 const ListSelectPane = defineComponent({
   inheritAttrs: false,
@@ -37,10 +37,10 @@ const ListSelectPane = defineComponent({
       type: [Object, Array] as PropType<Value>
     },
     'onUpdate:value': {
-      type: Function as PropType<OnUpdateValue>
+      type: [Function, Array] as PropType<OnUpdateValue | OnUpdateValue[]>
     },
     onUpdateValue: {
-      type: Function as PropType<OnUpdateValue>
+      type: [Function, Array] as PropType<OnUpdateValue | OnUpdateValue[]>
     },
     confirm: {
       type: Function as PropType<(checked: Value) => Promise<void>>
@@ -52,17 +52,14 @@ const ListSelectPane = defineComponent({
       for (const row of rows) {
         const cachedRow = cachedRows.find((item) => item[rowKey.value] === row[rowKey.value])
         if (!cachedRow) {
-          cachedRows.push({
-            [rowKey.value]: row[rowKey.value],
-            [props.labelField]: row[props.labelField]
-          })
+          cachedRows.push(row)
         }
       }
     }
 
     const confirmLoading = ref(false)
 
-    const uncontrolledValue = ref<Value>()
+    const uncontrolledValue = ref<Value>(null)
 
     const value = computed({
       get() {
@@ -71,10 +68,25 @@ const ListSelectPane = defineComponent({
       set(newVal: Value) {
         if (typeof props.value === 'undefined') {
           uncontrolledValue.value = newVal
-        } else {
-          const { onUpdateValue, 'onUpdate:value': _onUpdateValue } = props
-          if (onUpdateValue) onUpdateValue(newVal)
-          if (_onUpdateValue) _onUpdateValue(newVal)
+        }
+        const { onUpdateValue, 'onUpdate:value': _onUpdateValue } = props
+        if (onUpdateValue) {
+          if (typeof onUpdateValue === 'function') {
+            onUpdateValue(newVal)
+          } else {
+            for (const fn of onUpdateValue) {
+              fn(newVal)
+            }
+          }
+        }
+        if (_onUpdateValue) {
+          if (typeof _onUpdateValue === 'function') {
+            _onUpdateValue(newVal)
+          } else {
+            for (const fn of _onUpdateValue) {
+              fn(newVal)
+            }
+          }
         }
       }
     })
@@ -113,15 +125,15 @@ const ListSelectPane = defineComponent({
       if (props.confirm) {
         try {
           confirmLoading.value = true
-          await props.confirm(checked)
+          await props.confirm(checked!)
           confirmLoading.value = false
-          value.value = checked
+          value.value = checked!
           hide()
         } catch (e) {
           confirmLoading.value = false
         }
       } else {
-        value.value = checked
+        value.value = checked!
         hide()
       }
     }
@@ -140,9 +152,9 @@ const ListSelectPane = defineComponent({
       checkedRowKeys.value = _value
         ? multiple.value
           ? _value.map((item: any) => item[rowKey.value])
-          : [_value[rowKey.value]]
+          : [(_value as Record<string, any>)[rowKey.value]]
         : []
-      setCachedRows(_value ? (multiple.value ? _value : [_value]) : [])
+      setCachedRows((_value ? (multiple.value ? _value : [_value]) : []) as Record<string, any>[])
       visible.value = true
     }
 

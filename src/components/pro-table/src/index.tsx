@@ -22,6 +22,7 @@ import type {
   RenderActionParams,
   RenderContentParams,
   RenderSearchParams,
+  RequestParams,
   SearchAction,
   TableAttrs,
   TableLoading,
@@ -132,18 +133,18 @@ const ProTable = defineComponent({
      */
     columns: {
       type: Array as PropType<ProTableColumn<any>[]>,
-      required: true
+      default: () => []
     },
     request: {
       type: Function as PropType<
-        (params: any) => Promise<{
+        (params: RequestParams) => Promise<{
           itemCount?: number
-          data?: any[]
+          data?: Record<string, any>[]
         } | void>
       >
     },
     onAfterRequest: {
-      type: Function as PropType<(data: any[]) => void>
+      type: Function as PropType<(data: Record<DataTableColumnKey, any>[]) => void>
     }
   },
   setup(props, { attrs, expose }) {
@@ -204,7 +205,7 @@ const ProTable = defineComponent({
     }
     const pagination = ref(mergePagination())
 
-    const data = ref<any[]>([])
+    const data = ref<Record<string, any>[]>([])
 
     const fetch = async () => {
       const _params = { ...params.value }

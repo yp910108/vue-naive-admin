@@ -1,17 +1,17 @@
-import { computed, ref, type Ref } from 'vue'
+import { computed, type Ref } from 'vue'
 import type { DataTableColumnKey } from 'naive-ui'
 import type { ProTableColumn, TableColumn } from '../typings'
 import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 
 export function useColumns(originColumns: Ref<ProTableColumn[]>) {
-  const getColumns = (columns: ProTableColumn[]) => {
-    return columns.map((column, i) => {
+  const columns = computed(() => {
+    return originColumns.value.map((column, i) => {
       column.visible = true
       column.order = i
+      column.initialOrder = i
       return column
     })
-  }
-  const columns = ref(getColumns(originColumns.value))
+  })
 
   const searchColumns = computed(() => filterSearchColumns(columns.value))
 
@@ -52,7 +52,9 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
   }
 
   const resetColumns = () => {
-    columns.value = getColumns(originColumns.value)
+    for (const column of originColumns.value) {
+      column.order = column.initialOrder
+    }
   }
 
   return {

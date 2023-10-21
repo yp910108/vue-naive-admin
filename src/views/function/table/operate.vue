@@ -80,7 +80,7 @@ import { computed, h, ref, shallowRef } from 'vue'
 import { NInputNumber, type FormInst, type FormRules } from 'naive-ui'
 import { removeInvalidValues, transformOptionToKeyValue } from '@/utils'
 import { useDict } from '@/hooks'
-import { ListSelect, type ProTableColumn } from '@/components'
+import { ListSelect, type ProTableColumn, type ProTableRequestParams } from '@/components'
 import type { BackendModel, FetchListParams, Model, Row } from './typings'
 import { addressOptions, deptOptions } from './constants'
 import { fetchUserList, fetchDetail, add, edit } from './service'
@@ -169,11 +169,16 @@ const leaderColumns = ref<ProTableColumn<Row>[]>([
   }
 ])
 
-const leaderMethodRequest = async (params: FetchListParams & { birthDate?: [string, string] }) => {
-  if (params.birthDate && params.birthDate.length) {
-    params.startBirthDate = params.birthDate[0]
-    params.endBirthDate = params.birthDate[1]
-    delete params.birthDate
+const leaderMethodRequest = async ({
+  birthDate,
+  page,
+  pageSize,
+  ...rest
+}: ProTableRequestParams) => {
+  const params: FetchListParams = { ...rest, page: page!, pageSize: pageSize! }
+  if (birthDate && birthDate.length) {
+    params.startBirthDate = birthDate[0]
+    params.endBirthDate = birthDate[1]
   }
   const { total, list } = (await fetchUserList(params)) ?? {}
   return { itemCount: total, data: list }
@@ -205,11 +210,11 @@ const setModel = async () => {
 const handleSave = () => {
   formRef.value?.validate(async (errors) => {
     if (errors) return
-    const params = removeInvalidValues(model.value)
-    if (params?.leader) {
-      ;(params as BackendModel).leaderId = params.leader.id
-      ;(params as BackendModel).leaderName = params.leader.name
-      delete params.leader
+    const { leader, ...rest } = removeInvalidValues(model.value)!
+    const params: BackendModel = { ...rest }
+    if (leader) {
+      params.leaderId = leader.id
+      params.leaderName = leader.name
     }
     try {
       saveLoading.value = true

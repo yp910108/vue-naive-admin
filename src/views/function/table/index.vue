@@ -17,7 +17,7 @@ import { ref, h, computed } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip } from 'naive-ui'
 import { transformOptionToKeyValue } from '@/utils'
 import { useDict } from '@/hooks'
-import { ProTable, type ProTableColumn } from '@/components'
+import { ProTable, type ProTableColumn, type ProTableRequestParams } from '@/components'
 import type { FetchListParams, Row } from './typings'
 import { addressOptions, deptOptions } from './constants'
 import { fetchList, deleteItem } from './service'
@@ -162,11 +162,11 @@ const columns = ref<ProTableColumn<Row>[]>([
   }
 ])
 
-const methodRequest = async (params: FetchListParams & { birthDate?: [string, string] }) => {
-  if (params.birthDate && params.birthDate.length) {
-    params.startBirthDate = params.birthDate[0]
-    params.endBirthDate = params.birthDate[1]
-    delete params.birthDate
+const methodRequest = async ({ birthDate, ...rest }: ProTableRequestParams) => {
+  const params: FetchListParams = { ...rest }
+  if (birthDate && birthDate.length) {
+    params.startBirthDate = birthDate[0]
+    params.endBirthDate = birthDate[1]
   }
   const { total, list } = (await fetchList(params)) ?? {}
   return { itemCount: total, data: list }

@@ -87,6 +87,7 @@ export type SettingColumn = {
   label?: string | (() => VNodeChild)
   visible?: boolean
   order?: number
+  initialOrder?: number
   renderLabel?: (label?: string) => VNodeChild
 }
 
@@ -101,6 +102,7 @@ export type TableAttrs = Omit<DataTableProps, TableExcludeAttrs>
 export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T> & {
   visible?: boolean
   order?: number
+  initialOrder?: number
 }
 
 type SearchFieldColumn =
@@ -121,3 +123,8 @@ export type ProTableColumnSpecific = SearchFieldColumn & {
   hideInTable?: boolean
 }
 export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> & ProTableColumnSpecific
+
+export type RequestParams = Record<DataTableColumnKey, any> & {
+  page?: number
+  pageSize?: number
+}

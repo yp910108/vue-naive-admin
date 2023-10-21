@@ -7,8 +7,8 @@ export interface FetchListParams {
   politics?: Dict.Type['politics']
   addressId?: string
   deptId?: string
-  page: number
-  pageSize: number
+  page?: number
+  pageSize?: number
 }
 
 export interface Row {
@@ -32,8 +32,8 @@ export type Model = Pick<
   'id' | 'name' | 'sex' | 'age' | 'birthDate' | 'politics' | 'addressId' | 'deptId' | 'remark'
 > & {
   leader?: {
-    id: number
-    name: string
+    id?: number | null
+    name?: string | null
   } | null
 }
 
