@@ -41,9 +41,9 @@ type CommonInputNumberColumn = {
   searchOptions?: never
 }
 type CommonSelectColumn = {
-  type?: 'select'
+  type?: 'select' | 'multiple-select'
   options?: SelectOption[] | (() => SelectOption[] | undefined)
-  searchType?: 'select'
+  searchType?: 'select' | 'multiple-select'
   searchOptions?: SelectOption[] | (() => SelectOption[] | undefined)
 }
 type CommonTreeSelectColumn = {

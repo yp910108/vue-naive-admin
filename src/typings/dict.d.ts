@@ -21,6 +21,6 @@ declare namespace Dict {
   }
 
   type Data = {
-    [type in keyof Type]?: DictItem[]
+    [type in keyof Type]?: Item[]
   }
 }

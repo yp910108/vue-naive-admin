@@ -99,10 +99,11 @@ const Search = defineComponent({
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
-      } else if (type === 'select') {
+      } else if (type === 'select' || type === 'multiple-select') {
         return (
           <NSelect
             value={form.value[key]}
+            multiple={type === 'multiple-select'}
             filterable
             clearable
             options={_options}
