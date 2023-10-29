@@ -1,14 +1,17 @@
 import { computed, type Ref } from 'vue'
-import type { DataTableColumnKey } from 'naive-ui'
-import type { ProTableColumn, TableColumn } from '../typings'
+import type { DataTableColumn, DataTableColumnKey } from 'naive-ui'
+import type { ProTableColumn } from '../typings'
 import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 
 export function useColumns(originColumns: Ref<ProTableColumn[]>) {
   const columns = computed(() => {
     return originColumns.value.map((column, i) => {
-      column.visible = true
-      column.order = i
-      column.initialOrder = i
+      const visible = typeof column.initialVisible === 'boolean' ? column.initialVisible : true
+      const order = column.initialOrder ?? i
+      column.visible = visible
+      column.initialVisible = visible
+      column.order = order
+      column.initialOrder = order
       return column
     })
   })
@@ -21,7 +24,7 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
     return filterTableColumns(columns.value).map((column) => {
       const _ellipsis = column.ellipsis
       const ellipsis = typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
-      return { align: 'center', ...column, ellipsis } as TableColumn
+      return { align: 'center', ...column, ellipsis } as DataTableColumn
     })
   })
 
@@ -53,6 +56,7 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
 
   const resetColumns = () => {
     for (const column of originColumns.value) {
+      column.visible = column.initialVisible
       column.order = column.initialOrder
     }
   }

@@ -12,8 +12,7 @@ import {
 } from 'naive-ui'
 import Sortable from 'sortablejs'
 import type { SettingColumn } from '../../typings'
-import IconSetting from './icon-setting'
-import IconDrag from './icon-drag'
+import { IconDrag, IconSetting } from './icons'
 import styles from './index.module.scss'
 
 export default defineComponent({
@@ -47,6 +46,7 @@ export default defineComponent({
           sortable.value = Sortable.create(el, {
             animation: 200,
             easing: 'linear',
+            forceFallback: true,
             onEnd: ({ oldIndex, newIndex }) => {
               if (
                 typeof oldIndex === 'undefined' ||

@@ -27,7 +27,7 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
 }
 
 export function filterSettingColumns(columns: ProTableColumn[]) {
-  const _columns = columns.filter((column) => !column.type && !column.hideInTable && !column.fixed)
+  const _columns = columns.filter((column) => !column.type && !column.hideInTable)
   return _columns
     .map((column) => {
       const result: SettingColumn = {

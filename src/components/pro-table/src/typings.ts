@@ -89,6 +89,7 @@ export type SettingColumn = {
   key: DataTableColumnKey
   label?: string | (() => VNodeChild)
   visible?: boolean
+  initialVisible?: boolean
   order?: number
   initialOrder?: number
   renderLabel?: (label?: string) => VNodeChild
@@ -104,6 +105,7 @@ export type TableAttrs = Omit<DataTableProps, TableExcludeAttrs>
 
 export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T> & {
   visible?: boolean
+  initialVisible?: boolean
   order?: number
   initialOrder?: number
 }
