@@ -1,6 +1,6 @@
 import { computed, type Ref } from 'vue'
-import type { DataTableColumn, DataTableColumnKey } from 'naive-ui'
-import type { ProTableColumn } from '../typings'
+import type { DataTableColumnKey } from 'naive-ui'
+import type { ProTableColumn, TableColumn } from '../typings'
 import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 
 export function useColumns(originColumns: Ref<ProTableColumn[]>) {
@@ -24,7 +24,7 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
     return filterTableColumns(columns.value).map((column) => {
       const _ellipsis = column.ellipsis
       const ellipsis = typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
-      return { align: 'center', ...column, ellipsis } as DataTableColumn
+      return { align: 'center', ...column, ellipsis } as TableColumn
     })
   })
 

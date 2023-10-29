@@ -89,9 +89,7 @@ export type SettingColumn = {
   key: DataTableColumnKey
   label?: string | (() => VNodeChild)
   visible?: boolean
-  initialVisible?: boolean
   order?: number
-  initialOrder?: number
   renderLabel?: (label?: string) => VNodeChild
 }
 
