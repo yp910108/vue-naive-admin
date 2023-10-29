@@ -72,12 +72,15 @@ type FieldColumn =
   | Pick<CommonTreeSelectColumn, 'type' | 'options'>
   | Pick<CommonCascaderColumn, 'type' | 'options'>
   | Pick<CommonDatePickerColumn, 'type' | 'options'>
+type OnSearchChange = (newValue: any, oldValue: any) => void
 export type SearchColumn = FieldColumn & {
   key: DataTableColumnKey
   label?: string | (() => VNodeChild)
   span?: 1 | 2 | 3 | 4
   defaultValue?: unknown
-  onChange?: (value: any) => void
+  clearable?: boolean
+  disabled?: boolean | ((params: any) => boolean)
+  onChange?: OnSearchChange | { watch?: boolean; immediate?: boolean; handler: OnSearchChange }
   renderLabel?: (label?: string) => VNodeChild
   renderField?: (params: any, key: DataTableColumnKey) => VNodeChild
 }
@@ -115,6 +118,8 @@ type SearchFieldColumn =
 export type ProTableColumnSpecific = SearchFieldColumn & {
   searchSpan?: SearchColumn['span']
   searchDefaultValue?: SearchColumn['defaultValue']
+  searchClearable?: SearchColumn['clearable']
+  searchDisabled?: SearchColumn['disabled']
   onSearchChange?: SearchColumn['onChange']
   renderSearchLabel?: SearchColumn['renderLabel']
   renderSearchField?: SearchColumn['renderField']

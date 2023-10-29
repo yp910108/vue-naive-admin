@@ -34,9 +34,15 @@ import { useColumns } from './hooks'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 import styles from './index.module.scss'
 
-type ExposedMethods = SearchExposedMethods & {
-  setSearchDefaultValue: (key: DataTableColumnKey, value: any) => void
-  setSearchDefaultValues: (fields: Record<DataTableColumnKey, any>) => void
+type ExposedMethods = {
+  reload: SearchExposedMethods['reload']
+  reset: SearchExposedMethods['reset']
+  setSearchDefaultValue: SearchExposedMethods['setDefaultValue']
+  setSearchDefaultValues: SearchExposedMethods['setDefaultValues']
+  getSearchValue: SearchExposedMethods['getValue']
+  getSearchValues: SearchExposedMethods['getValues']
+  setSearchValue: SearchExposedMethods['setValue']
+  setSearchValues: SearchExposedMethods['setValues']
 }
 
 interface ProTableExpose {
@@ -48,6 +54,7 @@ type Search =
   | ((searchParams: RenderSearchParams) => VNodeChild)
   | {
       labelWidth?: string | number | 'auto'
+      clearable?: boolean
       action?: SearchAction
     }
 
@@ -123,8 +130,11 @@ const ProTable = defineComponent({
      * - searchSpan 搜索项占用的列
      * - searchType 搜索项的组件类型
      * - searchOptions 搜索项组件对应的选项内容，当 searchType 为 select、tree-select、cascader 时有效
-     * - searchDefaultValue 搜索项默认的值
-     * - onSearchChange 搜索项的值修改后调用的方法
+     * - searchDefaultValue 搜索项默认值，可以为一个方法
+     * - searchClearable 搜索项是否可清空
+     * - searchDisabled 搜索项是否禁用，可以为一个方法
+     * - onSearchChange 搜索项的值修改后调用的方法。也可以设置为一个对象，此时，如果对象的 watch 属性为 true 时，会通过 vue 的 watch 方法
+     *   监听 searchValue 的变化。可以通过设置 { watch: true, immediate: ture } 使其在初始化 defaultSearchValue 后强制调用一次。
      * - renderSearchLabel 自定义渲染搜索项的 label
      * - renderSearchField 自定义渲染搜索项的 field
      * - renderSettingLabel 自定义渲染列设置的 label
@@ -274,28 +284,15 @@ const ProTable = defineComponent({
       }
     }
 
-    const setSearchDefaultValue = (key: DataTableColumnKey, value: any) => {
-      const column = props.columns.find((column) => (column as any).key === key)
-      if (column) {
-        column.searchDefaultValue = value
-      }
-    }
-
-    const setSearchDefaultValues = (fields: Record<DataTableColumnKey, any>) => {
-      for (const key of Object.keys(fields)) {
-        setSearchDefaultValue(key, fields[key])
-      }
-    }
-
     const exposedMethods: ExposedMethods = {
       reload,
       reset,
-      setSearchDefaultValue,
-      setSearchDefaultValues,
-      getSearchValue: (...args) => searchRef.value?.getSearchValue(...args),
-      getSearchValues: (...args) => searchRef.value?.getSearchValues(...args)!,
-      setSearchValue: (...args) => searchRef.value?.setSearchValue(...args),
-      setSearchValues: (...args) => searchRef.value?.setSearchValues(...args)
+      setSearchDefaultValue: (...args) => searchRef.value?.setDefaultValue(...args),
+      setSearchDefaultValues: (...args) => searchRef.value?.setDefaultValues(...args),
+      getSearchValue: (...args) => searchRef.value?.getValue(...args),
+      getSearchValues: (...args) => searchRef.value?.getValues(...args)!,
+      setSearchValue: (...args) => searchRef.value?.setValue(...args),
+      setSearchValues: (...args) => searchRef.value?.setValues(...args)
     }
 
     expose(exposedMethods)
@@ -354,6 +351,7 @@ const ProTable = defineComponent({
                 ref={searchRef}
                 columns={searchColumns.value}
                 labelWidth={typeof props.search === 'object' ? props.search.labelWidth : undefined}
+                clearable={typeof props.search === 'object' ? props.search.clearable : undefined}
                 action={typeof props.search === 'object' ? props.search.action : undefined}
                 onSearch={handleSearch}
               />

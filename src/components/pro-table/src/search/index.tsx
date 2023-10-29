@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, ref, toRef, type PropType, type Ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, type PropType, type Ref } from 'vue'
 import {
   NButton,
   NCascader,
@@ -25,10 +25,12 @@ import styles from './index.module.scss'
 export interface ExposedMethods {
   reload: () => void
   reset: () => void
-  getSearchValue: (key: DataTableColumnKey) => any
-  getSearchValues: (keys?: DataTableColumnKey[]) => Record<DataTableColumnKey, any>
-  setSearchValue: (key: DataTableColumnKey, value: any) => void
-  setSearchValues: (fields: Record<DataTableColumnKey, any>) => void
+  setDefaultValue: (key: DataTableColumnKey, value: any) => void
+  setDefaultValues: (fields: Record<DataTableColumnKey, any>) => void
+  getValue: (key: DataTableColumnKey) => any
+  getValues: (keys?: DataTableColumnKey[]) => Record<DataTableColumnKey, any>
+  setValue: (key: DataTableColumnKey, value: any) => void
+  setValues: (fields: Record<DataTableColumnKey, any>) => void
 }
 
 interface SearchExpose {
@@ -45,6 +47,10 @@ const Search = defineComponent({
       type: [String, Number] as PropType<string | number | 'auto'>,
       default: 105
     },
+    clearable: {
+      type: Boolean as PropType<boolean>,
+      default: true
+    },
     action: {
       type: [Boolean, Function] as PropType<SearchAction>,
       default: true
@@ -54,9 +60,7 @@ const Search = defineComponent({
     }
   },
   setup(props, { expose }) {
-    const columns = toRef(props, 'columns')
-
-    const { form, getForm, setForm, resetForm } = useForm(columns)
+    const { form, getForm, setForm, setDefaultForm, resetForm } = useForm(props.columns)
 
     const collapsed = ref(true)
     const collapsedRows = ref(1)
@@ -71,23 +75,36 @@ const Search = defineComponent({
     })
 
     const handleUpdateValue = (key: DataTableColumnKey, newVal: any) => {
+      const oldVal = form.value[key]
       form.value[key] = newVal
-      const column = columns.value.find((column) => column.key === key)
+      const column = props.columns.find((column) => column.key === key)
       if (column?.onChange) {
-        column.onChange(newVal)
+        const { onChange } = column
+        if (typeof onChange === 'function') {
+          onChange(newVal, oldVal)
+        } else {
+          const { watch, handler } = onChange
+          if (!watch) handler(newVal, oldVal)
+        }
       }
     }
 
-    const renderField = (form: Ref<any>, { key, renderField, type, options }: SearchColumn) => {
+    const renderField = (
+      form: Ref<any>,
+      { key, renderField, type, clearable, disabled, options }: SearchColumn
+    ) => {
       if (renderField) {
         return renderField(form.value, key)
       }
+      const _clearable = clearable ?? props.clearable
+      const _disabled = typeof disabled === 'function' ? disabled(form.value) : disabled
       const _options: any = typeof options === 'function' ? options() : options
       if (type === 'input') {
         return (
           <NInput
             value={form.value[key]}
-            clearable
+            clearable={_clearable}
+            disabled={_disabled}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
@@ -95,7 +112,8 @@ const Search = defineComponent({
         return (
           <NInputNumber
             value={form.value[key]}
-            clearable
+            clearable={_clearable}
+            disabled={_disabled}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
@@ -104,8 +122,10 @@ const Search = defineComponent({
           <NSelect
             value={form.value[key]}
             multiple={type === 'multiple-select'}
+            max-tag-count="responsive"
             filterable
-            clearable
+            clearable={_clearable}
+            disabled={_disabled}
             options={_options}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
@@ -115,7 +135,8 @@ const Search = defineComponent({
           <NTreeSelect
             value={form.value[key]}
             filterable
-            clearable
+            clearable={_clearable}
+            disabled={_disabled}
             default-expand-all
             options={_options}
             onUpdateValue={handleUpdateValue.bind(null, key)}
@@ -126,7 +147,8 @@ const Search = defineComponent({
           <NCascader
             value={form.value[key]}
             filterable
-            clearable
+            clearable={_clearable}
+            disabled={_disabled}
             check-strategy="child"
             options={_options}
             onUpdateValue={handleUpdateValue.bind(null, key)}
@@ -137,15 +159,17 @@ const Search = defineComponent({
           <NDatePicker
             formattedValue={form.value[key]}
             type={type}
-            clearable
-            onUpdateFormattedValue={(newVal) => (form.value[key] = newVal)}
+            clearable={_clearable}
+            disabled={_disabled}
+            onUpdateFormattedValue={handleUpdateValue.bind(null, key)}
           />
         )
       } else {
         return (
           <NInput
             value={form.value[key]}
-            clearable
+            clearable={_clearable}
+            disabled={_disabled}
             onUpdateValue={handleUpdateValue.bind(null, key)}
           />
         )
@@ -162,8 +186,14 @@ const Search = defineComponent({
       handleSearch()
     }
 
-    const getSearchValues = (keys?: DataTableColumnKey[]) => {
-      const defaultKeys = columns.value.map(({ key }) => key)
+    const setDefaultValues = (fields: Record<DataTableColumnKey, any>) => {
+      for (const key of Object.keys(fields)) {
+        setDefaultForm(key, fields[key])
+      }
+    }
+
+    const getValues = (keys?: DataTableColumnKey[]) => {
+      const defaultKeys = props.columns.map(({ key }) => key)
       const result: Record<DataTableColumnKey, any> = {}
       for (const key of keys ?? defaultKeys) {
         result[key] = getForm(key)
@@ -171,19 +201,21 @@ const Search = defineComponent({
       return removeInvalidValues(result) ?? {}
     }
 
-    const setSearchValues = (fields: Record<DataTableColumnKey, any>) => {
-      for (const prop of Object.keys(fields)) {
-        setForm(prop, fields[prop])
+    const setValues = (fields: Record<DataTableColumnKey, any>) => {
+      for (const key of Object.keys(fields)) {
+        setForm(key, fields[key])
       }
     }
 
     const exposedMethods: ExposedMethods = {
       reload: handleSearch,
       reset: handleReset,
-      getSearchValue: getForm,
-      getSearchValues,
-      setSearchValue: setForm,
-      setSearchValues
+      setDefaultValue: setDefaultForm,
+      setDefaultValues,
+      getValue: getForm,
+      getValues,
+      setValue: setForm,
+      setValues
     }
 
     expose(exposedMethods)
@@ -212,7 +244,7 @@ const Search = defineComponent({
           xGap={24}
           yGap={20}
         >
-          {columns.value.map((column) => (
+          {props.columns.map((column) => (
             <NGridItem key={column.key} span={column.span}>
               <NFormItem>
                 {{
