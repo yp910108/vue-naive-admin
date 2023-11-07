@@ -1,9 +1,9 @@
+import type { DataTableColumn } from 'naive-ui'
 import type {
   ProTableColumn,
   ProTableColumnSpecific,
   SearchColumn,
-  SettingColumn,
-  TableColumn
+  SettingColumn
 } from '../typings'
 
 export function filterSearchColumns(columns: ProTableColumn[]) {
@@ -27,14 +27,15 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
 }
 
 export function filterSettingColumns(columns: ProTableColumn[]) {
-  const _columns = columns.filter((column) => !column.type && !column.hideInTable && !column.fixed)
+  const _columns = columns.filter((column) => !column.type && !column.hideInTable)
   return _columns
     .map((column) => {
       const result: SettingColumn = {
         key: (column as any).key,
         label: (column as any).title,
-        visible: column.visible,
-        order: column.order,
+        visible: column._visible,
+        fixed: column._fixed,
+        order: column._order,
         renderLabel: column.renderSettingLabel
       }
       return result
@@ -55,20 +56,29 @@ const PROTABLE_COLUMN_SPECIFIC: Record<ProTableColumnSpecificKey, undefined> = {
   renderSearchField: undefined,
   renderSettingLabel: undefined,
   hideInSearch: undefined,
-  hideInTable: undefined
+  hideInTable: undefined,
+  visible: undefined,
+  _visible: undefined,
+  fixed: undefined,
+  _fixed: undefined,
+  order: undefined,
+  _order: undefined
 }
 const PROTABLE_COLUMN_SPECIFIC_KEYS = Object.keys(
   PROTABLE_COLUMN_SPECIFIC
 ) as ProTableColumnSpecificKey[]
 
-export function filterTableColumns(columns: ProTableColumn[]): TableColumn[] {
-  const _columns = columns.filter((column) => !column.hideInTable && column.visible)
+export function filterTableColumns(columns: ProTableColumn[]): DataTableColumn[] {
+  const _columns = columns.filter((column) => !column.hideInTable && column._visible)
   return _columns
     .map((column) => {
       const _column = { ...column }
       for (const key of PROTABLE_COLUMN_SPECIFIC_KEYS) {
         delete _column[key]
       }
+      _column.visible = column._visible
+      _column.fixed = column._fixed
+      _column.order = column._order
       return _column
     })
     .sort((a, b) => a.order! - b.order!)

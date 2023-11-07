@@ -1,5 +1,14 @@
 .pro-table-columns-setting {
   :global {
+    .n-checkbox {
+      .n-checkbox__label {
+        flex: 1;
+        width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
     .sortable-ghost {
       opacity: 0.8;
       background: rgb(var(--primary-color-5));

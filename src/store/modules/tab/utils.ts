@@ -21,6 +21,6 @@ export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecord
   } as MultiTab
 }
 
-export function hasTab(tabs: MultiTab[], activeTab: MultiTab) {
-  return !!tabs.find((tab) => tab.key === activeTab.key)
+export function hasTab(tabs: MultiTab[], tab: MultiTab) {
+  return !!tabs.find(({ key }) => key === tab.key)
 }

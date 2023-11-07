@@ -14,7 +14,10 @@ export const zhCN = {
         popover: {
           title: '列展示/排序',
           action: {
-            reset: '重置'
+            reset: '重置',
+            pinLeft: '固定到左侧',
+            pinRight: '固定到右侧',
+            unpin: '取消固定'
           }
         }
       }

@@ -12,7 +12,7 @@ import {
 } from 'naive-ui'
 import Sortable from 'sortablejs'
 import type { SettingColumn } from '../../typings'
-import { IconDrag, IconSetting } from './icons'
+import { IconDrag, IconPinTop, IconPinBottom, IconUnpin, IconSetting } from './icons'
 import styles from './index.module.scss'
 
 export default defineComponent({
@@ -23,6 +23,10 @@ export default defineComponent({
     },
     onUpdateColumnsVisible: {
       type: Function as PropType<(keys: DataTableColumnKey[]) => void>,
+      required: true
+    },
+    onUpdateColumnsFixed: {
+      type: Function as PropType<(key: DataTableColumnKey, fixed: SettingColumn['fixed']) => void>,
       required: true
     },
     onUpdateColumnsOrder: {
@@ -79,11 +83,75 @@ export default defineComponent({
       }
     }
 
+    const renderLeftPinIcon = (column: SettingColumn) => {
+      return column.fixed === 'left' ? (
+        <NTooltip contentStyle={{ padding: 0 }}>
+          {{
+            default: () => $translate('proTable.action.columnsSetting.popover.action.unpin'),
+            trigger: () => (
+              <span
+                class="p-4px hover:color-primary"
+                onClick={props.onUpdateColumnsFixed.bind(null, column.key, undefined)}
+              >
+                <IconUnpin />
+              </span>
+            )
+          }}
+        </NTooltip>
+      ) : (
+        <NTooltip contentStyle={{ padding: 0 }}>
+          {{
+            default: () => $translate('proTable.action.columnsSetting.popover.action.pinLeft'),
+            trigger: () => (
+              <span
+                class="p-4px hover:color-primary"
+                onClick={props.onUpdateColumnsFixed.bind(null, column.key, 'left')}
+              >
+                <IconPinTop />
+              </span>
+            )
+          }}
+        </NTooltip>
+      )
+    }
+
+    const renderRightPinIcon = (column: SettingColumn) => {
+      return column.fixed === 'right' ? (
+        <NTooltip contentStyle={{ padding: 0 }}>
+          {{
+            default: () => $translate('proTable.action.columnsSetting.popover.action.unpin'),
+            trigger: () => (
+              <span
+                class="p-4px hover:color-primary"
+                onClick={props.onUpdateColumnsFixed.bind(null, column.key, undefined)}
+              >
+                <IconUnpin />
+              </span>
+            )
+          }}
+        </NTooltip>
+      ) : (
+        <NTooltip contentStyle={{ padding: 0 }}>
+          {{
+            default: () => $translate('proTable.action.columnsSetting.popover.action.pinRight'),
+            trigger: () => (
+              <span
+                class="p-4px hover:color-primary"
+                onClick={props.onUpdateColumnsFixed.bind(null, column.key, 'right')}
+              >
+                <IconPinBottom />
+              </span>
+            )
+          }}
+        </NTooltip>
+      )
+    }
+
     return () => (
       <NPopover
         trigger="click"
         placement="bottom-end"
-        class={['w-200px', styles['pro-table-columns-setting']]}
+        class={['w-210px', styles['pro-table-columns-setting']]}
         headerStyle={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -97,13 +165,14 @@ export default defineComponent({
             <NCheckbox
               checked={checkedAll.value}
               indeterminate={checkAllIndeterminate.value}
+              class="flex-grow w-0"
               onUpdateChecked={handleUpdateCheckedAll}
             >
               <NText strong depth="1">
                 {$translate('proTable.action.columnsSetting.popover.title')}
               </NText>
             </NCheckbox>,
-            <NButton type="primary" text onClick={props.onResetColumns}>
+            <NButton type="primary" text class="flex-shrink-0" onClick={props.onResetColumns}>
               {$translate('proTable.action.columnsSetting.popover.action.reset')}
             </NButton>
           ],
@@ -118,18 +187,23 @@ export default defineComponent({
                   {props.columns.map((column) => (
                     <NSpace
                       key={column.key}
+                      size={0}
                       wrapItem={false}
                       align="center"
                       class="px-16px py-4px hover:bg-primary_1 cursor-pointer"
                     >
-                      <IconDrag class="flex-shrink-0 font-size-18px" />
-                      <NCheckbox value={column.key} class="flex-grow w-0">
+                      <IconDrag class="flex-shrink-0 font-size-18px cursor-grab" />
+                      <NCheckbox value={column.key} class="flex-grow ml-8px w-0">
                         {typeof column.label === 'function'
                           ? column.label()
                           : column.renderLabel
                           ? column.renderLabel(column.label)
                           : column.label}
                       </NCheckbox>
+                      <NSpace size={0} wrapItem={false} class="flex-shrink-0">
+                        {renderLeftPinIcon(column)}
+                        {renderRightPinIcon(column)}
+                      </NSpace>
                     </NSpace>
                   ))}
                 </NSpace>

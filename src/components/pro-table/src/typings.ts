@@ -89,6 +89,7 @@ export type SettingColumn = {
   key: DataTableColumnKey
   label?: string | (() => VNodeChild)
   visible?: boolean
+  fixed?: DataTableColumn['fixed']
   order?: number
   renderLabel?: (label?: string) => VNodeChild
 }
@@ -100,13 +101,6 @@ export type TableLoading = NonNullable<DataTableProps['loading']>
 export type TableExcludeAttrs = 'size' | 'loading' | 'pagination'
 
 export type TableAttrs = Omit<DataTableProps, TableExcludeAttrs>
-
-export type TableColumn<T = Record<string, unknown>> = DataTableColumn<T> & {
-  visible?: boolean
-  initialVisible?: boolean
-  order?: number
-  initialOrder?: number
-}
 
 type SearchFieldColumn =
   | Pick<CommonInputColumn, 'searchType' | 'searchOptions'>
@@ -126,8 +120,15 @@ export type ProTableColumnSpecific = SearchFieldColumn & {
   renderSettingLabel?: SettingColumn['renderLabel']
   hideInSearch?: boolean
   hideInTable?: boolean
+  visible?: SettingColumn['visible']
+  _visible?: SettingColumn['visible']
+  fixed?: SettingColumn['fixed']
+  _fixed?: SettingColumn['fixed']
+  order?: SettingColumn['order']
+  _order?: SettingColumn['order']
 }
-export type ProTableColumn<T = Record<string, unknown>> = TableColumn<T> & ProTableColumnSpecific
+export type ProTableColumn<T = Record<string, unknown>> = DataTableColumn<T> &
+  ProTableColumnSpecific & {}
 
 export type RequestParams = Record<DataTableColumnKey, any> & {
   page?: number

@@ -164,6 +164,7 @@ const ProTable = defineComponent({
       settingColumns,
       tableColumns,
       updateColumnsVisible,
+      updateColumnsFixed,
       updateColumnsOrder,
       resetColumns
     } = useColumns(columns)
@@ -309,6 +310,7 @@ const ProTable = defineComponent({
       <ColumnsSetting
         columns={settingColumns.value}
         onUpdateColumnsVisible={updateColumnsVisible}
+        onUpdateColumnsFixed={updateColumnsFixed}
         onUpdateColumnsOrder={updateColumnsOrder}
         onResetColumns={resetColumns}
       />

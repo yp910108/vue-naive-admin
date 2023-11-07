@@ -75,6 +75,7 @@ const columns = ref<ProTableColumn<Row>[]>([
   {
     key: 'sex',
     title: '用户性别',
+    fixed: 'left',
     width: 100,
     searchType: 'select',
     searchOptions: () => sexDict.value,
@@ -132,7 +133,7 @@ const columns = ref<ProTableColumn<Row>[]>([
   },
   { key: 'deptName', title: '所属组织', width: 100, hideInSearch: true },
   { key: 'leaderName', title: '上级领导', width: 100, hideInSearch: true },
-  { key: 'remark', title: '备注', hideInSearch: true },
+  { key: 'remark', title: '备注', hideInSearch: true, fixed: 'right' },
   {
     key: 'action',
     title: '操作',

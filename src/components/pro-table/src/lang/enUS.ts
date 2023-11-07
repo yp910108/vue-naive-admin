@@ -14,7 +14,10 @@ export const enUS = {
         popover: {
           title: 'Display/Sort',
           action: {
-            reset: 'Reset'
+            reset: 'Reset',
+            pinLeft: 'Pin To Left',
+            pinRight: 'Pin To Right',
+            unpin: 'Unpin'
           }
         }
       }
