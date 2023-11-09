@@ -14,10 +14,12 @@ export const useTabStore = defineStore('tab-store', () => {
   const { theme } = storeToRefs(useThemeStore())
 
   const tabs = ref<MultiTab[]>([])
+
   const pushLastTab = () => {
     const lastTab = tabs.value[tabs.value.length - 1]
     router.push(lastTab.routePath)
   }
+
   const addTab = (route: RouteLocationNormalizedLoaded) => {
     const tab = getTabByRoute(route)
     if (!hasTab(tabs.value, tab)) {
@@ -25,6 +27,7 @@ export const useTabStore = defineStore('tab-store', () => {
     }
     return tab
   }
+
   const removeTab = (tab: MultiTab) => {
     const index = tabs.value.findIndex(({ key }) => key === tab.key)
     tabs.value.splice(index, 1)
@@ -32,6 +35,7 @@ export const useTabStore = defineStore('tab-store', () => {
       pushLastTab()
     }
   }
+
   const clearLeftTabs = (currentTab: MultiTab) => {
     const currentIndex = tabs.value.findIndex(({ key }) => key === currentTab.key)
     const rootTab = getTabByRoute(routeStore.rootRoute)
@@ -42,6 +46,7 @@ export const useTabStore = defineStore('tab-store', () => {
       pushLastTab()
     }
   }
+
   const clearRightTabs = (currentTab: MultiTab) => {
     const currentIndex = tabs.value.findIndex(({ key }) => key === currentTab.key)
     tabs.value = tabs.value.slice(0, currentIndex + 1)
@@ -49,10 +54,11 @@ export const useTabStore = defineStore('tab-store', () => {
       pushLastTab()
     }
   }
+
   const clearOtherTabs = (currentTab: MultiTab) => {
     const rootTab = getTabByRoute(routeStore.rootRoute)
     const restTabs = tabs.value.filter(({ key }) => currentTab.key === key)
-    if (!hasTab(tabs.value, rootTab)) {
+    if (!hasTab(restTabs, rootTab)) {
       restTabs.unshift(rootTab)
     }
     tabs.value = restTabs
@@ -60,15 +66,15 @@ export const useTabStore = defineStore('tab-store', () => {
       pushLastTab()
     }
   }
+
   const clearAllTabs = () => {
     const rootTab = getTabByRoute(routeStore.rootRoute)
     tabs.value = [rootTab]
-    if (!hasTab(tabs.value, activeTab.value!)) {
-      pushLastTab()
-    }
+    router.push(rootTab.routePath)
   }
 
   const activeTab = ref<MultiTab>()
+
   const setActiveTab = (tab: MultiTab) => {
     activeTab.value = tab
   }

@@ -3,7 +3,7 @@ import Mock from 'mockjs'
 
 const apis: MockMethod[] = [
   {
-    url: '/mock/function/table-users',
+    url: '/mock/list/table-users',
     method: 'get',
     response: ({ query }) => {
       const { age, startBirthDate, endBirthDate, page, pageSize, ...rest } = query
@@ -44,7 +44,7 @@ const apis: MockMethod[] = [
     }
   },
   {
-    url: '/mock/function/table',
+    url: '/mock/list/table',
     method: 'get',
     response: ({ query }) => {
       const { age, startBirthDate, endBirthDate, page, pageSize, ...rest } = query
@@ -93,7 +93,7 @@ const apis: MockMethod[] = [
     }
   },
   {
-    url: '/mock/function/table/:id',
+    url: '/mock/list/table/:id',
     method: 'get',
     response: () => {
       const response = Mock.mock({
@@ -119,7 +119,7 @@ const apis: MockMethod[] = [
     }
   },
   {
-    url: '/mock/function/table',
+    url: '/mock/list/table',
     method: 'post',
     response: () => {
       const response = Mock.mock({
@@ -131,7 +131,7 @@ const apis: MockMethod[] = [
     }
   },
   {
-    url: '/mock/function/table/:id',
+    url: '/mock/list/table/:id',
     method: 'patch',
     response: () => {
       const response = Mock.mock({
@@ -143,7 +143,7 @@ const apis: MockMethod[] = [
     }
   },
   {
-    url: '/mock/function/table/:id',
+    url: '/mock/list/table/:id',
     method: 'delete',
     response: () => {
       const response = Mock.mock({

@@ -19,6 +19,18 @@ export const routeModel: RouteData[] = [
     ]
   },
   {
+    title: '列表',
+    path: 'list',
+    icon: 'list',
+    children: [
+      {
+        title: '查询表格',
+        path: 'table',
+        icon: 'list-table'
+      }
+    ]
+  },
+  {
     title: '文档',
     path: 'document',
     icon: 'document',
@@ -56,11 +68,6 @@ export const routeModel: RouteData[] = [
         title: 'Tab 页签',
         path: 'tab',
         icon: 'function-tab'
-      },
-      {
-        title: 'table 查询表格',
-        path: 'table',
-        icon: 'table'
       }
     ]
   },
