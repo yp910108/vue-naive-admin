@@ -1,6 +1,15 @@
-import { computed, defineComponent, onMounted, ref, type PropType, type Ref } from 'vue'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  type CSSProperties,
+  type PropType,
+  type Ref
+} from 'vue'
 import {
   NButton,
+  NCard,
   NCascader,
   NDatePicker,
   NForm,
@@ -39,6 +48,9 @@ interface SearchExpose {
 
 const Search = defineComponent({
   props: {
+    contentStyle: {
+      type: [String, Object] as PropType<CSSProperties>
+    },
     columns: {
       type: Array as PropType<SearchColumn[]>,
       required: true
@@ -230,70 +242,72 @@ const Search = defineComponent({
     ]
 
     return () => (
-      <NForm
-        labelPlacement="left"
-        labelWidth={props.labelWidth}
-        showFeedback={false}
-        class={styles['pro-table-search']}
-      >
-        <NGrid
-          ref={gridRef}
-          cols={COLS}
-          collapsed={collapsed.value}
-          collapsedRows={collapsedRows.value}
-          xGap={24}
-          yGap={20}
+      <NCard bordered={false} contentStyle={{ ...props.contentStyle }}>
+        <NForm
+          labelPlacement="left"
+          labelWidth={props.labelWidth}
+          showFeedback={false}
+          class={styles['pro-table-search']}
         >
-          {props.columns.map((column) => (
-            <NGridItem key={column.key} span={column.span}>
-              <NFormItem>
-                {{
-                  default: () => renderField(form, column),
-                  label: () =>
-                    typeof column.label === 'function'
-                      ? column.label()
-                      : column.renderLabel
-                      ? column.renderLabel(column.label)
-                      : column.label
-                }}
-              </NFormItem>
+          <NGrid
+            ref={gridRef}
+            cols={COLS}
+            collapsed={collapsed.value}
+            collapsedRows={collapsedRows.value}
+            xGap={24}
+            yGap={20}
+          >
+            {props.columns.map((column) => (
+              <NGridItem key={column.key} span={column.span}>
+                <NFormItem>
+                  {{
+                    default: () => renderField(form, column),
+                    label: () =>
+                      typeof column.label === 'function'
+                        ? column.label()
+                        : column.renderLabel
+                        ? column.renderLabel(column.label)
+                        : column.label
+                  }}
+                </NFormItem>
+              </NGridItem>
+            ))}
+            <NGridItem suffix span={1} class="pro-table-search__action">
+              {{
+                default: ({ overflow }: { overflow: boolean }) => {
+                  return (
+                    <NFormItem>
+                      <NSpace wrapItem={false}>
+                        {props.action
+                          ? typeof props.action === 'function'
+                            ? props.action({ vnodes: renderSearchAction() })
+                            : renderSearchAction()
+                          : undefined}
+                        {overflow || !collapsed.value ? (
+                          <NButton
+                            type="primary"
+                            text
+                            icon-placement="right"
+                            onClick={() => (collapsed.value = !collapsed.value)}
+                          >
+                            {{
+                              default: () =>
+                                collapsed.value
+                                  ? $translate('proTable.searchAction.expand')
+                                  : $translate('proTable.searchAction.collapse'),
+                              icon: () => <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
+                            }}
+                          </NButton>
+                        ) : undefined}
+                      </NSpace>
+                    </NFormItem>
+                  )
+                }
+              }}
             </NGridItem>
-          ))}
-          <NGridItem suffix span={1} class="pro-table-search__action">
-            {{
-              default: ({ overflow }: { overflow: boolean }) => {
-                return (
-                  <NFormItem>
-                    <NSpace wrapItem={false}>
-                      {props.action
-                        ? typeof props.action === 'function'
-                          ? props.action({ vnodes: renderSearchAction() })
-                          : renderSearchAction()
-                        : undefined}
-                      {overflow || !collapsed.value ? (
-                        <NButton
-                          type="primary"
-                          text
-                          icon-placement="right"
-                          onClick={() => (collapsed.value = !collapsed.value)}
-                        >
-                          {{
-                            default: () =>
-                              collapsed.value
-                                ? $translate('proTable.searchAction.expand')
-                                : $translate('proTable.searchAction.collapse'),
-                            icon: () => <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
-                          }}
-                        </NButton>
-                      ) : undefined}
-                    </NSpace>
-                  </NFormItem>
-                )
-              }
-            }}
-          </NGridItem>
-        </NGrid>
-      </NForm>
+          </NGrid>
+        </NForm>
+      </NCard>
     )
   }
 })

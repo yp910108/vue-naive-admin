@@ -40,7 +40,9 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
   }
 
   const updateColumnsFixed = (key: DataTableColumnKey, fixed: ProTableColumn['fixed']) => {
-    const column = columns.value.find((column) => (column as any).key === key)
+    const column = columns.value.find(
+      (column) => !column.hideInTable && (column as any).key === key
+    )
     column && (column._fixed = fixed)
   }
 

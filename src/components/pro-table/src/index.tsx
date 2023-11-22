@@ -4,6 +4,7 @@ import {
   ref,
   toRef,
   onMounted,
+  type CSSProperties,
   type DefineComponent,
   type PropType,
   type VNodeChild
@@ -80,6 +81,12 @@ const ProTable = defineComponent({
     segmented: {
       type: Boolean as PropType<boolean>,
       default: true
+    },
+    searchStyle: {
+      type: [String, Object] as PropType<CSSProperties>
+    },
+    contentStyle: {
+      type: [String, Object] as PropType<CSSProperties>
     },
     /**
      * 表格头部标题
@@ -348,16 +355,16 @@ const ProTable = defineComponent({
           typeof props.search === 'function' ? (
             props.search({ onSearch: handleSearch })
           ) : (
-            <NCard bordered={false} class="flex-shrink-0">
-              <Search
-                ref={searchRef}
-                columns={searchColumns.value}
-                labelWidth={typeof props.search === 'object' ? props.search.labelWidth : undefined}
-                clearable={typeof props.search === 'object' ? props.search.clearable : undefined}
-                action={typeof props.search === 'object' ? props.search.action : undefined}
-                onSearch={handleSearch}
-              />
-            </NCard>
+            <Search
+              ref={searchRef}
+              columns={searchColumns.value}
+              labelWidth={typeof props.search === 'object' ? props.search.labelWidth : undefined}
+              clearable={typeof props.search === 'object' ? props.search.clearable : undefined}
+              action={typeof props.search === 'object' ? props.search.action : undefined}
+              onSearch={handleSearch}
+              class="flex-shrink-0"
+              contentStyle={props.searchStyle}
+            />
           )
         ) : undefined}
         <NCard
@@ -367,7 +374,8 @@ const ProTable = defineComponent({
             display: 'flex',
             flexDirection: 'column',
             height: 0,
-            paddingTop: props.segmented ? '20px' : '10px'
+            paddingTop: props.segmented ? '20px' : '10px',
+            ...props.contentStyle
           }}
         >
           {props.headerTitle || props.renderToolbar || props.action ? (
