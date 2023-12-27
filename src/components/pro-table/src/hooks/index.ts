@@ -27,7 +27,11 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
     return filterTableColumns(columns.value).map((column) => {
       const _ellipsis = column.ellipsis
       const ellipsis = typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
-      return { align: 'center', ...column, ellipsis } as DataTableColumn
+      const _column: DataTableColumn = { align: 'center', ...column, ellipsis }
+      if (ellipsis && typeof ellipsis === 'object') {
+        _column.ellipsisComponent = 'performant-ellipsis'
+      }
+      return _column
     })
   })
 

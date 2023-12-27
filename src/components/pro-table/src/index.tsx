@@ -335,6 +335,7 @@ const ProTable = defineComponent({
         rowKey={(row) => row.id}
         columns={tableColumns.value}
         data={data.value}
+        // @ts-ignore
         pagination={pagination.value}
         onUpdatePage={handleUpatePage}
         onUpdatePageSize={handleUpatePageSize}

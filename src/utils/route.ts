@@ -108,7 +108,7 @@ export function transformRoutes(routeData: RouteData[]) {
         } else {
           basicLayoutRoute.children.push(route)
         }
-        transform(children, routePath, rest)
+        transform(children, routePath, meta)
       } else {
         const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
         const component = getNamedView(view, name)
