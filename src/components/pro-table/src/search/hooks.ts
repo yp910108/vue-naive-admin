@@ -23,8 +23,10 @@ export function useForm(columns: SearchColumn[]) {
     const column = columns.find((column) => column.key === key)
     if (column) {
       column.defaultValue = value
-      setForm(key, value)
+    } else {
+      columns.push({ key, defaultValue: value })
     }
+    setForm(key, value)
   }
 
   const scope = effectScope()

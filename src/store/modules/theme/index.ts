@@ -2,12 +2,8 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme, type GlobalThemeOverrides } from 'naive-ui'
 import type { Settings } from '@/settings'
-import {
-  addDarkClassToDocument,
-  getThemeColors,
-  initTheme,
-  removeDarkClassFromDocument
-} from './utils'
+import { FONT_WEIGHT_STRONG } from '@/constants'
+import { getThemeColors, initTheme } from './utils'
 
 export const useThemeStore = defineStore('theme-store', () => {
   const theme = ref<Settings>(initTheme())
@@ -24,7 +20,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     })
     return {
       common: {
-        fontWeightStrong: '600',
+        fontWeightStrong: FONT_WEIGHT_STRONG,
         ...themeColors
       }
     }
@@ -32,11 +28,6 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const setDarkMode = (darkMode: boolean) => {
     theme.value.darkMode = darkMode
-    if (darkMode) {
-      addDarkClassToDocument()
-    } else {
-      removeDarkClassFromDocument()
-    }
   }
 
   const setFollowSystemTheme = (visible: boolean) => {

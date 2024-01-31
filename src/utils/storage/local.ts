@@ -6,6 +6,7 @@ interface LocalStorage {
   token?: string
   userInfo?: UserInfo
   lang?: Lang
+  theme?: 'light' | 'dark'
   tabs?: MultiTab[]
 }
 

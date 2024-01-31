@@ -3,7 +3,9 @@ import { NSelect, type DataTableColumnKey, type SelectProps } from 'naive-ui'
 import { formItemInjectionKey } from 'naive-ui/es/_mixins/use-form-item'
 import ListSelectPane from '../list-select-pane'
 
-type Value = Record<string, any> | Record<string, any>[] | null
+interface Exposed {
+  paneRef?: InstanceType<typeof ListSelectPane>
+}
 
 const ListSelect = defineComponent({
   inheritAttrs: false,
@@ -19,7 +21,7 @@ const ListSelect = defineComponent({
       default: 'name'
     }
   },
-  setup(props, { attrs }) {
+  setup(props, { attrs, expose }) {
     const NFormItem = inject(formItemInjectionKey, null)
 
     const paneRef = ref<InstanceType<typeof ListSelectPane>>()
@@ -49,16 +51,17 @@ const ListSelect = defineComponent({
       const _value = paneRef.value?.value
       if (_value) {
         if (multiple.value) {
-          return _value.map((item: any) => item[rowKey.value])
+          return _value.map((item: any) => item[rowKey.value]).filter((item: any) => item)
         } else {
-          return (_value as Record<string, any>)[rowKey.value]
+          return (_value as Record<string, any>)[rowKey.value] || null
         }
       } else {
         return null
       }
     })
 
-    const handleUpdateValue = (newVal: Value | null) => {
+    // clear or multiple clear
+    const handleUpdateValue = (newVal: (string[] & number[]) | null) => {
       const _attrs = attrs as any
       const _value = _attrs.value
       const _newVal = newVal
@@ -82,6 +85,12 @@ const ListSelect = defineComponent({
       }
     )
 
+    const exposed: Exposed = {
+      paneRef: paneRef as unknown as InstanceType<typeof ListSelectPane>
+    }
+
+    expose(exposed)
+
     return () => (
       <>
         <NSelect
@@ -91,6 +100,7 @@ const ListSelect = defineComponent({
           {...(props.selectProps as any)}
           value={value.value}
           multiple={multiple.value}
+          max-tag-count="responsive"
           options={options.value}
           show={false}
           onUpdateShow={handleUpdateShow}
@@ -107,4 +117,4 @@ const ListSelect = defineComponent({
   }
 })
 
-export default ListSelect as typeof ListSelect & typeof ListSelectPane
+export default ListSelect as typeof ListSelect & typeof ListSelectPane & { new (): Exposed }

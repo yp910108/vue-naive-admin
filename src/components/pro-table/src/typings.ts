@@ -91,6 +91,7 @@ export type SettingColumn = {
   visible?: boolean
   fixed?: DataTableColumn['fixed']
   order?: number
+  initialOrder?: number
   renderLabel?: (label?: string) => VNodeChild
 }
 
@@ -128,7 +129,7 @@ export type ProTableColumnSpecific = SearchFieldColumn & {
   _order?: SettingColumn['order']
 }
 export type ProTableColumn<T = Record<string, unknown>> = DataTableColumn<T> &
-  ProTableColumnSpecific & {}
+  ProTableColumnSpecific
 
 export type RequestParams = Record<DataTableColumnKey, any> & {
   page?: number

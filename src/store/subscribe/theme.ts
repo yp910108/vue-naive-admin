@@ -3,13 +3,29 @@ import { storeToRefs } from 'pinia'
 import { useOsTheme, type GlobalThemeOverrides } from 'naive-ui'
 import { kebabCase } from 'lodash-es'
 import { useEventListener } from '@vueuse/core'
-import { getColorPalettes, getRgbOfColor, sessionStg } from '@/utils'
+import { getColorPalettes, getRgbOfColor, localStg, sessionStg } from '@/utils'
 import { useThemeStore } from '../modules'
+
+const DARK_CLASS = 'dark'
+
+/**
+ * 将 dark 类名添加到 document.documentELement
+ */
+const addDarkClassToDocument = () => {
+  document.documentElement.classList.add(DARK_CLASS)
+}
+
+/**
+ * 将 dark 类名从 document.documentELement 移除
+ */
+const removeDarkClassFromDocument = () => {
+  document.documentElement.classList.remove(DARK_CLASS)
+}
 
 type ThemeVars = Exclude<GlobalThemeOverrides['common'], undefined>
 type ThemeVarsKeys = keyof ThemeVars
 
-function addThemeCssVarsToHtml(themeVars: ThemeVars) {
+const addThemeCssVarsToHtml = (themeVars: ThemeVars) => {
   const keys = Object.keys(themeVars) as ThemeVarsKeys[]
   const style: string[] = []
   for (const key of keys) {
@@ -40,8 +56,20 @@ export default function subscribeThemeStore() {
     osTheme,
     (newVal) => {
       const isDark = newVal === 'dark'
-      if (theme.value.followSystemTheme) {
+      if (!localStg.get('theme') && theme.value.followSystemTheme) {
         themeStore.setDarkMode(isDark)
+      }
+    },
+    { immediate: true }
+  )
+
+  watch(
+    () => theme.value.darkMode,
+    (newDarkMode) => {
+      if (newDarkMode) {
+        addDarkClassToDocument()
+      } else {
+        removeDarkClassFromDocument()
       }
     },
     { immediate: true }

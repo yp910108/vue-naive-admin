@@ -7,6 +7,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { localStg } from '@/utils'
 import IconSunny from './icon-sunny.vue'
 import IconMoon from './icon-moon.vue'
 
@@ -31,6 +32,7 @@ const darkMode = computed({
     return props.dark
   },
   set(newVal: boolean) {
+    localStg.set('theme', newVal ? 'dark' : 'light')
     emit('update:dark', newVal)
   }
 })

@@ -31,7 +31,7 @@ import { useForm } from './hooks'
 import IconDown from './icon-down'
 import styles from './index.module.scss'
 
-export interface ExposedMethods {
+export interface Exposed {
   reload: () => void
   reset: () => void
   setDefaultValue: (key: DataTableColumnKey, value: any) => void
@@ -40,10 +40,6 @@ export interface ExposedMethods {
   getValues: (keys?: DataTableColumnKey[]) => Record<DataTableColumnKey, any>
   setValue: (key: DataTableColumnKey, value: any) => void
   setValues: (fields: Record<DataTableColumnKey, any>) => void
-}
-
-interface SearchExpose {
-  new (): ExposedMethods
 }
 
 const Search = defineComponent({
@@ -68,6 +64,9 @@ const Search = defineComponent({
       default: true
     },
     onSearch: {
+      type: Function as PropType<(form: any) => void>
+    },
+    onReset: {
       type: Function as PropType<(form: any) => void>
     }
   },
@@ -118,6 +117,7 @@ const Search = defineComponent({
             clearable={_clearable}
             disabled={_disabled}
             onUpdateValue={handleUpdateValue.bind(null, key)}
+            onKeyup={(e) => e.code === 'Enter' && handleSearch()}
           />
         )
       } else if (type === 'input-number') {
@@ -183,6 +183,7 @@ const Search = defineComponent({
             clearable={_clearable}
             disabled={_disabled}
             onUpdateValue={handleUpdateValue.bind(null, key)}
+            onKeyup={(e) => e.code === 'Enter' && handleSearch()}
           />
         )
       }
@@ -195,6 +196,8 @@ const Search = defineComponent({
 
     const handleReset = () => {
       resetForm()
+      const { onReset } = props
+      if (onReset) onReset(removeInvalidValues(form.value))
       handleSearch()
     }
 
@@ -219,7 +222,7 @@ const Search = defineComponent({
       }
     }
 
-    const exposedMethods: ExposedMethods = {
+    const exposed: Exposed = {
       reload: handleSearch,
       reset: handleReset,
       setDefaultValue: setDefaultForm,
@@ -230,7 +233,7 @@ const Search = defineComponent({
       setValues
     }
 
-    expose(exposedMethods)
+    expose(exposed)
 
     onMounted(handleSearch)
 
@@ -312,4 +315,4 @@ const Search = defineComponent({
   }
 })
 
-export default Search as typeof Search & SearchExpose
+export default Search as typeof Search & { new (): Exposed }

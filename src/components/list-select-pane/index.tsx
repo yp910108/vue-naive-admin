@@ -1,17 +1,15 @@
-import { computed, defineComponent, ref, type PropType, type Ref } from 'vue'
+import { computed, defineComponent, ref, type PropType, type StyleValue } from 'vue'
 import { NButton, NModal, type DataTableColumnKey, NSpace, type ModalProps } from 'naive-ui'
 import ProTable from '../pro-table'
 
 type Value = Record<string, any> | Record<string, any>[] | null
 
-interface ExposedMethods {
-  value: Ref<Value>
+interface Exposed {
+  tableRef?: InstanceType<typeof ProTable>
+  value: Value
+  checked: Value
   show: () => void
   hide: () => void
-}
-
-interface ListSelectExpose {
-  new (): ExposedMethods
 }
 
 type OnUpdateValue = (newVal: any) => void
@@ -24,7 +22,7 @@ const ListSelectPane = defineComponent({
       default: '选择'
     },
     modalProps: {
-      type: Object as PropType<ModalProps>
+      type: Object as PropType<ModalProps & { style: StyleValue }>
     },
     valueField: {
       type: String as PropType<string>
@@ -43,16 +41,17 @@ const ListSelectPane = defineComponent({
       type: [Function, Array] as PropType<OnUpdateValue | OnUpdateValue[]>
     },
     confirm: {
-      type: Function as PropType<(checked: Value) => Promise<void>>
+      type: Function as PropType<(checked: any) => Promise<void>>
     }
   },
   setup(props, { attrs, expose }) {
-    const cachedRows: Record<string, any>[] = []
-    const setCachedRows = (rows: Record<string, any>[]) => {
+    const cachedRows = ref<Record<DataTableColumnKey, any>[]>([])
+
+    const setCachedRows = (rows: Record<DataTableColumnKey, any>[]) => {
       for (const row of rows) {
-        const cachedRow = cachedRows.find((item) => item[rowKey.value] === row[rowKey.value])
+        const cachedRow = cachedRows.value.find((item) => item[rowKey.value] === row[rowKey.value])
         if (!cachedRow) {
-          cachedRows.push(row)
+          cachedRows.value.push(row)
         }
       }
     }
@@ -109,9 +108,11 @@ const ListSelectPane = defineComponent({
 
     const checkedRowKeys = ref<DataTableColumnKey[]>([])
 
-    const firstCheckedRow = computed(() => {
-      const firstKey = checkedRowKeys.value[0]
-      return cachedRows.find((row) => row[rowKey.value] === firstKey)
+    const checked = computed(() => {
+      const _checked = cachedRows.value.filter((row) =>
+        checkedRowKeys.value.includes(row[rowKey.value])
+      )
+      return multiple.value ? _checked : _checked[0]
     })
 
     const handleUpdateCheckedRowKeys = (rowKeys: DataTableColumnKey[]) => {
@@ -119,21 +120,18 @@ const ListSelectPane = defineComponent({
     }
 
     const handleConfirm = async () => {
-      const checked = multiple.value
-        ? cachedRows.filter((row) => checkedRowKeys.value.includes(row[rowKey.value]))
-        : firstCheckedRow.value
       if (props.confirm) {
         try {
           confirmLoading.value = true
-          await props.confirm(checked!)
+          await props.confirm(checked.value!)
           confirmLoading.value = false
-          value.value = checked!
+          value.value = checked.value!
           hide()
         } catch (e) {
           confirmLoading.value = false
         }
       } else {
-        value.value = checked!
+        value.value = checked.value!
         hide()
       }
     }
@@ -148,13 +146,11 @@ const ListSelectPane = defineComponent({
 
     const show = () => {
       tableRef.value?.reset()
-      const _value = value.value
-      checkedRowKeys.value = _value
-        ? multiple.value
-          ? _value.map((item: any) => item[rowKey.value])
-          : [(_value as Record<string, any>)[rowKey.value]]
-        : []
-      setCachedRows((_value ? (multiple.value ? _value : [_value]) : []) as Record<string, any>[])
+      const _value = (
+        (value.value ? (multiple.value ? value.value : [value.value]) : []) as Record<string, any>[]
+      ).filter((item) => !!item[rowKey.value])
+      checkedRowKeys.value = _value.map((item) => item[rowKey.value])
+      setCachedRows(_value)
       visible.value = true
     }
 
@@ -162,9 +158,15 @@ const ListSelectPane = defineComponent({
       visible.value = false
     }
 
-    const exposedMethods: ExposedMethods = { show, hide, value }
+    const exposed: Exposed = {
+      tableRef: tableRef as unknown as InstanceType<typeof ProTable>,
+      value,
+      checked,
+      show,
+      hide
+    }
 
-    expose(exposedMethods)
+    expose(exposed)
 
     return () => (
       <NModal
@@ -182,8 +184,9 @@ const ListSelectPane = defineComponent({
           default: () => (
             <ProTable
               ref={tableRef}
-              segmented={false}
               action={false}
+              searchStyle={{ padding: '15px 10px 10px' }}
+              contentStyle={{ padding: '0 10px' }}
               {...(attrs as any)}
               rowKey={(row) => row[rowKey.value]}
               checkedRowKeys={checkedRowKeys.value}
@@ -200,11 +203,11 @@ const ListSelectPane = defineComponent({
                 disabled={!Object.keys(checkedRowKeys.value).length}
                 onClick={handleConfirm}
               >
-                {multiple.value
+                {(multiple.value && !checkedRowKeys.value.length) || !checked.value
+                  ? '确 定'
+                  : multiple.value
                   ? `确 定（已选${checkedRowKeys.value.length}条）`
-                  : firstCheckedRow.value
-                  ? `确 定（已选${firstCheckedRow.value[props.labelField]}）`
-                  : '确 定'}
+                  : `确 定（已选${checked.value[props.labelField as any]}）`}
               </NButton>
             </NSpace>
           )
@@ -214,4 +217,4 @@ const ListSelectPane = defineComponent({
   }
 })
 
-export default ListSelectPane as typeof ListSelectPane & typeof ProTable & ListSelectExpose
+export default ListSelectPane as typeof ListSelectPane & typeof ProTable & { new (): Exposed }

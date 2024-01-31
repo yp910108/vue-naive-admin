@@ -81,8 +81,8 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
     settingColumns,
     tableColumns,
     updateColumnsVisible,
-    updateColumnsOrder,
     updateColumnsFixed,
+    updateColumnsOrder,
     resetColumns
   }
 }

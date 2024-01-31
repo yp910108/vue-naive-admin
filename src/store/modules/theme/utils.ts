@@ -1,5 +1,5 @@
 import { settings } from '@/settings'
-import { getColorPalette, sessionStg } from '@/utils'
+import { getColorPalette, localStg, sessionStg } from '@/utils'
 
 /**
  * 初始化主题配置
@@ -7,10 +7,16 @@ import { getColorPalette, sessionStg } from '@/utils'
  */
 export function initTheme() {
   const _settings = sessionStg.get('settings') ?? settings
+  const theme = localStg.get('theme')
   const primaryColor = _settings.primaryColor
   const infoColor = _settings.isCustomizeInfoColor ? _settings.otherColor.info : primaryColor
   const otherColor = { ..._settings.otherColor, info: infoColor }
-  return { ..._settings, primaryColor, otherColor }
+  return {
+    ..._settings,
+    darkMode: theme ? theme === 'dark' : settings.darkMode,
+    primaryColor,
+    otherColor
+  }
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'
@@ -52,20 +58,4 @@ export function getThemeColors(colors: Record<ColorType, string>) {
   }
 
   return themeColors
-}
-
-const DARK_CLASS = 'dark'
-
-/**
- * 将 dark 类名添加到 document.documentELement
- */
-export function addDarkClassToDocument() {
-  document.documentElement.classList.add(DARK_CLASS)
-}
-
-/**
- * 将 dark 类名从 document.documentELement 移除
- */
-export function removeDarkClassFromDocument() {
-  document.documentElement.classList.remove(DARK_CLASS)
 }

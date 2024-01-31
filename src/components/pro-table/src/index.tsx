@@ -17,7 +17,7 @@ import {
   type DataTableColumnKey,
   type PaginationProps
 } from 'naive-ui'
-import Search, { type ExposedMethods as SearchExposedMethods } from './search'
+import Search, { type Exposed as SearchExposed } from './search'
 import type {
   ProTableColumn,
   RenderActionParams,
@@ -35,19 +35,19 @@ import { useColumns } from './hooks'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 import styles from './index.module.scss'
 
-type ExposedMethods = {
-  reload: SearchExposedMethods['reload']
-  reset: SearchExposedMethods['reset']
-  setSearchDefaultValue: SearchExposedMethods['setDefaultValue']
-  setSearchDefaultValues: SearchExposedMethods['setDefaultValues']
-  getSearchValue: SearchExposedMethods['getValue']
-  getSearchValues: SearchExposedMethods['getValues']
-  setSearchValue: SearchExposedMethods['setValue']
-  setSearchValues: SearchExposedMethods['setValues']
-}
+type Data = Record<string, any>
 
-interface ProTableExpose {
-  new (): ExposedMethods
+type Exposed = {
+  tableData: Data[]
+  $elTable: HTMLDivElement
+  reload: SearchExposed['reload']
+  reset: SearchExposed['reset']
+  setSearchDefaultValue: SearchExposed['setDefaultValue']
+  setSearchDefaultValues: SearchExposed['setDefaultValues']
+  getSearchValue: SearchExposed['getValue']
+  getSearchValues: SearchExposed['getValues']
+  setSearchValue: SearchExposed['setValue']
+  setSearchValues: SearchExposed['setValues']
 }
 
 type Search =
@@ -156,12 +156,18 @@ const ProTable = defineComponent({
       type: Function as PropType<
         (params: RequestParams) => Promise<{
           itemCount?: number
-          data?: Record<string, any>[]
+          data?: Data[]
         } | void>
       >
     },
     onAfterRequest: {
       type: Function as PropType<(data: Record<DataTableColumnKey, any>[]) => void>
+    },
+    onSearch: {
+      type: Function as PropType<(params?: Record<DataTableColumnKey, any>) => void>
+    },
+    onReset: {
+      type: Function as PropType<(form: any) => void>
     }
   },
   setup(props, { attrs, expose }) {
@@ -223,7 +229,11 @@ const ProTable = defineComponent({
     }
     const pagination = ref(mergePagination())
 
-    const data = ref<Record<string, any>[]>([])
+    const data = ref<Data[]>([])
+
+    const tableRef = ref<InstanceType<typeof NDataTable>>()
+
+    const tableEl = computed(() => tableRef.value?.$el)
 
     const fetch = async () => {
       const _params = { ...params.value }
@@ -270,6 +280,8 @@ const ProTable = defineComponent({
     }
 
     const handleSearch = (_params?: Record<DataTableColumnKey, any>) => {
+      const { onSearch } = props
+      if (onSearch) onSearch(_params)
       setPage(1)
       params.value = _params
       fetch()
@@ -292,7 +304,9 @@ const ProTable = defineComponent({
       }
     }
 
-    const exposedMethods: ExposedMethods = {
+    const exposed: Exposed = {
+      tableData: data as unknown as Data[],
+      $elTable: tableEl as unknown as HTMLDivElement,
       reload,
       reset,
       setSearchDefaultValue: (...args) => searchRef.value?.setDefaultValue(...args),
@@ -303,7 +317,7 @@ const ProTable = defineComponent({
       setSearchValues: (...args) => searchRef.value?.setValues(...args)
     }
 
-    expose(exposedMethods)
+    expose(exposed)
 
     onMounted(() => {
       if (!props.search || typeof props.search === 'function') {
@@ -326,6 +340,7 @@ const ProTable = defineComponent({
     const renderTable = () => (
       // @ts-ignore
       <NDataTable
+        ref={tableRef}
         flexHeight
         remote
         bordered={false}
@@ -339,7 +354,7 @@ const ProTable = defineComponent({
         pagination={pagination.value}
         onUpdatePage={handleUpatePage}
         onUpdatePageSize={handleUpatePageSize}
-        class="flex-grow h-0"
+        class="flex-grow"
         {...restAttrs.value}
       />
     )
@@ -347,7 +362,7 @@ const ProTable = defineComponent({
     return () => (
       <NSpace
         vertical
-        size={props.segmented ? 16 : 0}
+        size={props.segmented ? 10 : 0}
         wrapItem={false}
         class={['h-full', styles['pro-table'], attrs.class]}
         style={attrs.style}
@@ -363,6 +378,7 @@ const ProTable = defineComponent({
               clearable={typeof props.search === 'object' ? props.search.clearable : undefined}
               action={typeof props.search === 'object' ? props.search.action : undefined}
               onSearch={handleSearch}
+              onReset={props.onReset}
               class="flex-shrink-0"
               contentStyle={props.searchStyle}
             />
@@ -370,11 +386,10 @@ const ProTable = defineComponent({
         ) : undefined}
         <NCard
           bordered={false}
-          class="flex-grow h-0"
+          class="flex-grow"
           contentStyle={{
             display: 'flex',
             flexDirection: 'column',
-            height: 0,
             paddingTop: props.segmented ? '20px' : '10px',
             ...props.contentStyle
           }}
@@ -401,4 +416,4 @@ const ProTable = defineComponent({
   }
 })
 
-export default ProTable as typeof ProTable & ProTableExpose & DefineComponent<TableAttrs>
+export default ProTable as typeof ProTable & { new (): Exposed } & DefineComponent<TableAttrs>
