@@ -1,8 +1,10 @@
 import { computed, defineComponent, ref, type PropType, type StyleValue } from 'vue'
-import { NButton, NModal, type DataTableColumnKey, NSpace, type ModalProps } from 'naive-ui'
+import { NButton, NModal, type DataTableRowKey, NSpace, type ModalProps } from 'naive-ui'
 import ProTable from '../pro-table'
 
-type Value = Record<string, any> | Record<string, any>[] | null
+type Row = Record<DataTableRowKey, any>
+
+type Value = Row | Row[] | null
 
 interface Exposed {
   tableRef?: InstanceType<typeof ProTable>
@@ -41,30 +43,17 @@ const ListSelectPane = defineComponent({
       type: [Function, Array] as PropType<OnUpdateValue | OnUpdateValue[]>
     },
     confirm: {
-      type: Function as PropType<(checked: any) => Promise<void>>
+      type: Function as PropType<(value: any) => Promise<void>>
     }
   },
   setup(props, { attrs, expose }) {
-    const cachedRows = ref<Record<DataTableColumnKey, any>[]>([])
-
-    const setCachedRows = (rows: Record<DataTableColumnKey, any>[]) => {
-      for (const row of rows) {
-        const cachedRow = cachedRows.value.find((item) => item[rowKey.value] === row[rowKey.value])
-        if (!cachedRow) {
-          cachedRows.value.push(row)
-        }
-      }
-    }
-
     const confirmLoading = ref(false)
 
     const uncontrolledValue = ref<Value>(null)
 
     const value = computed({
-      get() {
-        return typeof props.value === 'undefined' ? uncontrolledValue.value : props.value
-      },
-      set(newVal: Value) {
+      get: () => (typeof props.value === 'undefined' ? uncontrolledValue.value : props.value),
+      set: (newVal: Value) => {
         if (typeof props.value === 'undefined') {
           uncontrolledValue.value = newVal
         }
@@ -90,54 +79,60 @@ const ListSelectPane = defineComponent({
       }
     })
 
-    // note: use rowKey instead of props.valueField
-    const rowKey = computed(() => {
+    // note: use rowKey(row) instead of props.valueField
+    const rowKey = (row?: Row) => {
+      type RowKey = ((row?: Row) => DataTableRowKey) | undefined
+      const _rowKey = (attrs.rowKey ?? attrs['row-key']) as RowKey
       if (props.valueField) {
         return props.valueField
-      } else if (attrs.rowKey) {
-        return (attrs.rowKey as () => DataTableColumnKey)()
+      } else if (_rowKey) {
+        return _rowKey(row)
       } else {
         return 'id'
       }
-    })
+    }
 
     const multiple = computed(() => {
       const selectionColumn = (attrs.columns as any).find(({ type }: any) => type === 'selection')
       return !selectionColumn || selectionColumn.multiple || selectionColumn.multiple === undefined
     })
 
-    const checkedRowKeys = ref<DataTableColumnKey[]>([])
+    const checkedRows = ref<Row[]>([])
 
-    const checked = computed(() => {
-      const _checked = cachedRows.value.filter((row) =>
-        checkedRowKeys.value.includes(row[rowKey.value])
-      )
-      return multiple.value ? _checked : _checked[0]
+    const checked = computed({
+      get: () => (multiple.value ? checkedRows.value : checkedRows.value[0]),
+      set: (newChecked) => {
+        checkedRows.value = newChecked
+          ? Array.isArray(newChecked)
+            ? newChecked
+            : [newChecked]
+          : []
+      }
     })
 
-    const handleUpdateCheckedRowKeys = (rowKeys: DataTableColumnKey[]) => {
-      checkedRowKeys.value = rowKeys
+    const handleUpdateCheckedRowKeys = (_keys: DataTableRowKey[], rows: Row[]) => {
+      checkedRows.value = rows
     }
 
     const handleConfirm = async () => {
       if (props.confirm) {
         try {
           confirmLoading.value = true
-          await props.confirm(checked.value!)
+          await props.confirm(checked.value)
           confirmLoading.value = false
-          value.value = checked.value!
+          value.value = checked.value
           hide()
         } catch (e) {
           confirmLoading.value = false
         }
       } else {
-        value.value = checked.value!
+        value.value = checked.value
         hide()
       }
     }
 
     const handleAfterLeave = () => {
-      checkedRowKeys.value = []
+      checkedRows.value = []
     }
 
     const tableRef = ref<InstanceType<typeof ProTable>>()
@@ -145,13 +140,11 @@ const ListSelectPane = defineComponent({
     const visible = ref(false)
 
     const show = () => {
-      tableRef.value?.reset()
-      const _value = (
-        (value.value ? (multiple.value ? value.value : [value.value]) : []) as Record<string, any>[]
-      ).filter((item) => !!item[rowKey.value])
-      checkedRowKeys.value = _value.map((item) => item[rowKey.value])
-      setCachedRows(_value)
       visible.value = true
+      tableRef.value?.reset()
+      checkedRows.value = (
+        (value.value ? (multiple.value ? value.value : [value.value]) : []) as Row[]
+      ).filter((row) => !!row[rowKey(row)])
     }
 
     const hide = () => {
@@ -188,10 +181,32 @@ const ListSelectPane = defineComponent({
               searchStyle={{ padding: '15px 10px 10px' }}
               contentStyle={{ padding: '0 10px' }}
               {...(attrs as any)}
-              rowKey={(row) => row[rowKey.value]}
-              checkedRowKeys={checkedRowKeys.value}
+              rowKey={(row) => row[rowKey(row)]}
+              checkedRowKeys={checkedRows.value.map((row) => row[rowKey(row)])}
               onUpdateCheckedRowKeys={handleUpdateCheckedRowKeys}
-              onAfterRequest={setCachedRows}
+              rowProps={(row) => {
+                const rowProps = (attrs.rowProps ?? attrs['row-props']) as any
+                return {
+                  ...rowProps?.(row),
+                  onClick: (e) => {
+                    rowProps?.(row)?.onClick?.(e)
+                    const className = (e.target as HTMLDivElement).className
+                    if (className.includes('checkbox')) return
+                    if (multiple.value) {
+                      const index = checkedRows.value.findIndex(
+                        (_row) => _row[rowKey(_row)] === row[rowKey(row)]
+                      )
+                      if (index !== -1) {
+                        checkedRows.value.splice(index, 1)
+                      } else {
+                        checkedRows.value.push(row)
+                      }
+                    } else {
+                      checkedRows.value = [row]
+                    }
+                  }
+                }
+              }}
             />
           ),
           footer: () => (
@@ -200,14 +215,14 @@ const ListSelectPane = defineComponent({
               <NButton
                 type="primary"
                 loading={confirmLoading.value}
-                disabled={!Object.keys(checkedRowKeys.value).length}
+                disabled={!checkedRows.value.length}
                 onClick={handleConfirm}
               >
-                {(multiple.value && !checkedRowKeys.value.length) || !checked.value
+                {!checkedRows.value.length
                   ? '确 定'
                   : multiple.value
-                  ? `确 定（已选${checkedRowKeys.value.length}条）`
-                  : `确 定（已选${checked.value[props.labelField as any]}）`}
+                  ? `确 定（已选${checkedRows.value.length}条）`
+                  : `确 定（已选${checkedRows.value[0][props.labelField]}）`}
               </NButton>
             </NSpace>
           )
@@ -218,3 +233,5 @@ const ListSelectPane = defineComponent({
 })
 
 export default ListSelectPane as typeof ListSelectPane & typeof ProTable & { new (): Exposed }
+
+export type { Row as ListSelectPaneRow }

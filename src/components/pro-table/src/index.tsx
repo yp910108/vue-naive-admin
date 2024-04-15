@@ -15,6 +15,7 @@ import {
   NH4,
   NSpace,
   type DataTableColumnKey,
+  type DataTableRowKey,
   type PaginationProps
 } from 'naive-ui'
 import Search, { type Exposed as SearchExposed } from './search'
@@ -54,9 +55,12 @@ type Search =
   | boolean
   | ((searchParams: RenderSearchParams) => VNodeChild)
   | {
+      cols?: number
       labelWidth?: string | number | 'auto'
       clearable?: boolean
+      disabled?: boolean
       action?: SearchAction
+      showActionCollapse?: boolean
     }
 
 type Action = boolean | ((actionParams: RenderActionParams) => VNodeChild)
@@ -161,13 +165,13 @@ const ProTable = defineComponent({
       >
     },
     onAfterRequest: {
-      type: Function as PropType<(data: Record<DataTableColumnKey, any>[]) => void>
+      type: Function as PropType<(data: Record<DataTableRowKey, any>[]) => void>
     },
     onSearch: {
-      type: Function as PropType<(params?: Record<DataTableColumnKey, any>) => void>
+      type: Function as PropType<(params?: Record<DataTableRowKey, any>) => void>
     },
     onReset: {
-      type: Function as PropType<(form: any) => void>
+      type: Function as PropType<() => void>
     }
   },
   setup(props, { attrs, expose }) {
@@ -374,9 +378,14 @@ const ProTable = defineComponent({
             <Search
               ref={searchRef}
               columns={searchColumns.value}
+              cols={typeof props.search === 'object' ? props.search.cols : undefined}
               labelWidth={typeof props.search === 'object' ? props.search.labelWidth : undefined}
               clearable={typeof props.search === 'object' ? props.search.clearable : undefined}
+              disabled={typeof props.search === 'object' ? props.search.disabled : undefined}
               action={typeof props.search === 'object' ? props.search.action : undefined}
+              showActionCollapse={
+                typeof props.search === 'object' ? props.search.showActionCollapse : undefined
+              }
               onSearch={handleSearch}
               onReset={props.onReset}
               class="flex-shrink-0"

@@ -82,7 +82,15 @@ export type SearchColumn = FieldColumn & {
   disabled?: boolean | ((params: any) => boolean)
   onChange?: OnSearchChange | { watch?: boolean; immediate?: boolean; handler: OnSearchChange }
   renderLabel?: (label?: string) => VNodeChild
-  renderField?: (params: any, key: DataTableColumnKey) => VNodeChild
+  renderField?: (
+    params: any,
+    key: DataTableColumnKey,
+    info: {
+      clearable: boolean
+      disabled: boolean
+      options: any
+    }
+  ) => VNodeChild
 }
 
 export type SettingColumn = {

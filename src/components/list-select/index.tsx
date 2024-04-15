@@ -1,10 +1,12 @@
 import { computed, defineComponent, inject, ref, watch, type PropType } from 'vue'
-import { NSelect, type DataTableColumnKey, type SelectProps } from 'naive-ui'
+import { NSelect, type DataTableRowKey, type SelectProps } from 'naive-ui'
 import { formItemInjectionKey } from 'naive-ui/es/_mixins/use-form-item'
-import ListSelectPane from '../list-select-pane'
+import type { ProTable } from '../pro-table'
+import ListSelectPane, { type ListSelectPaneRow as Row } from '../list-select-pane'
 
 interface Exposed {
   paneRef?: InstanceType<typeof ListSelectPane>
+  tableRef?: InstanceType<typeof ProTable>
 }
 
 const ListSelect = defineComponent({
@@ -12,13 +14,6 @@ const ListSelect = defineComponent({
   props: {
     selectProps: {
       type: Object as PropType<SelectProps>
-    },
-    valueField: {
-      type: String as PropType<string>
-    },
-    labelField: {
-      type: String as PropType<string>,
-      default: 'name'
     }
   },
   setup(props, { attrs, expose }) {
@@ -26,48 +21,57 @@ const ListSelect = defineComponent({
 
     const paneRef = ref<InstanceType<typeof ListSelectPane>>()
 
-    // note: use rowKey instead of props.valueField
-    const rowKey = computed(() => {
-      if (props.valueField) {
-        return props.valueField
-      } else if (attrs.rowKey) {
-        return (attrs.rowKey as () => DataTableColumnKey)()
-      } else {
-        return 'id'
-      }
-    })
+    const tableRef = computed(() => paneRef.value?.tableRef)
 
     const multiple = computed(() => {
       const selectionColumn = (attrs.columns as any).find(({ type }: any) => type === 'selection')
       return !selectionColumn || selectionColumn.multiple || selectionColumn.multiple === undefined
     })
 
-    const options = computed(() => {
-      const _value = paneRef.value?.value
-      return _value ? (multiple.value ? _value : [_value]) : []
+    // note: use rowKey(row) instead of attrs.valueField
+    const rowKey = (row?: Row) => {
+      type RowKey = ((row?: Row) => DataTableRowKey) | undefined
+      const _rowKey = (attrs.rowKey ?? attrs['row-key']) as RowKey
+      if (attrs.valueField) {
+        return attrs.valueField as string
+      } else if (_rowKey) {
+        return _rowKey(row)
+      } else {
+        return 'id'
+      }
+    }
+
+    const labelField = computed(() => {
+      const _labelField = (attrs.labelField ?? attrs['label-field']) as string
+      return _labelField ?? 'name'
     })
 
-    const value = computed(() => {
-      const _value = paneRef.value?.value
-      if (_value) {
-        if (multiple.value) {
-          return _value.map((item: any) => item[rowKey.value]).filter((item: any) => item)
+    const selectValue = computed(() => {
+      const value = paneRef.value?.value
+      if (value) {
+        if (Array.isArray(value)) {
+          return value.filter((row: Row) => row).map((row: Row) => row[rowKey(row)])
         } else {
-          return (_value as Record<string, any>)[rowKey.value] || null
+          return value[rowKey(value)]
         }
       } else {
-        return null
+        return value
       }
+    })
+
+    const selectOptions = computed(() => {
+      const _value = paneRef.value?.value
+      const value = _value ? (Array.isArray(_value) ? _value : [_value]) : []
+      return value.map((item) => ({ value: item[rowKey(item)], label: item[labelField.value] }))
     })
 
     // clear or multiple clear
     const handleUpdateValue = (newVal: (string[] & number[]) | null) => {
-      const _attrs = attrs as any
-      const _value = _attrs.value
-      const _newVal = newVal
-        ? _value?.filter((item: any) => newVal.includes(item[rowKey.value]))
-        : newVal
       if (paneRef.value) {
+        const _value = paneRef.value.value
+        const _newVal = newVal
+          ? _value?.filter((item: Row) => newVal.includes(item[rowKey(item)]))
+          : newVal
         paneRef.value.value = _newVal
       }
     }
@@ -86,7 +90,8 @@ const ListSelect = defineComponent({
     )
 
     const exposed: Exposed = {
-      paneRef: paneRef as unknown as InstanceType<typeof ListSelectPane>
+      paneRef: paneRef as unknown as InstanceType<typeof ListSelectPane>,
+      tableRef: tableRef as unknown as InstanceType<typeof ProTable>
     }
 
     expose(exposed)
@@ -94,24 +99,20 @@ const ListSelect = defineComponent({
     return () => (
       <>
         <NSelect
-          labelField={props.labelField}
-          valueField={rowKey.value}
           clearable
           {...(props.selectProps as any)}
-          value={value.value}
+          valueField="value"
+          labelField="label"
+          value={selectValue.value}
           multiple={multiple.value}
           max-tag-count="responsive"
-          options={options.value}
+          options={selectOptions.value}
           show={false}
+          filterable={false}
           onUpdateShow={handleUpdateShow}
           onUpdateValue={handleUpdateValue}
         />
-        <ListSelectPane
-          ref={paneRef}
-          {...(attrs as any)}
-          valueField={rowKey.value}
-          labelField={props.labelField}
-        />
+        <ListSelectPane ref={paneRef} {...(attrs as any)} />
       </>
     )
   }

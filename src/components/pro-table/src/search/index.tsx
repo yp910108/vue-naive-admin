@@ -3,6 +3,7 @@ import {
   defineComponent,
   onMounted,
   ref,
+  watch,
   type CSSProperties,
   type PropType,
   type Ref
@@ -18,6 +19,7 @@ import {
   NInputNumber,
   NSelect,
   NSpace,
+  NTooltip,
   NTreeSelect,
   NGridItem,
   NFormItem,
@@ -28,7 +30,7 @@ import { removeInvalidValues } from '@/utils'
 import type { SearchAction, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
 import { useForm } from './hooks'
-import IconDown from './icon-down'
+import { IconDown, IconArrowRight } from './icons'
 import styles from './index.module.scss'
 
 export interface Exposed {
@@ -51,6 +53,9 @@ const Search = defineComponent({
       type: Array as PropType<SearchColumn[]>,
       required: true
     },
+    cols: {
+      type: Number as PropType<number>
+    },
     labelWidth: {
       type: [String, Number] as PropType<string | number | 'auto'>,
       default: 105
@@ -59,22 +64,36 @@ const Search = defineComponent({
       type: Boolean as PropType<boolean>,
       default: true
     },
+    disabled: {
+      type: Boolean as PropType<boolean>,
+      default: false
+    },
     action: {
       type: [Boolean, Function] as PropType<SearchAction>,
+      default: true
+    },
+    showActionCollapse: {
+      type: Boolean as PropType<boolean>,
       default: true
     },
     onSearch: {
       type: Function as PropType<(form: any) => void>
     },
     onReset: {
-      type: Function as PropType<(form: any) => void>
+      type: Function as PropType<() => void>
     }
   },
   setup(props, { expose }) {
     const { form, getForm, setForm, setDefaultForm, resetForm } = useForm(props.columns)
 
-    const collapsed = ref(true)
+    const collapsed = ref(props.showActionCollapse)
+
     const collapsedRows = ref(1)
+
+    watch(
+      () => props.showActionCollapse,
+      (newVal) => (collapsed.value = newVal)
+    )
 
     const gridRef = ref<InstanceType<typeof NGrid>>()
 
@@ -100,16 +119,27 @@ const Search = defineComponent({
       }
     }
 
+    const showTooltips = ref<Record<DataTableColumnKey, boolean>>({})
+
+    const setShowToolTips = (key: DataTableColumnKey, newVal: boolean) => {
+      showTooltips.value[key] = newVal
+    }
+
     const renderField = (
       form: Ref<any>,
       { key, renderField, type, clearable, disabled, options }: SearchColumn
     ) => {
-      if (renderField) {
-        return renderField(form.value, key)
-      }
       const _clearable = clearable ?? props.clearable
-      const _disabled = typeof disabled === 'function' ? disabled(form.value) : disabled
+      const _disabled =
+        typeof disabled === 'function' ? disabled(form.value) : disabled ?? props.disabled
       const _options: any = typeof options === 'function' ? options() : options
+      if (renderField) {
+        return renderField(form.value, key, {
+          clearable: _clearable,
+          disabled: _disabled,
+          options: _options
+        })
+      }
       if (type === 'input') {
         return (
           <NInput
@@ -167,15 +197,37 @@ const Search = defineComponent({
           />
         )
       } else if (DATE_PICKER_TYPES.includes(type)) {
-        return (
+        const DatePicker = (
           <NDatePicker
             formattedValue={form.value[key]}
             type={type}
             clearable={_clearable}
             disabled={_disabled}
             onUpdateFormattedValue={handleUpdateValue.bind(null, key)}
+            // @ts-ignore
+            onMouseenter={setShowToolTips.bind(null, key, true)}
+            onMouseleave={setShowToolTips.bind(null, key, false)}
           />
         )
+        if (type === 'datetimerange') {
+          return (
+            <NTooltip show={!!form.value[key] && showTooltips.value[key]}>
+              {{
+                default: () =>
+                  form.value[key] && (
+                    <NSpace wrapItem={false} align="center">
+                      {form.value[key][0]}
+                      <IconArrowRight class="inline" />
+                      {form.value[key][1]}
+                    </NSpace>
+                  ),
+                trigger: () => DatePicker
+              }}
+            </NTooltip>
+          )
+        } else {
+          return DatePicker
+        }
       } else {
         return (
           <NInput
@@ -197,7 +249,7 @@ const Search = defineComponent({
     const handleReset = () => {
       resetForm()
       const { onReset } = props
-      if (onReset) onReset(removeInvalidValues(form.value))
+      if (onReset) onReset()
       handleSearch()
     }
 
@@ -208,7 +260,7 @@ const Search = defineComponent({
     }
 
     const getValues = (keys?: DataTableColumnKey[]) => {
-      const defaultKeys = props.columns.map(({ key }) => key)
+      const defaultKeys = Object.keys(form.value)
       const result: Record<DataTableColumnKey, any> = {}
       for (const key of keys ?? defaultKeys) {
         result[key] = getForm(key)
@@ -254,7 +306,7 @@ const Search = defineComponent({
         >
           <NGrid
             ref={gridRef}
-            cols={COLS}
+            cols={props.cols ?? COLS}
             collapsed={collapsed.value}
             collapsedRows={collapsedRows.value}
             xGap={24}
@@ -275,39 +327,43 @@ const Search = defineComponent({
                 </NFormItem>
               </NGridItem>
             ))}
-            <NGridItem suffix span={1} class="pro-table-search__action">
-              {{
-                default: ({ overflow }: { overflow: boolean }) => {
-                  return (
-                    <NFormItem>
-                      <NSpace wrapItem={false}>
-                        {props.action
-                          ? typeof props.action === 'function'
-                            ? props.action({ vnodes: renderSearchAction() })
-                            : renderSearchAction()
-                          : undefined}
-                        {overflow || !collapsed.value ? (
-                          <NButton
-                            type="primary"
-                            text
-                            icon-placement="right"
-                            onClick={() => (collapsed.value = !collapsed.value)}
-                          >
-                            {{
-                              default: () =>
-                                collapsed.value
-                                  ? $translate('proTable.searchAction.expand')
-                                  : $translate('proTable.searchAction.collapse'),
-                              icon: () => <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
-                            }}
-                          </NButton>
-                        ) : undefined}
-                      </NSpace>
-                    </NFormItem>
-                  )
-                }
-              }}
-            </NGridItem>
+            {(props.action || props.showActionCollapse) && (
+              <NGridItem suffix span={1} class="pro-table-search__action">
+                {{
+                  default: ({ overflow }: { overflow: boolean }) => {
+                    return (
+                      <NFormItem>
+                        <NSpace wrapItem={false}>
+                          {props.action
+                            ? typeof props.action === 'function'
+                              ? props.action({ vnodes: renderSearchAction() })
+                              : renderSearchAction()
+                            : undefined}
+                          {props.showActionCollapse && (overflow || !collapsed.value) ? (
+                            <NButton
+                              type="primary"
+                              text
+                              icon-placement="right"
+                              onClick={() => (collapsed.value = !collapsed.value)}
+                            >
+                              {{
+                                default: () =>
+                                  collapsed.value
+                                    ? $translate('proTable.searchAction.expand')
+                                    : $translate('proTable.searchAction.collapse'),
+                                icon: () => (
+                                  <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
+                                )
+                              }}
+                            </NButton>
+                          ) : undefined}
+                        </NSpace>
+                      </NFormItem>
+                    )
+                  }
+                }}
+              </NGridItem>
+            )}
           </NGrid>
         </NForm>
       </NCard>

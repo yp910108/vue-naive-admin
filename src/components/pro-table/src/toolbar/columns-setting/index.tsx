@@ -50,11 +50,10 @@ export default defineComponent({
           sortable.value = Sortable.create(el, {
             animation: 200,
             easing: 'linear',
-            forceFallback: true,
-            onEnd: ({ oldIndex, newIndex }) => {
+            onEnd: ({ newIndex, oldIndex }) => {
               if (
-                typeof oldIndex === 'undefined' ||
                 typeof newIndex === 'undefined' ||
+                typeof oldIndex === 'undefined' ||
                 newIndex === oldIndex
               )
                 return
