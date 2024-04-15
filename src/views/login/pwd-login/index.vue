@@ -15,7 +15,7 @@
       />
     </n-form-item>
     <n-space :vertical="true" :size="24">
-      <div class="flex-y-center justify-between">
+      <div class="flex justify-between items-center">
         <n-checkbox v-model:checked="rememberMe">
           {{ $translate('login.pwdLogin.rememberMe') }}
         </n-checkbox>
@@ -33,7 +33,7 @@
       >
         {{ $translate('login.confirm') }}
       </n-button>
-      <div class="flex-y-center justify-between">
+      <div class="flex justify-between items-center">
         <n-button class="flex-1" :block="true" @click="toLoginModule('code-login')">
           {{ $translate('login.codeLogin.title') }}
         </n-button>

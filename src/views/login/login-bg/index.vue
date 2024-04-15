@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute-lt z-1 wh-full overflow-hidden">
+  <div class="absolute left-0 top-0 z-1 w-full h-full overflow-hidden">
     <div class="absolute -right-300px -top-900px <sm:(-right-100px -top-1170px)">
       <corner-top :start-color="lightColor" :end-color="darkColor" />
     </div>

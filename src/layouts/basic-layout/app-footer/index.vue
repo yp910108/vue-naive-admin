@@ -1,5 +1,8 @@
 <template>
-  <dark-mode-container class="flex-center h-full" :inverted="theme.footer.inverted">
+  <dark-mode-container
+    class="flex justify-center items-center h-full"
+    :inverted="theme.footer.inverted"
+  >
     <span>Copyright ©2023 Vue Naive Admin</span>
   </dark-mode-container>
 </template>

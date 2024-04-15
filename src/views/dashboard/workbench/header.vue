@@ -1,7 +1,7 @@
 <template>
   <n-card :bordered="false" class="rounded-8px shadow-sm">
-    <div class="flex-y-center justify-between">
-      <div class="flex-y-center">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center">
         <icon-avatar class="text-70px" />
         <div class="pl-12px">
           <h3 class="text-18px font-semibold">

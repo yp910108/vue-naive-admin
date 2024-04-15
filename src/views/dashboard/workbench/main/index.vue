@@ -1,10 +1,15 @@
 <template>
-  <n-grid :item-responsive="true" :x-gap="16" :y-gap="16">
+  <n-grid
+    :item-responsive="true"
+    :x-gap="16"
+    :y-gap="16"
+    :style="{ '--primary-color': themeVars.primaryColor }"
+  >
     <n-grid-item span="0:24 640:24 1024:16">
       <n-space :vertical="true" :size="16">
         <n-card title="项目主要技术栈" :bordered="false" size="small" class="rounded-8px shadow-sm">
           <template #header-extra>
-            <a class="text-primary" href="javascript:;">更多技术栈</a>
+            <a class="text-[var(--primary-color)]" href="javascript:;">更多技术栈</a>
           </template>
           <n-grid :item-responsive="true" responsive="screen" cols="m:2 l:3" :x-gap="8" :y-gap="8">
             <n-grid-item v-for="item in technology" :key="item.id">
@@ -14,7 +19,7 @@
         </n-card>
         <n-card title="动态" :bordered="false" size="small" class="rounded-8px shadow-sm">
           <template #header-extra>
-            <a class="text-primary" href="javascript:;">更多动态</a>
+            <a class="text-[var(--primary-color)]" href="javascript:;">更多动态</a>
           </template>
           <n-list>
             <n-list-item v-for="item in activity" :key="item.id">
@@ -37,8 +42,8 @@
           </n-grid>
         </n-card>
         <n-card title="创意" :bordered="false" size="small" class="rounded-8px shadow-sm">
-          <div class="flex-center h-380px">
-            <icon-banner class="text-400px sm:text-320px text-primary" />
+          <div class="flex justify-center items-center h-380px">
+            <icon-banner class="text-400px sm:text-320px text-[var(--primary-color)]" />
           </div>
         </n-card>
       </n-space>
@@ -47,10 +52,13 @@
 </template>
 
 <script setup lang="ts">
+import { useThemeVars } from 'naive-ui'
 import IconAvatar from '../component/icon-avatar.vue'
 import ShortcutsCard from './shortcuts-card/index.vue'
 import TechnologyCard from './technology-card/index.vue'
 import IconBanner from './icon-banner.vue'
+
+const themeVars = useThemeVars()
 
 interface Technology {
   id: number

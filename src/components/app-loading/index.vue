@@ -1,12 +1,18 @@
 <template>
-  <div class="fixed-center flex-col">
-    <icon-logo icon="logo" class="text-128px text-primary" />
+  <div
+    class="fixed left-0 top-0 flex flex-col justify-center items-center w-full h-full"
+    :style="{ '--primary-color': primaryColor }"
+  >
+    <icon-logo icon="logo" class="text-128px text-[var(--primary-color)]" />
     <div class="w-56px h-56px my-36px">
       <div class="relative h-full animate-spin">
         <div
           v-for="(item, index) in loadingClses"
           :key="index"
-          :class="['absolute w-16px h-16px rounded-8px bg-primary animate-pulse', item]"
+          :class="[
+            'absolute w-16px h-16px rounded-8px bg-[var(--primary-color)] animate-pulse',
+            item
+          ]"
         ></div>
       </div>
     </div>
@@ -18,7 +24,7 @@
 
 <script setup lang="ts">
 import { settings } from '@/settings'
-import { sessionStg, getRgbOfColor } from '@/utils'
+import { sessionStg } from '@/utils'
 import { $translate } from '@/locales'
 import IconLogo from './icon-logo.vue'
 
@@ -31,13 +37,5 @@ const loadingClses = [
   'right-0 bottom-0 animate-delay-1500'
 ]
 
-function addPrimaryColorCssVar() {
-  const _settings = sessionStg.get('settings') ?? settings
-
-  const { r, g, b } = getRgbOfColor(_settings.primaryColor)
-
-  document.documentElement.style.setProperty('--primary-color', `${r}, ${g}, ${b}`)
-}
-
-addPrimaryColorCssVar()
+const primaryColor = (sessionStg.get('settings') ?? settings).primaryColor
 </script>

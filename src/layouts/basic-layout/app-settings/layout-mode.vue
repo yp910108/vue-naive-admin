@@ -2,13 +2,19 @@
   <n-divider title-placement="center">
     {{ $translate('layout.settings.layoutMode.title') }}
   </n-divider>
-  <n-space justify="space-around" class="px-12px" :wrap="true" :size="24">
+  <n-space
+    justify="space-around"
+    class="px-12px"
+    :wrap="true"
+    :size="24"
+    :style="{ '--primary-color': themeVars.primaryColor }"
+  >
     <div
       v-for="item in modeList"
       :key="item.value"
       :class="[
-        'border-2px rounded-6px cursor-pointer hover:border-primary',
-        item.value === theme.layout.mode ? 'border-primary' : 'border-transparent'
+        'border-2px rounded-6px cursor-pointer hover:border-[var(--primary-color)]',
+        item.value === theme.layout.mode ? 'border-[var(--primary-color)]' : 'border-transparent'
       ]"
       @click="themeStore.setLayoutMode(item.value)"
     >
@@ -16,34 +22,34 @@
         <template #trigger>
           <div
             :class="[
-              'layout-card__shadow gap-6px w-96px h-64px p-6px rd-4px',
-              item.value.includes('vertical') ? 'flex' : 'flex-col'
+              'layout-card__shadow gap-6px w-96px h-64px p-6px b-rd-4px',
+              item.value.includes('vertical') ? 'flex' : 'flex flex-col'
             ]"
           >
             <template v-if="item.value === 'vertical'">
-              <div class="w-18px h-full bg-primary:50 rd-4px"></div>
-              <div class="flex-1 flex-col gap-6px">
-                <div class="h-16px bg-primary rd-4px"></div>
-                <div class="flex-1 bg-primary:25 rd-4px"></div>
+              <div class="w-18px h-full bg-[var(--primary-color)]:50 b-rd-4px"></div>
+              <div class="flex flex-col gap-6px flex-1">
+                <div class="h-16px bg-[var(--primary-color)] b-rd-4px"></div>
+                <div class="flex-1 bg-[var(--primary-color)]:25 b-rd-4px"></div>
               </div>
             </template>
             <template v-else-if="item.value === 'vertical-mix'">
-              <div class="w-8px h-full bg-primary:50 rd-4px"></div>
-              <div class="w-16px h-full bg-primary:50 rd-4px"></div>
-              <div class="flex-1 flex-col gap-6px">
-                <div class="h-16px bg-primary rd-4px"></div>
-                <div class="flex-1 bg-primary:25 rd-4px"></div>
+              <div class="w-8px h-full bg-[var(--primary-color)]:50 b-rd-4px"></div>
+              <div class="w-16px h-full bg-[var(--primary-color)]:50 b-rd-4px"></div>
+              <div class="flex flex-col gap-6px flex-1">
+                <div class="h-16px bg-[var(--primary-color)] b-rd-4px"></div>
+                <div class="flex-1 bg-[var(--primary-color)]:25 b-rd-4px"></div>
               </div>
             </template>
             <template v-else-if="item.value === 'horizontal'">
-              <div class="h-16px bg-primary rd-4px"></div>
-              <div class="flex-1 bg-primary:25 rd-4px"></div>
+              <div class="h-16px bg-[var(--primary-color)] b-rd-4px"></div>
+              <div class="flex-1 bg-[var(--primary-color)]:25 b-rd-4px"></div>
             </template>
             <template v-else>
-              <div class="h-16px bg-primary rd-4px"></div>
-              <div class="flex-1 flex gap-6px">
-                <div class="w-18px bg-primary:50 rd-4px"></div>
-                <div class="flex-1 bg-primary:25 rd-4px"></div>
+              <div class="h-16px bg-[var(--primary-color)] b-rd-4px"></div>
+              <div class="flex flex-1 gap-6px">
+                <div class="w-18px bg-[var(--primary-color)]:50 b-rd-4px"></div>
+                <div class="flex-1 bg-[var(--primary-color)]:25 b-rd-4px"></div>
               </div>
             </template>
           </div>
@@ -57,12 +63,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { PopoverPlacement } from 'naive-ui'
+import { useThemeVars, type PopoverPlacement } from 'naive-ui'
 import type { Settings } from '@/settings'
 import type { OptionWithKey } from '@/utils'
 import { useThemeStore } from '@/store'
 
+const themeVars = useThemeVars()
+
 const themeStore = useThemeStore()
+
 const { theme } = storeToRefs(themeStore)
 
 type LayoutMode = Settings['layout']['mode']

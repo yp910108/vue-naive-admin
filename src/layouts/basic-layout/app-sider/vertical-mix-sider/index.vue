@@ -4,9 +4,9 @@
     :inverted="theme.sider.inverted"
     @mouseleave="handleMouseLeave"
   >
-    <div class="flex-1-hidden flex-col-stretch h-full">
+    <div class="flex flex-col items-stretch flex-1 h-full overflow-hidden">
       <logo :style="{ height: `${theme.header.height}px` }" />
-      <n-scrollbar class="flex-1-hidden">
+      <n-scrollbar class="flex-1 overflow-hidden">
         <mix-menu-item
           v-for="menu of menuStore.menus"
           :key="menu.key"

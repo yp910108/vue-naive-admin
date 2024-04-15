@@ -2,21 +2,22 @@
   <div
     class="relative h-full transition-width duration-300 ease-in-out"
     :style="{
+      '--primary-color': themeVars.primaryColor,
       width: appStore.mixSiderFixed ? `${theme.sider.mixChildMenuWidth}px` : '0px'
     }"
   >
     <dark-mode-container
-      class="drawer-shadow absolute-lt flex-col-stretch h-full nowrap-hidden"
+      class="drawer-shadow absolute left-0 top-0 flex flex-col items-stretch h-full whitespace-nowrap overflow-hidden"
       :inverted="theme.sider.inverted"
       :style="{
         width: visible || appStore.mixSiderFixed ? `${theme.sider.mixChildMenuWidth}px` : '0px'
       }"
     >
       <header
-        class="header-height flex-y-center justify-between"
+        class="flex justify-between items-center"
         :style="{ height: `${theme.header.height}px` }"
       >
-        <h2 class="text-primary pl-8px text-16px font-bold">
+        <h2 class="text-[var(--primary-color)] pl-8px text-16px font-bold">
           {{ $translate('system.title') }}
         </h2>
         <div
@@ -27,7 +28,7 @@
           <icon-pin v-else />
         </div>
       </header>
-      <n-scrollbar class="flex-1-hidden">
+      <n-scrollbar class="flex-1 overflow-hidden">
         <n-menu
           :value="activeKey"
           :options="menus"
@@ -44,7 +45,7 @@
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import type { MenuOption as NaiveMenuOption } from 'naive-ui'
+import { useThemeVars, type MenuOption as NaiveMenuOption } from 'naive-ui'
 import { isExternal } from '@/utils'
 import { useAppStore, useThemeStore, type MenuOption } from '@/store'
 import { DarkModeContainer } from '@/components'
@@ -52,20 +53,28 @@ import { getActiveKeyPathsOfMenus } from '../../hepler'
 import IconPinOff from './icon-pin-off.vue'
 import IconPin from './icon-pin.vue'
 
+const themeVars = useThemeVars()
+
 const route = useRoute()
+
 const router = useRouter()
+
 const appStore = useAppStore()
+
 const { theme } = storeToRefs(useThemeStore())
 
 const visible = ref(false)
 
 const menus = ref<MenuOption[]>()
+
 const setMenus = (_menus: MenuOption[]) => {
   menus.value = _menus
 }
 
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
+
 const expandedKeys = ref<string[]>()
+
 const setExpandKeys = (menus: MenuOption[]) => {
   expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menus)
 }

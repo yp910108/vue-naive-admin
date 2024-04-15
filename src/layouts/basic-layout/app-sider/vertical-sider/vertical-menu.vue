@@ -1,5 +1,5 @@
 <template>
-  <n-scrollbar class="flex-1-hidden">
+  <n-scrollbar class="flex-1 overflow-hidden">
     <n-menu
       :value="activeKey"
       :options="menuStore.menus"

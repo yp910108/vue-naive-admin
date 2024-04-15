@@ -52,7 +52,9 @@ const ListSelectPane = defineComponent({
     const uncontrolledValue = ref<Value>(null)
 
     const value = computed({
-      get: () => (typeof props.value === 'undefined' ? uncontrolledValue.value : props.value),
+      get: () => {
+        return typeof props.value === 'undefined' ? uncontrolledValue.value : props.value
+      },
       set: (newVal: Value) => {
         if (typeof props.value === 'undefined') {
           uncontrolledValue.value = newVal
@@ -100,7 +102,9 @@ const ListSelectPane = defineComponent({
     const checkedRows = ref<Row[]>([])
 
     const checked = computed({
-      get: () => (multiple.value ? checkedRows.value : checkedRows.value[0]),
+      get: () => {
+        return multiple.value ? checkedRows.value : checkedRows.value[0]
+      },
       set: (newChecked) => {
         checkedRows.value = newChecked
           ? Array.isArray(newChecked)

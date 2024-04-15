@@ -1,9 +1,13 @@
 <template>
-  <router-link to="/" class="flex-center w-full nowrap-hidden">
-    <icon-logo class="text-22px text-primary" />
+  <router-link
+    to="/"
+    class="flex justify-center items-center w-full whitespace-nowrap overflow-hidden"
+    :style="{ '--primary-color': themeVars.primaryColor }"
+  >
+    <icon-logo class="text-22px text-[var(--primary-color)]" />
     <h2
       v-show="showTitle"
-      class="pl-8px text-16px font-bold text-primary transition duration-300 ease-in-out"
+      class="pl-8px text-16px font-bold text-[var(--primary-color)] transition duration-300 ease-in-out"
     >
       {{ $translate('system.title') }}
     </h2>
@@ -11,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import { useThemeVars } from 'naive-ui'
 import IconLogo from './icon-logo.vue'
 
 interface Props {
@@ -18,4 +23,6 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const themeVars = useThemeVars()
 </script>

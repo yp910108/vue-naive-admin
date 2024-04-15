@@ -3,7 +3,7 @@
     {{ $translate('layout.settings.pageFunc.title') }}
   </n-divider>
   <n-space vertical size="large">
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.scrollMode.title') }}</span>
       <n-select
         class="w-120px"
@@ -13,14 +13,14 @@
         @update:value="themeStore.setScrollMode"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.fixedHeaderAndTab') }}</span>
       <n-switch
         :value="theme.fixedHeaderAndTab"
         @update:value="themeStore.setIsFixedHeaderAndTab"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.menuHorizontalPosition.title') }}</span>
       <n-select
         class="w-120px"
@@ -30,7 +30,7 @@
         @update:value="themeStore.setHorizontalMenuPosition"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.headerHeight') }}</span>
       <n-input-number
         class="w-120px"
@@ -40,7 +40,7 @@
         @update:value="themeStore.setHeaderHeight"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.tabHeight') }}</span>
       <n-input-number
         class="w-120px"
@@ -50,11 +50,11 @@
         @update:value="themeStore.setTabHeight"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.tabIsCache') }}</span>
       <n-switch :value="theme.tab.isCache" @update:value="themeStore.setTabIsCache" />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.siderWidth') }}</span>
       <n-input-number
         class="w-120px"
@@ -64,7 +64,7 @@
         @update:value="themeStore.setSiderWidth"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.siderMixWidth') }}</span>
       <n-input-number
         class="w-120px"
@@ -74,11 +74,11 @@
         @update:value="themeStore.setMixSiderWidth"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.footerVisible') }}</span>
       <n-switch :value="theme.footer.visible" @update:value="themeStore.setFooterVisible" />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageFunc.footerFixed') }}</span>
       <n-switch :value="theme.footer.fixed" @update:value="themeStore.setFooterIsFixed" />
     </div>

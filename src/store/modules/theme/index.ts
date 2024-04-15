@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme, type GlobalThemeOverrides } from 'naive-ui'
 import type { Settings } from '@/settings'
-import { FONT_WEIGHT_STRONG } from '@/constants'
+import { FONT_WEIGHT_STRONG, BORDER_RADIUS } from '@/constants'
 import { getThemeColors, initTheme } from './utils'
 
 export const useThemeStore = defineStore('theme-store', () => {
@@ -21,6 +21,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     return {
       common: {
         fontWeightStrong: FONT_WEIGHT_STRONG,
+        borderRadius: BORDER_RADIUS,
         ...themeColors
       }
     }

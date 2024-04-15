@@ -1,5 +1,8 @@
 <template>
-  <div class="relative flex-center wh-full" :style="{ backgroundColor: bgColor }">
+  <div
+    class="relative flex justify-center items-center w-full h-full"
+    :style="{ '--primary-color': themeVars.primaryColor, backgroundColor: bgColor }"
+  >
     <dark-mode-switch
       class="absolute left-48px top-24px z-3"
       :dark="theme.darkMode"
@@ -8,8 +11,8 @@
     <lang-select container-class="absolute right-37px top-13px z-3" />
     <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm">
       <div class="w-300px sm:w-360px">
-        <header class="flex-y-center justify-between">
-          <icon-logo class="text-64px text-primary" />
+        <header class="flex justify-between items-center">
+          <icon-logo class="text-64px text-[var(--primary-color)]" />
           <n-gradient-text type="primary" :size="28">
             {{ $translate('system.title') }}
           </n-gradient-text>
@@ -33,6 +36,7 @@
 <script setup lang="ts">
 import { computed, type Component } from 'vue'
 import { useRoute } from 'vue-router'
+import { useThemeVars } from 'naive-ui'
 import { getColorPalette, mixColor } from '@/utils'
 import { useThemeStore } from '@/store'
 import { DarkModeSwitch, LangSelect } from '@/components'
@@ -44,6 +48,8 @@ import CodeLogin from './code-login/index.vue'
 import BindWechat from './bind-wechat/index.vue'
 import ResetPwd from './reset-pwd/index.vue'
 import Register from './register/index.vue'
+
+const themeVars = useThemeVars()
 
 const route = useRoute()
 

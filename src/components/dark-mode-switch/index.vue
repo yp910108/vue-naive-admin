@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-center text-18px cursor-pointer" @click="handleSwitch">
+  <div class="flex justify-center items-center text-18px cursor-pointer" @click="handleSwitch">
     <icon-moon v-if="darkMode" />
     <icon-sunny v-else />
   </div>

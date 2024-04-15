@@ -1,9 +1,9 @@
 <template>
   <dark-mode-container
-    class="app-tab flex-y-center w-full pl-16px"
+    class="app-tab flex items-center w-full pl-16px"
     :style="{ height: `${theme.tab.height}px` }"
   >
-    <div ref="bsWrapper" class="flex-1-hidden h-full">
+    <div ref="bsWrapper" class="flex-1 h-full overflow-hidden">
       <better-scroll
         ref="bsScroll"
         :options="{

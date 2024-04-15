@@ -22,7 +22,7 @@
     >
       <n-tab-pane v-for="(item, index) of tabData" :key="item.key" :name="index">
         <template #tab>
-          <div :class="['flex-x-center items-center', isMobile ? 'w-92px' : 'w-120px']">
+          <div :class="['flex justify-center items-center', isMobile ? 'w-92px' : 'w-120px']">
             <span class="mr-5px">{{ item.name }}</span>
             <n-badge
               v-bind="item.badgeProps"

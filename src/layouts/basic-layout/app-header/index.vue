@@ -1,12 +1,15 @@
 <template>
-  <dark-mode-container class="app-header flex-y-center h-full" :inverted="theme.header.inverted">
+  <dark-mode-container
+    class="app-header flex items-center h-full"
+    :inverted="theme.header.inverted"
+  >
     <logo
       v-if="headerProps.showLogo"
       show-title
       class="h-full"
       :style="{ width: `${theme.sider.width}px` }"
     />
-    <div v-if="!headerProps.showHeaderMenu" class="flex-1-hidden flex-y-center h-full">
+    <div v-if="!headerProps.showHeaderMenu" class="flex items-center flex-1 h-full overflow-hidden">
       <menu-collapse v-if="headerProps.showMenuCollapse || isMobile" />
       <breadcrumb v-if="theme.header.crumb.visible && !isMobile" />
     </div>

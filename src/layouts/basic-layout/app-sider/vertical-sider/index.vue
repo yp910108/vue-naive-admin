@@ -1,5 +1,5 @@
 <template>
-  <dark-mode-container class="flex-col h-full" :inverted="theme.sider.inverted">
+  <dark-mode-container class="flex flex-col h-full" :inverted="theme.sider.inverted">
     <logo
       v-if="!isHorizontalMix"
       :show-title="showTitle"

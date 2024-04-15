@@ -11,12 +11,7 @@
       }
     }
     .sortable-ghost {
-      opacity: 0.8;
-      background: rgb(var(--primary-color-5));
-      color: #fff;
-      .n-checkbox__label {
-        color: #fff;
-      }
+      background: var(--bg-active-color);
     }
   }
 }

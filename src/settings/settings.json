@@ -6,9 +6,9 @@
     "mode": "vertical"
   },
   "scrollMode": "content",
-  "primaryColor": "#1890ff",
+  "primaryColor": "#1677ff",
   "otherColor": {
-    "info": "#1890ff",
+    "info": "#1677ff",
     "success": "#18a058",
     "warning": "#f0a020",
     "error": "#d03050"

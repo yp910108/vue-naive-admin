@@ -3,9 +3,9 @@
     {{ $translate('layout.settings.colorSelect.title') }}
   </n-divider>
   <n-grid :cols="8" :x-gap="8" :y-gap="12">
-    <n-grid-item v-for="color in colors" :key="color" class="flex-x-center">
+    <n-grid-item v-for="color in colors" :key="color" class="flex justify-center">
       <div
-        class="flex-center w-20px h-20px rounded-2px shadow cursor-pointer"
+        class="flex justify-center items-center w-20px h-20px rounded-2px shadow cursor-pointer"
         :style="{ backgroundColor: color }"
         @click="themeStore.setPrimaryColor(color)"
       >

@@ -3,8 +3,8 @@
     :is="activeTab"
     :darkMode="props.darkMode"
     :active="props.active"
-    @close="emit('close')"
     :style="cssVars"
+    @close="emit('close')"
   >
     <template #icon>
       <component v-if="icon" :is="Icons[icon]" class="inline-block align-text-bottom text-16px" />

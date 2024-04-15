@@ -1,6 +1,9 @@
 <template>
-  <div class="flex-col-center gap-24px min-h-520px wh-full overflow-hidden">
-    <div class="flex text-400px text-primary">
+  <div
+    class="flex flex-col justify-center items-center gap-24px min-h-520px w-full h-full overflow-hidden"
+    :style="{ '--primary-color': themeVars.primaryColor }"
+  >
+    <div class="flex text-400px text-[var(--primary-color)]">
       <icon-no-permission v-if="type === '403'" />
       <icon-not-found v-if="type === '404'" />
       <icon-service-error v-if="type === '500'" />
@@ -12,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import { useThemeVars } from 'naive-ui'
 import IconNoPermission from './icon-no-permission.vue'
 import IconNotFound from './icon-not-found.vue'
 import IconServiceError from './icon-service-error.vue'
@@ -25,4 +29,6 @@ interface Props {
 }
 
 defineProps<Props>()
+
+const themeVars = useThemeVars()
 </script>

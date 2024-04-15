@@ -8,9 +8,11 @@ import {
   NSpace,
   NText,
   NTooltip,
+  useThemeVars,
   type DataTableColumnKey
 } from 'naive-ui'
 import Sortable from 'sortablejs'
+import { addColorAlpha } from '@/utils'
 import type { SettingColumn } from '../../typings'
 import { IconDrag, IconPinTop, IconPinBottom, IconUnpin, IconSetting } from './icons'
 import styles from './index.module.scss'
@@ -39,7 +41,10 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const themeVars = useThemeVars()
+
     const sortable = ref<Sortable>()
+
     const sortRef = ref<InstanceType<typeof NSpace>>()
 
     const handleUpdateShow = (newVal: boolean) => {
@@ -48,7 +53,7 @@ export default defineComponent({
           if (sortable.value) sortable.value.destroy()
           const el = sortRef.value?.$el
           sortable.value = Sortable.create(el, {
-            animation: 200,
+            animation: 100,
             easing: 'linear',
             onEnd: ({ newIndex, oldIndex }) => {
               if (
@@ -89,7 +94,7 @@ export default defineComponent({
             default: () => $translate('proTable.action.columnsSetting.popover.action.unpin'),
             trigger: () => (
               <span
-                class="p-4px hover:color-primary"
+                class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
                 onClick={props.onUpdateColumnsFixed.bind(null, column.key, undefined)}
               >
                 <IconUnpin />
@@ -103,7 +108,7 @@ export default defineComponent({
             default: () => $translate('proTable.action.columnsSetting.popover.action.pinLeft'),
             trigger: () => (
               <span
-                class="p-4px hover:color-primary"
+                class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
                 onClick={props.onUpdateColumnsFixed.bind(null, column.key, 'left')}
               >
                 <IconPinTop />
@@ -121,7 +126,7 @@ export default defineComponent({
             default: () => $translate('proTable.action.columnsSetting.popover.action.unpin'),
             trigger: () => (
               <span
-                class="p-4px hover:color-primary"
+                class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
                 onClick={props.onUpdateColumnsFixed.bind(null, column.key, undefined)}
               >
                 <IconUnpin />
@@ -135,7 +140,7 @@ export default defineComponent({
             default: () => $translate('proTable.action.columnsSetting.popover.action.pinRight'),
             trigger: () => (
               <span
-                class="p-4px hover:color-primary"
+                class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
                 onClick={props.onUpdateColumnsFixed.bind(null, column.key, 'right')}
               >
                 <IconPinBottom />
@@ -179,7 +184,7 @@ export default defineComponent({
             <NScrollbar style={{ maxHeight: '300px' }}>
               <NCheckboxGroup
                 value={checked.value}
-                class="py-8px"
+                class="px-12px py-8px"
                 onUpdateValue={props.onUpdateColumnsVisible}
               >
                 <NSpace ref={sortRef} vertical size={3} wrapItem={false}>
@@ -189,9 +194,15 @@ export default defineComponent({
                       size={0}
                       wrapItem={false}
                       align="center"
-                      class="px-16px py-4px hover:bg-primary_1 cursor-pointer"
+                      class="px-8px py-4px b-rd-[var(--border-radius)] hover:bg-[var(--bg-color)] cursor-pointer"
+                      style={{
+                        '--border-radius': themeVars.value.borderRadius,
+                        '--bg-color': themeVars.value.hoverColor,
+                        '--bg-active-color': addColorAlpha(themeVars.value.primaryColor, 0.1),
+                        '--icon-color': themeVars.value.iconColor
+                      }}
                     >
-                      <IconDrag class="flex-shrink-0 font-size-18px cursor-grab" />
+                      <IconDrag class="flex-shrink-0 font-size-14px color-[var(--icon-color)] cursor-grab" />
                       <NCheckbox value={column.key} class="flex-grow ml-8px w-0">
                         {typeof column.label === 'function'
                           ? column.label()
@@ -199,7 +210,12 @@ export default defineComponent({
                           ? column.renderLabel(column.label)
                           : column.label}
                       </NCheckbox>
-                      <NSpace size={0} wrapItem={false} class="flex-shrink-0">
+                      <NSpace
+                        size={0}
+                        wrapItem={false}
+                        class="flex-shrink-0"
+                        style={{ '--primary-color': themeVars.value.primaryColor }}
+                      >
                         {renderLeftPinIcon(column)}
                         {renderRightPinIcon(column)}
                       </NSpace>

@@ -5,7 +5,10 @@
     footer-style="padding: 0; margin: 0"
     :segmented="{ footer: 'soft' }"
     :closable="false"
-    :class="['fixed left-0 right-0', isMobile ? 'wh-full top-0px rounded-0' : 'w-630px top-50px']"
+    :class="[
+      'fixed left-0 right-0',
+      isMobile ? 'w-full h-full top-0px rounded-0' : 'w-630px top-50px'
+    ]"
     @after-leave="handeAfterLeave"
   >
     <n-input-group>

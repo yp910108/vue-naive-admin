@@ -5,7 +5,7 @@
     :inverted="theme.header.inverted"
   >
     <dark-mode-switch
-      class="wh-full"
+      class="w-full h-full"
       :dark="theme.darkMode"
       @update:dark="themeStore.setDarkMode"
     />

@@ -4,7 +4,7 @@
       <n-input v-model:value="model.phone" :placeholder="$translate('login.phonePlaceholder')" />
     </n-form-item>
     <n-form-item path="code">
-      <div class="flex-y-center w-full">
+      <div class="flex items-center w-full">
         <n-input v-model:value="model.code" :placeholder="$translate('login.codePlaceholder')" />
         <div class="w-18px"></div>
         <n-button size="large" :disabled="isCounting" :loading="smsLoading" @click="handleSmsCode">

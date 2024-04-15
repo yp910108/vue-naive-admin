@@ -1,5 +1,5 @@
 <template>
-  <n-scrollbar class="max-h-360px">
+  <n-scrollbar class="max-h-360px" :style="{ '--primary-color': themeVars.primaryColor }">
     <n-list>
       <n-list-item
         v-for="(item, index) in list"
@@ -12,7 +12,7 @@
             <component
               v-if="item.icon"
               :is="iconComponents[item.icon]"
-              class="text-34px text-primary"
+              class="text-34px text-[var(--primary-color)]"
             />
           </template>
           <template #header>
@@ -41,6 +41,7 @@
 </template>
 <script setup lang="ts">
 import type { Component } from 'vue'
+import { useThemeVars } from 'naive-ui'
 import type { MessageList } from '../typings'
 import IconAvatar from './icon-avatar.vue'
 import IconMessage from './icon-message.vue'
@@ -59,6 +60,8 @@ interface Emits {
 }
 
 const emit = defineEmits<Emits>()
+
+const themeVars = useThemeVars()
 
 type Components = Record<string, Component>
 

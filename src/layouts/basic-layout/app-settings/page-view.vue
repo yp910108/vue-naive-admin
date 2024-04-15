@@ -3,25 +3,25 @@
     {{ $translate('layout.settings.pageView.title') }}
   </n-divider>
   <n-space vertical size="large">
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageView.headerCrumb') }}</span>
       <n-switch
         :value="theme.header.crumb.visible"
         @update:value="themeStore.setHeaderCrumbVisible"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageView.headerCrumbIcon') }}</span>
       <n-switch
         :value="theme.header.crumb.showIcon"
         @update:value="themeStore.setHeaderCrumbIconVisible"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageView.tab') }}</span>
       <n-switch :value="theme.tab.visible" @update:value="themeStore.setTabVisible" />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageView.tabMode.title') }}</span>
       <n-select
         class="w-120px"
@@ -31,11 +31,11 @@
         @update:value="themeStore.setTabMode"
       />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageView.pageAnimate') }}</span>
       <n-switch :value="theme.page.animate" @update:value="themeStore.setPageIsAnimate" />
     </div>
-    <div class="flex-y-center justify-between">
+    <div class="flex justify-between items-center">
       <span>{{ $translate('layout.settings.pageView.pageAnimateMode.title') }}</span>
       <n-select
         class="w-120px"
