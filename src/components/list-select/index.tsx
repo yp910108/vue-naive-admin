@@ -101,16 +101,16 @@ const ListSelect = defineComponent({
         <NSelect
           clearable
           {...(props.selectProps as any)}
-          valueField="value"
-          labelField="label"
           value={selectValue.value}
           multiple={multiple.value}
-          max-tag-count="responsive"
+          maxTagCount="responsive"
+          valueField="value"
+          labelField="label"
           options={selectOptions.value}
           show={false}
           filterable={false}
-          onUpdateShow={handleUpdateShow}
           onUpdateValue={handleUpdateValue}
+          onUpdateShow={handleUpdateShow}
         />
         <ListSelectPane ref={paneRef} {...(attrs as any)} />
       </>

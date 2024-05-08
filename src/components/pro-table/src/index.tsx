@@ -18,7 +18,6 @@ import {
   type DataTableRowKey,
   type PaginationProps
 } from 'naive-ui'
-import Search, { type Exposed as SearchExposed } from './search'
 import type {
   ProTableColumn,
   RenderActionParams,
@@ -33,6 +32,7 @@ import type {
 } from './typings'
 import { tableExcludeAttrsKeys } from './constants'
 import { useColumns } from './hooks'
+import Search, { type Exposed as SearchExposed } from './search'
 import { ColumnsSetting, Refresh, SwitchSize } from './toolbar'
 import styles from './index.module.scss'
 

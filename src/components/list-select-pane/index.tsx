@@ -6,6 +6,8 @@ type Row = Record<DataTableRowKey, any>
 
 type Value = Row | Row[] | null
 
+type OnUpdateValue = (newVal: any) => void
+
 interface Exposed {
   tableRef?: InstanceType<typeof ProTable>
   value: Value
@@ -14,7 +16,13 @@ interface Exposed {
   hide: () => void
 }
 
-type OnUpdateValue = (newVal: any) => void
+const findIndex = (rows: Row[], row: Row, rowKey: DataTableRowKey) => {
+  return rows.findIndex((_row) => _row[rowKey] === row[rowKey])
+}
+
+const includes = (rows: Row[], row: Row, rowKey: DataTableRowKey) => {
+  return findIndex(rows, row, rowKey) !== -1
+}
 
 const ListSelectPane = defineComponent({
   inheritAttrs: false,
@@ -42,7 +50,7 @@ const ListSelectPane = defineComponent({
     onUpdateValue: {
       type: [Function, Array] as PropType<OnUpdateValue | OnUpdateValue[]>
     },
-    confirm: {
+    onConfirm: {
       type: Function as PropType<(value: any) => Promise<void>>
     }
   },
@@ -114,15 +122,32 @@ const ListSelectPane = defineComponent({
       }
     })
 
-    const handleUpdateCheckedRowKeys = (_keys: DataTableRowKey[], rows: Row[]) => {
-      checkedRows.value = rows
+    const handleUpdateCheckedRowKeys = (
+      _newCheckedRowKeys: DataTableRowKey[],
+      newCheckedRows: Row[]
+    ) => {
+      const _newCheckedRows = newCheckedRows.filter((row) => !!row)
+      const unCheckedRows = tableRef.value?.tableData?.filter(
+        (row) => !includes(_newCheckedRows, row, rowKey(row))
+      )
+      for (const row of _newCheckedRows) {
+        if (!includes(checkedRows.value, row, rowKey(row))) {
+          checkedRows.value.push(row)
+        }
+      }
+      for (const row of unCheckedRows ?? []) {
+        const index = findIndex(checkedRows.value, row, rowKey(row))
+        if (index !== -1) {
+          checkedRows.value.splice(index, 1)
+        }
+      }
     }
 
     const handleConfirm = async () => {
-      if (props.confirm) {
+      if (props.onConfirm) {
         try {
           confirmLoading.value = true
-          await props.confirm(checked.value)
+          await props.onConfirm(checked.value)
           confirmLoading.value = false
           value.value = checked.value
           hide()
@@ -197,9 +222,7 @@ const ListSelectPane = defineComponent({
                     const className = (e.target as HTMLDivElement).className
                     if (className.includes('checkbox')) return
                     if (multiple.value) {
-                      const index = checkedRows.value.findIndex(
-                        (_row) => _row[rowKey(_row)] === row[rowKey(row)]
-                      )
+                      const index = findIndex(checkedRows.value, row, rowKey(row))
                       if (index !== -1) {
                         checkedRows.value.splice(index, 1)
                       } else {
