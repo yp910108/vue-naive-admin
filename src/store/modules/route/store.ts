@@ -53,7 +53,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
     const routeData = await fetchAuthRoutes(userInfo?.userId ?? '')
 
-    if (!routeData || !routeData.length) {
+    if (!routeData?.length) {
       const NO_MENU_MSG = '用户没有菜单权限~'
       window.$message.error(NO_MENU_MSG)
       return Promise.reject(new Error(NO_MENU_MSG))

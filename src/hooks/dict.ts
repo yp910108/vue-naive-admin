@@ -1,11 +1,12 @@
 import { ref, toRef } from 'vue'
 import { mockRequest } from '@/utils'
 
-function fetchDict(type: keyof Dict.Type) {
+const fetchDict = (type: keyof Dict.Type) => {
   return mockRequest.get<Dict.Item[]>(`/dict`, { params: { type } })
 }
 
 const dict = ref<Dict.Data>({})
+
 const existKeys: string[] = []
 
 export function useDict(type: keyof Dict.Type) {

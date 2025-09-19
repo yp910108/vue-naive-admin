@@ -59,8 +59,8 @@ function getFirstPathNotExternal(routeData: RouteData[]) {
  */
 export function transformRoutes(routeData: RouteData[]) {
   const rootRoute = {
-    name: 'Root',
-    path: '/'
+    path: '/',
+    name: 'Root'
   } as RouteRecordRaw
   const blankLayoutRoute: RouteRecordRaw = {
     path: '/',

@@ -88,7 +88,7 @@ export type SearchColumn = FieldColumn & {
     info: {
       clearable: boolean
       disabled: boolean
-      options: any
+      options?: any
     }
   ) => VNodeChild
 }

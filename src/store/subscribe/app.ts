@@ -5,18 +5,18 @@ import { useAppStore } from '../modules'
 export default function subscribeAppStore() {
   const { isFullscreen, toggle } = useFullscreen()
 
-  const app = useAppStore()
+  const appStore = useAppStore()
 
   const update = () => {
-    if (app.contentFull && !isFullscreen.value) {
+    if (appStore.contentFull && !isFullscreen.value) {
       toggle()
-    } else if (!app.contentFull && isFullscreen.value) {
+    } else if (!appStore.contentFull && isFullscreen.value) {
       toggle()
     }
   }
 
   watch(
-    () => app.contentFull,
+    () => appStore.contentFull,
     () => {
       update()
     }
@@ -24,7 +24,7 @@ export default function subscribeAppStore() {
 
   watch(isFullscreen, (newValue) => {
     if (!newValue) {
-      app.setContentFull(false)
+      appStore.setContentFull(false)
     }
   })
 }

@@ -1,4 +1,4 @@
-import { ProxyOptions } from 'vite'
+import type { ProxyOptions } from 'vite'
 
 export function setupViteProxy() {
   const proxy: Record<string, ProxyOptions> = {

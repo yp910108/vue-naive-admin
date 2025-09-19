@@ -7,14 +7,16 @@ import { AppLoading } from './components'
 import App from './App.vue'
 
 async function setupApp() {
+  setupAssets()
+
   const appLoading = createApp(AppLoading)
+
   appLoading.mount('#app')
 
   const app = createApp(App)
 
   setupStore(app)
 
-  setupAssets()
   setupDiscreteApis()
 
   setupI18n(app)
@@ -22,6 +24,7 @@ async function setupApp() {
   await setupRouter(app)
 
   appLoading.unmount()
+
   app.mount('#app')
 }
 

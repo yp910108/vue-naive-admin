@@ -4,12 +4,12 @@
       mode="out-in"
       appear
       :name="themeStore.pageAnimateMode"
-      @before-leave="app.setDisableMainXScroll(true)"
-      @after-enter="app.setDisableMainXScroll(false)"
+      @before-leave="appStore.setDisableMainXScroll(true)"
+      @after-enter="appStore.setDisableMainXScroll(false)"
     >
       <keep-alive :include="cacheStore.caches">
         <component
-          v-if="app.reloadFlag"
+          v-if="appStore.reloadFlag"
           :is="Component"
           :key="route.fullPath"
           :class="[
@@ -38,7 +38,7 @@ withDefaults(defineProps<Props>(), {
   showPadding: true
 })
 
-const app = useAppStore()
+const appStore = useAppStore()
 const themeStore = useThemeStore()
 const cacheStore = useCacheStore()
 </script>
