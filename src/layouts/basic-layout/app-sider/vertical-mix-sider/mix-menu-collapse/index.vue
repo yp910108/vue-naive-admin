@@ -7,8 +7,7 @@
 
 <script lang="ts" setup>
 import { useAppStore } from '@/store'
-import IconLeft from './icon-left.vue'
-import IconRight from './icon-right.vue'
+import { IconLeft, IconRight } from './icons'
 
 const appStore = useAppStore()
 </script>

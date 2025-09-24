@@ -2,7 +2,7 @@ import { stringify } from 'qs'
 import { isFile } from '../../typeof'
 import type { ContentType } from '../typings'
 
-async function transformFile(formData: FormData, key: string, file: File[] | File) {
+const transformFile = async (formData: FormData, key: string, file: File[] | File) => {
   if (Array.isArray(file)) {
     const promises = file.map((item) => {
       formData.append(key, item)
@@ -14,7 +14,7 @@ async function transformFile(formData: FormData, key: string, file: File[] | Fil
   }
 }
 
-function handleFormData(data: Record<string, any>) {
+const handleFormData = (data: Record<string, any>) => {
   const formData = new FormData()
   const entries = Object.entries(data)
 
@@ -31,13 +31,7 @@ function handleFormData(data: Record<string, any>) {
   return formData
 }
 
-/**
- * 请求数据转换
- * @param requestData
- * @param contentType
- * @returns
- */
-export function transformRequestData(requestData: any, contentType?: ContentType) {
+export const transformRequestData = (requestData: any, contentType?: ContentType) => {
   if (contentType === 'application/x-www-form-urlencoded') {
     requestData = stringify(requestData)
   } else if (contentType === 'multipart/form-data') {

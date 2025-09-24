@@ -1,14 +1,12 @@
 import { h } from 'vue'
 import { camelize, combineURL, isExternal } from '@/utils'
 import { Icons } from '@/components'
-import type { RouteData } from '../route'
-import type { MenuOption, SearchMenuOption } from './typings'
 
 /**
  * 通过路径获取组件名称
  * @param path
  */
-export function parsePathToName(path: string) {
+export const parsePathToName = (path: string) => {
   path = path.split('/:')[0].replace(/\//g, '-')
   return camelize(path, true)
 }
@@ -18,12 +16,12 @@ export function parsePathToName(path: string) {
  * @param routeData
  * @param prefix
  */
-export function transformMenus(routeData: RouteData[], prefix: string = '/') {
-  const menus: MenuOption[] = []
+export const transformMenus = (routeData: Route.RouteData[], prefix: string = '/') => {
+  const menus: Menu.MenuOption[] = []
   for (const { title, path, icon, children } of routeData) {
     const routePath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
     const name = parsePathToName(routePath)
-    const menu: MenuOption = {
+    const menu: Menu.MenuOption = {
       key: name,
       label: title,
       routePath
@@ -47,8 +45,8 @@ export function transformMenus(routeData: RouteData[], prefix: string = '/') {
  * 将权限路由转换为搜索菜单
  * @param authRoutes
  */
-export function transformSearchMenus(menus: MenuOption[]) {
-  const searchMenus: SearchMenuOption[] = []
+export const transformSearchMenus = (menus: Menu.MenuOption[]) => {
+  const searchMenus: Menu.SearchMenuOption[] = []
   for (const menu of menus) {
     const { children, ...rest } = menu
     searchMenus.push({ ...rest })

@@ -88,18 +88,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { Settings } from '@/settings'
-import type { OptionWithKey } from '@/utils'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
 
-type ScrollMode = Settings['scrollMode']
+type ScrollMode = Settings.Settings['scrollMode']
 
-type HorizontalMenuPosition = Settings['menu']['horizontalPosition']
+type HorizontalMenuPosition = Settings.Settings['menu']['horizontalPosition']
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-const scrollModeList = computed<OptionWithKey<ScrollMode>[]>(() => [
+const scrollModeList = computed<{ value: ScrollMode; label: string }[]>(() => [
   {
     value: 'wrapper',
     label: $translate('layout.settings.pageFunc.scrollMode.wrapper')
@@ -110,18 +109,20 @@ const scrollModeList = computed<OptionWithKey<ScrollMode>[]>(() => [
   }
 ])
 
-const menuHorizontalPositionList = computed<OptionWithKey<HorizontalMenuPosition>[]>(() => [
-  {
-    value: 'flex-start',
-    label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexStart')
-  },
-  {
-    value: 'center',
-    label: $translate('layout.settings.pageFunc.menuHorizontalPosition.center')
-  },
-  {
-    value: 'flex-end',
-    label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexEnd')
-  }
-])
+const menuHorizontalPositionList = computed<{ value: HorizontalMenuPosition; label: string }[]>(
+  () => [
+    {
+      value: 'flex-start',
+      label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexStart')
+    },
+    {
+      value: 'center',
+      label: $translate('layout.settings.pageFunc.menuHorizontalPosition.center')
+    },
+    {
+      value: 'flex-end',
+      label: $translate('layout.settings.pageFunc.menuHorizontalPosition.flexEnd')
+    }
+  ]
+)
 </script>

@@ -1,29 +1,29 @@
 import { isObject } from './typeof'
+import { isValidValue } from './data'
 
-export type OptionWithKey<K> = { value: K; label: string }
-
-export function transformObjectToOption<T extends Record<string, any>>(obj: T) {
-  return Object.entries(obj).map(([value, label]) => ({
-    value,
-    label
-  })) as OptionWithKey<keyof T>[]
-}
-
-export function transformOptionToKeyValue(option?: OptionWithKey<string>[]) {
+export const transformOptionToValueLabel = (
+  option?: Record<string, any>[],
+  props?: { valueField?: string; labelField?: string }
+) => {
+  props = { valueField: 'value', labelField: 'label', ...props }
   return option?.reduce(
     (prev, curr) => {
-      prev[curr.value] = curr.label
+      prev[(curr as any)[props.valueField!]] = (curr as any)[props.labelField!]
       return prev
     },
-    {} as Record<string, string>
+    {} as Record<string, string | undefined>
   )
+}
+
+export const transformValueLabelToOption = (valueLabel: Record<string, any>) => {
+  return Object.entries(valueLabel).map(([value, label]) => ({ value, label }))
 }
 
 /**
  * 去除对象/数组中的无效值。注意：{}（空对象）和 []（空数组）也会被去除
  * @param source
  */
-export function removeInvalidValues<T>(source: T) {
+export const removeInvalidValues = <T>(source: T) => {
   if (isObject(source)) {
     const result: Record<string, any> = {}
     for (const key of Object.keys(source)) {
@@ -37,7 +37,7 @@ export function removeInvalidValues<T>(source: T) {
           result[key] = _val
         }
       } else {
-        if (_val || _val === 0) {
+        if (isValidValue(_val)) {
           result[key] = _val
         }
       }
@@ -47,12 +47,12 @@ export function removeInvalidValues<T>(source: T) {
     const result: any[] = []
     for (const item of source) {
       const _item = removeInvalidValues(item)
-      if (_item) {
+      if (isValidValue(_item)) {
         result.push(_item)
       }
     }
     return result.length ? (result as T) : undefined
   } else {
-    return source || source === 0 || source === false ? source : undefined
+    return isValidValue(source) ? source : undefined
   }
 }

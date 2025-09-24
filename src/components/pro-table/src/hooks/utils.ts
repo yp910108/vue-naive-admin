@@ -6,7 +6,7 @@ import type {
   SettingColumn
 } from '../typings'
 
-export function filterSearchColumns(columns: ProTableColumn[]) {
+export const filterSearchColumns = (columns: ProTableColumn[]) => {
   const _columns = columns.filter((column) => !column.type && !column.hideInSearch)
   return _columns.map((column) => {
     const result: SearchColumn = {
@@ -26,7 +26,7 @@ export function filterSearchColumns(columns: ProTableColumn[]) {
   })
 }
 
-export function filterSettingColumns(columns: ProTableColumn[]) {
+export const filterSettingColumns = (columns: ProTableColumn[]) => {
   const _columns = columns.filter((column) => !column.type && !column.hideInTable)
   return _columns
     .map((column) => {
@@ -68,7 +68,7 @@ const PROTABLE_COLUMN_SPECIFIC_KEYS = Object.keys(
   PROTABLE_COLUMN_SPECIFIC
 ) as ProTableColumnSpecificKey[]
 
-export function filterTableColumns(columns: ProTableColumn[]): DataTableColumn[] {
+export const filterTableColumns = (columns: ProTableColumn[]): DataTableColumn[] => {
   const _columns = columns.filter((column) => !column.hideInTable && column._visible)
   return _columns
     .map((column) => {

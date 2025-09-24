@@ -16,11 +16,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { setLocale } from '@/locales'
 import { localStg } from '@/utils'
-import { setLocale, type Lang } from '@/locales'
 import { useThemeStore } from '@/store'
 import { HoverContainer } from '@/components'
-import IconLanguage from './icon-language.vue'
+import { IconLanguage } from './icons'
 
 interface Props {
   withHoverContainer?: boolean
@@ -33,15 +33,16 @@ const { theme } = storeToRefs(useThemeStore())
 
 type Option = {
   label: string
-  key: Lang
+  key: Lang.Type
 }
 
-const language = ref<Lang>(localStg.get('lang') ?? 'zhCN')
+const language = ref<Lang.Type>(localStg.get('lang') ?? 'zhCN')
+
 const options: Option[] = [
   { label: '中文', key: 'zhCN' },
   { label: 'English', key: 'enUS' }
 ]
-const handleSelect = (key: Lang) => {
+const handleSelect = (key: Lang.Type) => {
   language.value = key
   setLocale(key)
   localStg.set('lang', key)

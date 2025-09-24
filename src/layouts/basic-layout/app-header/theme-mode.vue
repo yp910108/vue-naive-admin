@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
 import { DarkModeSwitch, HoverContainer } from '@/components'
 

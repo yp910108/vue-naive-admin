@@ -1,13 +1,9 @@
-import type { Lang } from '@/locales'
-import type { MultiTab, UserInfo } from '@/store'
-import { decrypto, encrypto } from '../crypto'
-
 interface LocalStorage {
   token?: string
-  userInfo?: UserInfo
-  lang?: Lang
+  userInfo?: Auth.UserInfo
+  lang?: Lang.Type
   theme?: 'light' | 'dark'
-  tabs?: MultiTab[]
+  tabs?: Tab.MultiTab[]
 }
 
 interface StorageData<T> {
@@ -15,7 +11,7 @@ interface StorageData<T> {
   expire?: number
 }
 
-function createLocalStorage<T extends LocalStorage>() {
+const createLocalStorage = <T extends LocalStorage>() => {
   const DEFAULT_EXPIRE = 7 * 24 * 60 * 60
 
   /**
@@ -23,20 +19,20 @@ function createLocalStorage<T extends LocalStorage>() {
    * @param value
    * @param expire 如果不传默认 7 天，传 0 为永久
    */
-  function set<K extends keyof T>(key: K, value: T[K], expire?: number) {
+  const set = <K extends keyof T>(key: K, value: T[K], expire?: number) => {
     const storageData: StorageData<T[K]> = {
       value,
       expire: expire ?? Date.now() + DEFAULT_EXPIRE * 1000
     }
-    const json = encrypto(storageData)
-    localStorage.setItem(key as string, json)
+    const str = JSON.stringify(storageData)
+    localStorage.setItem(key as string, str)
   }
 
-  function get<K extends keyof T>(key: K) {
-    const json = localStorage.getItem(key as string)
-    if (json) {
+  const get = <K extends keyof T>(key: K) => {
+    const str = localStorage.getItem(key as string)
+    if (str) {
       try {
-        const storageData: StorageData<T[K]> = decrypto(json)
+        const storageData: StorageData<T[K]> = JSON.parse(str)
         if (storageData) {
           const { value, expire } = storageData
           if (!expire || expire > Date.now()) {
@@ -50,11 +46,11 @@ function createLocalStorage<T extends LocalStorage>() {
     remove(key)
   }
 
-  function remove(key: keyof T) {
+  const remove = (key: keyof T) => {
     localStorage.removeItem(key as string)
   }
 
-  function clear() {
+  const clear = () => {
     localStorage.clear()
   }
 

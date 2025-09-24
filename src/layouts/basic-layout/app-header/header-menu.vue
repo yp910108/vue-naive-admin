@@ -23,7 +23,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import type { MenuOption as NaiveMenuOption } from 'naive-ui'
 import { isExternal } from '@/utils'
-import { useMenuStore, useThemeStore, type MenuOption } from '@/store'
+import { useMenuStore, useThemeStore } from '@/store'
 
 const route = useRoute()
 const router = useRouter()
@@ -33,7 +33,7 @@ const { theme } = storeToRefs(useThemeStore())
 const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string)
 
 const handleUpdateMenu = (key: string, item: NaiveMenuOption) => {
-  const { routePath } = item as MenuOption
+  const { routePath } = item as Menu.MenuOption
   if (isExternal(routePath)) {
     window.open(routePath, '_blank')
   } else {

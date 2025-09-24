@@ -16,7 +16,8 @@
 
 <script setup lang="ts">
 import { useThemeVars } from 'naive-ui'
-import IconLogo from './icon-logo.vue'
+import { $translate } from '@/locales'
+import { IconLogo } from './icons'
 
 interface Props {
   showTitle?: boolean

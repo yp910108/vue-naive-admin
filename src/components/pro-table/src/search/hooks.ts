@@ -2,7 +2,7 @@ import { effectScope, onMounted, onScopeDispose, ref, watch } from 'vue'
 import type { DataTableColumnKey } from 'naive-ui'
 import type { SearchColumn } from '../typings'
 
-export function useForm(columns: SearchColumn[]) {
+export const useForm = (columns: SearchColumn[]) => {
   const form = ref<Record<DataTableColumnKey, any>>({})
 
   const getForm = (key: DataTableColumnKey) => {

@@ -1,6 +1,6 @@
 import type { LayoutProps } from './typings'
 
-export function createLayoutCssVars(props: LayoutProps) {
+export const createLayoutCssVars = (props: LayoutProps) => {
   const maxZIndex = props.maxZIndex!
   const siderZIndex = props.mode === 'vertical' || props.isMobile ? maxZIndex - 1 : maxZIndex - 4
   const mobileSiderZIndex = props.isMobile ? maxZIndex - 2 : 0

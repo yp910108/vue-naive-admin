@@ -48,18 +48,20 @@ import AppTab from './app-tab/index.vue'
 import AppFooter from './app-footer/index.vue'
 import AppSettings from './app-settings/index.vue'
 
-defineOptions({ name: 'BasicLayout' })
-
 const appStore = useAppStore()
+
 const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()
+
 const { mode, siderVisible, siderWidth, siderCollapsedWidth } = useLayout()
 
 const settingsAble = import.meta.env.DEV || import.meta.env.VITE_PROD_APP_SETTINGS === 'Y'
 </script>
 
 <style lang="scss">
+@use '@/styles/scrollbar' as *;
+
 #__SCROLL_EL_ID__ {
   @include scrollbar(8px, #e1e1e1);
 }

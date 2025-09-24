@@ -5,9 +5,11 @@ import { useTabStore } from '../tab'
 
 export const useCacheStore = defineStore('cache-store', () => {
   const router = useRouter()
+
   const tabStore = useTabStore()
 
   const caches = ref<string[]>([])
+
   const addCache = (key: string) => {
     const routes = router.getRoutes()
     const route = routes.find(({ name }) => name === key)
@@ -15,6 +17,7 @@ export const useCacheStore = defineStore('cache-store', () => {
       caches.value.push(key)
     }
   }
+
   const removeCache = (cache: string) => {
     const index = caches.value.indexOf(cache)
     if (index !== -1) {

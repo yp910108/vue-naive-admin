@@ -8,10 +8,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { localStg } from '@/utils'
-import IconSunny from './icon-sunny.vue'
-import IconMoon from './icon-moon.vue'
-
-defineOptions({ name: 'DarkModeSwitch' })
+import { IconSunny, IconMoon } from './icons'
 
 interface Props {
   dark?: boolean

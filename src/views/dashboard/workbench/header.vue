@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { useAuthStore } from '@/store'
-import IconAvatar from './component/icon-avatar.vue'
+import { IconAvatar } from './icons'
 
 const auth = useAuthStore()
 

@@ -34,10 +34,9 @@
 import { computed, ref } from 'vue'
 import { useThemeVars } from 'naive-ui'
 import { addColorAlpha } from '@/utils'
-import type { MenuOption } from '@/store'
 
 interface Props {
-  item: MenuOption
+  item: Menu.MenuOption
   activeKey?: string
   isMini: boolean
 }
@@ -45,7 +44,7 @@ interface Props {
 const props = defineProps<Props>()
 
 interface Emits {
-  (e: 'change', menus: MenuOption): void
+  (e: 'change', menus: Menu.MenuOption): void
 }
 
 const emit = defineEmits<Emits>()

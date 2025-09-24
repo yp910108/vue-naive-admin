@@ -1,12 +1,11 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { darkTheme, type GlobalThemeOverrides } from 'naive-ui'
-import type { Settings } from '@/settings'
 import { FONT_WEIGHT_STRONG, BORDER_RADIUS } from '@/constants'
 import { getThemeColors, initTheme } from './utils'
 
 export const useThemeStore = defineStore('theme-store', () => {
-  const theme = ref<Settings>(initTheme())
+  const theme = ref<Settings.Settings>(initTheme())
 
   const naiveTheme = computed(() => {
     return theme.value.darkMode ? darkTheme : undefined
@@ -47,7 +46,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.footer.inverted = inverted
   }
 
-  const setLayoutMode = (mode: Settings['layout']['mode']) => {
+  const setLayoutMode = (mode: Settings.Settings['layout']['mode']) => {
     theme.value.layout.mode = mode
   }
 
@@ -58,7 +57,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     }
   }
 
-  const setScrollMode = (mode: Settings['scrollMode']) => {
+  const setScrollMode = (mode: Settings.Settings['scrollMode']) => {
     theme.value.scrollMode = mode
   }
 
@@ -66,7 +65,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.fixedHeaderAndTab = isFixed
   }
 
-  const setHorizontalMenuPosition = (position: Settings['menu']['horizontalPosition']) => {
+  const setHorizontalMenuPosition = (position: Settings.Settings['menu']['horizontalPosition']) => {
     theme.value.menu.horizontalPosition = position
   }
 
@@ -118,7 +117,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     theme.value.tab.visible = visible
   }
 
-  const setTabMode = (mode: Settings['tab']['mode']) => {
+  const setTabMode = (mode: Settings.Settings['tab']['mode']) => {
     theme.value.tab.mode = mode
   }
 
@@ -130,7 +129,7 @@ export const useThemeStore = defineStore('theme-store', () => {
     const { page } = theme.value
     return page.animate ? page.animateMode : undefined
   })
-  const setPageAnimateMode = (mode: Settings['page']['animateMode']) => {
+  const setPageAnimateMode = (mode: Settings.Settings['page']['animateMode']) => {
     theme.value.page.animateMode = mode
   }
 
@@ -165,10 +164,8 @@ export const useThemeStore = defineStore('theme-store', () => {
     setTabVisible,
     setTabMode,
     setPageIsAnimate,
-
     pageAnimateMode,
     setPageAnimateMode,
-
     reset
   }
 })

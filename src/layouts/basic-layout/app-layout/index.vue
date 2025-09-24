@@ -128,6 +128,7 @@ const props = withDefaults(defineProps<LayoutProps>(), {
 interface Emits {
   (e: 'click-mobile-sider-mask'): void
 }
+
 const emit = defineEmits<Emits>()
 
 type SlotFn = (props?: Record<string, unknown>) => any
@@ -149,17 +150,23 @@ const slots = defineSlots<Slots>()
 const cssVars = computed(() => createLayoutCssVars(props))
 
 const isVertical = computed(() => props.mode === 'vertical')
+
 const isHorizontal = computed(() => props.mode === 'horizontal')
 
 const isWrapperScroll = computed(() => props.scrollMode === 'wrapper')
+
 const isContentScroll = computed(() => props.scrollMode === 'content')
 
 const showSider = computed(
   () => !props.isMobile && !props.contentFull && props.siderVisible && slots.sider
 )
+
 const showMobileSider = computed(() => props.isMobile && props.siderVisible && slots.sider)
+
 const showHeader = computed(() => !props.contentFull && props.headerVisible && slots.header)
+
 const showTab = computed(() => !props.contentFull && props.tabVisible && slots.tab)
+
 const showFooter = computed(() => !props.contentFull && props.footerVisible && slots.footer)
 
 const fixedHeaderAndTab = computed(
@@ -214,6 +221,7 @@ const handleClickMask = () => {
     width: var(--sider-collapsed-width);
   }
 }
+
 .sider-padding-top {
   padding-top: var(--header-height);
 }
@@ -221,6 +229,7 @@ const handleClickMask = () => {
 .layout-mobile-sider {
   z-index: var(--sider-z-index);
 }
+
 .layout-mobile-sider-mask {
   z-index: var(--mobile-sider-z-index);
 }
@@ -228,6 +237,7 @@ const handleClickMask = () => {
 .left-gap {
   padding-left: var(--sider-width);
 }
+
 .left-gap_collapsed {
   padding-left: var(--sider-collapsed-width);
 }
@@ -236,6 +246,7 @@ const handleClickMask = () => {
   z-index: var(--header-z-index);
   height: var(--header-height);
 }
+
 .layout-header-placement {
   height: var(--header-height);
 }
@@ -245,6 +256,7 @@ const handleClickMask = () => {
   height: var(--tab-height);
   z-index: var(--tab-z-index);
 }
+
 .layout-tab-placement {
   height: var(--tab-height);
 }
@@ -253,6 +265,7 @@ const handleClickMask = () => {
   z-index: var(--footer-z-index);
   height: var(--footer-height);
 }
+
 .layout-footer-placement {
   height: var(--footer-height);
 }

@@ -21,7 +21,7 @@ const removeDarkClassFromDocument = () => {
   document.documentElement.classList.remove(DARK_CLASS)
 }
 
-export default function subscribeThemeStore() {
+const subscribeThemeStore = () => {
   const themeStore = useThemeStore()
 
   const { theme } = storeToRefs(themeStore)
@@ -55,3 +55,5 @@ export default function subscribeThemeStore() {
     sessionStg.set('settings', theme.value)
   })
 }
+
+export default subscribeThemeStore

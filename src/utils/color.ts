@@ -4,11 +4,17 @@ import mixPlugin from 'colord/plugins/mix'
 extend([mixPlugin])
 
 const hueStep = 2 // 色相阶梯
+
 const saturationStep = 16 // 饱和度阶梯，浅色部分
+
 const saturationStep2 = 5 // 饱和度阶梯，深色部分
+
 const brightnessStep1 = 5 // 亮度阶梯，浅色部分
+
 const brightnessStep2 = 15 // 亮度阶梯，深色部分
+
 const lightColorCount = 5 // 浅色数量，主色上
+
 const darkColorCount = 4 // 浅色数量，主色下
 
 /**
@@ -24,7 +30,7 @@ type ColorIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
  * @param isLight
  * @returns
  */
-function getHue(hsv: HsvColor, i: number, isLight: boolean) {
+const getHue = (hsv: HsvColor, i: number, isLight: boolean) => {
   let hue: number
 
   const hsvH = Math.round(hsv.h)
@@ -51,7 +57,7 @@ function getHue(hsv: HsvColor, i: number, isLight: boolean) {
  * @param isLight
  * @returns
  */
-function getSaturation(hsv: HsvColor, i: number, isLight: boolean) {
+const getSaturation = (hsv: HsvColor, i: number, isLight: boolean) => {
   if (hsv.h === 0 && hsv.s === 0) {
     return hsv.s
   }
@@ -88,7 +94,7 @@ function getSaturation(hsv: HsvColor, i: number, isLight: boolean) {
  * @param isLight
  * @returns
  */
-function getValue(hsv: HsvColor, i: number, isLight: boolean) {
+const getValue = (hsv: HsvColor, i: number, isLight: boolean) => {
   let value: number
 
   if (isLight) {
@@ -104,7 +110,7 @@ function getValue(hsv: HsvColor, i: number, isLight: boolean) {
   return value
 }
 
-export function getColorPalette(color: AnyColor, index: ColorIndex): string {
+export const getColorPalette = (color: AnyColor, index: ColorIndex): string => {
   const transformColor = colord(color)
 
   if (!transformColor.isValid()) {
@@ -147,11 +153,11 @@ const darkColorMap = [
  * @param darkTheme
  * @param darkThemeMixColor
  */
-export function getColorPalettes(
+export const getColorPalettes = (
   color: AnyColor,
   darkTheme = false,
   darkThemeMixColor = '#141414'
-): string[] {
+): string[] => {
   const indexes: ColorIndex[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
   const patterns = indexes.map((index) => getColorPalette(color, index))
@@ -175,7 +181,7 @@ export function getColorPalettes(
  * @param alpha
  * @returns
  */
-export function addColorAlpha(color: string, alpha: number) {
+export const addColorAlpha = (color: string, alpha: number) => {
   return colord(color).alpha(alpha).toHex()
 }
 
@@ -186,7 +192,7 @@ export function addColorAlpha(color: string, alpha: number) {
  * @param ratio
  * @returns
  */
-export function mixColor(firstColor: string, secondColor: string, ratio: number) {
+export const mixColor = (firstColor: string, secondColor: string, ratio: number) => {
   return colord(firstColor).mix(secondColor, ratio).toHex()
 }
 
@@ -195,7 +201,7 @@ export function mixColor(firstColor: string, secondColor: string, ratio: number)
  * @param color
  * @returns
  */
-export function getRgbOfColor(color: string) {
+export const getRgbOfColor = (color: string) => {
   return colord(color).toRgb()
 }
 
@@ -205,13 +211,14 @@ export function getRgbOfColor(color: string) {
  * @param alpha
  * @param bgColor
  */
-export function transformColorWithOpacity(color: string, alpha: number, bgColor = '#ffffff') {
+export const transformColorWithOpacity = (color: string, alpha: number, bgColor = '#ffffff') => {
   const originColor = addColorAlpha(color, alpha)
+
   const { r: oR, g: oG, b: oB } = colord(originColor).toRgb()
 
   const { r: bgR, g: bgG, b: bgB } = colord(bgColor).toRgb()
 
-  function calRgb(or: number, bg: number, al: number) {
+  const calRgb = (or: number, bg: number, al: number) => {
     return bg + (or - bg) * al
   }
 

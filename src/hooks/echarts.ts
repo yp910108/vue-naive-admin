@@ -33,7 +33,7 @@ import {
   type ToolboxComponentOption,
   type TooltipComponentOption
 } from 'echarts/components'
-import { LabelLayout, UniversalTransition } from 'echarts/features'
+import { LabelLayout, LegacyGridContainLabel, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 import { useThemeStore } from '@/store'
 
@@ -69,6 +69,7 @@ echarts.use([
   RadarChart,
   GaugeChart,
   LabelLayout,
+  LegacyGridContainLabel,
   UniversalTransition,
   CanvasRenderer
 ])
@@ -79,35 +80,36 @@ echarts.use([
  * @param renderFun - 图表渲染函数(例如：图表监听函数)
  * @description 按需引入图表组件，没注册的组件需要先引入
  */
-export function useEcharts(
+export const useEcharts = (
   options: Ref<ECOption> | ComputedRef<ECOption>,
   renderFun?: (chartInstance: echarts.ECharts) => void
-) {
+) => {
   const { theme } = storeToRefs(useThemeStore())
 
   const domRef = ref<HTMLElement>()
 
   const initialSize = { width: 0, height: 0 }
+
   const { width, height } = useElementSize(domRef, initialSize)
 
   let chart: echarts.ECharts | null = null
 
-  function canRender() {
+  const canRender = () => {
     return initialSize.width > 0 && initialSize.height > 0
   }
 
-  function isRendered() {
+  const isRendered = () => {
     return Boolean(domRef.value && chart)
   }
 
-  function update(updateOptions: ECOption) {
+  const update = (updateOptions: ECOption) => {
     if (isRendered()) {
       chart?.clear()
       chart!.setOption({ ...updateOptions, backgroundColor: 'transparent' })
     }
   }
 
-  async function render() {
+  const render = async () => {
     if (domRef.value) {
       const chartTheme = theme.value.darkMode ? 'dark' : 'light'
       await nextTick()
@@ -119,15 +121,15 @@ export function useEcharts(
     }
   }
 
-  function resize() {
+  const resize = () => {
     chart?.resize()
   }
 
-  function destroy() {
+  const destroy = () => {
     chart?.dispose()
   }
 
-  function updateTheme() {
+  const updateTheme = () => {
     destroy()
     render()
   }
@@ -151,20 +153,9 @@ export function useEcharts(
       }
     })
 
-    watch(
-      options,
-      (newValue) => {
-        update(newValue)
-      },
-      { deep: true }
-    )
+    watch(options, update, { deep: true })
 
-    watch(
-      () => theme.value.darkMode,
-      () => {
-        updateTheme()
-      }
-    )
+    watch(() => theme.value.darkMode, updateTheme)
   })
 
   onScopeDispose(() => {
@@ -172,7 +163,5 @@ export function useEcharts(
     scope.stop()
   })
 
-  return {
-    domRef
-  }
+  return { domRef }
 }

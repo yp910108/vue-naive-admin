@@ -9,12 +9,7 @@
 
 <script setup lang="ts">
 import type { Component } from 'vue'
-import IconMac from './icon-mac.vue'
-import IconSetting from './icon-setting.vue'
-import IconTree from './icon-tree.vue'
-import IconAppStore from './icon-app-store.vue'
-import IconTable from './icon-table.vue'
-import IconChart from './icon-chart.vue'
+import { IconMac, IconSetting, IconTree, IconAppStore, IconTable, IconChart } from './icons'
 
 interface Props {
   /**

@@ -65,11 +65,12 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
 import { HoverContainer, LoadingEmpty } from '@/components'
 import { useMobile } from '../../hooks'
 import type { MessageTab } from './typings'
-import IconNotification from './icon-notification.vue'
+import { IconNotification } from './icons'
 import MessageList from './message-list/index.vue'
 
 const { theme } = storeToRefs(useThemeStore())

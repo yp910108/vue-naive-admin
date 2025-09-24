@@ -46,12 +46,12 @@ import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useThemeVars, type MenuOption as NaiveMenuOption } from 'naive-ui'
+import { $translate } from '@/locales'
 import { isExternal } from '@/utils'
-import { useAppStore, useThemeStore, type MenuOption } from '@/store'
+import { useAppStore, useThemeStore } from '@/store'
 import { DarkModeContainer } from '@/components'
-import { getActiveKeyPathsOfMenus } from '../../hepler'
-import IconPinOff from './icon-pin-off.vue'
-import IconPin from './icon-pin.vue'
+import { getActiveKeyPathsOfMenus } from '../../utils'
+import { IconPin, IconPinOff } from './icons'
 
 const themeVars = useThemeVars()
 
@@ -65,9 +65,9 @@ const { theme } = storeToRefs(useThemeStore())
 
 const visible = ref(false)
 
-const menus = ref<MenuOption[]>()
+const menus = ref<Menu.MenuOption[]>()
 
-const setMenus = (_menus: MenuOption[]) => {
+const setMenus = (_menus: Menu.MenuOption[]) => {
   menus.value = _menus
 }
 
@@ -75,12 +75,12 @@ const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string
 
 const expandedKeys = ref<string[]>()
 
-const setExpandKeys = (menus: MenuOption[]) => {
+const setExpandKeys = (menus: Menu.MenuOption[]) => {
   expandedKeys.value = getActiveKeyPathsOfMenus(activeKey.value, menus)
 }
 
 const handleUpdateMenu = (key: string, item: NaiveMenuOption) => {
-  const { routePath } = item as MenuOption
+  const { routePath } = item as Menu.MenuOption
   if (isExternal(routePath)) {
     window.open(routePath, '_blank')
   } else {
@@ -92,7 +92,7 @@ const handleUpdateExpandedKeys = (keys: string[]) => {
   expandedKeys.value = keys
 }
 
-const show = (menus: MenuOption[]) => {
+const show = (menus: Menu.MenuOption[]) => {
   setMenus(menus)
   setExpandKeys(menus)
   visible.value = true

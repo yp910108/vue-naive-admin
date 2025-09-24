@@ -15,23 +15,16 @@
 <script setup lang="ts">
 import { ref, h, computed } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip } from 'naive-ui'
-import { transformOptionToKeyValue } from '@/utils'
+import { transformOptionToValueLabel } from '@/utils'
 import { useDict } from '@/hooks'
 import { ProTable, type ProTableColumn, type ProTableRequestParams } from '@/components'
 import type { FetchListParams, Row } from './typings'
 import { addressOptions, deptOptions } from './constants'
 import { fetchList, deleteItem } from './service'
-import IconQuestion from './icon-question.vue'
+import { IconQuestion } from './icons'
 import Operate from './operate.vue'
 
-const sexDict = useDict('sex')
-const politicsDict = useDict('politics')
-const sexKeyValue = computed(() => transformOptionToKeyValue(sexDict.value))
-const politicsKeyValue = computed(() => transformOptionToKeyValue(politicsDict.value))
-
 const tableRef = ref<InstanceType<typeof ProTable>>()
-
-const operateRef = ref<InstanceType<typeof Operate>>()
 
 const handleDelete = async ({ id }: Row) => {
   const instance = window.$message.loading('删除中，请稍后...', { duration: 0 })
@@ -47,12 +40,22 @@ const handleDelete = async ({ id }: Row) => {
   }
 }
 
+const operateRef = ref<InstanceType<typeof Operate>>()
+
 const renderToolbar = () =>
   h(
     NButton,
     { type: 'primary', onClick: operateRef.value?.show.bind(null, undefined) },
     () => '新 建'
   )
+
+const sexDict = useDict('sex')
+
+const sexValueLabel = computed(() => transformOptionToValueLabel(sexDict.value))
+
+const politicsDict = useDict('politics')
+
+const politicsValueLabel = computed(() => transformOptionToValueLabel(politicsDict.value))
 
 const columns = ref<ProTableColumn<Row>[]>([
   { type: 'selection', fixed: 'left' },
@@ -80,7 +83,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     searchType: 'select',
     searchOptions: () => sexDict.value,
     searchDefaultValue: '1' as Dict.Type['sex'],
-    render: (row) => sexKeyValue.value?.[row.sex!]
+    render: (row) => sexValueLabel.value?.[row.sex!]
   },
   {
     key: 'age',
@@ -108,7 +111,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     width: 100,
     searchType: 'select',
     searchOptions: () => politicsDict.value,
-    render: (row) => politicsKeyValue.value?.[row.politics!],
+    render: (row) => politicsValueLabel.value?.[row.politics!],
     renderSettingLabel: (label) => h(NGradientText, { size: 14 }, { default: () => label })
   },
   {
@@ -165,7 +168,7 @@ const columns = ref<ProTableColumn<Row>[]>([
 
 const methodRequest = async ({ birthDate, ...rest }: ProTableRequestParams) => {
   const params: FetchListParams = { ...rest }
-  if (birthDate && birthDate.length) {
+  if (birthDate?.length) {
     params.startBirthDate = birthDate[0]
     params.endBirthDate = birthDate[1]
   }

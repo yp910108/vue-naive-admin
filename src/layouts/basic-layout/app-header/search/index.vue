@@ -13,9 +13,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
 import { HoverContainer } from '@/components'
-import IconSearch from './component/icon-search.vue'
+import { IconSearch } from './icons'
 import Modal from './modal/index.vue'
 
 const { theme } = storeToRefs(useThemeStore())

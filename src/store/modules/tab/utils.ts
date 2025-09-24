@@ -1,13 +1,12 @@
 import type { RouteLocationNormalizedLoaded, RouteRecordNormalized } from 'vue-router'
-import type { MultiTab } from './typings'
 
-function hasFullPath(
+const hasFullPath = (
   route: RouteLocationNormalizedLoaded | RouteRecordNormalized
-): route is RouteLocationNormalizedLoaded {
+): route is RouteLocationNormalizedLoaded => {
   return !!(route as RouteLocationNormalizedLoaded).fullPath
 }
 
-export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecordNormalized) {
+export const getTabByRoute = (route: RouteLocationNormalizedLoaded | RouteRecordNormalized) => {
   const { name, meta } = route
   return {
     key: name as string,
@@ -18,9 +17,9 @@ export function getTabByRoute(route: RouteLocationNormalizedLoaded | RouteRecord
       left: 0,
       top: 0
     }
-  } as MultiTab
+  } as Tab.MultiTab
 }
 
-export function hasTab(tabs: MultiTab[], tab: MultiTab) {
+export const hasTab = (tabs: Tab.MultiTab[], tab: Tab.MultiTab) => {
   return !!tabs.find(({ key }) => key === tab.key)
 }

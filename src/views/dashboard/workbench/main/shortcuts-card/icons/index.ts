@@ -1,0 +1,6 @@
+export { default as IconMac } from './mac.vue'
+export { default as IconSetting } from './setting.vue'
+export { default as IconTree } from './tree.vue'
+export { default as IconAppStore } from './app-store.vue'
+export { default as IconTable } from './table.vue'
+export { default as IconChart } from './chart.vue'

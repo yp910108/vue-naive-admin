@@ -1,17 +1,10 @@
-import { REGEXP_URL } from '@/constants/regexp'
+import { REGEXP_URL } from '@/constants'
 
-/**
- * @param path
- */
-export function isExternal(path: string): boolean {
+export const isExternal = (path: string): boolean => {
   return REGEXP_URL.test(path)
 }
 
-/**
- * 拼接 url
- * @param urls
- */
-export function combineURL(...urls: string[]) {
+export const combineURL = (...urls: string[]) => {
   const ret = urls.map((url) => {
     if (!url) return url
     if (isExternal(url)) {

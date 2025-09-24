@@ -18,6 +18,7 @@ import {
   type DataTableRowKey,
   type PaginationProps
 } from 'naive-ui'
+import { $translate } from '@/locales'
 import type {
   ProTableColumn,
   RenderActionParams,

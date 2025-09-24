@@ -9,23 +9,14 @@ export default defineConfig(({ mode }) => {
     plugins: setupVitePlugins(env),
     resolve: {
       alias: {
-        '~': fileURLToPath(new URL('.', import.meta.url)),
-        '@': fileURLToPath(new URL('./src', import.meta.url)),
-        'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
-      }
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "./src/styles/scrollbar.scss" as *;`
-        }
+        '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     },
     server: {
       proxy: setupViteProxy()
     },
     optimizeDeps: {
-      include: ['@better-scroll/core', '@better-scroll/mouse-wheel', 'echarts']
+      include: ['echarts']
     },
     build: {
       reportCompressedSize: false

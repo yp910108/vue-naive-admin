@@ -3,18 +3,9 @@
     class="app-tab flex items-center w-full pl-16px"
     :style="{ height: `${theme.tab.height}px` }"
   >
-    <div ref="bsWrapper" class="flex-1 h-full overflow-hidden">
-      <better-scroll
-        ref="bsScroll"
-        :options="{
-          scrollX: true,
-          scrollY: false,
-          click: !!deviceInfo.device.type
-        }"
-      >
-        <tabs @scroll="handleTabsScroll" />
-      </better-scroll>
-    </div>
+    <scroll-pane ref="scrollRef" class="grow-1 w-0!">
+      <tabs @scroll="handleTabsScroll" />
+    </scroll-pane>
     <reload-button />
   </dark-mode-container>
 </template>
@@ -23,38 +14,25 @@
 import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { useElementBounding } from '@vueuse/core'
-import type { BScrollInstance } from '@better-scroll/core'
 import { useTabStore, useThemeStore } from '@/store'
-import { BetterScroll, DarkModeContainer } from '@/components'
-import { useDeviceInfo } from './hooks'
+import { DarkModeContainer, ScrollPane } from '@/components'
 import Tabs from './tabs/index.vue'
 import ReloadButton from './reload-button/index.vue'
 
 defineOptions({ name: 'AppTab' })
 
 const route = useRoute()
+
 const tabStore = useTabStore()
-const deviceInfo = useDeviceInfo()
 
-const bsWrapper = ref<HTMLElement>()
-const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper)
-
-const bsScroll = ref<BScrollInstance>()
+const scrollRef = ref<InstanceType<typeof ScrollPane>>()
 
 const { theme } = storeToRefs(useThemeStore())
 
-const handleTabsScroll = (clientX: number) => {
-  setTimeout(() => {
-    const currentX = clientX - bsWrapperLeft.value
-    const deltaX = currentX - bsWrapperWidth.value / 2
-    if (bsScroll.value) {
-      const { maxScrollX, x } = bsScroll.value.instance
-      const scrollX = maxScrollX - x
-      const update = deltaX > 0 ? Math.max(-deltaX, scrollX) : Math.min(-deltaX, -x)
-      bsScroll.value?.instance.scrollBy(update, 0, 300)
-    }
-  })
+const handleTabsScroll = (activeLeft: number, activeWidth: number) => {
+  const wrapperWidth = scrollRef.value?.scrollEl?.offsetWidth!
+  const deltX = activeLeft - wrapperWidth + (wrapperWidth - activeWidth) / 2
+  scrollRef.value?.scrollTo(deltX)
 }
 
 watch(route, (newVal) => {

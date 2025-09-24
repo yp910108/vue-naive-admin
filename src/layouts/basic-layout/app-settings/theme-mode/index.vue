@@ -42,12 +42,11 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
-import IconSunny from './icon-sunny.vue'
-import IconMoon from './icon-moon.vue'
-import IconNotDisturb from './icon-not-disturb.vue'
-import IconHdrAuto from './icon-hdr-auto.vue'
+import { IconSunny, IconMoon, IconNotDisturb, IconHdrAuto } from './icons'
 
 const themeStore = useThemeStore()
+
 const { theme } = storeToRefs(themeStore)
 </script>

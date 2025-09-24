@@ -25,8 +25,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { colors } from '@/settings'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
-import IconCheck from './icon-check.vue'
+import { IconCheck } from './icons'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)

@@ -1,10 +1,11 @@
 import type { App } from 'vue'
 import { createI18n } from 'vue-i18n'
 import { localStg } from '@/utils'
-import { messages, type Lang } from './lang'
+import { messages } from './lang'
 
-const locale: Lang = localStg.get('lang') ?? 'zhCN'
-const fallbackLocale: Lang = 'enUS'
+const locale: Lang.Type = localStg.get('lang') ?? 'zhCN'
+
+const fallbackLocale: Lang.Type = 'enUS'
 
 const i18n = createI18n({
   locale,
@@ -13,16 +14,12 @@ const i18n = createI18n({
   legacy: false
 })
 
-export function setupI18n(app: App) {
+export const setupI18n = (app: App) => {
   app.use(i18n)
-  window.$translate = i18n.global.t
-  app.config.globalProperties.$translate = i18n.global.t
 }
 
 export const $translate = i18n.global.t
 
-export function setLocale(locale: Lang) {
+export const setLocale = (locale: Lang.Type) => {
   i18n.global.locale.value = locale
 }
-
-export * from './lang'

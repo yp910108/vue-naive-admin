@@ -1,8 +1,9 @@
 import { defineComponent, type PropType } from 'vue'
 import { NButton, NDropdown, NTooltip } from 'naive-ui'
+import { $translate } from '@/locales'
 import type { TableSize } from '../../typings'
 import { tableSizeOptions } from './constants'
-import IconSize from './icon-size'
+import { IconSize } from './icons'
 
 export default defineComponent({
   props: {

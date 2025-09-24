@@ -48,11 +48,13 @@ export interface Props {
 defineProps<Props>()
 
 type SlotFn = () => any
+
 type Slots = {
   icon?: SlotFn
   default?: SlotFn
   close?: SlotFn
 }
+
 defineSlots<Slots>()
 
 // comment: hack for highlight

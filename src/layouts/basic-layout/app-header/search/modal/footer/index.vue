@@ -17,10 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import IconReturn from './icon-return.vue'
-import IconUp from './icon-up.vue'
-import IconDown from './icon-down.vue'
-import IconEsc from './icon-esc.vue'
+import { $translate } from '@/locales'
+import { IconUp, IconDown, IconReturn, IconEsc } from './icons'
 </script>
 
 <style scoped lang="scss">

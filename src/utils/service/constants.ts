@@ -12,6 +12,7 @@ export const ERROR_MSG_DURATION = 3 * 1000
  * 默认的请求错误 code
  */
 export const DEFAULT_REQUEST_ERROR_CODE = 'DEFAULT'
+
 /**
  * 默认的请求错误文本
  */
@@ -21,6 +22,7 @@ export const DEFAULT_REQUEST_ERROR_MSG = '请求错误～'
  * 网络不可用的 code
  */
 export const NETWORK_ERROR_CODE = 'ERR_NETWORK'
+
 /**
  * 网络不可用的错误文本
  */
@@ -30,6 +32,7 @@ export const NETWORK_ERROR_MSG = '网络不可用～'
  * 请求超时的错误 code
  */
 export const REQUEST_TIMEOUT_CODE = 'ECONNABORTED'
+
 /**
  * 请求超时的错误文本
  */
@@ -39,6 +42,7 @@ export const REQUEST_TIMEOUT_MSG = '请求超时～'
  * 请求取消的错误 code
  */
 export const REQUEST_CANCELED_CODE = 'ERR_CANCELED'
+
 /**
  * 请求取消的错误文本
  */

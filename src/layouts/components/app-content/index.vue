@@ -25,8 +25,6 @@
 <script setup lang="ts">
 import { useAppStore, useCacheStore, useThemeStore } from '@/store'
 
-defineOptions({ name: 'AppContent' })
-
 interface Props {
   /**
    * 显示padding
@@ -39,6 +37,8 @@ withDefaults(defineProps<Props>(), {
 })
 
 const appStore = useAppStore()
+
 const themeStore = useThemeStore()
+
 const cacheStore = useCacheStore()
 </script>

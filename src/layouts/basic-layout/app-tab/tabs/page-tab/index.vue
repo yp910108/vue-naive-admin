@@ -27,15 +27,14 @@
 <script setup lang="ts">
 import { computed, type Component } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { Settings } from '@/settings'
 import { addColorAlpha, transformColorWithOpacity } from '@/utils'
 import { useThemeStore } from '@/store'
 import { Icons } from '@/components'
+import { IconClose } from './icons'
 import ChromeTab from './chrome-tab.vue'
 import ButtonTab from './button-tab.vue'
-import IconClose from './icon-close.vue'
 
-type TabMode = Settings['tab']['mode']
+type TabMode = Settings.Settings['tab']['mode']
 
 interface Props {
   mode?: TabMode

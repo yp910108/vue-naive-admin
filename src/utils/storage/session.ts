@@ -1,21 +1,18 @@
-import type { Settings } from '@/settings'
-import { decrypto, encrypto } from '../crypto'
-
 interface SessionStorage {
-  settings?: Settings
+  settings?: Settings.Settings
 }
 
-function createSessionStorage<T extends SessionStorage>() {
-  function set<K extends keyof T>(key: K, value: T[K]) {
-    const json = encrypto(value)
-    sessionStorage.setItem(key as string, json)
+const createSessionStorage = <T extends SessionStorage>() => {
+  const set = <K extends keyof T>(key: K, value: T[K]) => {
+    const str = JSON.stringify(value)
+    sessionStorage.setItem(key as string, str)
   }
 
-  function get<K extends keyof T>(key: K) {
-    const json = sessionStorage.getItem(key as string)
-    if (json) {
+  const get = <K extends keyof T>(key: K) => {
+    const str = sessionStorage.getItem(key as string)
+    if (str) {
       try {
-        return decrypto(json) as T[K]
+        return JSON.parse(str) as T[K]
       } catch (e) {
         // do nothing
       }
@@ -23,11 +20,11 @@ function createSessionStorage<T extends SessionStorage>() {
     remove(key)
   }
 
-  function remove(key: keyof T) {
+  const remove = (key: keyof T) => {
     sessionStorage.removeItem(key as string)
   }
 
-  function clear() {
+  const clear = () => {
     sessionStorage.clear()
   }
 

@@ -1,23 +1,28 @@
 import { computed, onScopeDispose, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { $translate } from '@/locales'
 import { REGEXP_PHONE } from '@/constants'
 import type { LoginModule } from './typings'
 import { fetchSmsCode } from './service'
 
-export function useToLoginModule() {
+export const useToLoginModule = () => {
   const route = useRoute()
+
   const router = useRouter()
+
   const toLoginModule = (module: LoginModule) => {
     const { query } = route
     router.push({ name: 'Login', params: { module }, query })
   }
+
   return { toLoginModule }
 }
 
-function useCountDown(second: number) {
+const useCountDown = (second: number) => {
   const isComplete = ref(false)
 
   const counts = ref(0)
+
   const isCounting = computed(() => Boolean(counts.value))
 
   let intervalId: any
@@ -46,8 +51,9 @@ function useCountDown(second: number) {
   return { counts, start, stop, isCounting, isComplete }
 }
 
-export function useSmsCode() {
+export const useSmsCode = () => {
   const loading = ref(false)
+
   const { counts, start, isCounting } = useCountDown(60)
 
   const label = computed(() => {

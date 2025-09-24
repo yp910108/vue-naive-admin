@@ -23,10 +23,7 @@
 import type { Component } from 'vue'
 import CountTo from '../components/count-to/index.vue'
 import GradientBg from './gradient-bg.vue'
-import IconChart from './icon-chart.vue'
-import IconMoney from './icon-money.vue'
-import IconDownload from './icon-download.vue'
-import IconTrademark from './icon-trademark.vue'
+import { IconChart, IconMoney, IconDownload, IconTrademark } from './icons'
 
 interface CardData {
   id: string

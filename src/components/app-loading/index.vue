@@ -24,11 +24,9 @@
 
 <script setup lang="ts">
 import { settings } from '@/settings'
-import { sessionStg } from '@/utils'
 import { $translate } from '@/locales'
-import IconLogo from './icon-logo.vue'
-
-defineOptions({ name: 'AppLoading' })
+import { sessionStg } from '@/utils'
+import { IconLogo } from './icons'
 
 const loadingClses = [
   'left-0 top-0',

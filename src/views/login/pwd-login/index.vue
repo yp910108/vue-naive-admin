@@ -49,8 +49,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
-import { REGEXP_PWD } from '@/constants'
+import { $translate } from '@/locales'
 import { useAuthStore } from '@/store'
+import { REGEXP_PWD } from '../constants'
 import { useToLoginModule } from '../hooks'
 
 const authStore = useAuthStore()

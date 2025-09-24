@@ -2,7 +2,7 @@ import type { RouteLocationNormalized } from 'vue-router'
 import { INVALID_CODE, localStg, type RequestError } from '@/utils'
 import { useAuthStore, useRouteStore } from '@/store'
 
-export async function createPermissionGuard(to: RouteLocationNormalized) {
+export const createPermissionGuard = async (to: RouteLocationNormalized) => {
   const token = localStg.get('token')
   const authStore = useAuthStore()
   const routeStore = useRouteStore()

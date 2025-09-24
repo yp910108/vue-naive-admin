@@ -1,5 +1,4 @@
 import type { RouteComponent, RouteMeta, RouteRecordRaw } from 'vue-router'
-import type { RouteData } from '@/store'
 import { BasicLayout, BlankLayout } from '@/layouts'
 import views, { NotFound } from '@/views'
 import { camelize } from './camelize'
@@ -9,7 +8,7 @@ import { combineURL, isExternal } from './url'
  * /login/:module => /login
  * @param path
  */
-export function removeParamsFromPath(path: string) {
+export const removeParamsFromPath = (path: string) => {
   return path.split('/:')[0]
 }
 
@@ -17,7 +16,7 @@ export function removeParamsFromPath(path: string) {
  * 通过路径获取组件名称
  * @param path
  */
-export function parsePathToName(path: string) {
+export const parsePathToName = (path: string) => {
   path = removeParamsFromPath(path).replace(/\//g, '-')
   return camelize(path, true)
 }
@@ -33,7 +32,7 @@ type ModuleComponent = {
  * @param component
  * @param name
  */
-function getNamedView(view: Lazy<ModuleComponent>, name: string) {
+const getNamedView = (view: Lazy<ModuleComponent>, name: string) => {
   return async () => {
     const result = await view()
     Object.assign(result.default, { name })
@@ -45,7 +44,7 @@ function getNamedView(view: Lazy<ModuleComponent>, name: string) {
  * 获取第一个不为外部链接的 path
  * @param routeData
  */
-function getFirstPathNotExternal(routeData: RouteData[]) {
+const getFirstPathNotExternal = (routeData: Route.RouteData[]) => {
   for (const { path } of routeData) {
     if (!isExternal(path)) {
       return path
@@ -57,7 +56,7 @@ function getFirstPathNotExternal(routeData: RouteData[]) {
  * 转换路由
  * @param routeData
  */
-export function transformRoutes(routeData: RouteData[]) {
+export const transformRoutes = (routeData: Route.RouteData[]) => {
   const rootRoute = {
     path: '/',
     name: 'Root'
@@ -82,7 +81,7 @@ export function transformRoutes(routeData: RouteData[]) {
 
   const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
 
-  const transform = (routeData: RouteData[], prefix: string = '', parentMeta?: RouteMeta) => {
+  const transform = (routeData: Route.RouteData[], prefix: string = '', parentMeta?: RouteMeta) => {
     for (const { path, layout, redirect, children, ...rest } of routeData) {
       if (isExternal(path)) continue
       const routePath = combineURL(prefix, path)

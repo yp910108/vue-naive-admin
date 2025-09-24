@@ -248,8 +248,8 @@ const ListSelectPane = defineComponent({
                 {!checkedRows.value.length
                   ? '确 定'
                   : multiple.value
-                  ? `确 定（已选${checkedRows.value.length}条）`
-                  : `确 定（已选${checkedRows.value[0][props.labelField]}）`}
+                    ? `确 定（已选${checkedRows.value.length}条）`
+                    : `确 定（已选${checkedRows.value[0][props.labelField]}）`}
               </NButton>
             </NSpace>
           )

@@ -3,7 +3,7 @@ import type { DataTableColumn, DataTableColumnKey } from 'naive-ui'
 import type { ProTableColumn } from '../typings'
 import { filterSearchColumns, filterSettingColumns, filterTableColumns } from './utils'
 
-export function useColumns(originColumns: Ref<ProTableColumn[]>) {
+export const useColumns = (originColumns: Ref<ProTableColumn[]>) => {
   const columns = computed(() => {
     return originColumns.value.map((column, i) => {
       const visible = typeof column.visible === 'boolean' ? column.visible : true
@@ -47,7 +47,7 @@ export function useColumns(originColumns: Ref<ProTableColumn[]>) {
     const column = columns.value.find(
       (column) => !column.hideInTable && (column as any).key === key
     )
-    column && (column._fixed = fixed)
+    if (column) column._fixed = fixed
   }
 
   const updateColumnsOrder = (newOrder: number, oldOrder: number) => {

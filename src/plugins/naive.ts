@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { createDiscreteApi, type ConfigProviderProps } from 'naive-ui'
 import { useThemeStore } from '@/store'
 
-export function setupDiscreteApis() {
+export const setupDiscreteApis = () => {
   const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
 
   const configProviderProps = computed<ConfigProviderProps>(() => ({

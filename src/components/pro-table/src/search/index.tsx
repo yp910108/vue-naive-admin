@@ -26,6 +26,7 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import { useResizeObserver } from '@vueuse/core'
+import { $translate } from '@/locales'
 import { removeInvalidValues } from '@/utils'
 import type { SearchAction, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
@@ -131,7 +132,7 @@ const Search = defineComponent({
     ) => {
       const _clearable = clearable ?? props.clearable
       const _disabled =
-        typeof disabled === 'function' ? disabled(form.value) : disabled ?? props.disabled
+        typeof disabled === 'function' ? disabled(form.value) : (disabled ?? props.disabled)
       const _options: any = typeof options === 'function' ? options() : options
       if (renderField) {
         return renderField(form.value, key, {
@@ -321,8 +322,8 @@ const Search = defineComponent({
                       typeof column.label === 'function'
                         ? column.label()
                         : column.renderLabel
-                        ? column.renderLabel(column.label)
-                        : column.label
+                          ? column.renderLabel(column.label)
+                          : column.label
                   }}
                 </NFormItem>
               </NGridItem>

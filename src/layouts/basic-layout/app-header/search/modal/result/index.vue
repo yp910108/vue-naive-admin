@@ -23,12 +23,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useThemeStore, type SearchMenuOption } from '@/store'
-import IconEnter from './icon-enter.vue'
+import { useThemeStore } from '@/store'
+import { IconEnter } from './icons'
 
 interface Props {
   value?: string
-  options: SearchMenuOption[]
+  options: Menu.SearchMenuOption[]
 }
 
 const props = defineProps<Props>()
@@ -55,7 +55,7 @@ const handleTo = () => {
   emit('enter')
 }
 
-const handleMouseEnter = ({ key }: SearchMenuOption) => {
+const handleMouseEnter = ({ key }: Menu.SearchMenuOption) => {
   active.value = key
 }
 </script>

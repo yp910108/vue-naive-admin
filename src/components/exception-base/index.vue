@@ -16,9 +16,7 @@
 
 <script setup lang="ts">
 import { useThemeVars } from 'naive-ui'
-import IconNoPermission from './icon-no-permission.vue'
-import IconNotFound from './icon-not-found.vue'
-import IconServiceError from './icon-service-error.vue'
+import { IconNoPermission, IconNotFound, IconServiceError } from './icons'
 
 defineOptions({ name: 'ExceptionBase' })
 

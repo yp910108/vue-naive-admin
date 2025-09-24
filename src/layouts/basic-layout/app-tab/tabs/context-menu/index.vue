@@ -13,18 +13,20 @@
 <script setup lang="ts">
 import { computed, h } from 'vue'
 import type { DropdownOption } from 'naive-ui'
-import { useAppStore, useTabStore, type MultiTab } from '@/store'
-import IconFullscreen from './icon-fullscreen.vue'
-import IconReload from './icon-reload.vue'
-import IconCloseCurrent from './icon-close-current.vue'
-import IconCloseLeft from './icon-close-left.vue'
-import IconCloseRight from './icon-close-right.vue'
-import IconCloseOther from './icon-close-other.vue'
-import IconCloseAll from './icon-close-all.vue'
+import { useAppStore, useTabStore } from '@/store'
+import {
+  IconFullscreen,
+  IconReload,
+  IconCloseCurrent,
+  IconCloseLeft,
+  IconCloseRight,
+  IconCloseOther,
+  IconCloseAll
+} from './icons'
 
 interface Props {
   visible?: boolean
-  tab?: MultiTab
+  tab?: Tab.MultiTab
   /**
    * tab 是否可关闭
    */

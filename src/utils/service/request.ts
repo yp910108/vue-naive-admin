@@ -13,7 +13,7 @@ interface RequestParam {
 
 type RequestParams = RequestParam & { instance: AxiosInstance }
 
-async function getRequestResponse(params: RequestParams): Promise<any> {
+const getRequestResponse = async (params: RequestParams): Promise<any> => {
   const { instance, method, url, data, config } = params
 
   if (method === 'get' || method === 'delete') {
@@ -23,34 +23,34 @@ async function getRequestResponse(params: RequestParams): Promise<any> {
   }
 }
 
-export function createRequest(
+export const createRequest = (
   axiosConfig: AxiosRequestConfig,
   backendConfig?: Partial<BackendConfig>
-) {
+) => {
   const customInstance = new CustomAxiosInstance(axiosConfig, backendConfig)
 
-  async function asyncRequest<T>(param: RequestParam) {
+  const asyncRequest = async <T>(param: RequestParam) => {
     const { instance } = customInstance
     return (await getRequestResponse({ ...param, instance })) as T | undefined
   }
 
-  function get<T>(url: string, config?: AxiosRequestConfig) {
+  const get = <T>(url: string, config?: AxiosRequestConfig) => {
     return asyncRequest<T>({ url, method: 'get', config })
   }
 
-  function post<T>(url: string, data?: any, config?: AxiosRequestConfig) {
+  const post = <T>(url: string, data?: any, config?: AxiosRequestConfig) => {
     return asyncRequest<T>({ url, method: 'post', data, config })
   }
 
-  function patch<T>(url: string, data?: any, config?: AxiosRequestConfig) {
+  const patch = <T>(url: string, data?: any, config?: AxiosRequestConfig) => {
     return asyncRequest<T>({ url, method: 'patch', data, config })
   }
 
-  function put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
+  const put = <T>(url: string, data?: any, config?: AxiosRequestConfig) => {
     return asyncRequest<T>({ url, method: 'put', data, config })
   }
 
-  function handleDelete<T>(url: string, config?: AxiosRequestConfig) {
+  const handleDelete = <T>(url: string, config?: AxiosRequestConfig) => {
     return asyncRequest<T>({ url, method: 'delete', config })
   }
 

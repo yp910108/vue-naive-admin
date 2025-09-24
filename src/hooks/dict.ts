@@ -9,7 +9,7 @@ const dict = ref<Dict.Data>({})
 
 const existKeys: string[] = []
 
-export function useDict(type: keyof Dict.Type) {
+export const useDict = (type: keyof Dict.Type) => {
   if (!dict.value[type] && !existKeys.includes(type)) {
     existKeys.push(type)
     fetchDict(type).then((res) => {

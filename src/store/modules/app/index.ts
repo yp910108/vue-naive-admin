@@ -67,7 +67,7 @@ export const useAppStore = defineStore('app-store', () => {
       cacheStore.addCache(key)
       setTimeout(() => {
         const { scrollEl } = getScrollInfo()
-        scrollEl && scrollTo(scrollEl)
+        if (scrollEl) scrollTo(scrollEl)
       }, 600)
     })
   }

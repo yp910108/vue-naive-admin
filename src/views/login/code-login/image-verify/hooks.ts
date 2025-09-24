@@ -5,22 +5,21 @@ import { onMounted, ref } from 'vue'
  * @param width - 图形宽度
  * @param height - 图形高度
  */
-export function useImageVerify(width = 152, height = 40) {
+export const useImageVerify = (width = 152, height = 40) => {
   const domRef = ref<HTMLCanvasElement>()
+
   const imgCode = ref('')
 
-  function setImgCode(code: string) {
+  const setImgCode = (code: string) => {
     imgCode.value = code
   }
 
-  function getImgCode() {
+  const getImgCode = () => {
     if (!domRef.value) return
     imgCode.value = draw(domRef.value, width, height)
   }
 
-  onMounted(() => {
-    getImgCode()
-  })
+  onMounted(getImgCode)
 
   return {
     domRef,
@@ -30,19 +29,19 @@ export function useImageVerify(width = 152, height = 40) {
   }
 }
 
-function randomNum(min: number, max: number) {
+const randomNum = (min: number, max: number) => {
   const num = Math.floor(Math.random() * (max - min) + min)
   return num
 }
 
-function randomColor(min: number, max: number) {
+const randomColor = (min: number, max: number) => {
   const r = randomNum(min, max)
   const g = randomNum(min, max)
   const b = randomNum(min, max)
   return `rgb(${r},${g},${b})`
 }
 
-function draw(dom: HTMLCanvasElement, width: number, height: number) {
+const draw = (dom: HTMLCanvasElement, width: number, height: number) => {
   let imgCode = ''
 
   const NUMBER_STRING = '0123456789'

@@ -30,8 +30,6 @@
 import { computed } from 'vue'
 import { useThemeVars, type PopoverPlacement } from 'naive-ui'
 
-defineOptions({ name: 'HoverContainer' })
-
 interface Props {
   tooltipContent?: string
   placement?: PopoverPlacement

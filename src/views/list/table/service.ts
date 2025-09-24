@@ -1,26 +1,26 @@
 import { mockRequest } from '@/utils'
 import type { BackendModel, FetchListParams, Row } from './typings'
 
-export function fetchUserList(params: FetchListParams) {
+export const fetchUserList = (params: FetchListParams) => {
   return mockRequest.get<{ total?: number; list?: Row[] }>('/list/table-users', { params })
 }
 
-export function fetchList(params: FetchListParams) {
+export const fetchList = (params: FetchListParams) => {
   return mockRequest.get<{ total?: number; list?: Row[] }>('/list/table', { params })
 }
 
-export function fetchDetail(id: number) {
+export const fetchDetail = (id: number) => {
   return mockRequest.get<Row>(`/list/table/${id}`)
 }
 
-export function add(data: BackendModel) {
+export const add = (data: BackendModel) => {
   return mockRequest.post('/list/table', data)
 }
 
-export function edit(id: number, data: BackendModel) {
+export const edit = (id: number, data: BackendModel) => {
   return mockRequest.patch(`/list/table/${id}`, data)
 }
 
-export function deleteItem(id: number) {
+export const deleteItem = (id: number) => {
   return mockRequest.delete(`/list/table/${id}`)
 }

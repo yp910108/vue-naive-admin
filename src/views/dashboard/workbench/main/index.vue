@@ -53,10 +53,9 @@
 
 <script setup lang="ts">
 import { useThemeVars } from 'naive-ui'
-import IconAvatar from '../component/icon-avatar.vue'
+import { IconAvatar, IconBanner } from './icons'
 import ShortcutsCard from './shortcuts-card/index.vue'
 import TechnologyCard from './technology-card/index.vue'
-import IconBanner from './icon-banner.vue'
 
 const themeVars = useThemeVars()
 

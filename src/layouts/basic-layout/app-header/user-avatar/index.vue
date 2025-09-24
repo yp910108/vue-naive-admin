@@ -13,11 +13,10 @@
 import { computed, h } from 'vue'
 import { storeToRefs } from 'pinia'
 import type { DropdownOption } from 'naive-ui'
+import { $translate } from '@/locales'
 import { useAuthStore, useThemeStore } from '@/store'
 import { HoverContainer } from '@/components'
-import IconAvatar from './icon-avatar.vue'
-import IconUserAvatar from './icon-user-avatar.vue'
-import IconLogout from './icon-logout.vue'
+import { IconAvatar, IconUserAvatar, IconLogout } from './icons'
 
 const authStore = useAuthStore()
 const { theme } = storeToRefs(useThemeStore())

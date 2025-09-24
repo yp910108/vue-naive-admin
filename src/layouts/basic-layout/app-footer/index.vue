@@ -12,7 +12,5 @@ import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store'
 import { DarkModeContainer } from '@/components'
 
-defineOptions({ name: 'AppFooter' })
-
 const { theme } = storeToRefs(useThemeStore())
 </script>

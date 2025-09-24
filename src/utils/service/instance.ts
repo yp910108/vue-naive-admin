@@ -3,9 +3,13 @@ import { useAuthStore } from '@/store'
 import { localStg } from '../storage'
 import type { BackendConfig, ContentType } from './typings'
 import { INVALID_CODE } from './constants'
-import { handleAxiosError, handleBackendError, transformRequestData } from './helpers'
-
-const controller = new AbortController()
+import {
+  abort,
+  addController,
+  handleAxiosError,
+  handleBackendError,
+  transformRequestData
+} from './helpers'
 
 export default class CustomAxiosInstance {
   instance: AxiosInstance
@@ -31,7 +35,7 @@ export default class CustomAxiosInstance {
         config.headers.Authorization = localStg.get('token') ?? ''
         config.data = transformRequestData(config.data, contentType)
       }
-      config.signal = controller.signal
+      addController(config)
       return config
     })
     this.instance.interceptors.response.use(
@@ -46,6 +50,7 @@ export default class CustomAxiosInstance {
         if (code === successCode) {
           return data
         } else if (INVALID_CODE.includes(code)) {
+          abort()
           const error = handleBackendError(code, message)
           const authStore = useAuthStore()
           authStore.logout()
@@ -61,7 +66,7 @@ export default class CustomAxiosInstance {
           if (status === 304) {
             return data
           } else if (status === 401) {
-            controller.abort()
+            abort()
             const authStore = useAuthStore()
             authStore.logout()
           }

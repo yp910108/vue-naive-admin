@@ -5,7 +5,7 @@ import { getColorPalette, localStg, sessionStg } from '@/utils'
  * 初始化主题配置
  * @returns
  */
-export function initTheme() {
+export const initTheme = () => {
   const _settings = sessionStg.get('settings') ?? settings
   const theme = localStg.get('theme')
   const primaryColor = _settings.primaryColor
@@ -20,8 +20,11 @@ export function initTheme() {
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'
+
 type ColorScene = '' | 'Hover' | 'Pressed' | 'Suppl'
+
 type ColorKey = `${ColorType}Color${ColorScene}`
+
 type ThemeColors = Partial<Record<ColorKey, string>>
 
 interface ColorAction {
@@ -29,7 +32,7 @@ interface ColorAction {
   handler: (color: string) => string
 }
 
-export function getThemeColors(colors: Record<ColorType, string>) {
+export const getThemeColors = (colors: Record<ColorType, string>) => {
   const { primary, info, success, warning, error } = colors
 
   const colorTypeVals: [ColorType, string][] = [

@@ -16,12 +16,7 @@
 
 <script setup lang="ts">
 import type { Component } from 'vue'
-import IconVue from './icon-vue.vue'
-import IconTypescript from './icon-typescript.vue'
-import IconVite from './icon-vite.vue'
-import IconNaive from './icon-naive.vue'
-import IconUno from './icon-uno.vue'
-import IconPinia from './icon-pinia.vue'
+import { IconVue, IconTs, IconVite, IconNaive, IconUno, IconPinia } from './icons'
 
 interface Props {
   /**
@@ -56,14 +51,14 @@ type Components = Record<string, Component>
 
 const iconComponents: Components = {
   vue: IconVue,
-  typescript: IconTypescript,
+  typescript: IconTs,
   vite: IconVite,
   naive: IconNaive,
   uno: IconUno,
   pinia: IconPinia
 }
 
-function handleOpenSite() {
+const handleOpenSite = () => {
   window.open(props.site, '_blank')
 }
 </script>

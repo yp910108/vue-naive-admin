@@ -15,24 +15,19 @@ import {
 
 const errorMsgStack = new Map<string | number, string>([]) // 错误消息栈，防止同一错误出现两次
 
-function addErrorMsg(err: RequestError) {
+const addErrorMsg = (err: RequestError) => {
   errorMsgStack.set(err.code, err.message)
 }
 
-function removeErrMsg(err: RequestError) {
+const removeErrMsg = (err: RequestError) => {
   errorMsgStack.delete(err.code)
 }
 
-function hasErrorMsg(error: RequestError) {
+const hasErrorMsg = (error: RequestError) => {
   return errorMsgStack.has(error.code)
 }
 
-/**
- * 显示错误消息
- * @param error
- * @returns
- */
-function showErrorMsg(error: RequestError) {
+const showErrorMsg = (error: RequestError) => {
   if (!error.message || hasErrorMsg(error)) return
 
   addErrorMsg(error)
@@ -45,12 +40,7 @@ function showErrorMsg(error: RequestError) {
 
 type ErrorStatus = keyof typeof ERROR_STATUS
 
-/**
- * 处理 axios 请求失败的错误
- * @param axiosError
- * @returns
- */
-export function handleAxiosError(axiosError: AxiosError) {
+export const handleAxiosError = (axiosError: AxiosError) => {
   const error: RequestError = {
     type: 'http',
     code: DEFAULT_REQUEST_ERROR_CODE,
@@ -89,12 +79,7 @@ export function handleAxiosError(axiosError: AxiosError) {
   return error
 }
 
-/**
- * 处理后端返回的错误（业务错误）
- * @param code
- * @param message
- */
-export function handleBackendError(code: string | number, message: string) {
+export const handleBackendError = (code: string | number, message: string) => {
   const error: RequestError = {
     type: 'backend',
     code: code,

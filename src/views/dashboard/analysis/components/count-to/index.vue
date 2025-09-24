@@ -79,7 +79,7 @@ const source = ref(props.startValue)
 let outputValue = useTransition(source)
 const value = computed(() => formatNumber(outputValue.value))
 
-function run() {
+const run = () => {
   outputValue = useTransition(source, {
     duration: props.duration,
     onStarted: () => emit('on-started'),
@@ -88,12 +88,12 @@ function run() {
   })
 }
 
-function start() {
+const start = () => {
   run()
   source.value = props.endValue
 }
 
-function formatNumber(num: number | string) {
+const formatNumber = (num: number | string) => {
   if (num !== 0 && !num) {
     return ''
   }

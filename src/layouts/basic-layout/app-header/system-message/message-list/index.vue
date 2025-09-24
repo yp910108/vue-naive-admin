@@ -43,9 +43,7 @@
 import type { Component } from 'vue'
 import { useThemeVars } from 'naive-ui'
 import type { MessageList } from '../typings'
-import IconAvatar from './icon-avatar.vue'
-import IconMessage from './icon-message.vue'
-import IconTodo from './icon-todo.vue'
+import { IconAvatar, IconMessage, IconTodo } from './icons'
 
 interface Props {
   list?: MessageList[]

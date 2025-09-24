@@ -1,8 +1,6 @@
-import type { Settings } from '@/settings'
+type LayoutMode = Settings.Settings['layout']['mode']
 
-type LayoutMode = Settings['layout']['mode']
-
-type ScrollMode = Settings['scrollMode']
+type ScrollMode = Settings.Settings['scrollMode']
 
 export interface LayoutProps {
   mode?: LayoutMode

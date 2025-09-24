@@ -2,7 +2,7 @@ import { watch } from 'vue'
 import { useFullscreen } from '@vueuse/core'
 import { useAppStore } from '../modules'
 
-export default function subscribeAppStore() {
+const subscribeAppStore = () => {
   const { isFullscreen, toggle } = useFullscreen()
 
   const appStore = useAppStore()
@@ -17,9 +17,7 @@ export default function subscribeAppStore() {
 
   watch(
     () => appStore.contentFull,
-    () => {
-      update()
-    }
+    () => update
   )
 
   watch(isFullscreen, (newValue) => {
@@ -28,3 +26,5 @@ export default function subscribeAppStore() {
     }
   })
 }
+
+export default subscribeAppStore

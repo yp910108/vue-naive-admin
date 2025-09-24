@@ -21,8 +21,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import type { MenuOption as NaiveMenuOption } from 'naive-ui'
 import { isExternal } from '@/utils'
-import { useAppStore, useMenuStore, useThemeStore, type MenuOption } from '@/store'
-import { getActiveKeyPathsOfMenus } from '../hepler'
+import { useAppStore, useMenuStore, useThemeStore } from '@/store'
+import { getActiveKeyPathsOfMenus } from '../utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -34,7 +34,7 @@ const activeKey = computed(() => (route.meta.activeMenu ?? route.name) as string
 const expandedKeys = ref<string[]>()
 
 const handleUpdateMenu = (key: string, item: NaiveMenuOption) => {
-  const { routePath } = item as MenuOption
+  const { routePath } = item as Menu.MenuOption
   if (isExternal(routePath)) {
     window.open(routePath, '_blank')
   } else {

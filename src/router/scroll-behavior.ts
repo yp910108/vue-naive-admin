@@ -3,6 +3,7 @@ import { useAppStore, useTabStore } from '@/store'
 
 export const scrollBehavior: RouterScrollBehavior = (to, from) => {
   const appStore = useAppStore()
+
   const tabStore = useTabStore()
 
   const { scrollEl, scrollLeft, scrollTop } = appStore.getScrollInfo()

@@ -16,8 +16,9 @@
 import { h } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useClipboard } from '@vueuse/core'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
-import IconSuccess from './icon-success.vue'
+import { IconSuccess } from './icons'
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
@@ -30,15 +31,15 @@ const handleCopy = async () => {
   }
   await copy(JSON.stringify(theme.value, null, '\t'))
   window.$dialog.info({
-    title: window.$translate('layout.settings.themeConfig.operateSuccess'),
-    content: window.$translate('layout.settings.themeConfig.copySuccess'),
-    positiveText: window.$translate('layout.settings.themeConfig.confirmCopy'),
+    title: $translate('layout.settings.themeConfig.operateSuccess'),
+    content: $translate('layout.settings.themeConfig.copySuccess'),
+    positiveText: $translate('layout.settings.themeConfig.confirmCopy'),
     icon: () => h(IconSuccess)
   })
 }
 
 const handleResetConfig = () => {
   themeStore.reset()
-  window.$message.success(window.$translate('layout.settings.themeConfig.resetSuccess'))
+  window.$message.success($translate('layout.settings.themeConfig.resetSuccess'))
 }
 </script>

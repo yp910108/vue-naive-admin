@@ -78,7 +78,7 @@
 <script setup lang="ts">
 import { computed, h, ref, shallowRef } from 'vue'
 import { NInputNumber, type FormInst, type FormRules } from 'naive-ui'
-import { removeInvalidValues, transformOptionToKeyValue } from '@/utils'
+import { removeInvalidValues, transformOptionToValueLabel } from '@/utils'
 import { useDict } from '@/hooks'
 import { ListSelect, type ProTableColumn, type ProTableRequestParams } from '@/components'
 import type { BackendModel, FetchListParams, Model, Row } from './typings'
@@ -92,45 +92,10 @@ interface Emits {
 const emit = defineEmits<Emits>()
 
 const sexDict = useDict('sex')
+
+const sexValueLabel = computed(() => transformOptionToValueLabel(sexDict.value))
+
 const politicsDict = useDict('politics')
-const sexKeyValue = computed(() => transformOptionToKeyValue(sexDict.value))
-
-const spinning = ref(false)
-const saveLoading = ref(false)
-const saveAble = ref(true)
-
-const formRef = ref<FormInst>()
-
-const row = shallowRef<Row>()
-
-const isEdit = computed(() => !!row.value && !!Object.keys(row.value).length)
-
-const defaultModel: Model = {
-  name: null,
-  sex: '1',
-  age: null,
-  birthDate: null,
-  politics: '3',
-  addressId: null,
-  deptId: null,
-  leader: null,
-  remark: null
-}
-
-const model = ref<Model>({ ...defaultModel })
-
-const rules = ref<FormRules>({
-  name: {
-    required: true,
-    trigger: ['blur', 'input'],
-    message: '请输入'
-  },
-  sex: {
-    required: true,
-    trigger: ['blur', 'change'],
-    message: '请选择'
-  }
-})
 
 const leaderColumns = ref<ProTableColumn<Row>[]>([
   { type: 'selection', multiple: false },
@@ -145,7 +110,7 @@ const leaderColumns = ref<ProTableColumn<Row>[]>([
     width: 100,
     searchType: 'select',
     searchOptions: () => sexDict.value,
-    render: (row) => sexKeyValue.value?.[row.sex!]
+    render: (row) => sexValueLabel.value?.[row.sex!]
   },
   {
     key: 'age',
@@ -183,6 +148,35 @@ const leaderMethodRequest = async ({
   const { total, list } = (await fetchUserList(params)) ?? {}
   return { itemCount: total, data: list }
 }
+
+const formRef = ref<FormInst>()
+
+const defaultModel: Model = {
+  name: null,
+  sex: '1',
+  age: null,
+  birthDate: null,
+  politics: '3',
+  addressId: null,
+  deptId: null,
+  leader: null,
+  remark: null
+}
+
+const model = ref<Model>({ ...defaultModel })
+
+const rules = ref<FormRules>({
+  name: {
+    required: true,
+    trigger: ['blur', 'input'],
+    message: '请输入'
+  },
+  sex: {
+    required: true,
+    trigger: ['blur', 'change'],
+    message: '请选择'
+  }
+})
 
 const setModel = async () => {
   try {
@@ -238,6 +232,16 @@ const handeAfterLeave = () => {
 }
 
 const visible = ref(false)
+
+const spinning = ref(false)
+
+const saveLoading = ref(false)
+
+const saveAble = ref(true)
+
+const isEdit = computed(() => !!row.value && !!Object.keys(row.value).length)
+
+const row = shallowRef<Row>()
 
 const show = (_row?: Row) => {
   visible.value = true

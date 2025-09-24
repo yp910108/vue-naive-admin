@@ -43,8 +43,6 @@ import ThemeMode from './theme-mode.vue'
 import SystemMessage from './system-message/index.vue'
 import UserAvatar from './user-avatar/index.vue'
 
-defineOptions({ name: 'AppHeader' })
-
 const { theme } = storeToRefs(useThemeStore())
 
 const { isMobile } = useMobile()

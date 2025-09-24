@@ -9,4 +9,5 @@ export const request = createRequest({
 })
 
 export * from './typings'
+
 export * from './constants'

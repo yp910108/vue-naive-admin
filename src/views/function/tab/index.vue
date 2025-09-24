@@ -12,7 +12,7 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-function handleToTabDetail() {
+const handleToTabDetail = () => {
   router.push({
     name: 'FunctionTabDetail',
     query: { name: 'abc' }

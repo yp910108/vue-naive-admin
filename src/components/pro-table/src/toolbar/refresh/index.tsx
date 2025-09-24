@@ -1,6 +1,7 @@
 import { defineComponent, type PropType } from 'vue'
 import { NButton, NTooltip } from 'naive-ui'
-import IconRefresh from './icon-refresh'
+import { $translate } from '@/locales'
+import { IconRefresh } from './icons'
 
 export default defineComponent({
   props: {

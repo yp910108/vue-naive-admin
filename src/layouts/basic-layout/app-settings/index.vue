@@ -25,16 +25,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import IconClose from './icon-close.vue'
-import IconSetting from './icon-setting.vue'
+import { $translate } from '@/locales'
+import { IconClose, IconSetting } from './icons'
 import ThemeMode from './theme-mode/index.vue'
 import LayoutMode from './layout-mode.vue'
 import ColorSelect from './color-select/index.vue'
 import PageFunc from './page-func.vue'
 import PageView from './page-view.vue'
 import ThemeConfig from './theme-config/index.vue'
-
-defineOptions({ name: 'AppSetting' })
 
 const visible = ref(false)
 </script>

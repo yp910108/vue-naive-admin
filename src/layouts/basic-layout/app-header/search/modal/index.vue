@@ -43,10 +43,11 @@
 import { ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { onKeyStroke, useDebounceFn } from '@vueuse/core'
+import { $translate } from '@/locales'
 import { isExternal } from '@/utils'
-import { useMenuStore, type SearchMenuOption } from '@/store'
+import { useMenuStore } from '@/store'
 import { useMobile } from '../../../hooks'
-import IconSearch from '../component/icon-search.vue'
+import { IconSearch } from '../icons'
 import Result from './result/index.vue'
 import SearchFooter from './footer/index.vue'
 
@@ -60,7 +61,7 @@ const visible = ref(false)
 
 const keyword = ref<string | null>()
 const activeKey = ref<string>()
-const resultOptions = shallowRef<SearchMenuOption[]>()
+const resultOptions = shallowRef<Menu.SearchMenuOption[]>()
 
 const search = () => {
   resultOptions.value = menuStore.searchMenus.filter(({ label }) => {
@@ -117,7 +118,9 @@ const handleEnter = () => {
 }
 
 onKeyStroke('ArrowUp', handleUp)
+
 onKeyStroke('ArrowDown', handleDown)
+
 onKeyStroke('Enter', handleEnter)
 
 const show = () => {

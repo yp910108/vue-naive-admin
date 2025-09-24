@@ -1,6 +1,6 @@
 import type { ProxyOptions } from 'vite'
 
-export function setupViteProxy() {
+export const setupViteProxy = () => {
   const proxy: Record<string, ProxyOptions> = {
     '/api': {
       target: 'http://jsonplaceholder.typicode.com',

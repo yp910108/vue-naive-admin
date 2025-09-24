@@ -26,7 +26,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormInst } from 'naive-ui'
-import { REGEXP_PHONE, REGEXP_CODE_SIX } from '@/constants'
+import { $translate } from '@/locales'
+import { REGEXP_PHONE } from '@/constants'
+import { REGEXP_CODE_SIX } from '../constants'
 import { useSmsCode, useToLoginModule } from '../hooks'
 
 const { toLoginModule } = useToLoginModule()

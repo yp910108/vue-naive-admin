@@ -3,7 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import AppContent from '../components/app-content/index.vue'
-
-defineOptions({ name: 'BlankLayout' })
+import { AppContent } from '../components'
 </script>

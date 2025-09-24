@@ -12,6 +12,7 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import Sortable from 'sortablejs'
+import { $translate } from '@/locales'
 import { addColorAlpha } from '@/utils'
 import type { SettingColumn } from '../../typings'
 import { IconDrag, IconPinTop, IconPinBottom, IconUnpin, IconSetting } from './icons'
@@ -207,8 +208,8 @@ export default defineComponent({
                         {typeof column.label === 'function'
                           ? column.label()
                           : column.renderLabel
-                          ? column.renderLabel(column.label)
-                          : column.label}
+                            ? column.renderLabel(column.label)
+                            : column.label}
                       </NCheckbox>
                       <NSpace
                         size={0}

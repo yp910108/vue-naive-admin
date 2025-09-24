@@ -14,7 +14,7 @@ export const router = createRouter({
   scrollBehavior
 })
 
-export async function setupRouter(app: App) {
+export const setupRouter = async (app: App) => {
   app.use(router)
   createRouterGuard(router)
   await router.isReady()

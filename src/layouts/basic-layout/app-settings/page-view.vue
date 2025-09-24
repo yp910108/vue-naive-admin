@@ -51,18 +51,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { Settings } from '@/settings'
-import type { OptionWithKey } from '@/utils'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
 
-type TabMode = Settings['tab']['mode']
+type TabMode = Settings.Settings['tab']['mode']
 
-type PageAnimateMode = Settings['page']['animateMode']
+type PageAnimateMode = Settings.Settings['page']['animateMode']
 
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
 
-const tabModeList = computed<OptionWithKey<TabMode>[]>(() => [
+const tabModeList = computed<{ value: TabMode; label: string }[]>(() => [
   {
     value: 'chrome',
     label: $translate('layout.settings.pageView.tabMode.chrome')
@@ -73,7 +72,7 @@ const tabModeList = computed<OptionWithKey<TabMode>[]>(() => [
   }
 ])
 
-const pageAnimateModeList = computed<OptionWithKey<PageAnimateMode>[]>(() => [
+const pageAnimateModeList = computed<{ value: PageAnimateMode; label: string }[]>(() => [
   {
     value: 'fade-slide',
     label: $translate('layout.settings.pageView.pageAnimateMode.fadeSlide')

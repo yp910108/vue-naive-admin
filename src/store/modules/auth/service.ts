@@ -1,13 +1,6 @@
 import { mockRequest } from '@/utils'
-import type { UserInfo } from './typings'
 
-/**
- * 登录
- * @param userName
- * @param password
- * @returns
- */
-export function login(userName: string, password: string) {
+export const login = (userName: string, password: string) => {
   return mockRequest.post<string>('/login', { userName, password })
 }
 
@@ -15,6 +8,6 @@ export function login(userName: string, password: string) {
  * 获取用户信息
  * @returns
  */
-export function fetchUserInfo() {
-  return mockRequest.get<UserInfo>('/getUserInfo')
+export const fetchUserInfo = () => {
+  return mockRequest.get<Auth.UserInfo>('/getUserInfo')
 }

@@ -64,8 +64,7 @@
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeVars, type PopoverPlacement } from 'naive-ui'
-import type { Settings } from '@/settings'
-import type { OptionWithKey } from '@/utils'
+import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
 
 const themeVars = useThemeVars()
@@ -74,7 +73,7 @@ const themeStore = useThemeStore()
 
 const { theme } = storeToRefs(themeStore)
 
-type LayoutMode = Settings['layout']['mode']
+type LayoutMode = Settings.Settings['layout']['mode']
 
 type Placement = Record<LayoutMode, PopoverPlacement>
 
@@ -85,7 +84,7 @@ const placement: Placement = {
   'horizontal-mix': 'bottom-end'
 }
 
-const modeList = computed<OptionWithKey<LayoutMode>[]>(() => [
+const modeList = computed<{ value: LayoutMode; label: string }[]>(() => [
   {
     value: 'vertical',
     label: $translate('layout.settings.layoutMode.mode.vertical')
