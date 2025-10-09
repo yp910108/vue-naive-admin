@@ -1,7 +1,7 @@
 export const routeData: Route.RouteData[] = [
   {
     title: '登录',
-    path: 'login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
+    path: 'login',
     layout: 'blank',
     white: true
   },

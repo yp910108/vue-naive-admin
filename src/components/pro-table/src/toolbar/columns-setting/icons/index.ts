@@ -1,5 +1,0 @@
-export { default as IconSetting } from './setting'
-export { default as IconDrag } from './drag'
-export { default as IconPinTop } from './pin-top'
-export { default as IconPinBottom } from './pin-bottom'
-export { default as IconUnpin } from './unpin'

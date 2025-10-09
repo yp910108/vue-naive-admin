@@ -1,8 +1,10 @@
 declare namespace Tab {
-  type MultiTab = {
+  type TabItem = {
     key: string
     title: string
+    cache?: boolean
     routePath: string
+    backRoutePath?: string
     icon?: string
     scrollPosition: {
       left: number

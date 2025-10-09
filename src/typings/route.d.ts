@@ -19,6 +19,10 @@ declare namespace Route {
      */
     path: string
     /**
+     * 路由对应的页面路径，如果不存在，则根据 path 进行拼接
+     */
+    page?: string
+    /**
      * 图标名称
      */
     icon?: string
@@ -38,6 +42,7 @@ declare namespace Route {
      * 当前路由需要选中的菜单（需要填写对应路由的完整路径或者 name，最终都会被转化为对应路由的 name）
      */
     activeMenu?: string
+    // TDDO
     /**
      * 是否可以用作根路由。默认为 false，当设置为 true 时，无法用作根路由（默认会将 basicLayoutRoute 中的
      * 第一个路由作为根路由，如果将此选项设置为 true，则此路由即便是第一个也无法用作根路由）

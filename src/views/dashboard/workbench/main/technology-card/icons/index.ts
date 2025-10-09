@@ -1,6 +1,0 @@
-export { default as IconVue } from './vue.vue'
-export { default as IconTs } from './ts.vue'
-export { default as IconVite } from './vite.vue'
-export { default as IconNaive } from './naive.vue'
-export { default as IconUno } from './uno.vue'
-export { default as IconPinia } from './pinia.vue'

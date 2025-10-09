@@ -1,55 +1,9 @@
 {
-  "darkMode": false,
-  "followSystemTheme": true,
-  "layout": {
-    "minWidth": 900,
-    "mode": "vertical"
-  },
-  "scrollMode": "content",
-  "primaryColor": "#1677ff",
-  "otherColor": {
-    "info": "#1677ff",
-    "success": "#18a058",
-    "warning": "#f0a020",
-    "error": "#d03050"
-  },
-  "isCustomizeInfoColor": false,
-  "fixedHeaderAndTab": true,
-  "showReload": true,
-  "header": {
-    "inverted": false,
-    "height": 56,
-    "crumb": {
-      "visible": true,
-      "showIcon": true
-    }
-  },
+  "theme": "os",
+  "primaryColor": "default",
   "tab": {
     "visible": true,
     "height": 44,
-    "mode": "chrome",
     "isCache": true
-  },
-  "sider": {
-    "inverted": false,
-    "width": 220,
-    "collapsedWidth": 64,
-    "mixWidth": 80,
-    "mixCollapsedWidth": 48,
-    "mixChildMenuWidth": 200
-  },
-  "menu": {
-    "horizontalPosition": "flex-start"
-  },
-  "footer": {
-    "visible": true,
-    "fixed": false,
-    "right": true,
-    "height": 48,
-    "inverted": false
-  },
-  "page": {
-    "animate": true,
-    "animateMode": "fade-slide"
   }
 }

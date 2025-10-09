@@ -1,13 +1,11 @@
-import { useEventListener } from '@vueuse/core'
+import { watch } from 'vue'
 import { localStg } from '@/utils'
 import { useTabStore } from '../modules'
 
-const subscribeTabStore = () => {
+export const subscribeTabStore = () => {
   const tabStore = useTabStore()
 
-  useEventListener(window, 'beforeunload', () => {
-    localStg.set('tabs', tabStore.tabs)
+  watch(tabStore.tabs, (newTabs) => {
+    localStg.set('tabs', newTabs)
   })
 }
-
-export default subscribeTabStore

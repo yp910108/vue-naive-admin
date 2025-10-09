@@ -1,22 +1,11 @@
-import { settings } from '@/settings'
-import { getColorPalette, localStg, sessionStg } from '@/utils'
+import { composite } from 'seemly'
 
-/**
- * 初始化主题配置
- * @returns
- */
-export const initTheme = () => {
-  const _settings = sessionStg.get('settings') ?? settings
-  const theme = localStg.get('theme')
-  const primaryColor = _settings.primaryColor
-  const infoColor = _settings.isCustomizeInfoColor ? _settings.otherColor.info : primaryColor
-  const otherColor = { ..._settings.otherColor, info: infoColor }
-  return {
-    ..._settings,
-    darkMode: theme ? theme === 'dark' : settings.darkMode,
-    primaryColor,
-    otherColor
-  }
+const createHoverColor = (color: string): string => {
+  return composite(color, [255, 255, 255, 0.16])
+}
+
+const createPressedColor = (color: string): string => {
+  return composite(color, [0, 0, 0, 0.12])
 }
 
 type ColorType = 'primary' | 'info' | 'success' | 'warning' | 'error'
@@ -45,9 +34,9 @@ export const getThemeColors = (colors: Record<ColorType, string>) => {
 
   const colorActions: ColorAction[] = [
     { scene: '', handler: (color) => color },
-    { scene: 'Hover', handler: (color) => getColorPalette(color, 5) },
-    { scene: 'Pressed', handler: (color) => getColorPalette(color, 7) },
-    { scene: 'Suppl', handler: (color) => getColorPalette(color, 5) }
+    { scene: 'Hover', handler: (color) => createHoverColor(color) },
+    { scene: 'Pressed', handler: (color) => createPressedColor(color) },
+    { scene: 'Suppl', handler: (color) => color }
   ]
 
   const themeColors: ThemeColors = {}

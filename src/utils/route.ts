@@ -1,24 +1,17 @@
+import { defineComponent, h } from 'vue'
 import type { RouteComponent, RouteMeta, RouteRecordRaw } from 'vue-router'
 import { BasicLayout, BlankLayout } from '@/layouts'
+import { CustomIframe } from '@/components'
 import views, { NotFound } from '@/views'
-import { camelize } from './camelize'
+import { pascalCase } from './string'
 import { combineURL, isExternal } from './url'
 
 /**
  * /login/:module => /login
  * @param path
  */
-export const removeParamsFromPath = (path: string) => {
+const removeParamsFromPath = (path: string) => {
   return path.split('/:')[0]
-}
-
-/**
- * 通过路径获取组件名称
- * @param path
- */
-export const parsePathToName = (path: string) => {
-  path = removeParamsFromPath(path).replace(/\//g, '-')
-  return camelize(path, true)
 }
 
 type Lazy<T> = () => Promise<T>
@@ -28,15 +21,25 @@ type ModuleComponent = {
 }
 
 /**
- * 给页面设置名称并返回
- * @param component
+ * 根据页面地址获取页面
+ * @param pagePath
  * @param name
  */
-const getNamedView = (view: Lazy<ModuleComponent>, name: string) => {
-  return async () => {
-    const result = await view()
-    Object.assign(result.default, { name })
-    return result
+const getNamedView = (pagePath: string, name: string) => {
+  if (isExternal(pagePath) || pagePath.startsWith('/')) {
+    return defineComponent({
+      name,
+      setup: () => {
+        return () => h(CustomIframe, { src: pagePath })
+      }
+    })
+  } else {
+    const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
+    return async () => {
+      const result = await view()
+      Object.assign(result.default, { name })
+      return result
+    }
   }
 }
 
@@ -46,9 +49,7 @@ const getNamedView = (view: Lazy<ModuleComponent>, name: string) => {
  */
 const getFirstPathNotExternal = (routeData: Route.RouteData[]) => {
   for (const { path } of routeData) {
-    if (!isExternal(path)) {
-      return path
-    }
+    if (!isExternal(path)) return path
   }
 }
 
@@ -58,21 +59,24 @@ const getFirstPathNotExternal = (routeData: Route.RouteData[]) => {
  */
 export const transformRoutes = (routeData: Route.RouteData[]) => {
   const rootRoute = {
-    path: '/',
-    name: 'Root'
+    name: 'Root',
+    path: '/'
   } as RouteRecordRaw
+
   const blankLayoutRoute: RouteRecordRaw = {
     path: '/',
     name: 'BlankLayout',
     component: BlankLayout,
     children: []
   }
+
   const basicLayoutRoute: RouteRecordRaw = {
     path: '/',
     name: 'BasicLayout',
     component: BasicLayout,
     children: []
   }
+
   const vueNotFoundRoute: RouteRecordRaw = {
     name: 'NotFound',
     path: '/:pathMatch(.*)*',
@@ -81,25 +85,34 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
 
   const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
 
-  const transform = (routeData: Route.RouteData[], prefix: string = '', parentMeta?: RouteMeta) => {
-    for (const { path, layout, redirect, children, ...rest } of routeData) {
+  const transform = (
+    routeData: Route.RouteData[],
+    parentPath?: string,
+    parentPage?: string,
+    parentMeta?: RouteMeta
+  ) => {
+    for (const { path, page, layout, redirect, children, ...rest } of routeData) {
       if (isExternal(path)) continue
-      const routePath = combineURL(prefix, path)
-      const pagePath = removeParamsFromPath(routePath)
-      const name = parsePathToName(routePath)
+      const routePath = path.startsWith('/') ? path : combineURL(parentPath, path)
+      const pagePath = page ? page : combineURL(parentPage, removeParamsFromPath(path))
+      const name = pascalCase(routePath)
       const meta = {
         ...rest,
         keepAlive: rest.keepAlive ?? parentMeta?.keepAlive,
         activeMenu: rest.activeMenu ?? parentMeta?.activeMenu,
+        // TDDO
         unsafeRoot: parentMeta?.unsafeRoot ?? rest.unsafeRoot
       }
-      if (children && children.length) {
+      if (children?.length) {
         const firstPathNotExternal = getFirstPathNotExternal(children)
         if (!firstPathNotExternal) continue
+        const redirectPath = firstPathNotExternal.startsWith('/')
+          ? firstPathNotExternal
+          : `/${combineURL(routePath, firstPathNotExternal)}`
         const route: RouteRecordRaw = {
           path: routePath,
           name,
-          redirect: redirect ?? `/${combineURL(routePath, firstPathNotExternal)}`,
+          redirect: redirect ?? redirectPath,
           meta
         }
         if (layout === 'blank') {
@@ -107,13 +120,12 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
         } else {
           basicLayoutRoute.children.push(route)
         }
-        transform(children, routePath, meta)
+        transform(children, routePath, pagePath, meta)
       } else {
-        const view = (views[`./${pagePath}/index.vue`] ?? NotFound) as Lazy<ModuleComponent>
-        const component = getNamedView(view, name)
+        const component = getNamedView(pagePath, name)
         const route: RouteRecordRaw = { path: routePath, name, component, meta }
         if (route.meta?.activeMenu) {
-          route.meta.activeMenu = parsePathToName(route.meta.activeMenu)
+          route.meta.activeMenu = pascalCase(route.meta.activeMenu)
         }
         if (layout === 'blank') {
           blankLayoutRoute.children.push(route)
@@ -128,9 +140,7 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
 
   const safeRoutes = basicLayoutRoute.children.filter(({ meta }) => !meta?.unsafeRoot)
 
-  const rootPath = safeRoutes.length ? `/${removeParamsFromPath(safeRoutes[0].path)}` : undefined
-
-  rootRoute.redirect = rootPath
+  rootRoute.redirect = safeRoutes.length ? safeRoutes[0].path : undefined
 
   return routes
 }

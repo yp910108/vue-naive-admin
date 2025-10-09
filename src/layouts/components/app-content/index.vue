@@ -1,21 +1,12 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <transition
-      mode="out-in"
-      appear
-      :name="themeStore.pageAnimateMode"
-      @before-leave="appStore.setDisableMainXScroll(true)"
-      @after-enter="appStore.setDisableMainXScroll(false)"
-    >
+    <transition name="fade-slide" mode="out-in" appear>
       <keep-alive :include="cacheStore.caches">
         <component
-          v-if="appStore.reloadFlag"
           :is="Component"
           :key="route.fullPath"
-          :class="[
-            'flex-grow bg-#f6f9f8 dark:bg-#101014 transition duration-300 ease-in-out',
-            { 'p-16px': showPadding }
-          ]"
+          :class="['grow-1', contentClass]"
+          :style="contentStyle"
         />
       </keep-alive>
     </transition>
@@ -23,22 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { useAppStore, useCacheStore, useThemeStore } from '@/store'
+import type { CSSProperties } from 'vue'
+import { useCacheStore } from '@/store'
 
-interface Props {
-  /**
-   * 显示padding
-   */
-  showPadding?: boolean
-}
-
-withDefaults(defineProps<Props>(), {
-  showPadding: true
-})
-
-const appStore = useAppStore()
-
-const themeStore = useThemeStore()
+defineProps<{
+  contentClass?: string
+  contentStyle?: CSSProperties | string
+}>()
 
 const cacheStore = useCacheStore()
 </script>

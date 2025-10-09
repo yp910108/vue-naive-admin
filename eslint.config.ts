@@ -53,12 +53,17 @@ export default defineConfigWithVueTs(
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           pathGroups: [
             {
-              pattern: 'vue',
+              pattern: 'lodash-es',
               group: 'external',
               position: 'before'
             },
             {
-              pattern: 'pinia',
+              pattern: 'seemly',
+              group: 'external',
+              position: 'before'
+            },
+            {
+              pattern: 'vue',
               group: 'external',
               position: 'before'
             },
@@ -68,17 +73,12 @@ export default defineConfigWithVueTs(
               position: 'before'
             },
             {
+              pattern: 'pinia',
+              group: 'external',
+              position: 'before'
+            },
+            {
               pattern: 'vue-router',
-              group: 'external',
-              position: 'before'
-            },
-            {
-              pattern: 'naive-ui',
-              group: 'external',
-              position: 'before'
-            },
-            {
-              pattern: 'lodash-es',
               group: 'external',
               position: 'before'
             },
@@ -93,12 +93,17 @@ export default defineConfigWithVueTs(
               position: 'before'
             },
             {
-              pattern: '@/settings',
-              group: 'internal',
+              pattern: 'naive-ui',
+              group: 'external',
               position: 'before'
             },
             {
               pattern: '@/locales',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: '@/settings',
               group: 'internal',
               position: 'before'
             },
@@ -147,7 +152,8 @@ export default defineConfigWithVueTs(
               group: 'internal',
               position: 'before'
             }
-          ]
+          ],
+          pathGroupsExcludedImportTypes: []
         }
       ],
       'vue/multi-word-component-names': 0,

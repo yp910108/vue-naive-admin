@@ -1,5 +1,5 @@
 <template>
-  <app-content :show-padding="false" />
+  <app-content />
 </template>
 
 <script setup lang="ts">

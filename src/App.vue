@@ -16,7 +16,7 @@
 import { computed, type WritableComputedRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
-import { dateZhCN, zhCN } from 'naive-ui'
+import { zhCN, dateZhCN } from 'naive-ui'
 import { useThemeStore, subscribeStore } from './store'
 
 const { locale } = useI18n()

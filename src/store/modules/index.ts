@@ -1,4 +1,4 @@
-export * from './app'
+export * from './settings'
 export * from './theme'
 export * from './auth'
 export * from './route'
