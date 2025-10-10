@@ -27,8 +27,6 @@ const setupApp = async () => {
 
   appLoading.unmount()
 
-  setupStore(app)
-
   app.mount('#app')
 }
 

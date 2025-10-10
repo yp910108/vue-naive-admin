@@ -50,7 +50,7 @@
           {{ $translate('login.forgetPassword') }}
         </n-button>
       </n-flex>
-      <n-button type="primary" size="large" block class="mt-26px">
+      <n-button type="primary" size="large" block class="mt-26px" @click="handleLogin">
         {{ $translate('login.confirm') }}
       </n-button>
     </n-flex>
@@ -59,13 +59,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useThemeVars, type FormRules } from 'naive-ui'
+import { useThemeVars, type FormInst, type FormRules } from 'naive-ui'
 import { $translate } from '@/locales'
+import { useAuthStore } from '@/store'
 import { LangSelect, ThemeSelect } from '@/components'
 import { ImgLogo } from './assets'
 import { REGEXP_PWD } from './constants'
 
 const themeVars = useThemeVars()
+
+const formRef = ref<FormInst>()
 
 const model = ref({
   userName: 'Admin',
@@ -90,5 +93,15 @@ const rules: FormRules = {
       trigger: 'input'
     }
   ]
+}
+
+const authStore = useAuthStore()
+
+const handleLogin = async () => {
+  await formRef.value?.validate()
+
+  const { userName, password } = model.value
+
+  authStore.login(userName, password)
 }
 </script>
