@@ -1,11 +1,11 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { useOsTheme } from 'naive-ui'
+import { usePreferredColorScheme } from '@vueuse/core'
 import { defaultSettings } from '@/settings'
 import { localStg } from '@/utils'
 
 export const useSettingsStore = defineStore('settings-store', () => {
-  const osTheme = useOsTheme()
+  const osTheme = usePreferredColorScheme()
 
   const settings = ref(localStg.get('settings') ?? defaultSettings)
 
