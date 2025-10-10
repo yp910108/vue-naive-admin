@@ -1,9 +1,9 @@
 declare namespace Settings {
   /**
    * 系统主题
-   * - dark 暗色
-   * - light 亮色
    * - os 跟随系统
+   * - light 亮色主题
+   * - dark 暗色主题
    */
   type Theme = 'dark' | 'light' | 'os'
 

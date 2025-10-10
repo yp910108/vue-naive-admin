@@ -22,14 +22,12 @@
 import { storeToRefs } from 'pinia'
 import { useThemeVars } from 'naive-ui'
 import { $translate } from '@/locales'
-import { useThemeStore, subscribeSettingsStore } from '@/store'
+import { useThemeStore } from '@/store'
 import { ImgLogo } from './assets'
 
 const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
 
 const themeVars = useThemeVars()
-
-subscribeSettingsStore()
 </script>
 
 <style lang="scss" scoped>

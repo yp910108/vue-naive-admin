@@ -1,16 +1,21 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
+import { useOsTheme } from 'naive-ui'
 import { defaultSettings } from '@/settings'
 import { localStg } from '@/utils'
 
 export const useSettingsStore = defineStore('settings-store', () => {
+  const osTheme = useOsTheme()
+
   const settings = ref(localStg.get('settings') ?? defaultSettings)
 
-  const theme = ref<Exclude<Settings.Theme, 'os'>>(settings.value.theme as any)
+  const theme = computed(() =>
+    settings.value.theme === 'os' ? osTheme.value! : settings.value.theme
+  )
 
-  const setThemeByOs = (newTheme: Exclude<Settings.Theme, 'os'>) => {
-    theme.value = newTheme
+  const setTheme = (_theme: Settings.Theme) => {
+    settings.value.theme = _theme
   }
 
-  return { settings, theme, setThemeByOs }
+  return { settings, theme, setTheme }
 })
