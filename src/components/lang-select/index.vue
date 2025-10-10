@@ -20,9 +20,9 @@ const options: { value: Lang.Type; label: string }[] = [
 
 const value = ref<Lang.Type>(localStg.get('lang') ?? 'zhCN')
 
-const handleUpdateValue = (key: Lang.Type) => {
-  value.value = key
-  setLocale(key)
-  localStg.set('lang', key)
+const handleUpdateValue = (newValue: Lang.Type) => {
+  value.value = newValue
+  setLocale(newValue)
+  localStg.set('lang', newValue)
 }
 </script>

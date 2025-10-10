@@ -4,6 +4,7 @@
     :value="settingsStore.settings.theme"
     :options="options"
     :render-label="renderLabel"
+    @update:value="handleUpdateValue"
   >
     <icon-wrap>
       <icon-follow-system />
@@ -12,7 +13,7 @@
 </template>
 
 <script setup lang="tsx">
-import type { Component, DefineComponent, VNodeChild } from 'vue'
+import { ref, type Component, type DefineComponent, type VNodeChild } from 'vue'
 import { NFlex, type SelectOption } from 'naive-ui'
 import { useSettingsStore } from '@/store'
 import { IconWrap } from '@/components'
@@ -32,5 +33,12 @@ const renderLabel = (option: SelectOption & { icon: DefineComponent }): VNodeChi
       <option.icon /> {option.label}
     </NFlex>
   )
+}
+
+const value = ref<Settings.Theme>(settingsStore.theme)
+
+const handleUpdateValue = (newValue: Settings.Theme) => {
+  value.value = newValue
+  settingsStore.setTheme(newValue)
 }
 </script>
