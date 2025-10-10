@@ -21,9 +21,9 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useThemeVars } from 'naive-ui'
+import { ImgLogo } from '@/assets'
 import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
-import { ImgLogo } from './assets'
 
 const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
 
@@ -48,7 +48,7 @@ const themeVars = useThemeVars()
   }
 }
 .system-title {
-  background: linear-gradient(90deg, #5aaec6, #9fd4a6, #61538f);
+  background: linear-gradient(90deg, #c550d3, #57d1da, #a1dad1);
   -webkit-background-clip: text;
   background-clip: text;
   animation: shine 1s linear infinite alternate;

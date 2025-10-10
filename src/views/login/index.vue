@@ -60,10 +60,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useThemeVars, type FormInst, type FormRules } from 'naive-ui'
+import { ImgLogo } from '@/assets'
 import { $translate } from '@/locales'
 import { useAuthStore } from '@/store'
 import { LangSelect, ThemeSelect } from '@/components'
-import { ImgLogo } from './assets'
 import { REGEXP_PWD } from './constants'
 
 const themeVars = useThemeVars()
