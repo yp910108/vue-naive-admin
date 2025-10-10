@@ -1,5 +1,10 @@
 <template>
-  <n-popselect trigger="click" :value="value" :options="options" @update:value="handleUpdateValue">
+  <n-popselect
+    trigger="click"
+    :value="locale"
+    :options="options"
+    @update:value="handleUpdateLocale"
+  >
     <icon-wrap>
       <icon-lang />
     </icon-wrap>
@@ -7,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/locales'
 import { localStg } from '@/utils'
 import { IconWrap } from '@/components'
@@ -18,11 +23,10 @@ const options: { value: Lang.Type; label: string }[] = [
   { value: 'enUS', label: 'English' }
 ]
 
-const value = ref<Lang.Type>(localStg.get('lang') ?? 'zhCN')
+const { locale } = useI18n()
 
-const handleUpdateValue = (newValue: Lang.Type) => {
-  value.value = newValue
-  setLocale(newValue)
-  localStg.set('lang', newValue)
+const handleUpdateLocale = (newLocale: Lang.Type) => {
+  setLocale(newLocale)
+  localStg.set('lang', newLocale)
 }
 </script>
