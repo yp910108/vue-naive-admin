@@ -6,10 +6,7 @@
     :theme-overrides="naiveThemeOverrides"
   >
     <n-global-style />
-    <div
-      class="fixed left-0 top-0 flex flex-col justify-center items-center w-full h-full"
-      :style="{ '--color': themeVars.primaryColor }"
-    >
+    <div class="fixed left-0 top-0 flex flex-col justify-center items-center w-full h-full">
       <img :src="ImgLogo" class="w-128px h-128px" />
       <n-h1 class="system-title">{{ appName }}</n-h1>
     </div>
@@ -18,15 +15,12 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useThemeVars } from 'naive-ui'
 import { ImgLogo } from '@/assets'
 import { useThemeStore } from '@/store'
 
 const appName = import.meta.env.VITE_APP_NAME
 
 const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
-
-const themeVars = useThemeVars()
 </script>
 
 <style lang="scss" scoped>

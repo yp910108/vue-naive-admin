@@ -14,17 +14,17 @@ const setupApp = async () => {
 
   appLoading.mount('#app')
 
-  const app = createApp(App)
+  // const app = createApp(App)
 
-  setupStore(app)
+  // setupStore(app)
 
-  setupDiscreteApis()
+  // setupDiscreteApis()
 
-  await setupRouter(app)
+  // await setupRouter(app)
 
-  appLoading.unmount()
+  // appLoading.unmount()
 
-  app.mount('#app')
+  // app.mount('#app')
 }
 
 setupApp()
