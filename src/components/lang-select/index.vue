@@ -1,5 +1,10 @@
 <template>
-  <n-dropdown trigger="hover" :options="options" :value="language" @select="handleSelect">
+  <n-popselect
+    trigger="hover"
+    :options="options"
+    :value="locale"
+    @update:value="handleUpdateLocale"
+  >
     <hover-container
       v-if="withHoverContainer"
       :class="['p11px', containerClass]"
@@ -10,12 +15,12 @@
     <div v-else :class="['cursor-pointer p11px', containerClass]">
       <icon-language icon="cil:language" class="text-18px" />
     </div>
-  </n-dropdown>
+  </n-popselect>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import { setLocale } from '@/locales'
 import { localStg } from '@/utils'
 import { useThemeStore } from '@/store'
@@ -31,20 +36,15 @@ defineProps<Props>()
 
 const { theme } = storeToRefs(useThemeStore())
 
-type Option = {
-  label: string
-  key: Lang.Type
-}
-
-const language = ref<Lang.Type>(localStg.get('lang') ?? 'zhCN')
-
-const options: Option[] = [
-  { label: '中文', key: 'zhCN' },
-  { label: 'English', key: 'enUS' }
+const options: { value: Lang.Type; label: string }[] = [
+  { value: 'zhCN', label: '简体中文' },
+  { value: 'enUS', label: 'English' }
 ]
-const handleSelect = (key: Lang.Type) => {
-  language.value = key
-  setLocale(key)
-  localStg.set('lang', key)
+
+const { locale } = useI18n()
+
+const handleUpdateLocale = (newLocale: Lang.Type) => {
+  setLocale(newLocale)
+  localStg.set('lang', newLocale)
 }
 </script>
