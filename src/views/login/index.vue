@@ -50,7 +50,14 @@
           {{ $translate('login.forgetPassword') }}
         </n-button>
       </n-flex>
-      <n-button type="primary" size="large" block class="mt-26px" @click="handleLogin">
+      <n-button
+        type="primary"
+        size="large"
+        block
+        :loading="loading"
+        class="mt-26px"
+        @click="handleLogin"
+      >
         {{ $translate('login.confirm') }}
       </n-button>
     </n-flex>
@@ -95,13 +102,19 @@ const rules: FormRules = {
   ]
 }
 
+const loading = ref(false)
+
 const authStore = useAuthStore()
 
 const handleLogin = async () => {
-  await formRef.value?.validate()
-
-  const { userName, password } = model.value
-
-  authStore.login(userName, password)
+  try {
+    await formRef.value?.validate()
+    const { userName, password } = model.value
+    loading.value = true
+    authStore.login(userName, password)
+    loading.value = false
+  } catch (e) {
+    loading.value = false
+  }
 }
 </script>

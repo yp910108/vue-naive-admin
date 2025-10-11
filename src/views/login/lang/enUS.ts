@@ -9,6 +9,8 @@ export const enUS = {
     passwordValid: 'The password must be 6-18 digits/characters/symbols, at least 2 combinations',
     rememberAccount: 'Remember account',
     forgetPassword: 'Forget password?',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    loginSuccess: 'Login success',
+    welcomeBack: 'Welcome back, {userName}!'
   }
 }
