@@ -7,6 +7,32 @@ declare namespace Settings {
    */
   type Theme = 'dark' | 'light' | 'os'
 
+  interface Sider {
+    /**
+     * 侧边栏反转色
+     */
+    inverted: boolean
+    /**
+     * 侧边栏宽度
+     */
+    width: number
+    /**
+     * 侧边栏折叠时的宽度
+     */
+    collapsedWidth: number
+    /**
+     * logo 高度
+     */
+    logoHeight: number
+  }
+
+  interface Header {
+    /**
+     * 头部高度
+     */
+    height: number
+  }
+
   interface Tab {
     /**
      * 多页签可见
@@ -37,6 +63,14 @@ declare namespace Settings {
      * 主题色
      */
     primaryColor: 'default' | string
+    /**
+     * 侧边栏样式
+     */
+    sider: Sider
+    /**
+     * 头部样式
+     */
+    header: Header
     /**
      * 多页签样式
      */

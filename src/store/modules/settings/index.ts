@@ -14,7 +14,6 @@ export const useSettingsStore = defineStore('settings-store', () => {
   )
 
   const setTheme = (_theme: Settings.Theme) => {
-    localStg.set('settings', { ...settings.value, theme: _theme })
     settings.value.theme = _theme
   }
 

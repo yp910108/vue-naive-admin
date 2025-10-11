@@ -1,5 +1,30 @@
 <template>
-  <div class="div">this is basic layout.<router-view /></div>
+  <div class="flex h-full">
+    <app-sider
+      class="shrink-0 w-[var(--width)]"
+      :style="{
+        '--width': appStore.siderCollapse
+          ? `${settings.sider.collapsedWidth}px`
+          : `${settings.sider.width}px`
+      }"
+    />
+    <!-- <div class="flex flex-col flex-grow-1 w-0">
+      <app-header class="z-99 flex-shrink-0" />
+      <app-tab class="z-98 flex-shrink-0" />
+      <app-content class="flex-grow-1" />
+    </div> -->
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useAppStore, useSettingsStore } from '@/store'
+// import AppContent from '../components/app-content/index.vue'
+import AppSider from './app-sider/index.vue'
+// import AppHeader from './app-header/index.vue'
+// import AppTab from './app-tab/index.vue'
+
+const appStore = useAppStore()
+
+const { settings } = storeToRefs(useSettingsStore())
+</script>
