@@ -1,5 +1,4 @@
 interface LocalStorage {
-  lang?: Lang.Type
   settings?: Settings.Settings
   token?: string
   localRouteData?: Route.RouteData[]

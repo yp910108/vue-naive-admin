@@ -11,9 +11,7 @@
       :style="{ '--color': themeVars.primaryColor }"
     >
       <img :src="ImgLogo" class="w-128px h-128px" />
-      <n-h1 class="system-title">
-        {{ $translate('system.title') }}
-      </n-h1>
+      <n-h1 class="system-title">{{ appName }}</n-h1>
     </div>
   </n-config-provider>
 </template>
@@ -22,8 +20,9 @@
 import { storeToRefs } from 'pinia'
 import { useThemeVars } from 'naive-ui'
 import { ImgLogo } from '@/assets'
-import { $translate } from '@/locales'
 import { useThemeStore } from '@/store'
+
+const appName = import.meta.env.VITE_APP_NAME
 
 const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
 

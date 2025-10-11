@@ -1,7 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter, useRoute } from 'vue-router'
-import { $translate } from '@/locales'
 import { localStg } from '@/utils'
 import { useRouteStore } from '../route'
 import { useTabStore } from '../tab'
@@ -18,7 +17,7 @@ export const useAuthStore = defineStore('auth-store', () => {
 
   const isInit = ref(false)
 
-  const userInfo = ref()
+  const userInfo = ref<Auth.UserInfo>()
 
   const setUserInfo = async () => {
     const res = await fetchUserInfo()
@@ -47,10 +46,8 @@ export const useAuthStore = defineStore('auth-store', () => {
       localStg.set('token', _token)
       await init()
       window.$notification.success({
-        title: $translate('login.loginSuccess'),
-        content: $translate('login.welcomeBack', {
-          userName: userInfo.value?.userName
-        }),
+        title: '登录成功',
+        content: `欢迎回来，${userInfo.value?.userName}！`,
         duration: 3000
       })
       router.push(route.query.redirect ? (route.query.redirect as string) : { name: 'Root' })

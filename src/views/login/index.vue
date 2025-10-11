@@ -2,7 +2,7 @@
   <div class="relative flex justify-center items-center h-full">
     <n-flex align="center" class="absolute left-26px top-26px">
       <img :src="ImgLogo" class="w-42px" />
-      <span class="font-bold text-20px">{{ $translate('system.title') }}</span>
+      <span class="font-bold text-20px">{{ appName }}</span>
     </n-flex>
     <n-flex
       align="center"
@@ -13,12 +13,11 @@
         '--bg-color': themeVars.buttonColor2Hover
       }"
     >
-      <lang-select />
       <theme-select />
     </n-flex>
     <n-flex vertical>
-      <n-h1 :style="{ '--n-margin': 0 }">{{ $translate('login.welcome') }}</n-h1>
-      <n-text depth="3"> {{ $translate('login.tip') }} </n-text>
+      <n-h1 :style="{ '--n-margin': 0 }">欢迎回来 👋🏻</n-h1>
+      <n-text depth="3">请输入您的帐户信息以开始管理您的项目</n-text>
       <n-form
         ref="formRef"
         :model="model"
@@ -28,27 +27,20 @@
         class="mt-30px w-400px"
       >
         <n-form-item path="userName">
-          <n-input
-            v-model:value="model.userName"
-            :placeholder="$translate('login.userNamePlaceholder')"
-          />
+          <n-input v-model:value="model.userName" placeholder="请输入用户名" />
         </n-form-item>
         <n-form-item path="password">
           <n-input
             v-model:value="model.password"
             type="password"
             show-password-on="click"
-            :placeholder="$translate('login.passwordPlaceholder')"
+            placeholder="请输入密码"
           />
         </n-form-item>
       </n-form>
       <n-flex justify="space-between">
-        <n-checkbox>
-          {{ $translate('login.rememberAccount') }}
-        </n-checkbox>
-        <n-button text>
-          {{ $translate('login.forgetPassword') }}
-        </n-button>
+        <n-checkbox>记住账号</n-checkbox>
+        <n-button text>忘记密码？</n-button>
       </n-flex>
       <n-button
         type="primary"
@@ -58,7 +50,7 @@
         class="mt-26px"
         @click="handleLogin"
       >
-        {{ $translate('login.confirm') }}
+        确 定
       </n-button>
     </n-flex>
   </div>
@@ -68,10 +60,11 @@
 import { ref } from 'vue'
 import { useThemeVars, type FormInst, type FormRules } from 'naive-ui'
 import { ImgLogo } from '@/assets'
-import { $translate } from '@/locales'
 import { useAuthStore } from '@/store'
-import { LangSelect, ThemeSelect } from '@/components'
+import { ThemeSelect } from '@/components'
 import { REGEXP_PWD } from './constants'
+
+const appName = import.meta.env.VITE_APP_NAME
 
 const themeVars = useThemeVars()
 
@@ -85,18 +78,18 @@ const model = ref({
 const rules: FormRules = {
   userName: {
     required: true,
-    message: $translate('login.userNameRequired'),
+    message: '请输入用户名',
     trigger: 'input'
   },
   password: [
     {
       required: true,
-      message: $translate('login.passwordRequired'),
+      message: '请输入密码',
       trigger: 'input'
     },
     {
       pattern: REGEXP_PWD,
-      message: $translate('login.passwordValid'),
+      message: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
       trigger: 'input'
     }
   ]

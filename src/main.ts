@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import { setupAssets, setupDiscreteApis } from './plugins'
-import { setupI18n } from './locales'
 import { setupStore } from './store'
 import { setupRouter } from './router'
 import { AppLoading } from './components'
@@ -16,8 +15,6 @@ const setupApp = async () => {
   appLoading.mount('#app')
 
   const app = createApp(App)
-
-  setupI18n(app)
 
   setupStore(app)
 

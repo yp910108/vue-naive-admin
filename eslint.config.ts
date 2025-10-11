@@ -109,11 +109,6 @@ export default defineConfigWithVueTs(
               position: 'before'
             },
             {
-              pattern: '@/locales',
-              group: 'internal',
-              position: 'before'
-            },
-            {
               pattern: '@/settings',
               group: 'internal',
               position: 'before'
