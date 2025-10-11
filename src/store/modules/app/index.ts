@@ -43,22 +43,6 @@ export const useAppStore = defineStore('app-store', () => {
     }, 500)
   }
 
-  /**
-   * [sider badge]
-   * 左侧菜单数字
-   */
-  const siderNums = ref<Record<string, number>>({})
-
-  const setSiderNum = (key: string, num: number) => {
-    siderNums.value[key] = num
-  }
-
-  const setSiderNums = (nums: Record<string, number>) => {
-    for (const [key, num] of Object.entries(nums)) {
-      setSiderNum(key, num)
-    }
-  }
-
   return {
     scrollElId,
     siderCollapse,
@@ -66,9 +50,6 @@ export const useAppStore = defineStore('app-store', () => {
     toggleSiderCollapse,
     getScrollInfo,
     reloadFlag,
-    reloadPage,
-    siderNums,
-    setSiderNum,
-    setSiderNums
+    reloadPage
   }
 })

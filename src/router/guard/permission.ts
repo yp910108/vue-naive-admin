@@ -3,10 +3,6 @@ import { INVALID_CODE, localStg, type RequestError } from '@/utils'
 import { useAuthStore } from '@/store'
 
 export const createPermissionGuard = async (to: RouteLocationNormalized) => {
-  const { token: queryToken } = to.query
-  if (queryToken) {
-    localStg.set('token', queryToken as string)
-  }
   const token = localStg.get('token')
   const authStore = useAuthStore()
   if (token) {

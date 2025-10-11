@@ -44,8 +44,8 @@ declare namespace Route {
     activeMenu?: string
     // TDDO
     /**
-     * 是否可以用作根路由。默认为 false，当设置为 true 时，无法用作根路由（默认会将 basicLayoutRoute 中的
-     * 第一个路由作为根路由，如果将此选项设置为 true，则此路由即便是第一个也无法用作根路由）
+     * 是否可以用作根路由。默认为 false，当设置为 true 时，无法用作根路由（默认会将 basicLayoutRoute 下的
+     * 第一个路由作为根路由，如果将此选项设置为 true，则此路由即便是第一个路由也无法用作根路由）
      */
     unsafeRoot?: boolean
     /**
