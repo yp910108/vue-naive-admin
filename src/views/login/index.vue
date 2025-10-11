@@ -4,17 +4,7 @@
       <img :src="ImgLogo" class="w-42px" />
       <span class="font-bold text-20px">{{ appName }}</span>
     </n-flex>
-    <n-flex
-      align="center"
-      :size="0"
-      class="absolute right-26px top-26px px-6px py-4px bg-[var(--bg-color)] b-rd-[var(--border-radius)]"
-      :style="{
-        '--border-radius': themeVars.borderRadius,
-        '--bg-color': themeVars.buttonColor2Hover
-      }"
-    >
-      <theme-select />
-    </n-flex>
+    <theme-select class="absolute right-26px top-26px" />
     <n-flex vertical>
       <n-h1 :style="{ '--n-margin': 0 }">欢迎回来 👋🏻</n-h1>
       <n-text depth="3">请输入您的帐户信息以开始管理您的项目</n-text>
@@ -58,15 +48,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useThemeVars, type FormInst, type FormRules } from 'naive-ui'
+import { type FormInst, type FormRules } from 'naive-ui'
 import { ImgLogo } from '@/assets'
 import { useAuthStore } from '@/store'
 import { ThemeSelect } from '@/components'
 import { REGEXP_PWD } from './constants'
 
 const appName = import.meta.env.VITE_APP_NAME
-
-const themeVars = useThemeVars()
 
 const formRef = ref<FormInst>()
 

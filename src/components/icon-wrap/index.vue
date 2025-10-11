@@ -1,6 +1,6 @@
 <template>
   <n-flex
-    class="px-10px py-6px text-16px hover:bg-[var(--bg-color)] b-rd-[var(--border-radius)] cursor-pointer"
+    class="p-8px text-16px hover:bg-[var(--bg-color)] b-rd-[var(--border-radius)] cursor-pointer"
     :style="{
       '--border-radius': themeVars.borderRadius,
       '--bg-color': themeVars.buttonColor2Hover

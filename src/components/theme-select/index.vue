@@ -6,18 +6,22 @@
     :render-label="renderLabel"
     @update:value="handleUpdateTheme"
   >
-    <icon-wrap>
+    <icon-wrap v-bind="attrs">
       <icon />
     </icon-wrap>
   </n-popselect>
 </template>
 
 <script setup lang="tsx">
-import { computed, type Component, type DefineComponent, type VNodeChild } from 'vue'
+import { computed, useAttrs, type Component, type DefineComponent, type VNodeChild } from 'vue'
 import { NFlex, type SelectOption } from 'naive-ui'
 import { useSettingsStore } from '@/store'
 import { IconWrap } from '@/components'
 import { IconFollowSystem, IconDark, IconLight } from './icons'
+
+defineOptions({ inheritAttrs: false })
+
+const attrs = useAttrs()
 
 const settingsStore = useSettingsStore()
 
