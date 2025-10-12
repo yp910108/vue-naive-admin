@@ -7,9 +7,9 @@ export const routeData: Route.RouteData[] = [
   },
   {
     title: 'Tab 详情',
-    path: 'function/tab-detail',
-    icon: 'function-tab',
-    activeMenu: '/function/tab',
+    path: 'tab/static-detail',
+    icon: 'tab',
+    activeMenu: '/tab/static',
     unsafeRoot: true
   }
 ]

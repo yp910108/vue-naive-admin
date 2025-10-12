@@ -18,6 +18,6 @@ export const DARK_WARNING_COLOR = '#f2c97d'
 
 export const DARK_ERROR_COLOR = '#e88080'
 
-export const BORDER_RADIUS = '8px'
+export const BORDER_RADIUS = '6px'
 
 export const FONT_WEIGHT_STRONG = '600'

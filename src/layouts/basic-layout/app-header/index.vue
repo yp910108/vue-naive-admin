@@ -1,19 +1,19 @@
 <template>
   <div
-    class="flex items-center px-10px shadow-[var(--shadow)]"
+    class="flex items-center gap-10px px-10px shadow-[var(--shadow)]"
     :style="{ '--shadow': themeVars.boxShadow1 }"
   >
     <collapse />
+    <reload />
+    <breadcrumb />
   </div>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useThemeVars } from 'naive-ui'
-import { useSettingsStore } from '@/store'
 import Collapse from './collapse/index.vue'
+import Breadcrumb from './breadcrumb/index.vue'
+import Reload from './reload/index.vue'
 
 const themeVars = useThemeVars()
-
-const { settings } = storeToRefs(useSettingsStore())
 </script>

@@ -2,7 +2,7 @@ import type { MockMethod } from 'vite-plugin-mock'
 
 const routeModel: Route.RouteData[] = [
   {
-    title: '仪表盘',
+    title: '概览',
     path: 'dashboard',
     icon: 'dashboard',
     children: [
@@ -60,14 +60,19 @@ const routeModel: Route.RouteData[] = [
     ]
   },
   {
-    title: '功能',
-    path: 'function',
-    icon: 'function',
+    title: 'Tab 页签',
+    path: 'tab',
+    icon: 'tab',
     children: [
       {
-        title: 'Tab 页签',
-        path: 'tab',
-        icon: 'function-tab'
+        title: '静态页签',
+        path: 'static',
+        icon: 'tab'
+      },
+      {
+        title: '动态页签',
+        path: 'dynamic',
+        icon: 'tab'
       }
     ]
   },
