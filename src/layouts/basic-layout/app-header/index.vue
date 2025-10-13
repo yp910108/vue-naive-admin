@@ -12,6 +12,7 @@
       <search />
       <theme-select />
       <full-screen />
+      <avatar />
     </n-flex>
   </div>
 </template>
@@ -24,6 +25,7 @@ import Breadcrumb from './breadcrumb/index.vue'
 import Reload from './reload/index.vue'
 import Search from './search/index.vue'
 import FullScreen from './full-screen/index.vue'
+import Avatar from './avatar/index.vue'
 
 const themeVars = useThemeVars()
 </script>

@@ -99,13 +99,13 @@ export default defineConfigWithVueTs(
               position: 'before'
             },
             {
-              pattern: '@/assets',
-              group: 'internal',
+              pattern: 'naive-ui',
+              group: 'external',
               position: 'before'
             },
             {
-              pattern: 'naive-ui',
-              group: 'external',
+              pattern: '@/assets',
+              group: 'internal',
               position: 'before'
             },
             {

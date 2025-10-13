@@ -1,6 +1,6 @@
 <template>
   <icon-wrap @click="handleShowSearch">
-    <icon-search class="text-20px" />
+    <icon-search />
     <modal ref="modalRef" />
   </icon-wrap>
 </template>
