@@ -13,8 +13,8 @@
         class="shrink-0 h[var(--height)]"
         :style="{ '--height': `${settings.header.height}px` }"
       />
-      <!-- <app-tab class="z-98 flex-shrink-0" />
-      <app-content class="flex-grow-1" /> -->
+      <!-- <app-tab class="z-98 flex-shrink-0" /> -->
+      <app-content class="grow-1" />
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useAppStore, useSettingsStore } from '@/store'
-// import AppContent from '../components/app-content/index.vue'
+import { AppContent } from '../components'
 import AppSider from './app-sider/index.vue'
 import AppHeader from './app-header/index.vue'
 // import AppTab from './app-tab/index.vue'

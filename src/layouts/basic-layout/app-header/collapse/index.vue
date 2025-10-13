@@ -1,13 +1,14 @@
 <template>
   <icon-wrap @click="appStore.toggleSiderCollapse">
-    <icon-layout />
+    <icon-fold v-if="appStore.siderCollapse" />
+    <icon-unfold v-else />
   </icon-wrap>
 </template>
 
 <script setup lang="ts">
 import { useAppStore } from '@/store'
 import { IconWrap } from '@/components'
-import { IconLayout } from './icons'
+import { IconFold, IconUnfold } from './icons'
 
 const appStore = useAppStore()
 </script>

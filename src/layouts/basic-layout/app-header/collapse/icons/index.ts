@@ -1,1 +1,2 @@
-export { default as IconLayout } from './layout.vue'
+export { default as IconFold } from './fold.vue'
+export { default as IconUnfold } from './unfold.vue'

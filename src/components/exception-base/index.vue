@@ -18,8 +18,6 @@
 import { useThemeVars } from 'naive-ui'
 import { IconNoPermission, IconNotFound, IconServiceError } from './icons'
 
-defineOptions({ name: 'ExceptionBase' })
-
 type ExceptionType = '403' | '404' | '500'
 
 interface Props {

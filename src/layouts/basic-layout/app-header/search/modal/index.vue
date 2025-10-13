@@ -4,8 +4,8 @@
     preset="card"
     :segmented="{ footer: 'soft' }"
     :closable="false"
-    class="fixed left-0 right-0"
     :footer-style="{ padding: 0, margin: 0 }"
+    class="fixed left-0 top-50px right-0 w-650px"
     @after-leave="handeAfterLeave"
   >
     <n-input-group>

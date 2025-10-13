@@ -6,14 +6,6 @@ import views, { NotFound } from '@/views'
 import { pascalCase } from './string'
 import { combineURL, isExternal } from './url'
 
-/**
- * /login/:module => /login
- * @param path
- */
-const removeParamsFromPath = (path: string) => {
-  return path.split('/:')[0]
-}
-
 type Lazy<T> = () => Promise<T>
 
 type ModuleComponent = {
@@ -51,6 +43,15 @@ const getFirstPathNotExternal = (routeData: Route.RouteData[]) => {
   for (const { path } of routeData) {
     if (!isExternal(path)) return path
   }
+}
+
+const getRootRedirect = (basicLayoutRoute: RouteRecordRaw) => {
+  const safeRoutes = basicLayoutRoute.children?.filter(({ meta }) => !meta?.unsafeRoot)
+  if (safeRoutes?.length) {
+    const firstPath = safeRoutes[0].path
+    return firstPath.startsWith('/') ? firstPath : `/${firstPath}`
+  }
+  return undefined
 }
 
 /**
@@ -94,7 +95,7 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
     for (const { path, page, layout, redirect, children, ...rest } of routeData) {
       if (isExternal(path)) continue
       const routePath = path.startsWith('/') ? path : combineURL(parentPath, path)
-      const pagePath = page ? page : combineURL(parentPage, removeParamsFromPath(path))
+      const pagePath = page ? page : combineURL(parentPage, path.split('/:')[0])
       const name = pascalCase(routePath)
       const meta = {
         ...rest,
@@ -138,9 +139,7 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
 
   transform(routeData)
 
-  const safeRoutes = basicLayoutRoute.children.filter(({ meta }) => !meta?.unsafeRoot)
-
-  rootRoute.redirect = safeRoutes.length ? safeRoutes[0].path : undefined
+  rootRoute.redirect = getRootRedirect(basicLayoutRoute)
 
   return routes
 }
