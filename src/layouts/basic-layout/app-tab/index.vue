@@ -1,6 +1,6 @@
 <template>
   <div class="app-tab">
-    <!-- <scroll-pane>
+    <scroll-pane>
       <ul
         class="app-tab-list"
         :style="{
@@ -26,8 +26,7 @@
           </i>
         </li>
       </ul>
-    </scroll-pane> -->
-    <tab-bg />
+    </scroll-pane>
   </div>
 </template>
 
@@ -38,7 +37,6 @@ import { useRoute } from 'vue-router'
 import { useThemeVars } from 'naive-ui'
 import { useRouteStore, useTabStore } from '@/store'
 import { ScrollPane, icons } from '@/components'
-import { TabBg } from './components'
 import { IconClose } from './icons'
 
 const themeVars = useThemeVars()
