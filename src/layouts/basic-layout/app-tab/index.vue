@@ -4,14 +4,18 @@
       <ul
         class="app-tab-list"
         :style="{
-          '--border-color': themeVars.borderColor,
-          '--border-color-hover': changeColor(themeVars.primaryColor, { alpha: 0.3 }),
-          '--border-color-active': changeColor(themeVars.primaryColor, { alpha: 0.3 }),
+          '--border-radius': themeVars.borderRadius,
+          // '--border-color': themeVars.borderColor,
+          // '--border-color-hover': changeColor(themeVars.primaryColor, { alpha: 0.3 }),
+          // '--border-color-active': changeColor(themeVars.primaryColor, { alpha: 0.3 }),
+          '--bg-color-hover': themeVars.buttonColor2Hover,
           '--bg-color-active': changeColor(themeVars.primaryColor, { alpha: 0.1 }),
           '--text-color-hover': themeVars.primaryColor,
           '--text-color-active': themeVars.primaryColor,
-          '--close-bg-color-hover': themeVars.primaryColor,
-          '--close-text-color-hover': '#fff'
+          '--close-bg-color-hover': '#ccc',
+          '--close-bg-color-active': themeVars.primaryColor,
+          '--close-text-color-hover': '#fff',
+          '--close-text-color-active': '#fff'
         }"
       >
         <li
@@ -19,11 +23,13 @@
           :key="tab.key"
           :class="['app-tab-item', { active: tab.key === tabStore.activeTab?.key }]"
         >
+          <icon-tab-left class="app-tab-item__chrome app-tab-item__chrome--left" />
           <component v-if="tab.icon" :is="icons[tab.icon]" />
           {{ tab.title }}
           <i v-if="tab.key !== routeStore.rootRoute.name" class="app-tab-item__close">
             <icon-close />
           </i>
+          <icon-tab-right class="app-tab-item__chrome app-tab-item__chrome--right" />
         </li>
       </ul>
     </scroll-pane>
@@ -37,7 +43,7 @@ import { useRoute } from 'vue-router'
 import { useThemeVars } from 'naive-ui'
 import { useRouteStore, useTabStore } from '@/store'
 import { ScrollPane, icons } from '@/components'
-import { IconClose } from './icons'
+import { IconTabLeft, IconTabRight, IconClose } from './icons'
 
 const themeVars = useThemeVars()
 
@@ -63,16 +69,29 @@ onMounted(tabStore.init)
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 0 12px;
     .app-tab-item {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
-      border: 1px solid var(--border-color);
       padding: 0 12px;
       height: 30px;
-      border-radius: 4px;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
       cursor: pointer;
+      .app-tab-item__chrome {
+        position: absolute;
+        bottom: 0;
+        font-size: 12px;
+        color: transparent;
+      }
+      .app-tab-item__chrome--left {
+        left: -12px;
+      }
+      .app-tab-item__chrome--right {
+        right: -12px;
+      }
       .app-tab-item__close {
         border-radius: 50%;
         padding: 1px;
@@ -82,13 +101,23 @@ onMounted(tabStore.init)
         }
       }
       &:hover {
-        border-color: var(--border-color-hover);
-        color: var(--text-color-hover);
+        background-color: var(--bg-color-hover);
+        .app-tab-item__chrome {
+          color: var(--bg-color-hover);
+        }
       }
       &.active {
-        border-color: var(--border-color-active);
         background-color: var(--bg-color-active);
         color: var(--text-color-active);
+        .app-tab-item__chrome {
+          color: var(--bg-color-active);
+        }
+        .app-tab-item__close {
+          &:hover {
+            background: var(--close-bg-color-active);
+            color: var(--close-text-color-active);
+          }
+        }
       }
     }
   }
