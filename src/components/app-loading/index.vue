@@ -6,7 +6,7 @@
     :theme-overrides="naiveThemeOverrides"
   >
     <n-global-style />
-    <div class="fixed left-0 top-0 flex flex-col justify-center items-center w-full h-full">
+    <div class="fixed left-0 top-0 flex flex-col justify-center items-center size-full">
       <img :src="ImgLogo" class="w-128px h-128px" />
       <n-h1 class="system-title">{{ appName }}</n-h1>
     </div>

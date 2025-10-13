@@ -1,6 +1,6 @@
 <template>
   <n-spin :show="spinning" class="h-full" content-class="h-full">
-    <iframe class="w-full h-full" :src="src" @load="handleLoad"></iframe>
+    <iframe class="size-full" :src="src" @load="handleLoad"></iframe>
   </n-spin>
 </template>
 

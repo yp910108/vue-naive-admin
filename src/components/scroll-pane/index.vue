@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'scroll-pane relative w-full h-full',
+      'scroll-pane relative w-full',
       {
         'scroll-pane--shadow-start': !arrivedState.left,
         'scroll-pane--shadow-end': !arrivedState.right

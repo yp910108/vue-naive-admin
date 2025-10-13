@@ -1,6 +1,6 @@
 import { h } from 'vue'
 import { combineURL, isExternal, pascalCase } from '@/utils'
-import Icons from './icons'
+import { icons } from '@/components'
 
 /**
  * 将权限路由转换成菜单
@@ -19,8 +19,8 @@ export const transformMenus = (routeData: Route.RouteData[], parentPath: string 
       routePath
     }
     if (icon) {
-      if (Icons[icon]) {
-        menu.icon = () => h(Icons[icon])
+      if (icons[icon]) {
+        menu.icon = () => h(icons[icon])
       } else {
         console.warn(`图标 ${icon} 不存在！`)
       }

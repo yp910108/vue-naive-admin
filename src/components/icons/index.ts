@@ -13,4 +13,4 @@ for (const key in modules) {
   icons[iconName] = modules[key].default
 }
 
-export default icons
+export { icons }
