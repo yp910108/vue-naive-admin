@@ -55,7 +55,7 @@ const routeModel: Route.RouteData[] = [
       {
         title: '项目地址',
         path: 'https://github.com/yp910108/vue-naive-admin',
-        icon: 'external-link-logo'
+        icon: 'external-link-github'
       }
     ]
   },
