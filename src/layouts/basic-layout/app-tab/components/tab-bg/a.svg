@@ -1,0 +1,5 @@
+<svg width="200" height="40" viewBox="0 0 200 40"> 
+  <!-- <path d="M 0 40 A 7 7 0 0 0 7 33 L 7 40 Z" /> -->
+  <path d="M 0 0 A 7 7 0 0 0 7 7 L 0 7 Z" />
+  <path d="M 193 193 A 7 7 0 0 0 200 200 L 193 40 Z" />
+</svg>
