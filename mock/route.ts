@@ -10,11 +10,6 @@ const routeModel: Route.RouteData[] = [
         title: '分析页',
         path: 'analysis',
         icon: 'dashboard-analysis'
-      },
-      {
-        title: '工作台',
-        path: 'workbench',
-        icon: 'dashboard-workbench'
       }
     ]
   },
@@ -31,19 +26,19 @@ const routeModel: Route.RouteData[] = [
     ]
   },
   {
-    title: '文档',
-    path: 'document',
-    icon: 'document',
+    title: '内嵌页面',
+    path: 'internal',
+    icon: 'internal',
     children: [
       {
         title: 'vue 文档',
         path: 'vue',
-        icon: 'document-vue'
+        icon: 'internal-vue'
       },
       {
         title: 'naive 文档',
         path: 'naive',
-        icon: 'document-naive'
+        icon: 'internal-naive'
       }
     ]
   },

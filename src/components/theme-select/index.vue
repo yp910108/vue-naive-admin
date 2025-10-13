@@ -27,8 +27,8 @@ const settingsStore = useSettingsStore()
 
 const options: { value: Settings.Theme; label: string; icon: Component }[] = [
   { value: 'os', label: '跟随系统', icon: IconFollowSystem },
-  { value: 'light', label: '亮色主题', icon: IconDark },
-  { value: 'dark', label: '暗色主题', icon: IconLight }
+  { value: 'light', label: '亮色主题', icon: IconLight },
+  { value: 'dark', label: '暗色主题', icon: IconDark }
 ]
 
 const Icon = computed(
