@@ -52,15 +52,14 @@ import { type FormInst, type FormRules } from 'naive-ui'
 import { ImgLogo } from '@/assets'
 import { useAuthStore } from '@/store'
 import { ThemeSelect } from '@/components'
-import { REGEXP_PWD } from './constants'
 
 const appName = import.meta.env.VITE_APP_NAME
 
 const formRef = ref<FormInst>()
 
 const model = ref({
-  userName: 'Admin',
-  password: 'abc123'
+  userName: 'admin',
+  password: '123456'
 })
 
 const rules: FormRules = {
@@ -69,18 +68,11 @@ const rules: FormRules = {
     message: '请输入用户名',
     trigger: 'input'
   },
-  password: [
-    {
-      required: true,
-      message: '请输入密码',
-      trigger: 'input'
-    },
-    {
-      pattern: REGEXP_PWD,
-      message: '密码为 6-18 位数字/字符/符号，至少 2 种组合',
-      trigger: 'input'
-    }
-  ]
+  password: {
+    required: true,
+    message: '请输入密码',
+    trigger: 'input'
+  }
 }
 
 const loading = ref(false)

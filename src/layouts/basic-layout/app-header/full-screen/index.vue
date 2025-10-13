@@ -1,5 +1,5 @@
 <template>
-  <icon-wrap @click="toggle">
+  <icon-wrap round @click="toggle">
     <icon-fullscreen-exit v-if="isFullscreen" />
     <icon-fullscreen v-else />
   </icon-wrap>

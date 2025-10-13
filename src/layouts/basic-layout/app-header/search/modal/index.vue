@@ -8,18 +8,11 @@
     class="fixed left-0 top-50px right-0 w-650px"
     @after-leave="handeAfterLeave"
   >
-    <n-input-group>
-      <n-input
-        v-model:value="keyword"
-        clearable
-        placeholder="请输入关键词搜索"
-        @input="handleSearch"
-      >
-        <template #prefix>
-          <icon-search class="text-15px text-#c2c2c2" />
-        </template>
-      </n-input>
-    </n-input-group>
+    <n-input v-model:value="keyword" clearable placeholder="请输入关键词搜索" @input="handleSearch">
+      <template #prefix>
+        <icon-search class="text-15px text-#c2c2c2" />
+      </template>
+    </n-input>
     <div class="mt-20px">
       <n-empty v-if="!resultOptions?.length" description="暂无搜索结果" />
       <result v-else v-model:value="activeKey" :options="resultOptions" @enter="handleEnter" />
@@ -43,8 +36,6 @@ import SearchFooter from './footer/index.vue'
 const router = useRouter()
 
 const menuStore = useMenuStore()
-
-const visible = ref(false)
 
 const keyword = ref<string | null>()
 
@@ -90,11 +81,6 @@ const handleDown = () => {
   }
 }
 
-const handeAfterLeave = () => {
-  keyword.value = null
-  resultOptions.value = undefined
-}
-
 const handleEnter = () => {
   if (!resultOptions.value?.length || !activeKey.value) return
   const { key, routePath } = resultOptions.value.find((item) => item.key === activeKey.value)!
@@ -111,6 +97,13 @@ onKeyStroke('ArrowUp', handleUp)
 onKeyStroke('ArrowDown', handleDown)
 
 onKeyStroke('Enter', handleEnter)
+
+const visible = ref(false)
+
+const handeAfterLeave = () => {
+  keyword.value = null
+  resultOptions.value = undefined
+}
 
 const show = () => {
   visible.value = true

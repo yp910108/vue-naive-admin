@@ -9,9 +9,9 @@ const userModel: UserModel[] = [
   {
     token: '__TOKEN_ADMIN__',
     userId: '2',
-    userName: 'Admin',
-    userRole: 'admin',
-    password: 'abc123'
+    userName: 'admin',
+    phone: '13712345678',
+    password: '123456'
   }
 ]
 

@@ -6,7 +6,7 @@
     :render-label="renderLabel"
     @update:value="handleUpdateTheme"
   >
-    <icon-wrap v-bind="attrs">
+    <icon-wrap v-bind="attrs" round>
       <icon />
     </icon-wrap>
   </n-popselect>

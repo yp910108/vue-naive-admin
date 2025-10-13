@@ -1,5 +1,5 @@
 <template>
-  <icon-wrap @click="handleShowSearch">
+  <icon-wrap round @click="handleShowSearch">
     <icon-search />
     <modal ref="modalRef" />
   </icon-wrap>
