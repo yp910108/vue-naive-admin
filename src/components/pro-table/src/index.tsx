@@ -337,7 +337,6 @@ const ProTable = defineComponent({
     ]
 
     const renderTable = () => (
-      // @ts-ignore
       <NDataTable
         ref={tableRef}
         flexHeight
@@ -345,11 +344,9 @@ const ProTable = defineComponent({
         bordered={false}
         size={tableSize.value}
         loading={loading.value}
-        // @ts-ignore
         rowKey={(row) => row.id}
         columns={tableColumns.value}
         data={data.value}
-        // @ts-ignore
         pagination={pagination.value}
         onUpdatePage={handleUpatePage}
         onUpdatePageSize={handleUpatePageSize}
