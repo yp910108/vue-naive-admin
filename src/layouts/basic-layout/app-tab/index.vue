@@ -1,20 +1,7 @@
 <template>
   <div class="app-tab">
     <scroll-pane ref="scrollRef">
-      <ul
-        class="app-tab-list"
-        :style="{
-          '--border-radius': '6px',
-          '--bg-color-hover': themeVars.buttonColor2Hover,
-          '--bg-color-active': changeColor(themeVars.primaryColor, { alpha: 0.1 }),
-          '--text-color-hover': themeVars.primaryColor,
-          '--text-color-active': themeVars.primaryColor,
-          '--close-bg-color-hover': '#cacaca',
-          '--close-bg-color-active': themeVars.primaryColor,
-          '--close-text-color-hover': '#fff',
-          '--close-text-color-active': '#fff'
-        }"
-      >
+      <ul class="app-tab-list" :style="cssVars">
         <li
           v-for="(tab, index) of tabStore.tabs"
           :key="tab.key"
@@ -44,44 +31,19 @@
 </template>
 
 <script setup lang="ts">
-import { changeColor } from 'seemly'
-import { nextTick, onMounted, ref, watch } from 'vue'
-import { onBeforeRouteUpdate, useRouter } from 'vue-router'
-import { useThemeVars } from 'naive-ui'
-import { APP_CONTENT_TRANSITION_DURATION } from '@/constants'
+import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useRouteStore, useTabStore } from '@/store'
 import { ScrollPane, icons } from '@/components'
+import { useCssVars, useScroll, useCache } from './hooks'
 import { IconTabLeft, IconTabRight, IconClose } from './icons'
 import ContextMenu from './context-menu/index.vue'
 
-const themeVars = useThemeVars()
+const { cssVars } = useCssVars()
 
-const tabStore = useTabStore()
+useCache()
 
-const scrollRef = ref<InstanceType<typeof ScrollPane>>()
-
-const tabRefs: HTMLLIElement[] = []
-
-const setTabRefs = (index: number, el: any) => {
-  tabRefs[index] = el
-}
-
-watch(
-  () => tabStore.activeTab,
-  (newActionTab) => {
-    nextTick(() => {
-      const activeTabIndex = tabStore.tabs.findIndex(({ key }) => key === newActionTab?.key)
-      if (tabRefs.length) {
-        const activeEl = tabRefs[activeTabIndex]
-        const activeWidth = activeEl.offsetWidth
-        const activeLeft = activeEl.offsetLeft + activeWidth
-        const wrapperWidth = scrollRef.value?.scrollEl?.offsetWidth!
-        const deltX = activeLeft - wrapperWidth + (wrapperWidth - activeWidth) / 2
-        scrollRef.value?.scrollTo(deltX)
-      }
-    })
-  }
-)
+const { scrollRef, setTabRefs } = useScroll()
 
 const routeStore = useRouteStore()
 
@@ -90,6 +52,8 @@ const router = useRouter()
 const handleItemClick = (tab: Tab.TabItem) => {
   router.push(tab.routePath)
 }
+
+const tabStore = useTabStore()
 
 const handleClose = (tab: Tab.TabItem) => {
   tabStore.removeTab(tab)
@@ -100,34 +64,6 @@ const contextMenuRef = ref<InstanceType<typeof ContextMenu>>()
 const handleContextMenu = (e: MouseEvent, tab: Tab.TabItem) => {
   contextMenuRef.value?.show({ tab, position: { x: e.clientX, y: e.clientY } })
 }
-
-onBeforeRouteUpdate(async (to, from) => {
-  const toName = to.name as string
-  const fromName = from.name as string
-  if (toName.includes(fromName)) {
-    const backRoutePath = from.fullPath
-    const newTab = tabStore.addTab(to, backRoutePath)
-    tabStore.setActiveTab(newTab)
-    const oldTab = tabStore.tabs.find(({ key }) => key === from.name)
-    if (oldTab) {
-      oldTab.cache = true
-    }
-  }
-  const newTab = tabStore.addTab(to)
-  tabStore.setActiveTab(newTab)
-  if (newTab?.cache) {
-    if (fromName.includes(toName)) {
-      setTimeout(() => {
-        newTab.cache = false
-      }, APP_CONTENT_TRANSITION_DURATION + 500)
-    } else {
-      newTab.cache = false
-      await new Promise((resolve) => {
-        setTimeout(resolve, 20)
-      })
-    }
-  }
-})
 
 onMounted(tabStore.init)
 </script>
