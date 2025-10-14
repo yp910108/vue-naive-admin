@@ -13,9 +13,8 @@
 <script setup lang="tsx">
 import { computed, ref } from 'vue'
 import type { DropdownOption } from 'naive-ui'
-import { useAppStore, useRouteStore, useTabStore } from '@/store'
+import { useRouteStore, useTabStore } from '@/store'
 import {
-  IconReload,
   IconCloseCurrent,
   IconCloseLeft,
   IconCloseRight,
@@ -36,20 +35,11 @@ type Option = DropdownOption & {
   action: () => void
 }
 
-const appStore = useAppStore()
-
 const routeStore = useRouteStore()
 
 const tabStore = useTabStore()
 
 const options = computed<Option[]>(() => [
-  {
-    label: '重新加载',
-    key: 'reload-current',
-    disabled: tab.value?.key !== tabStore.activeTab?.key,
-    icon: () => <IconReload />,
-    action: () => appStore.reloadPage(tab.value?.key!)
-  },
   {
     label: '关闭',
     key: 'close-current',
@@ -76,7 +66,7 @@ const options = computed<Option[]>(() => [
     action: () => tabStore.clearOtherTabs(tab.value!)
   },
   {
-    label: '关闭所有',
+    label: '关闭全部',
     key: 'close-all',
     icon: () => <IconCloseAll />,
     action: tabStore.clearAllTabs

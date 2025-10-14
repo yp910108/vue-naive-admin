@@ -10,10 +10,10 @@
     />
     <div class="relative z-1 flex flex-col grow-1 w-0">
       <app-header
-        class="shrink-0 h[var(--height)]"
+        class="relative z-2 shrink-0 h[var(--height)]"
         :style="{ '--height': `${settings.header.height}px` }"
       />
-      <app-tab class="shrink-0" />
+      <app-tab class="relative z-1 shrink-0" />
       <app-content class="grow-1 p-16px" />
     </div>
   </div>
