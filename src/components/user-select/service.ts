@@ -1,11 +1,6 @@
-import { iamRequest } from '@/utils'
+import { mockRequest } from '@/utils'
 import type { FetchListParams, Row } from './typings'
 
 export function fetchList(params: FetchListParams) {
-  return iamRequest.get<{
-    total?: number
-    records?: Row[]
-  }>('/user/user/pageWithOrgsNotEncryption', {
-    params
-  })
+  return mockRequest.get<{ total?: number; list?: Row[] }>('/users', { params })
 }

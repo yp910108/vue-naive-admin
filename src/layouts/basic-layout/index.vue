@@ -14,7 +14,7 @@
         :style="{ '--height': `${settings.header.height}px` }"
       />
       <app-tab class="shrink-0" />
-      <app-content class="grow-1" />
+      <app-content class="grow-1 p-16px" />
     </div>
   </div>
 </template>

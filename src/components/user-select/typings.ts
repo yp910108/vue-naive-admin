@@ -1,15 +1,28 @@
 export interface FetchListParams {
-  username?: string
-  realName?: string
-  current?: number
-  size?: number
+  name?: string
+  sex?: Dict.Type['sex']
+  age?: number
+  startBirthDate?: string
+  endBirthDate?: string
+  politics?: Dict.Type['politics']
+  addressId?: string
+  deptId?: string
+  page?: number
+  pageSize?: number
 }
 
 export interface Row {
   id?: number
-  username?: string
-  realName?: string
-  orgId?: string
-  orgNames?: string
-  orgName?: string
+  name?: string
+  sex?: Dict.Type['sex']
+  age?: number
+  birthDate?: string
+  politics?: Dict.Type['politics']
+  addressId?: string
+  addressName?: string
+  deptId?: string
+  deptName?: string
+  leaderId?: number
+  leaderName?: string
+  remark?: string
 }
