@@ -14,7 +14,9 @@
         :style="{ '--height': `${settings.header.height}px` }"
       />
       <app-tab class="relative z-1 shrink-0" />
-      <app-content class="grow-1 p-16px" />
+      <n-scrollbar content-class="flex flex-col grow-1">
+        <app-content class="grow-1 p-16px" />
+      </n-scrollbar>
     </div>
   </div>
 </template>
@@ -31,3 +33,12 @@ const appStore = useAppStore()
 
 const { settings } = storeToRefs(useSettingsStore())
 </script>
+
+<style lang="scss" scoped>
+:deep(.n-scrollbar) {
+  .n-scrollbar-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>
