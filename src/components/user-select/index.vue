@@ -1,6 +1,9 @@
 <template>
   <list-select
     title="选择人员"
+    :modal-props="{
+      class: 'w-1050px! h-700px!'
+    }"
     :search="{ showActionCollapse: false, labelWidth: 80, cols: 3 }"
     :columns="columns"
     :request="methodRequest"
