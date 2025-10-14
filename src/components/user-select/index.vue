@@ -30,7 +30,6 @@ const sexDict = useDict('sex')
 
 const sexValueLabel = computed(() => transformOptionToValueLabel(sexDict.value))
 
-// TODO Row FetchListParams
 const columns = ref<ProTableColumn<Row>[]>([
   { type: 'selection', multiple: props.multiple },
   {

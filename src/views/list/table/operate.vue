@@ -80,11 +80,7 @@ import type { BackendModel, Model, Row } from './typings'
 import { addressOptions, deptOptions } from './constants'
 import { fetchDetail, add, edit } from './service'
 
-interface Emits {
-  (e: 'refresh'): void
-}
-
-const emit = defineEmits<Emits>()
+const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 const sexDict = useDict('sex')
 

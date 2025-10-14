@@ -4,9 +4,6 @@ export interface FetchListParams {
   age?: number
   startBirthDate?: string
   endBirthDate?: string
-  politics?: Dict.Type['politics']
-  addressId?: string
-  deptId?: string
   page?: number
   pageSize?: number
 }
@@ -17,12 +14,4 @@ export interface Row {
   sex?: Dict.Type['sex']
   age?: number
   birthDate?: string
-  politics?: Dict.Type['politics']
-  addressId?: string
-  addressName?: string
-  deptId?: string
-  deptName?: string
-  leaderId?: number
-  leaderName?: string
-  remark?: string
 }
