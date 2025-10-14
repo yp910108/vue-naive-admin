@@ -15,7 +15,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup: (props) => {
     return () => (
       <NDropdown
         trigger="click"
@@ -26,7 +26,6 @@ export default defineComponent({
       >
         <NTooltip>
           {{
-            // TODO remove () =>
             default: () => '密度',
             trigger: () => (
               <NButton text class="flex-shrink-0">

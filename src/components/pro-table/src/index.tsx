@@ -174,7 +174,7 @@ const ProTable = defineComponent({
       type: Function as PropType<() => void>
     }
   },
-  setup(props, { attrs, expose }) {
+  setup: (props, { attrs, expose }) => {
     const columns = toRef(props, 'columns')
     const {
       searchColumns,
@@ -337,6 +337,7 @@ const ProTable = defineComponent({
     ]
 
     const renderTable = () => (
+      // @ts-ignore
       <NDataTable
         ref={tableRef}
         flexHeight

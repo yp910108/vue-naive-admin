@@ -83,7 +83,7 @@ const Search = defineComponent({
       type: Function as PropType<() => void>
     }
   },
-  setup(props, { expose }) {
+  setup: (props, { expose }) => {
     const { form, getForm, setForm, setDefaultForm, resetForm } = useForm(props.columns)
 
     const collapsed = ref(props.showActionCollapse)

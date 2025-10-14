@@ -54,7 +54,7 @@ const ListSelectPane = defineComponent({
       type: Function as PropType<(value: any) => Promise<void>>
     }
   },
-  setup(props, { attrs, expose }) {
+  setup: (props, { attrs, expose }) => {
     const confirmLoading = ref(false)
 
     const uncontrolledValue = ref<Value>(null)

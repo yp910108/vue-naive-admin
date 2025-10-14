@@ -1,7 +1,7 @@
 <template>
   <list-select
     title="选择人员"
-    :search="{ showActionCollapse: false, labelWidth: 70, cols: 3 }"
+    :search="{ showActionCollapse: false, labelWidth: 80, cols: 3 }"
     :columns="columns"
     :request="methodRequest"
   />

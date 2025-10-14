@@ -40,7 +40,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup: (props) => {
     const themeVars = useThemeVars()
 
     const sortable = ref<Sortable>()
