@@ -25,19 +25,15 @@ import { computed } from 'vue'
 import { useThemeVars } from 'naive-ui'
 import { IconEnter } from './icons'
 
-interface Props {
+const props = defineProps<{
   value?: string
   options: Menu.SearchMenuOption[]
-}
+}>()
 
-const props = defineProps<Props>()
-
-interface Emits {
+const emit = defineEmits<{
   (e: 'update:value', value?: string): void
   (e: 'enter'): void
-}
-
-const emit = defineEmits<Emits>()
+}>()
 
 const themeVars = useThemeVars()
 

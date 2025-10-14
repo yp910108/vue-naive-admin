@@ -98,12 +98,12 @@ onKeyStroke('ArrowDown', handleDown)
 
 onKeyStroke('Enter', handleEnter)
 
-const visible = ref(false)
-
 const handeAfterLeave = () => {
   keyword.value = null
   resultOptions.value = undefined
 }
+
+const visible = ref(false)
 
 const show = () => {
   visible.value = true

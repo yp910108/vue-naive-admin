@@ -19,36 +19,60 @@
           v-for="tab of tabStore.tabs"
           :key="tab.key"
           :class="['app-tab-item', { active: tab.key === tabStore.activeTab?.key }]"
+          @click="handleItemClick(tab)"
+          @contextmenu.prevent="handleContextMenu($event, tab)"
         >
           <icon-tab-left class="app-tab-item__chrome app-tab-item__chrome--left" />
           <icon-tab-right class="app-tab-item__chrome app-tab-item__chrome--right" />
           <span class="app-tab-item__content">
             <component v-if="tab.icon" :is="icons[tab.icon]" class="app-tab-item__icon" />
             {{ tab.title }}
-            <i v-if="tab.key !== routeStore.rootRoute.name" class="app-tab-item__close">
+            <i
+              v-if="tab.key !== routeStore.rootRoute.name"
+              class="app-tab-item__close"
+              @click.stop="handleClose(tab)"
+            >
               <icon-close />
             </i>
           </span>
         </li>
       </ul>
     </scroll-pane>
+    <context-menu ref="contextMenuRef" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { changeColor } from 'seemly'
-import { onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useThemeVars } from 'naive-ui'
 import { useRouteStore, useTabStore } from '@/store'
 import { ScrollPane, icons } from '@/components'
 import { IconTabLeft, IconTabRight, IconClose } from './icons'
+import ContextMenu from './context-menu/index.vue'
 
 const themeVars = useThemeVars()
 
 const routeStore = useRouteStore()
 
+const router = useRouter()
+
+const handleItemClick = (tab: Tab.TabItem) => {
+  router.push(tab.routePath)
+}
+
 const tabStore = useTabStore()
+
+const handleClose = (tab: Tab.TabItem) => {
+  tabStore.removeTab(tab)
+}
+
+const contextMenuRef = ref<InstanceType<typeof ContextMenu>>()
+
+const handleContextMenu = (e: MouseEvent, tab: Tab.TabItem) => {
+  contextMenuRef.value?.show({ tab, position: { x: e.clientX, y: e.clientY } })
+}
 
 const route = useRoute()
 
@@ -64,6 +88,7 @@ onMounted(tabStore.init)
 .app-tab {
   padding: 8px 16px 0;
   box-shadow: 0 1px 2px rgb(0 21 41 / 8%);
+  user-select: none;
   .app-tab-list {
     display: flex;
     align-items: center;
