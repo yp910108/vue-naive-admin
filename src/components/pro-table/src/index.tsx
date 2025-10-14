@@ -351,7 +351,7 @@ const ProTable = defineComponent({
         pagination={pagination.value}
         onUpdatePage={handleUpatePage}
         onUpdatePageSize={handleUpatePageSize}
-        class="flex-grow"
+        class="grow-1"
         {...restAttrs.value}
       />
     )
@@ -381,14 +381,14 @@ const ProTable = defineComponent({
               }
               onSearch={handleSearch}
               onReset={props.onReset}
-              class="flex-shrink-0"
+              class="shrink-0"
               contentStyle={props.searchStyle}
             />
           )
         ) : undefined}
         <NCard
           bordered={false}
-          class="flex-grow"
+          class="grow-1"
           contentStyle={{
             display: 'flex',
             flexDirection: 'column',
@@ -397,11 +397,9 @@ const ProTable = defineComponent({
           }}
         >
           {props.headerTitle || props.renderToolbar || props.action ? (
-            <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0 mb-16px">
-              {props.headerTitle ? (
-                <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
-              ) : undefined}
-              <NSpace wrapItem={false} justify="end" class="flex-grow w-0">
+            <NSpace size={20} wrapItem={false} align="center" class="shrink-0 mb-16px">
+              {props.headerTitle ? <NH4 class="shrink-0 m-0">{props.headerTitle}</NH4> : undefined}
+              <NSpace wrapItem={false} justify="end" class="grow-1 w-0">
                 {props.renderToolbar ? props.renderToolbar() : undefined}
                 {props.action
                   ? typeof props.action === 'function'

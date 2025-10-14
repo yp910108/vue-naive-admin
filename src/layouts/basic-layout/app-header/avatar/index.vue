@@ -1,5 +1,5 @@
 <template>
-  <n-dropdown :options="options" class="w-200px" @select="handleSelect">
+  <n-dropdown :options="options" class="w-160px" @select="handleSelect">
     <icon-wrap round :padding="4">
       <n-avatar size="small" round :src="avatarUrl">
         <icon-avatar v-if="!avatarUrl" class="text-16px" />
@@ -24,7 +24,7 @@ const options = computed<DropdownOption[]>(() => [
     key: 'header',
     type: 'render',
     render: () => (
-      <NFlex align="center" class="px-10px py-6px">
+      <NFlex align="center" size={8} class="px-10px py-6px">
         <NAvatar round src={avatarUrl.value}>
           {!avatarUrl.value && <IconAvatar />}
         </NAvatar>
