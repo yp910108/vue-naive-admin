@@ -1,14 +1,10 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import type { NScrollbar } from 'naive-ui'
 import { useCacheStore } from '../cache'
 
 export const useAppStore = defineStore('app-store', () => {
   const cacheStore = useCacheStore()
-
-  /**
-   * 滚动元素的 id
-   */
-  const scrollElId = ref('__SCROLL_EL_ID__')
 
   const siderCollapse = ref(false)
 
@@ -20,13 +16,26 @@ export const useAppStore = defineStore('app-store', () => {
     siderCollapse.value = !siderCollapse.value
   }
 
+  const scrollRef = ref<InstanceType<typeof NScrollbar>>()
+
   /**
    * 获取滚动区域的滚动位置信息
    */
   const getScrollInfo = () => {
-    const scrollEl = document.querySelector(`#${scrollElId.value}`)
+    const scrollEl = (scrollRef.value?.$refs.scrollbarInstRef as any)
+      ?.containerRef as HTMLDivElement | null
     const { scrollLeft = 0, scrollTop = 0 } = scrollEl ?? {}
-    return { scrollEl, scrollLeft, scrollTop }
+    return { left: scrollLeft, top: scrollTop }
+  }
+
+  interface ScrollToOption {
+    left?: number
+    top?: number
+    behavior?: ScrollBehavior
+  }
+
+  const scrollTo = (position: ScrollToOption) => {
+    scrollRef.value?.scrollTo(position)
   }
 
   /**
@@ -44,11 +53,12 @@ export const useAppStore = defineStore('app-store', () => {
   }
 
   return {
-    scrollElId,
+    scrollRef,
     siderCollapse,
     setSiderCollapse,
     toggleSiderCollapse,
     getScrollInfo,
+    scrollTo,
     reloadFlag,
     reloadPage
   }

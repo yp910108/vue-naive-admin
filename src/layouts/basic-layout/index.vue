@@ -3,7 +3,7 @@
     <app-sider
       class="relative z-2 shrink-0 w-[var(--width)] transition-all-300"
       :style="{
-        '--width': appStore.siderCollapse
+        '--width': siderCollapse
           ? `${settings.sider.collapsedWidth}px`
           : `${settings.sider.width}px`
       }"
@@ -14,8 +14,9 @@
         :style="{ '--height': `${settings.header.height}px` }"
       />
       <app-tab class="relative z-1 shrink-0" />
-      <n-scrollbar content-class="flex flex-col grow-1">
+      <n-scrollbar ref="scrollRef" class="app-scroll-wrap" content-class="flex flex-col grow-1">
         <app-content class="grow-1 p-16px" />
+        <n-back-top class="z-3" />
       </n-scrollbar>
     </div>
   </div>
@@ -29,14 +30,14 @@ import AppSider from './app-sider/index.vue'
 import AppHeader from './app-header/index.vue'
 import AppTab from './app-tab/index.vue'
 
-const appStore = useAppStore()
+const { scrollRef, siderCollapse } = storeToRefs(useAppStore())
 
 const { settings } = storeToRefs(useSettingsStore())
 </script>
 
 <style lang="scss" scoped>
-:deep(.n-scrollbar) {
-  .n-scrollbar-container {
+:deep(.app-scroll-wrap) {
+  > .n-scrollbar-container {
     display: flex;
     flex-direction: column;
   }
