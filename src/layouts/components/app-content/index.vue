@@ -3,9 +3,10 @@
     <transition name="fade-slide" mode="out-in" appear>
       <keep-alive :include="cacheStore.caches">
         <component
+          v-if="appStore.reloadFlag"
           :is="Component"
           :key="route.fullPath"
-          :class="['grow-1', contentClass]"
+          :class="['grow-1 bg-#f6f9f8', contentClass]"
           :style="contentStyle"
         />
       </keep-alive>
@@ -15,12 +16,14 @@
 
 <script setup lang="ts">
 import type { CSSProperties } from 'vue'
-import { useCacheStore } from '@/store'
+import { useAppStore, useCacheStore } from '@/store'
 
 defineProps<{
   contentClass?: string
   contentStyle?: CSSProperties | string
 }>()
+
+const appStore = useAppStore()
 
 const cacheStore = useCacheStore()
 </script>

@@ -1,0 +1,11 @@
+.pro-table {
+  :global {
+    .n-data-table-td--last-row {
+      border-bottom: 1px solid var(--n-merged-border-color) !important;
+    }
+    .n-base-selection.n-base-selection--error-status
+      .n-base-selection__state-border {
+      border-color: #0000;
+    }
+  }
+}
