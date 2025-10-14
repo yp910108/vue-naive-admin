@@ -1,14 +1,14 @@
 <template>
-  <div class="flex h-full">
+  <div class="flex h-full bg-#f6f9f8">
     <app-sider
-      class="shrink-0 w-[var(--width)] transition-all-300"
+      class="relative z-2 shrink-0 w-[var(--width)] transition-all-300"
       :style="{
         '--width': appStore.siderCollapse
           ? `${settings.sider.collapsedWidth}px`
           : `${settings.sider.width}px`
       }"
     />
-    <div class="flex flex-col grow-1 w-0">
+    <div class="relative z-1 flex flex-col grow-1 w-0">
       <app-header
         class="shrink-0 h[var(--height)]"
         :style="{ '--height': `${settings.header.height}px` }"

@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col shadow-[var(--shadow)]" :style="{ '--shadow': themeVars.boxShadow1 }">
+  <div
+    class="flex flex-col bg-#fff shadow-[var(--shadow)]"
+    :style="{ '--shadow': themeVars.boxShadow1 }"
+  >
     <app-logo
       class="flex-shrink-0 h-[var(--height)]"
       :style="{ '--height': `${settings.sider.logoHeight}px` }"

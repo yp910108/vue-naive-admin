@@ -1,5 +1,5 @@
 <template>
-  <div class="app-tab">
+  <div class="app-tab bg-#fff">
     <scroll-pane ref="scrollRef">
       <ul class="app-tab-list" :style="cssVars">
         <li

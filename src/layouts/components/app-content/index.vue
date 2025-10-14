@@ -2,12 +2,7 @@
   <router-view v-slot="{ Component, route }">
     <transition name="fade-slide" mode="out-in" appear>
       <keep-alive :include="cacheStore.caches">
-        <component
-          v-if="appStore.reloadFlag"
-          :is="Component"
-          :key="route.fullPath"
-          class="bg-#f6f9f8"
-        />
+        <component v-if="appStore.reloadFlag" :is="Component" :key="route.fullPath" />
       </keep-alive>
     </transition>
   </router-view>
