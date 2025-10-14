@@ -101,7 +101,7 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
         ...rest,
         keepAlive: rest.keepAlive ?? parentMeta?.keepAlive,
         activeMenu: rest.activeMenu ?? parentMeta?.activeMenu,
-        // TDDO
+        // TODO
         unsafeRoot: parentMeta?.unsafeRoot ?? rest.unsafeRoot
       }
       if (children?.length) {

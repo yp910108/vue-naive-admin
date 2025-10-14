@@ -8,7 +8,7 @@
       @click="handleClick(breadcrumb)"
     >
       <n-flex align="center" :size="4">
-        <component :is="breadcrumb.icon" class="mt-2px text-16px" />
+        <component :is="breadcrumb.icon" class="text-16px" />
         {{ breadcrumb.label }}
       </n-flex>
     </n-breadcrumb-item>

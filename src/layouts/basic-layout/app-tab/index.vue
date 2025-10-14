@@ -1,6 +1,6 @@
 <template>
   <div class="app-tab">
-    <scroll-pane>
+    <scroll-pane ref="scrollRef">
       <ul
         class="app-tab-list"
         :style="{
@@ -16,8 +16,9 @@
         }"
       >
         <li
-          v-for="tab of tabStore.tabs"
+          v-for="(tab, index) of tabStore.tabs"
           :key="tab.key"
+          :ref="setTabRefs.bind(null, index)"
           :class="['app-tab-item', { active: tab.key === tabStore.activeTab?.key }]"
           @click="handleItemClick(tab)"
           @contextmenu.prevent="handleContextMenu($event, tab)"
@@ -44,15 +45,43 @@
 
 <script setup lang="ts">
 import { changeColor } from 'seemly'
-import { onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { nextTick, onMounted, ref, watch } from 'vue'
+import { onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { useThemeVars } from 'naive-ui'
+import { APP_CONTENT_TRANSITION_DURATION } from '@/constants'
 import { useRouteStore, useTabStore } from '@/store'
 import { ScrollPane, icons } from '@/components'
 import { IconTabLeft, IconTabRight, IconClose } from './icons'
 import ContextMenu from './context-menu/index.vue'
 
 const themeVars = useThemeVars()
+
+const tabStore = useTabStore()
+
+const scrollRef = ref<InstanceType<typeof ScrollPane>>()
+
+const tabRefs: HTMLLIElement[] = []
+
+const setTabRefs = (index: number, el: any) => {
+  tabRefs[index] = el
+}
+
+watch(
+  () => tabStore.activeTab,
+  (newActionTab) => {
+    nextTick(() => {
+      const activeTabIndex = tabStore.tabs.findIndex(({ key }) => key === newActionTab?.key)
+      if (tabRefs.length) {
+        const activeEl = tabRefs[activeTabIndex]
+        const activeWidth = activeEl.offsetWidth
+        const activeLeft = activeEl.offsetLeft + activeWidth
+        const wrapperWidth = scrollRef.value?.scrollEl?.offsetWidth!
+        const deltX = activeLeft - wrapperWidth + (wrapperWidth - activeWidth) / 2
+        scrollRef.value?.scrollTo(deltX)
+      }
+    })
+  }
+)
 
 const routeStore = useRouteStore()
 
@@ -61,8 +90,6 @@ const router = useRouter()
 const handleItemClick = (tab: Tab.TabItem) => {
   router.push(tab.routePath)
 }
-
-const tabStore = useTabStore()
 
 const handleClose = (tab: Tab.TabItem) => {
   tabStore.removeTab(tab)
@@ -74,11 +101,32 @@ const handleContextMenu = (e: MouseEvent, tab: Tab.TabItem) => {
   contextMenuRef.value?.show({ tab, position: { x: e.clientX, y: e.clientY } })
 }
 
-const route = useRoute()
-
-watch(route, (newVal) => {
-  const newTab = tabStore.addTab(newVal)
+onBeforeRouteUpdate(async (to, from) => {
+  const toName = to.name as string
+  const fromName = from.name as string
+  if (toName.includes(fromName)) {
+    const backRoutePath = from.fullPath
+    const newTab = tabStore.addTab(to, backRoutePath)
+    tabStore.setActiveTab(newTab)
+    const oldTab = tabStore.tabs.find(({ key }) => key === from.name)
+    if (oldTab) {
+      oldTab.cache = true
+    }
+  }
+  const newTab = tabStore.addTab(to)
   tabStore.setActiveTab(newTab)
+  if (newTab?.cache) {
+    if (fromName.includes(toName)) {
+      setTimeout(() => {
+        newTab.cache = false
+      }, APP_CONTENT_TRANSITION_DURATION + 500)
+    } else {
+      newTab.cache = false
+      await new Promise((resolve) => {
+        setTimeout(resolve, 20)
+      })
+    }
+  }
 })
 
 onMounted(tabStore.init)
@@ -120,7 +168,6 @@ onMounted(tabStore.init)
         height: 28px;
         border-radius: var(--border-radius);
         .app-tab-item__icon {
-          margin-top: 2px;
           font-size: 16px;
         }
         .app-tab-item__close {
