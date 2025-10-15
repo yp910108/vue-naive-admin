@@ -1,10 +1,14 @@
 <template>
   <n-divider>界面主题</n-divider>
-  <ul class="flex justify-between">
-    <li v-for="item of options" :key="item.value" class="flex-col-x-center gap-4px">
+  <ul class="flex gap-16px">
+    <li
+      v-for="item of options"
+      :key="item.value"
+      class="flex-col-x-center gap-4px w-[calc((100%-32px)/3)]"
+    >
       <box-select
         :checked="item.value === settings.theme"
-        class="w-100px h-52px"
+        class="w-full h-52px"
         @click="handleItemClick(item.value)"
       >
         <component :is="item.icon" class="text-20px" />

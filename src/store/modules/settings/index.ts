@@ -17,5 +17,9 @@ export const useSettingsStore = defineStore('settings-store', () => {
     settings.value.theme = _theme
   }
 
-  return { settings, theme, setTheme }
+  const setPrimaryColor = (primaryColor: string) => {
+    settings.value.primaryColor = primaryColor
+  }
+
+  return { settings, theme, setTheme, setPrimaryColor }
 })
