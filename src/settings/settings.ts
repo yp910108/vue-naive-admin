@@ -1,0 +1,18 @@
+export const defaultSettings: Settings.Settings = {
+  theme: 'os',
+  primaryColor: 'default',
+  tab: {
+    visible: true,
+    height: 44,
+    isCache: true
+  },
+  sider: {
+    inverted: false,
+    width: 220,
+    collapsedWidth: 60,
+    logoHeight: 50
+  },
+  header: {
+    height: 50
+  }
+}

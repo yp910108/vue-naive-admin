@@ -33,10 +33,10 @@
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeVars } from 'naive-ui'
+import { darkThemeCommonVars, lightThemeCommonVars } from '@/settings'
 import { useSettingsStore } from '@/store'
 import { BoxSelect } from '../../components'
 import { COLOR_OPTIONS } from './constants'
-import { DARK_PRIMARY_COLOR, LIGHT_PRIMARY_COLOR } from '@/store/modules/theme/constants'
 
 const themeVars = useThemeVars()
 
@@ -45,9 +45,9 @@ const settingsStore = useSettingsStore()
 const { settings, theme } = storeToRefs(settingsStore)
 
 const colorOptions = computed(() => {
-  const defaultPrimaryColor = theme.value === 'dark' ? DARK_PRIMARY_COLOR : LIGHT_PRIMARY_COLOR
+  const themeCommonVars = theme.value === 'dark' ? darkThemeCommonVars : lightThemeCommonVars
   return [
-    { color: defaultPrimaryColor, text: '默认', value: 'default' },
+    { color: themeCommonVars.primaryColor, text: '默认', value: 'default' },
     ...COLOR_OPTIONS.map((item) => ({ ...item, value: item.color }))
   ]
 })
