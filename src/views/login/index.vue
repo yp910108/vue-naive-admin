@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex justify-center items-center h-full">
+  <div class="relative flex-center h-full">
     <n-flex align="center" class="absolute left-26px top-26px">
       <img :src="ImgLogo" class="w-42px" />
       <span class="font-bold text-20px">{{ appName }}</span>

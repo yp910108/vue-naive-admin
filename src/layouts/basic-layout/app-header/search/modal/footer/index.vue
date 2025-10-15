@@ -1,15 +1,15 @@
 <template>
-  <div class="flex items-center px-24px h-44px">
-    <span class="flex items-center mr-14px">
+  <div class="flex-y-center px-24px h-44px">
+    <span class="flex-y-center mr-14px">
       <icon-return class="icon text-20px p-2px mr-6px" />
       <span>确认</span>
     </span>
-    <span class="flex items-center mr-14px">
+    <span class="flex-y-center mr-14px">
       <icon-up class="icon text-20px p-2px mr-5px" />
       <icon-down class="icon text-20px p-2px mr-6px" />
       <span>切换</span>
     </span>
-    <span class="flex items-center">
+    <span class="flex-y-center">
       <icon-esc class="icon text-20px p-2px mr-6px" />
       <span>关闭</span>
     </span>

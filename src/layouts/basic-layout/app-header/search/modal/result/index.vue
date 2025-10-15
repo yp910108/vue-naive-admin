@@ -8,7 +8,7 @@
           background: item.key === active ? themeVars.primaryColor : '',
           color: item.key === active ? '#fff' : ''
         }"
-        class="flex justify-between items-center mt-8px h-56px px-14px rounded-4px bg-#e5e7eb dark:bg-dark cursor-pointer"
+        class="flex-center mt-8px h-56px px-14px rounded-4px bg-#e5e7eb dark:bg-dark cursor-pointer"
         @click="handleTo"
         @mouseenter="handleMouseEnter(item)"
       >

@@ -11,13 +11,13 @@
           : `${settings.sider.width}px`
       }"
     />
-    <div class="relative z-1 flex flex-col grow-1 w-0">
+    <div class="relative z-1 flex-col grow-1 w-0">
       <app-header
         class="relative z-2 shrink-0 h[var(--height)]"
         :style="{ '--height': `${settings.header.height}px` }"
       />
       <app-tab class="relative z-1 shrink-0" />
-      <n-scrollbar ref="scrollRef" class="app-scroll-wrap" content-class="flex flex-col grow-1">
+      <n-scrollbar ref="scrollRef" class="app-scroll-wrap" content-class="flex-col grow-1">
         <app-content class="grow-1 p-16px" />
         <n-back-top class="z-3" />
       </n-scrollbar>

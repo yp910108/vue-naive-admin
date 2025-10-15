@@ -1,8 +1,5 @@
 <template>
-  <theme-wrap
-    class="flex flex-col shadow-[var(--shadow)]"
-    :style="{ '--shadow': themeVars.boxShadow1 }"
-  >
+  <theme-wrap class="flex-col shadow-[var(--shadow)]" :style="{ '--shadow': themeVars.boxShadow1 }">
     <app-logo
       class="flex-shrink-0 h-[var(--height)]"
       :style="{ '--height': `${settings.sider.logoHeight}px` }"
