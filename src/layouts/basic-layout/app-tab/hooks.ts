@@ -3,13 +3,16 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { useThemeVars } from 'naive-ui'
 import { APP_CONTENT_TRANSITION_DURATION } from '@/constants'
-import { useTabStore } from '@/store'
+import { useSettingsStore, useTabStore } from '@/store'
 import type { ScrollPane } from '@/components'
 
 export const useCssVars = () => {
   const themeVars = useThemeVars()
 
+  const settingsStore = useSettingsStore()
+
   const cssVars = computed(() => ({
+    '--tab-height': `${settingsStore.settings.tab.height}px`,
     '--border-radius': '6px',
     '--bg-color-hover': themeVars.value.buttonColor2Hover,
     '--bg-color-active': changeColor(themeVars.value.primaryColor, { alpha: 0.15 }),

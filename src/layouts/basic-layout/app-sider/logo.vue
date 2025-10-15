@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO collapse center -->
   <router-link to="/" class="flex-y-center gap-8px px-12px">
     <img :src="ImgLogo" class="w-32px" />
     <n-h3

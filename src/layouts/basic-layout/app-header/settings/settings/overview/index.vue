@@ -1,6 +1,6 @@
 <template>
   <n-divider>界面显示</n-divider>
-  <n-flex vertical>
+  <n-flex vertical :size="12">
     <n-flex justify="space-between" align="center">
       <n-text>侧边栏宽度</n-text>
       <n-input-number
@@ -11,7 +11,7 @@
         :step="10"
         size="small"
         class="w-120px"
-        @update:value="handleUpdateSiderWidth"
+        @update:value="settingsStore.setSiderWidth"
       />
     </n-flex>
     <n-flex justify="space-between" align="center">
@@ -24,7 +24,7 @@
         :step="1"
         size="small"
         class="w-120px"
-        @update:value="handleUpdateSiderCollapsedWidth"
+        @update:value="settingsStore.setSiderCollapsedWidth"
       />
     </n-flex>
     <n-flex justify="space-between" align="center">
@@ -37,9 +37,45 @@
         :step="1"
         size="small"
         class="w-120px"
-        @update:value="handleUpdateSiderLogoHeight"
+        @update:value="settingsStore.setSiderLogoHeight"
       />
     </n-flex>
+    <n-flex justify="space-between" align="center">
+      <n-text>头部高度</n-text>
+      <n-input-number
+        :value="settings.header.height"
+        :min="40"
+        :max="80"
+        :precision="0"
+        :step="1"
+        size="small"
+        class="w-120px"
+        @update:value="settingsStore.setHeaderHeight"
+      />
+    </n-flex>
+    <n-flex justify="space-between" align="center">
+      <n-text>显示多页签</n-text>
+      <n-switch :value="settings.tab.visible" @update:value="settingsStore.setTabVisible" />
+    </n-flex>
+    <template v-if="settings.tab.visible">
+      <n-flex justify="space-between" align="center">
+        <n-text>多页签是否缓存</n-text>
+        <n-switch :value="settings.tab.isCache" @update:value="settingsStore.setTabIsCache" />
+      </n-flex>
+      <n-flex justify="space-between" align="center">
+        <n-text>多页签高度</n-text>
+        <n-input-number
+          :value="settings.tab.height"
+          :min="36"
+          :max="50"
+          :precision="0"
+          :step="1"
+          size="small"
+          class="w-120px"
+          @update:value="settingsStore.setTabHeight"
+        />
+      </n-flex>
+    </template>
   </n-flex>
 </template>
 
@@ -50,16 +86,4 @@ import { useSettingsStore } from '@/store'
 const settingsStore = useSettingsStore()
 
 const { settings } = storeToRefs(settingsStore)
-
-const handleUpdateSiderWidth = (newSiderWidth: number | null) => {
-  settingsStore.setSiderWidth(newSiderWidth)
-}
-
-const handleUpdateSiderCollapsedWidth = (newSiderCollapsedWidth: number | null) => {
-  settingsStore.setSiderCollapsedWidth(newSiderCollapsedWidth)
-}
-
-const handleUpdateSiderLogoHeight = (newSiderLogoHeight: number | null) => {
-  settingsStore.setSiderLogoHeight(newSiderLogoHeight)
-}
 </script>

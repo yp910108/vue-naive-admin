@@ -40,6 +40,26 @@ export const useSettingsStore = defineStore('settings-store', () => {
     }
   }
 
+  const setHeaderHeight = (headerHeight: number | null) => {
+    if (headerHeight) {
+      settings.value.header.height = headerHeight
+    }
+  }
+
+  const setTabVisible = (tabVisible: boolean) => {
+    settings.value.tab.visible = tabVisible
+  }
+
+  const setTabIsCache = (tabIsCache: boolean) => {
+    settings.value.tab.isCache = tabIsCache
+  }
+
+  const setTabHeight = (tabHeight: number | null) => {
+    if (tabHeight) {
+      settings.value.tab.height = tabHeight
+    }
+  }
+
   return {
     settings,
     theme,
@@ -47,6 +67,10 @@ export const useSettingsStore = defineStore('settings-store', () => {
     setPrimaryColor,
     setSiderWidth,
     setSiderCollapsedWidth,
-    setSiderLogoHeight
+    setSiderLogoHeight,
+    setHeaderHeight,
+    setTabVisible,
+    setTabIsCache,
+    setTabHeight
   }
 })

@@ -20,6 +20,4 @@ const settingsRef = ref<InstanceType<typeof Settings>>()
 const handleShowSettings = () => {
   settingsRef.value?.show()
 }
-
-setTimeout(handleShowSettings, 200)
 </script>

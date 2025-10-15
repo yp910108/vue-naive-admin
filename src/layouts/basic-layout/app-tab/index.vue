@@ -1,7 +1,7 @@
 <template>
-  <theme-wrap class="app-tab">
+  <theme-wrap class="app-tab" :style="cssVars">
     <scroll-pane ref="scrollRef">
-      <ul class="app-tab-list" :style="cssVars">
+      <ul class="app-tab-list">
         <li
           v-for="(tab, index) of tabStore.tabs"
           :key="tab.key"
@@ -70,7 +70,10 @@ onMounted(tabStore.init)
 
 <style lang="scss" scoped>
 .app-tab {
-  padding: 6px 6px 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 6px;
+  height: var(--tab-height);
   box-shadow: 0 1px 2px rgb(0 21 41 / 8%);
   user-select: none;
   .app-tab-list {

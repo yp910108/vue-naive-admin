@@ -1,13 +1,14 @@
+import { storeToRefs } from 'pinia'
 import { localStg } from '@/utils'
 import { useSettingsStore, useTabStore } from '../modules'
 
 export const subscribeTabStore = () => {
-  const settingsStore = useSettingsStore()
+  const { settings } = storeToRefs(useSettingsStore())
 
   const tabStore = useTabStore()
 
   tabStore.$subscribe((_, { tabs }) => {
-    if (settingsStore.settings.tab.isCache) {
+    if (settings.value.tab.visible && settings.value.tab.isCache) {
       localStg.set('tabs', tabs)
     }
   })

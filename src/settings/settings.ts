@@ -1,11 +1,6 @@
 export const defaultSettings: Settings.Settings = {
   theme: 'os',
   primaryColor: 'default',
-  tab: {
-    visible: true,
-    height: 44,
-    isCache: true
-  },
   sider: {
     width: 220,
     collapsedWidth: 60,
@@ -13,5 +8,10 @@ export const defaultSettings: Settings.Settings = {
   },
   header: {
     height: 50
+  },
+  tab: {
+    visible: true,
+    isCache: true,
+    height: 36
   }
 }

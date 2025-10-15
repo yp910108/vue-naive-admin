@@ -35,13 +35,13 @@ declare namespace Settings {
      */
     visible: boolean
     /**
+     * 多页签是否缓存
+     */
+    isCache: boolean
+    /**
      * 多页签高度
      */
     height: number
-    /**
-     * 开启多页签缓存
-     */
-    isCache: boolean
   }
 
   /**
