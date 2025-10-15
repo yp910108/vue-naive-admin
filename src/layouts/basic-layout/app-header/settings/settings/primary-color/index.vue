@@ -47,7 +47,7 @@ const color = computed(() =>
 )
 
 const defaultColorOption = computed(() => {
-  if (settings.value.primaryColor === 'default') {
+  if (defaultSettings.primaryColor === 'default') {
     const themeCommonVars = theme.value === 'dark' ? darkThemeCommonVars : lightThemeCommonVars
     return { color: themeCommonVars.primaryColor, text: '默认', value: 'default' }
   } else {
