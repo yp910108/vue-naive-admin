@@ -40,6 +40,7 @@ export const useTabStore = defineStore('tab-store', () => {
     }
   }
 
+  // TODO root 关闭左侧
   const clearLeftTabs = (currentTab: Tab.TabItem) => {
     const currentIndex = tabs.value.findIndex(({ key }) => key === currentTab.key)
     const rootTab = generateTabByRoute(routeStore.rootRoute)
