@@ -1,5 +1,6 @@
 import { changeColor } from 'seemly'
 import { computed, nextTick, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { useThemeVars } from 'naive-ui'
 import { APP_CONTENT_TRANSITION_DURATION } from '@/constants'
@@ -9,16 +10,17 @@ import type { ScrollPane } from '@/components'
 export const useCssVars = () => {
   const themeVars = useThemeVars()
 
-  const settingsStore = useSettingsStore()
+  const { settings, theme } = storeToRefs(useSettingsStore())
 
   const cssVars = computed(() => ({
-    '--tab-height': `${settingsStore.settings.tab.height}px`,
+    '--tab-height': `${settings.value.tab.height}px`,
     '--border-radius': '6px',
     '--bg-color-hover': themeVars.value.buttonColor2Hover,
     '--bg-color-active': changeColor(themeVars.value.primaryColor, { alpha: 0.15 }),
     '--text-color-hover': themeVars.value.primaryColor,
     '--text-color-active': themeVars.value.primaryColor,
-    '--close-bg-color-hover': '#cacaca',
+    '--close-bg-color-hover':
+      theme.value == 'dark' ? themeVars.value.borderColor : themeVars.value.iconColor,
     '--close-bg-color-active': themeVars.value.primaryColor,
     '--close-text-color-hover': '#fff',
     '--close-text-color-active': '#fff'
