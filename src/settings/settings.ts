@@ -1,6 +1,6 @@
 export const defaultSettings: Settings.Settings = {
   theme: 'os',
-  primaryColor: 'default',
+  primaryColor: 'red',
   tab: {
     visible: true,
     height: 44,

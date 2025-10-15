@@ -22,11 +22,7 @@
       <n-text depth="3" class="text-12px">{{ item.text }}</n-text>
     </li>
   </ul>
-  <n-color-picker
-    :value="settings.primaryColor === 'default' ? themeVars.primaryColor : settings.primaryColor"
-    class="mt-12px"
-    @update:value="handleUpdateColor"
-  />
+  <n-color-picker :value="color" class="mt-12px" @update:value="handleUpdateColor" />
 </template>
 
 <script setup lang="ts">
@@ -44,10 +40,24 @@ const settingsStore = useSettingsStore()
 
 const { settings, theme } = storeToRefs(settingsStore)
 
+const color = computed(() => {
+  const primaryColor = settings.value.primaryColor
+  return primaryColor === 'default' ? themeVars.value.primaryColor : primaryColor
+})
+
+const defaultColorOption = computed(() => {
+  const primaryColor = settings.value.primaryColor
+  if (primaryColor === 'default') {
+    const themeCommonVars = theme.value === 'dark' ? darkThemeCommonVars : lightThemeCommonVars
+    return { color: themeCommonVars.primaryColor, text: '默认', value: 'default' }
+  } else {
+    return { color: primaryColor, text: '默认', value: primaryColor }
+  }
+})
+
 const colorOptions = computed(() => {
-  const themeCommonVars = theme.value === 'dark' ? darkThemeCommonVars : lightThemeCommonVars
   return [
-    { color: themeCommonVars.primaryColor, text: '默认', value: 'default' },
+    defaultColorOption.value,
     ...COLOR_OPTIONS.map((item) => ({ ...item, value: item.color }))
   ]
 })
