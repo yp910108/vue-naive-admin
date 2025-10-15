@@ -7,7 +7,6 @@ export const defaultSettings: Settings.Settings = {
     isCache: true
   },
   sider: {
-    inverted: false,
     width: 220,
     collapsedWidth: 60,
     logoHeight: 50

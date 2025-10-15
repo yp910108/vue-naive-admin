@@ -12,12 +12,13 @@ export const useThemeStore = defineStore('theme-store', () => {
 
   const naiveThemeOverrides = computed<GlobalThemeOverrides>(() => {
     const themeCommonVars = theme.value === 'dark' ? darkThemeCommonVars : lightThemeCommonVars
+    const primaryColor =
+      settings.value.primaryColor === 'default'
+        ? themeCommonVars.primaryColor
+        : settings.value.primaryColor
     const themeColors = getThemeColors({
-      primary:
-        settings.value.primaryColor === 'default'
-          ? themeCommonVars.primaryColor
-          : settings.value.primaryColor,
-      info: themeCommonVars.infoColor,
+      primary: primaryColor,
+      info: primaryColor,
       success: themeCommonVars.successColor,
       warning: themeCommonVars.warningColor,
       error: themeCommonVars.errorColor

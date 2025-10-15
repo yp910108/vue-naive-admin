@@ -22,5 +22,31 @@ export const useSettingsStore = defineStore('settings-store', () => {
     settings.value.primaryColor = primaryColor
   }
 
-  return { settings, theme, setTheme, setPrimaryColor }
+  const setSiderWidth = (siderWidth: number | null) => {
+    if (siderWidth) {
+      settings.value.sider.width = siderWidth
+    }
+  }
+
+  const setSiderCollapsedWidth = (siderCollapsedWidth: number | null) => {
+    if (siderCollapsedWidth) {
+      settings.value.sider.collapsedWidth = siderCollapsedWidth
+    }
+  }
+
+  const setSiderLogoHeight = (siderLogoHeight: number | null) => {
+    if (siderLogoHeight) {
+      settings.value.sider.logoHeight = siderLogoHeight
+    }
+  }
+
+  return {
+    settings,
+    theme,
+    setTheme,
+    setPrimaryColor,
+    setSiderWidth,
+    setSiderCollapsedWidth,
+    setSiderLogoHeight
+  }
 })

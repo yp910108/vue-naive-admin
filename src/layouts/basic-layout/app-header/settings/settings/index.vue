@@ -3,6 +3,7 @@
     <n-drawer-content title="偏好设置">
       <appearance />
       <primary-color />
+      <overview />
     </n-drawer-content>
   </n-drawer>
 </template>
@@ -11,6 +12,7 @@
 import { ref } from 'vue'
 import Appearance from './appearance/index.vue'
 import PrimaryColor from './primary-color/index.vue'
+import Overview from './overview/index.vue'
 
 const visible = ref(false)
 

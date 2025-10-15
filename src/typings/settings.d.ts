@@ -9,10 +9,6 @@ declare namespace Settings {
 
   interface Sider {
     /**
-     * 侧边栏反转色
-     */
-    inverted: boolean
-    /**
      * 侧边栏宽度
      */
     width: number

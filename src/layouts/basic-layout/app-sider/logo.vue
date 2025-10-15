@@ -1,6 +1,6 @@
 <template>
   <router-link to="/" class="flex-y-center gap-8px px-12px">
-    <img :src="ImgLogo" class="w-32px h-32px" />
+    <img :src="ImgLogo" class="w-32px" />
     <n-h3
       v-if="!appStore.siderCollapse"
       class="whitespace-nowrap overflow-hidden"
