@@ -36,17 +36,21 @@ import { useThemeVars } from 'naive-ui'
 import { useSettingsStore } from '@/store'
 import { BoxSelect } from '../../components'
 import { COLOR_OPTIONS } from './constants'
+import { DARK_PRIMARY_COLOR, LIGHT_PRIMARY_COLOR } from '@/store/modules/theme/constants'
 
 const themeVars = useThemeVars()
 
 const settingsStore = useSettingsStore()
 
-const { settings } = storeToRefs(settingsStore)
+const { settings, theme } = storeToRefs(settingsStore)
 
-const colorOptions = computed(() => [
-  { color: themeVars.value.primaryColor, text: '默认', value: 'default' },
-  ...COLOR_OPTIONS.map((item) => ({ ...item, value: item.color }))
-])
+const colorOptions = computed(() => {
+  const defaultPrimaryColor = theme.value === 'dark' ? DARK_PRIMARY_COLOR : LIGHT_PRIMARY_COLOR
+  return [
+    { color: defaultPrimaryColor, text: '默认', value: 'default' },
+    ...COLOR_OPTIONS.map((item) => ({ ...item, value: item.color }))
+  ]
+})
 
 const handleItemClick = (value: string) => {
   settingsStore.setPrimaryColor(value)
