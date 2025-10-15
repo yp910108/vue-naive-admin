@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash-es'
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { usePreferredColorScheme } from '@vueuse/core'
@@ -7,7 +8,7 @@ import { localStg } from '@/utils'
 export const useSettingsStore = defineStore('settings-store', () => {
   const osTheme = usePreferredColorScheme()
 
-  const settings = ref(localStg.get('settings') ?? defaultSettings)
+  const settings = ref(localStg.get('settings') ?? cloneDeep(defaultSettings))
 
   const theme = computed(() =>
     settings.value.theme === 'os' ? osTheme.value! : settings.value.theme
