@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[var(--bg-color)]" :style="{ '--bg-color': themeVars.cardColor }">
+  <div class="bg-[var(--bg-color)] transition-all" :style="{ '--bg-color': themeVars.cardColor }">
     <slot></slot>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex h-full bg-[var(--bg-color)]"
+    class="flex h-full bg-[var(--bg-color)] transition-all"
     :style="{ '--bg-color': theme === 'dark' ? themeVars.bodyColor : '#f6f9f8' }"
   >
     <app-sider
