@@ -40,18 +40,18 @@ const settingsStore = useSettingsStore()
 
 const { settings, theme } = storeToRefs(settingsStore)
 
-const color = computed(() => {
-  const primaryColor = settings.value.primaryColor
-  return primaryColor === 'default' ? themeVars.value.primaryColor : primaryColor
-})
+const color = computed(() =>
+  settings.value.primaryColor === 'default'
+    ? themeVars.value.primaryColor
+    : settings.value.primaryColor
+)
 
 const defaultColorOption = computed(() => {
-  const primaryColor = settings.value.primaryColor
-  if (primaryColor === 'default') {
+  if (settings.value.primaryColor === 'default') {
     const themeCommonVars = theme.value === 'dark' ? darkThemeCommonVars : lightThemeCommonVars
     return { color: themeCommonVars.primaryColor, text: '默认', value: 'default' }
   } else {
-    return { color: primaryColor, text: '默认', value: primaryColor }
+    return { color: settings.value.primaryColor, text: '默认', value: settings.value.primaryColor }
   }
 })
 
