@@ -70,7 +70,7 @@ onMounted(tabStore.init)
 
 <style lang="scss" scoped>
 .app-tab {
-  padding: 3px 6px 0;
+  padding: 6px 6px 0;
   box-shadow: 0 1px 2px rgb(0 21 41 / 8%);
   user-select: none;
   .app-tab-list {

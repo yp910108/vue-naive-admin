@@ -8,7 +8,7 @@ export const LIGHT_WARNING_COLOR = '#f0a020'
 
 export const LIGHT_ERROR_COLOR = '#d03050'
 
-export const DARK_PRIMARY_COLOR = '#006be6'
+export const DARK_PRIMARY_COLOR = '#2d8cf0'
 
 export const DARK_INFO_COLOR = '#70c0e8'
 
