@@ -1,6 +1,6 @@
 <template>
-  <div
-    class="flex flex-col bg-#fff shadow-[var(--shadow)]"
+  <theme-wrap
+    class="flex flex-col shadow-[var(--shadow)]"
     :style="{ '--shadow': themeVars.boxShadow1 }"
   >
     <app-logo
@@ -8,13 +8,14 @@
       :style="{ '--height': `${settings.sider.logoHeight}px` }"
     />
     <app-menu class="grow-1 h-0" />
-  </div>
+  </theme-wrap>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useThemeVars } from 'naive-ui'
 import { useSettingsStore } from '@/store'
+import { ThemeWrap } from '@/components'
 import AppLogo from './logo.vue'
 import AppMenu from './menu/index.vue'
 

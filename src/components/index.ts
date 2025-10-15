@@ -1,4 +1,5 @@
 export { default as AppLoading } from './app-loading/index.vue'
+export { default as ThemeWrap } from './theme-wrap/index.vue'
 export { default as IconWrap } from './icon-wrap/index.vue'
 export { default as ScrollPane } from './scroll-pane/index.vue'
 export { default as ThemeSelect } from './theme-select/index.vue'

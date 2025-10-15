@@ -1,5 +1,5 @@
 <template>
-  <div class="app-tab bg-#fff">
+  <theme-wrap class="app-tab">
     <scroll-pane ref="scrollRef">
       <ul class="app-tab-list" :style="cssVars">
         <li
@@ -27,14 +27,14 @@
       </ul>
     </scroll-pane>
     <context-menu ref="contextMenuRef" />
-  </div>
+  </theme-wrap>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useRouteStore, useTabStore } from '@/store'
-import { ScrollPane, icons } from '@/components'
+import { ThemeWrap, ScrollPane, icons } from '@/components'
 import { useCssVars, useScroll, useCache } from './hooks'
 import { IconTabLeft, IconTabRight, IconClose } from './icons'
 import ContextMenu from './context-menu/index.vue'
@@ -70,7 +70,7 @@ onMounted(tabStore.init)
 
 <style lang="scss" scoped>
 .app-tab {
-  padding: 8px 16px 0;
+  padding: 3px 6px 0;
   box-shadow: 0 1px 2px rgb(0 21 41 / 8%);
   user-select: none;
   .app-tab-list {

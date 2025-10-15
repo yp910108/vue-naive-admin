@@ -1,5 +1,8 @@
 <template>
-  <div class="flex h-full bg-#f6f9f8">
+  <div
+    class="flex h-full bg-[var(--bg-color)]"
+    :style="{ '--bg-color': theme === 'dark' ? themeVars.bodyColor : '#f6f9f8' }"
+  >
     <app-sider
       class="relative z-2 shrink-0 w-[var(--width)] transition-all-300"
       :style="{
@@ -24,15 +27,18 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { useThemeVars } from 'naive-ui'
 import { useAppStore, useSettingsStore } from '@/store'
 import { AppContent } from '../components'
 import AppSider from './app-sider/index.vue'
 import AppHeader from './app-header/index.vue'
 import AppTab from './app-tab/index.vue'
 
+const themeVars = useThemeVars()
+
 const { scrollRef, siderCollapse } = storeToRefs(useAppStore())
 
-const { settings } = storeToRefs(useSettingsStore())
+const { settings, theme } = storeToRefs(useSettingsStore())
 </script>
 
 <style lang="scss" scoped>
