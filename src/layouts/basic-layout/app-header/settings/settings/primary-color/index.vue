@@ -22,7 +22,12 @@
       <n-text depth="3" class="text-12px">{{ item.text }}</n-text>
     </li>
   </ul>
-  <n-color-picker :value="color" class="mt-12px" @update:value="handleUpdateColor" />
+  <n-color-picker
+    :value="color"
+    :show-alpha="false"
+    class="mt-12px"
+    @update:value="handleUpdateColor"
+  />
 </template>
 
 <script setup lang="ts">
