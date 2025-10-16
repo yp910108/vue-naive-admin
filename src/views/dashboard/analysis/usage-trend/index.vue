@@ -1,9 +1,16 @@
 <template>
   <n-card title="访问量和使用量趋势" class="h-350px">
     <template #header-extra>
-      <n-tabs type="segment" animated size="small" class="w-100px">
+      <n-tabs
+        :value="type"
+        type="segment"
+        animated
+        size="small"
+        class="w-100px"
+        @update:value="handleUpdateType"
+      >
         <n-tab-pane name="month" tab="月" />
-        <n-tab-pane name="week" tab="周" />
+        <n-tab-pane name="day" tab="天" />
       </n-tabs>
     </template>
     <chart :option="option" />
@@ -14,7 +21,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useThemeVars } from 'naive-ui'
 import { Chart, type ECOption } from '@/components'
-import type { DataItem } from './typings'
+import type { DataItem, Type } from './typings'
 import { fetchData } from './service'
 
 const themeVars = useThemeVars()
@@ -44,6 +51,11 @@ const option = computed<ECOption>(() => {
     xAxis: {
       type: 'category',
       boundaryGap: false,
+      axisLine: {
+        lineStyle: {
+          color: themeVars.value.borderColor
+        }
+      },
       data: data.value?.map((item) => item.time)
     },
     yAxis: {
@@ -79,19 +91,18 @@ const option = computed<ECOption>(() => {
   } as ECOption
 })
 
-const loading = ref(false)
+const type = ref<Type>('month')
 
 const data = ref<DataItem[]>()
 
 const setData = async () => {
-  try {
-    loading.value = true
-    const res = await fetchData()
-    loading.value = false
-    data.value = res
-  } catch (e) {
-    loading.value = false
-  }
+  const res = await fetchData(type.value)
+  data.value = res
+}
+
+const handleUpdateType = (newType: Type) => {
+  type.value = newType
+  setData()
 }
 
 onMounted(setData)
