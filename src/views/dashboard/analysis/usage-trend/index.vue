@@ -1,5 +1,12 @@
 <template>
-  <n-card title="访问量和使用量趋势" class="h-350px">
+  <n-card
+    title="访问量和使用量趋势"
+    :bordered="false"
+    class="h-350px shadow-[var(--shadow)]"
+    :style="{
+      '--shadow': '0 1px 2px rgb(0 21 41 / 8%)'
+    }"
+  >
     <template #header-extra>
       <n-tabs
         :value="type"
@@ -13,7 +20,7 @@
         <n-tab-pane name="day" tab="天" />
       </n-tabs>
     </template>
-    <chart :option="option" />
+    <chart v-if="data?.length" :option="option" />
   </n-card>
 </template>
 
@@ -102,6 +109,7 @@ const setData = async () => {
 
 const handleUpdateType = (newType: Type) => {
   type.value = newType
+  data.value = undefined
   setData()
 }
 
