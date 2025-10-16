@@ -30,9 +30,3 @@ defineProps<DataItem>()
 
 const themeVars = useThemeVars()
 </script>
-
-<style lang="scss" scoped>
-.x {
-  transform: rotate();
-}
-</style>
