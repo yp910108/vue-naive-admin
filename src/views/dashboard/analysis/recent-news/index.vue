@@ -7,25 +7,28 @@
       '--shadow': '0 1px 2px rgb(0 21 41 / 8%)'
     }"
   >
-    <n-list hoverable clickable>
-      <n-list-item v-for="(item, index) of data" :key="index" class="px-10px">
+    <template #header-extra>
+      <n-button type="primary" text>更多</n-button>
+    </template>
+    <n-list>
+      <n-list-item v-for="(item, index) of data" :key="index">
         <n-flex align="center">
-          <n-avatar round :src="item.avatar" class="shrink-0" />
+          <n-avatar :src="item.avatar" :size="40" round class="shrink-0" />
           <n-flex align="flex-end" class="grow-1 w-0">
             <n-flex vertical :size="0" class="grow-1 w-0">
-              <n-text>{{ item.name }}</n-text>
+              <n-text class="text-16px">{{ item.name }}</n-text>
               <n-highlight
                 :text="getDesc(item.desc)"
                 :patterns="getPatterns(item.desc)"
-                class="text-12px text-[var(--color)] truncate"
-                highlight-class="text-12px bg-transparent text-[var(--highlight-color)]"
+                class="text-[var(--color)] truncate"
+                highlight-class="bg-transparent text-[var(--highlight-color)] cursor-pointer"
                 :style="{
                   '--color': themeVars.textColor3,
                   '--highlight-color': themeVars.primaryColor
                 }"
               />
             </n-flex>
-            <n-text depth="3" class="shrink-0 text-12px">
+            <n-text depth="3" class="shrink-0 mb-2px text-12px">
               {{ item.time }}
             </n-text>
           </n-flex>

@@ -25,7 +25,7 @@ const options = computed<DropdownOption[]>(() => [
     type: 'render',
     render: () => (
       <NFlex align="center" size={8} class="px-10px py-6px">
-        <NAvatar round src={avatarUrl.value}>
+        <NAvatar src={avatarUrl.value} round>
           {!avatarUrl.value && <IconAvatar />}
         </NAvatar>
         <NFlex vertical size={0}>
