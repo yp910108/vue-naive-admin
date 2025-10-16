@@ -12,9 +12,9 @@ import { IconUser, IconVisit, IconDownload, IconApply } from './icons'
 import type { DataItem } from './typings'
 
 const data: DataItem[] = [
-  { title: '用户量', num: 2125, increment: 3, color: '#005ef9', icon: IconUser },
-  { title: '访问量', num: 25210, increment: -2, color: '#19e1da', icon: IconVisit },
-  { title: '下载量', num: 36555, increment: 5, color: '#59c336', icon: IconDownload },
-  { title: '使用量', num: 36555, increment: 5, color: '#fbac33', icon: IconApply }
+  { title: '用户量', num: 2125, increment: 3, color: '#416ff8', icon: IconUser },
+  { title: '访问量', num: 25210, increment: -2, color: '#f57855', icon: IconVisit },
+  { title: '下载量', num: 36555, increment: 5, color: '#21b984', icon: IconDownload },
+  { title: '使用量', num: 36555, increment: 5, color: '#f59d2d', icon: IconApply }
 ]
 </script>

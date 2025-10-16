@@ -1,10 +1,10 @@
 <template>
   <n-flex
-    class="p-[var(--padding)] text-16px hover:bg-[var(--bg-color)] b-rd-[var(--border-radius)] cursor-pointer"
+    class="p-[var(--padding)] text-16px hover:bg-[var(--bg-color-hover)] b-rd-[var(--border-radius)] cursor-pointer"
     :style="{
       '--padding': `${padding}px`,
-      '--border-radius': round ? '50%' : themeVars.borderRadius,
-      '--bg-color': themeVars.buttonColor2Hover
+      '--bg-color-hover': themeVars.buttonColor2Hover,
+      '--border-radius': round ? '50%' : themeVars.borderRadius
     }"
   >
     <slot></slot>
