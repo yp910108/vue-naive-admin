@@ -50,6 +50,7 @@ const options = computed<Option[]>(() => [
   {
     label: '关闭左侧',
     key: 'close-left',
+    disabled: tab.value?.key === routeStore.rootRoute.name,
     icon: () => <IconCloseLeft />,
     action: () => tabStore.clearLeftTabs(tab.value!)
   },
