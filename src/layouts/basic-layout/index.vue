@@ -7,7 +7,7 @@
       class="relative z-2 shrink-0 w-[var(--width)] transition-all-300"
       :style="{
         '--width': siderCollapse
-          ? `${settings.sider.collapsedWidth}px`
+          ? `${settings.sider._collapsedWidth}px`
           : `${settings.sider.width}px`
       }"
     />

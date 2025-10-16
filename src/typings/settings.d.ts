@@ -13,9 +13,9 @@ declare namespace Settings {
      */
     width: number
     /**
-     * 侧边栏折叠时的宽度
+     * 侧边栏折叠时的宽度（设置中不会设置此值，此处放入 settings 是为了方便统一管理）
      */
-    collapsedWidth: number
+    _collapsedWidth: number
     /**
      * logo 高度
      */

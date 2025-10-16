@@ -28,12 +28,6 @@ export const useSettingsStore = defineStore('settings-store', () => {
     }
   }
 
-  const setSiderCollapsedWidth = (siderCollapsedWidth: number | null) => {
-    if (siderCollapsedWidth) {
-      settings.value.sider.collapsedWidth = siderCollapsedWidth
-    }
-  }
-
   const setSiderLogoHeight = (siderLogoHeight: number | null) => {
     if (siderLogoHeight) {
       settings.value.sider.logoHeight = siderLogoHeight
@@ -66,7 +60,6 @@ export const useSettingsStore = defineStore('settings-store', () => {
     setTheme,
     setPrimaryColor,
     setSiderWidth,
-    setSiderCollapsedWidth,
     setSiderLogoHeight,
     setHeaderHeight,
     setTabVisible,

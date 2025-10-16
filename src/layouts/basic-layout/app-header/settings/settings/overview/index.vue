@@ -15,19 +15,6 @@
       />
     </n-flex>
     <n-flex justify="space-between" align="center">
-      <n-text>侧边栏折叠宽度</n-text>
-      <n-input-number
-        :value="settings.sider.collapsedWidth"
-        :min="50"
-        :max="80"
-        :precision="0"
-        :step="1"
-        size="small"
-        class="w-120px"
-        @update:value="settingsStore.setSiderCollapsedWidth"
-      />
-    </n-flex>
-    <n-flex justify="space-between" align="center">
       <n-text>侧边栏 logo 高度</n-text>
       <n-input-number
         :value="settings.sider.logoHeight"

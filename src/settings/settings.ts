@@ -3,7 +3,7 @@ export const defaultSettings: Settings.Settings = {
   primaryColor: 'default',
   sider: {
     width: 220,
-    collapsedWidth: 60,
+    _collapsedWidth: 60,
     logoHeight: 50
   },
   header: {

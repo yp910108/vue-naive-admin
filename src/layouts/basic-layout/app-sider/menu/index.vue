@@ -4,7 +4,7 @@
       :value="active"
       :options="menuStore.menus"
       :collapsed="appStore.siderCollapse"
-      :collapsed-width="settings.sider.collapsedWidth"
+      :collapsed-width="settings.sider._collapsedWidth"
       :collapsed-icon-size="22"
       :expanded-keys="expandedKeys"
       :indent="18"
