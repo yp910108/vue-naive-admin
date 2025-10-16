@@ -8,7 +8,7 @@
   >
     <n-flex vertical>
       <n-text depth="3">{{ title }}</n-text>
-      <n-text class="text-26px">
+      <n-text class="text-28px">
         <n-number-animation :from="0" :to="num" show-separator />
       </n-text>
       <n-flex align="center" :size="8">

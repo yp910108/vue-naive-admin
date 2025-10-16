@@ -8,9 +8,9 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import type { BackendData, DataItem } from './typings'
 import { BoxItem } from './components'
 import { IconUser, IconVisit, IconDownload, IconApply } from './icons'
-import type { BackendData, DataItem } from './typings'
 import { fetchData } from './service'
 
 const data = ref<BackendData>()
