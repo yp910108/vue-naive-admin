@@ -8,7 +8,6 @@
       :collapsed-icon-size="22"
       :expanded-keys="expandedKeys"
       :indent="18"
-      :inverted="settings.sider.inverted"
       @update:value="handleUpdateActive"
       @update:expanded-keys="handleUpdateExpandedKeys"
     />
