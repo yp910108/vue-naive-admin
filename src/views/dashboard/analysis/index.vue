@@ -1,24 +1,9 @@
 <template>
-  <div class="div">
-    <n-flex vertical>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <!-- <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card>
-      <n-card title="卡片"> 卡片内容 </n-card> -->
-    </n-flex>
-  </div>
+  <n-flex vertical>
+    <usage-nums />
+  </n-flex>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import UsageNums from './usage-nums/index.vue'
+</script>
