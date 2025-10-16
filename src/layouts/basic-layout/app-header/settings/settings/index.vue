@@ -6,8 +6,18 @@
       <overview />
       <template #footer>
         <n-flex>
-          <n-button type="primary" @click="handleCopy">复制偏好设置</n-button>
-          <n-button @click="handleReset">重置偏好设置</n-button>
+          <n-button type="primary" @click="handleCopy">
+            <template #icon>
+              <icon-copy class="text-16px" />
+            </template>
+            拷贝设置
+          </n-button>
+          <n-button @click="handleReset">
+            <template #icon>
+              <icon-reset class="text-16px" />
+            </template>
+            重置设置
+          </n-button>
         </n-flex>
       </template>
     </n-drawer-content>
@@ -20,6 +30,7 @@ import { ref } from 'vue'
 import { useClipboard } from '@vueuse/core'
 import { defaultSettings } from '@/settings'
 import { useSettingsStore } from '@/store'
+import { IconCopy, IconReset } from './icons'
 import Appearance from './appearance/index.vue'
 import PrimaryColor from './primary-color/index.vue'
 import Overview from './overview/index.vue'
