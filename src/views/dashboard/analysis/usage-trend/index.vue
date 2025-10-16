@@ -12,9 +12,12 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { Chart, chartColors, type ECOption } from '@/components'
+import { useThemeVars } from 'naive-ui'
+import { Chart, type ECOption } from '@/components'
 import type { DataItem } from './typings'
 import { fetchData } from './service'
+
+const themeVars = useThemeVars()
 
 const option = computed<ECOption>(() => {
   return {
@@ -27,15 +30,11 @@ const option = computed<ECOption>(() => {
     tooltip: {
       trigger: 'axis',
       borderWidth: 0,
-      backgroundColor: 'rgba(2, 11, 27, 0.8)',
+      backgroundColor: themeVars.value.cardColor,
       axisPointer: {
         lineStyle: {
-          type: [8, 5],
-          color: chartColors[0]
+          type: [8, 5]
         }
-      },
-      textStyle: {
-        color: '#fff'
       }
     },
     legend: {
@@ -64,19 +63,6 @@ const option = computed<ECOption>(() => {
         lineStyle: {
           width: 2
         },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: chartColors[0] },
-              { offset: 1, color: '#fff' }
-            ]
-          }
-        },
         data: data.value?.map((item) => item.visitNum)
       },
       {
@@ -86,19 +72,6 @@ const option = computed<ECOption>(() => {
         symbol: 'none',
         lineStyle: {
           width: 2
-        },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: chartColors[1] },
-              { offset: 1, color: '#fff' }
-            ]
-          }
         },
         data: data.value?.map((item) => item.applyNum)
       }
