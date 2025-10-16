@@ -1,9 +1,11 @@
 <template>
   <n-flex vertical>
-    <usage-nums />
+    <usage-num />
+    <usage-trend />
   </n-flex>
 </template>
 
 <script setup lang="ts">
-import UsageNums from './usage-nums/index.vue'
+import UsageNum from './usage-num/index.vue'
+import UsageTrend from './usage-trend/index.vue'
 </script>
