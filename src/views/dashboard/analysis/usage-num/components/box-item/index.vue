@@ -16,7 +16,7 @@
           <n-number-animation :from="0" :to="increment" show-separator />%
           <icon-arrow :class="{ 'rotate-180deg': increment < 0 }" />
         </n-text>
-        <n-text depth="3" class="text-12px">较昨天</n-text>
+        <n-text depth="3" class="mt-2px text-12px">较昨天</n-text>
       </n-flex>
     </n-flex>
     <n-flex

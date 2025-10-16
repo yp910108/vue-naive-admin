@@ -16,6 +16,7 @@ import {
   DataZoomComponent
 } from 'echarts/components'
 import { BarChart, LineChart, PieChart } from 'echarts/charts'
+import { useSettingsStore } from '@/store'
 import type { ECOption } from './typings'
 import { COLORS } from './constants'
 
@@ -47,6 +48,8 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
+const settingsStore = useSettingsStore()
+
 const chartRef = ref<HTMLElement>()
 
 const option = computed(() => ({
@@ -60,7 +63,7 @@ let chart: EChartsType | null
 const init = () => {
   chart?.off()
   chart?.dispose()
-  chart = echarts.init(chartRef.value)
+  chart = echarts.init(chartRef.value, settingsStore.theme === 'dark' ? 'dark' : 'light')
   chart?.setOption(option.value)
 }
 
@@ -73,6 +76,8 @@ useResizeObserver(chartRef, ([entry]) => {
     emit('resize')
   }
 })
+
+watch(() => settingsStore.theme, init)
 
 watch(option, () => {
   chart?.setOption(option.value)
