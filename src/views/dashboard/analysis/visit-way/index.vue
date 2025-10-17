@@ -1,6 +1,6 @@
 <template>
   <n-card
-    title="访问来源统计"
+    title="访问方式统计"
     :bordered="false"
     class="h-395px shadow-[var(--shadow)]"
     :style="{
@@ -20,7 +20,7 @@ import { fetchData } from './service'
 
 const themeVars = useThemeVars()
 
-const option = computed<ECOption>(() => {
+const option = computed(() => {
   return {
     grid: {
       left: 30,

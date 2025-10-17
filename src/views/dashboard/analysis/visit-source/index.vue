@@ -20,7 +20,7 @@ import { fetchData } from './service'
 
 const themeVars = useThemeVars()
 
-const option = computed<ECOption>(() => {
+const option = computed(() => {
   return {
     grid: {
       left: 30,
