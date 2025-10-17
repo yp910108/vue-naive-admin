@@ -1,5 +1,5 @@
 <template>
-  <n-grid :cols="4" :x-gap="12">
+  <n-grid cols="1 520:2 800:3 1080:4" :x-gap="12" :y-gap="12">
     <n-gi v-for="(item, index) of options" :key="index">
       <box-item v-bind="item" />
     </n-gi>

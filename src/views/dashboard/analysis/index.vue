@@ -2,7 +2,7 @@
   <n-flex vertical :size="12">
     <usage-num />
     <usage-trend />
-    <n-grid :cols="3" :x-gap="12">
+    <n-grid cols="1 930:3" :x-gap="12" :y-gap="12">
       <n-gi :span="2">
         <n-flex vertical :size="12">
           <visit-source />
