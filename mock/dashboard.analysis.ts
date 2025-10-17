@@ -148,13 +148,13 @@ const apis: MockMethod[] = [
           {
             name: '林东东',
             avatar: 'https://i.pravatar.cc/300?r=9',
-            time: '2025-10-16 22:26',
+            time: '2025-10-16',
             desc: '推送了代码到 `Github`'
           },
           {
             name: 'admin',
             avatar: 'https://i.pravatar.cc/300?r=10',
-            time: '2025-10-07 09:35',
+            time: '2025-10-09',
             desc: '发表文章 `如何编写使用 Vue Naive Admin？`'
           }
         ]
