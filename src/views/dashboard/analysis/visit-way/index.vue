@@ -22,7 +22,7 @@ const option = computed(() => {
     series: {
       type: 'pie',
       radius: ['40%', '70%'],
-      padAngle: 5,
+      padAngle: 4,
       itemStyle: {
         borderRadius: 10
       },
