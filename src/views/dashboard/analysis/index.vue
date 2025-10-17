@@ -1,23 +1,19 @@
 <template>
-  <n-grid :cols="3" :x-gap="12">
-    <n-gi :span="2">
-      <n-flex vertical>
-        <usage-num />
-        <usage-trend />
-        <n-grid :cols="2" :x-gap="12">
-          <n-gi>
-            <visit-source />
-          </n-gi>
-          <n-gi>
-            <visit-way />
-          </n-gi>
-        </n-grid>
-      </n-flex>
-    </n-gi>
-    <n-gi>
-      <recent-news />
-    </n-gi>
-  </n-grid>
+  <n-flex vertical :size="12">
+    <usage-num />
+    <usage-trend />
+    <n-grid :cols="3" :x-gap="12">
+      <n-gi :span="2">
+        <n-flex vertical :size="12">
+          <visit-source />
+          <visit-way />
+        </n-flex>
+      </n-gi>
+      <n-gi>
+        <recent-news />
+      </n-gi>
+    </n-grid>
+  </n-flex>
 </template>
 
 <script setup lang="ts">
