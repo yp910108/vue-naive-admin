@@ -37,6 +37,7 @@ const apis: MockMethod[] = [
         Mock.mock({
           time: `${index + 1}月`,
           'visitNum|6000-9000': 0,
+          'downloadNum|6000-9000': 0,
           'applyNum|6000-9000': 0
         })
       )
@@ -44,6 +45,7 @@ const apis: MockMethod[] = [
         Mock.mock({
           time: `10/${`${index + 1}`.padStart(2, '0')}`,
           'visitNum|200-300': 0,
+          'downloadNum|200-300': 0,
           'applyNum|200-300': 0
         })
       )
@@ -51,6 +53,39 @@ const apis: MockMethod[] = [
         code: 200,
         message: 'ok',
         data: type === 'month' ? monthList : dayList
+      }
+    }
+  },
+  {
+    url: '/mock/dashboard/analysys/visit-source',
+    method: 'get',
+    response: () => {
+      return {
+        code: 200,
+        message: 'ok',
+        data: Mock.mock({
+          'search|6000-9000': 0,
+          'direct|6000-9000': 0,
+          'email|6000-9000': 0,
+          'adware|6000-9000': 0
+        })
+      }
+    }
+  },
+  {
+    url: '/mock/dashboard/analysys/visit-way',
+    method: 'get',
+    response: () => {
+      return {
+        code: 200,
+        message: 'ok',
+        data: Mock.mock({
+          'web|6000-9000': 0,
+          'app|6000-9000': 0,
+          'pad|6000-9000': 0,
+          'third|6000-9000': 0,
+          'other|6000-9000': 0
+        })
       }
     }
   },

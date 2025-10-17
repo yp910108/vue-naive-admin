@@ -86,6 +86,16 @@ const option = computed<ECOption>(() => {
       },
       {
         type: 'line',
+        name: '下载量',
+        smooth: true,
+        symbol: 'none',
+        lineStyle: {
+          width: 2
+        },
+        data: data.value?.map((item) => item.downloadNum)
+      },
+      {
+        type: 'line',
         name: '使用量',
         smooth: true,
         symbol: 'none',

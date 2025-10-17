@@ -43,14 +43,14 @@ const options = computed<DataItem[]>(() => {
       title: '下载量',
       num: download?.num ?? 0,
       increment: download?.increment ?? 0,
-      color: '#f57855',
+      color: '#f59d2d',
       icon: IconDownload
     },
     {
       title: '使用量',
       num: apply?.num ?? 0,
       increment: apply?.increment ?? 0,
-      color: '#f59d2d',
+      color: '#f57855',
       icon: IconApply
     }
   ]
