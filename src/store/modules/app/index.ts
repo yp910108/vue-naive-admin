@@ -1,10 +1,13 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import type { NScrollbar } from 'naive-ui'
 import { useCacheStore } from '../cache'
 
 export const useAppStore = defineStore('app-store', () => {
-  const cacheStore = useCacheStore()
+  const breakpoints = useBreakpoints(breakpointsTailwind)
+
+  const isMobile = breakpoints.smaller('sm')
 
   const siderCollapse = ref(false)
 
@@ -38,6 +41,8 @@ export const useAppStore = defineStore('app-store', () => {
     scrollRef.value?.scrollTo(position)
   }
 
+  const cacheStore = useCacheStore()
+
   /**
    * 重载页面（控制页面的显示）
    */
@@ -53,10 +58,11 @@ export const useAppStore = defineStore('app-store', () => {
   }
 
   return {
-    scrollRef,
+    isMobile,
     siderCollapse,
     setSiderCollapse,
     toggleSiderCollapse,
+    scrollRef,
     getScrollInfo,
     scrollTo,
     reloadFlag,
