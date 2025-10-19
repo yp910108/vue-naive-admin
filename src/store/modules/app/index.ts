@@ -7,7 +7,7 @@ import { useCacheStore } from '../cache'
 export const useAppStore = defineStore('app-store', () => {
   const breakpoints = useBreakpoints(breakpointsTailwind)
 
-  const isMobile = breakpoints.smaller('sm')
+  const isSmallScreen = breakpoints.smaller('md')
 
   const siderCollapse = ref(false)
 
@@ -58,7 +58,7 @@ export const useAppStore = defineStore('app-store', () => {
   }
 
   return {
-    isMobile,
+    isSmallScreen,
     siderCollapse,
     setSiderCollapse,
     toggleSiderCollapse,

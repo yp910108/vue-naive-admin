@@ -5,7 +5,7 @@
     :segmented="{ footer: 'soft' }"
     :closable="false"
     :footer-style="{ padding: 0, margin: 0 }"
-    class="fixed left-0 top-50px right-0 w-650px"
+    class="fixed left-0 top-50px right-0 max-w-80% w-650px"
     @after-leave="handeAfterLeave"
   >
     <n-input v-model:value="keyword" clearable placeholder="请输入关键词搜索" @input="handleSearch">

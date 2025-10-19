@@ -6,10 +6,10 @@ import { SIDER_COLLAPSED_WIDTH } from './constants'
 export const useSider = () => {
   const appStore = useAppStore()
 
-  const { isMobile, siderCollapse } = storeToRefs(appStore)
+  const { isSmallScreen, siderCollapse } = storeToRefs(appStore)
 
   watch(
-    isMobile,
+    isSmallScreen,
     (newVal) => {
       if (newVal) {
         appStore.setSiderCollapse(true)
@@ -22,7 +22,7 @@ export const useSider = () => {
 
   const { settings } = storeToRefs(useSettingsStore())
 
-  const showMask = computed(() => isMobile.value && !siderCollapse.value)
+  const showMask = computed(() => isSmallScreen.value && !siderCollapse.value)
 
   const handleMaskClick = () => {
     appStore.setSiderCollapse(true)
@@ -31,14 +31,14 @@ export const useSider = () => {
   const maskCls = 'absolute z-2 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.2)] cursor-pointer'
 
   const siderWidth = computed(() =>
-    isMobile.value || !siderCollapse.value
+    isSmallScreen.value || !siderCollapse.value
       ? `${settings.value.sider.width}px`
       : `${SIDER_COLLAPSED_WIDTH}px`
   )
 
   const siderClass = computed(() => {
     const cls = ['z-2 shrink-0 w-[var(--width)] transition-all-300']
-    if (isMobile.value) {
+    if (isSmallScreen.value) {
       cls.push('absolute h-full')
       if (siderCollapse.value) {
         cls.push('translate-x--100%')

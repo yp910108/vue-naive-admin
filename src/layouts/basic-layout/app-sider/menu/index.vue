@@ -3,7 +3,7 @@
     <n-menu
       :value="active"
       :options="menuStore.menus"
-      :collapsed="!appStore.isMobile && appStore.siderCollapse"
+      :collapsed="!appStore.isSmallScreen && appStore.siderCollapse"
       :collapsed-width="SIDER_COLLAPSED_WIDTH"
       :collapsed-icon-size="22"
       :expanded-keys="expandedKeys"
