@@ -56,18 +56,18 @@ const routeModel: Route.RouteData[] = [
   },
   {
     title: 'Tab 页签',
-    path: 'tab',
-    icon: 'tab',
+    path: 'tabs',
+    icon: 'tabs',
     children: [
       {
         title: '静态页签',
         path: 'static',
-        icon: 'tab'
+        icon: 'tabs'
       },
       {
         title: '动态页签',
         path: 'dynamic',
-        icon: 'tab'
+        icon: 'tabs'
       }
     ]
   },
