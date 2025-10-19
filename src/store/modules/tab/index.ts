@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { useRoute, useRouter, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { localStg } from '@/utils'
 import { useSettingsStore } from '../settings'
@@ -11,7 +11,7 @@ export const useTabStore = defineStore('tab-store', () => {
 
   const router = useRouter()
 
-  const settingsStore = useSettingsStore()
+  const { settings } = storeToRefs(useSettingsStore())
 
   const routeStore = useRouteStore()
 
@@ -90,7 +90,7 @@ export const useTabStore = defineStore('tab-store', () => {
   const init = () => {
     const rootTab = generateTabByRoute(routeStore.rootRoute)
     const currentTab = generateTabByRoute(route)
-    if (settingsStore.settings.tab.isCache) {
+    if (settings.value.tab.isCache) {
       const _tabs = localStg.get('tabs') ?? []
       if (!hasTab(_tabs, rootTab)) {
         _tabs.unshift(rootTab)

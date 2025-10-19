@@ -10,6 +10,10 @@ export const useSettingsStore = defineStore('settings-store', () => {
 
   const settings = ref(localStg.get('settings') ?? cloneDeep(defaultSettings))
 
+  const setSettings = (_settings: Settings.Settings) => {
+    settings.value = _settings
+  }
+
   const theme = computed(() =>
     settings.value.theme === 'os' ? osTheme.value! : settings.value.theme
   )
@@ -56,6 +60,7 @@ export const useSettingsStore = defineStore('settings-store', () => {
 
   return {
     settings,
+    setSettings,
     theme,
     setTheme,
     setPrimaryColor,

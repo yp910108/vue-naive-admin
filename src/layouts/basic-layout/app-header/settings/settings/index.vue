@@ -27,6 +27,7 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useClipboard } from '@vueuse/core'
 import { defaultSettings } from '@/settings'
 import { useSettingsStore } from '@/store'
@@ -39,16 +40,18 @@ const { copy, isSupported } = useClipboard()
 
 const settingsStore = useSettingsStore()
 
+const { settings } = storeToRefs(settingsStore)
+
 const handleCopy = async () => {
   if (!isSupported) {
     return window.$message.error('您的浏览器不支持 Clipboard API')
   }
-  await copy(JSON.stringify(settingsStore.settings, null, '\t'))
+  await copy(JSON.stringify(settings.value, null, '\t'))
   window.$message.success('复制成功，请在 app 下的 `src/settings/settings.ts` 内进行覆盖')
 }
 
 const handleReset = () => {
-  settingsStore.settings = cloneDeep(defaultSettings)
+  settingsStore.setSettings(cloneDeep(defaultSettings))
 }
 
 const visible = ref(false)

@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
 import { computed, onUnmounted, ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useResizeObserver } from '@vueuse/core'
 import * as echarts from 'echarts/core'
 import type { ECElementEvent, EChartsType } from 'echarts/core'
@@ -48,7 +49,7 @@ interface Emits {
 
 const emit = defineEmits<Emits>()
 
-const settingsStore = useSettingsStore()
+const { theme } = storeToRefs(useSettingsStore())
 
 const chartRef = ref<HTMLElement>()
 
@@ -63,7 +64,7 @@ let chart: EChartsType | null
 const init = () => {
   chart?.off()
   chart?.dispose()
-  chart = echarts.init(chartRef.value, settingsStore.theme === 'dark' ? 'dark' : 'light')
+  chart = echarts.init(chartRef.value, theme.value === 'dark' ? 'dark' : 'light')
   chart?.setOption(option.value)
 }
 
@@ -77,7 +78,7 @@ useResizeObserver(chartRef, ([entry]) => {
   }
 })
 
-watch(() => settingsStore.theme, init)
+watch(theme, init)
 
 watch(option, () => {
   chart?.setOption(option.value)

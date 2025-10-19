@@ -1,7 +1,7 @@
 <template>
   <n-popselect
     trigger="click"
-    :value="settingsStore.settings.theme"
+    :value="settings.theme"
     :options="options"
     :render-label="renderLabel"
     @update:value="handleUpdateTheme"
@@ -14,6 +14,7 @@
 
 <script setup lang="tsx">
 import { computed, useAttrs, type Component, type DefineComponent, type VNodeChild } from 'vue'
+import { storeToRefs } from 'pinia'
 import { NFlex, type SelectOption } from 'naive-ui'
 import { useSettingsStore } from '@/store'
 import { IconWrap } from '@/components'
@@ -25,15 +26,15 @@ const attrs = useAttrs()
 
 const settingsStore = useSettingsStore()
 
+const { settings } = storeToRefs(settingsStore)
+
 const options: { value: Settings.Theme; label: string; icon: Component }[] = [
   { value: 'os', label: '跟随系统', icon: IconFollowSystem },
   { value: 'light', label: '亮色主题', icon: IconLight },
   { value: 'dark', label: '暗色主题', icon: IconDark }
 ]
 
-const Icon = computed(
-  () => options.find((item) => item.value === settingsStore.settings.theme)?.icon
-)
+const Icon = computed(() => options.find((item) => item.value === settings.value.theme)?.icon)
 
 const renderLabel = (option: SelectOption & { icon: DefineComponent }): VNodeChild => {
   return (
