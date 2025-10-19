@@ -3,14 +3,8 @@
     class="flex h-full bg-[var(--bg-color)] transition-all"
     :style="{ '--bg-color': theme === 'dark' ? themeVars.bodyColor : '#f6f9f8' }"
   >
-    <app-sider
-      class="relative z-2 shrink-0 w-[var(--width)] transition-all-300"
-      :style="{
-        '--width': siderCollapse
-          ? `${settings.sider._collapsedWidth}px`
-          : `${settings.sider.width}px`
-      }"
-    />
+    <div v-if="showMask" :class="maskCls" @click="handleMaskClick"></div>
+    <app-sider :class="siderClass" :style="{ '--width': siderWidth }" />
     <div class="relative z-1 flex-col grow-1 w-0">
       <app-header
         class="relative z-2 shrink-0 h[var(--height)]"
@@ -33,12 +27,15 @@ import { AppContent } from '../components'
 import AppSider from './app-sider/index.vue'
 import AppHeader from './app-header/index.vue'
 import AppTab from './app-tab/index.vue'
+import { useSider } from './hooks'
 
 const themeVars = useThemeVars()
 
-const { scrollRef, siderCollapse } = storeToRefs(useAppStore())
+const { scrollRef } = storeToRefs(useAppStore())
 
 const { settings, theme } = storeToRefs(useSettingsStore())
+
+const { showMask, maskCls, handleMaskClick, siderWidth, siderClass } = useSider()
 </script>
 
 <style lang="scss" scoped>

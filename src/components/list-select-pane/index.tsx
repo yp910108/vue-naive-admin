@@ -113,12 +113,8 @@ const ListSelectPane = defineComponent({
       get: () => {
         return multiple.value ? checkedRows.value : checkedRows.value[0]
       },
-      set: (newChecked) => {
-        checkedRows.value = newChecked
-          ? Array.isArray(newChecked)
-            ? newChecked
-            : [newChecked]
-          : []
+      set: (checked) => {
+        checkedRows.value = checked ? (Array.isArray(checked) ? checked : [checked]) : []
       }
     })
 

@@ -42,9 +42,9 @@ export const useScroll = () => {
 
   watch(
     () => tabStore.activeTab,
-    (newActionTab) => {
+    (newVal) => {
       nextTick(() => {
-        const activeTabIndex = tabStore.tabs.findIndex(({ key }) => key === newActionTab?.key)
+        const activeTabIndex = tabStore.tabs.findIndex(({ key }) => key === newVal?.key)
         if (tabRefs.length) {
           const activeEl = tabRefs[activeTabIndex]
           const activeWidth = activeEl.offsetWidth

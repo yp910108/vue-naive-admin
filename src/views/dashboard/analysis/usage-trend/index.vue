@@ -117,8 +117,8 @@ const setData = async () => {
   data.value = res
 }
 
-const handleUpdateType = (newType: Type) => {
-  type.value = newType
+const handleUpdateType = (newVal: Type) => {
+  type.value = newVal
   data.value = undefined
   setData()
 }

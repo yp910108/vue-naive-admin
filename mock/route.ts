@@ -110,7 +110,7 @@ const routeModel: Route.RouteData[] = [
           },
           {
             title: '二级菜单（有子菜单）',
-            path: 'second-new',
+            path: 'second-2',
             icon: 'menu',
             children: [
               {

@@ -75,7 +75,7 @@ const handleItemClick = (value: string) => {
   settingsStore.setPrimaryColor(value)
 }
 
-const handleUpdateColor = (newColor: string) => {
-  settingsStore.setPrimaryColor(newColor)
+const handleUpdateColor = (newVal: string) => {
+  settingsStore.setPrimaryColor(newVal)
 }
 </script>

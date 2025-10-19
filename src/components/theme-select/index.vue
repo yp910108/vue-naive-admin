@@ -43,7 +43,7 @@ const renderLabel = (option: SelectOption & { icon: DefineComponent }): VNodeChi
   )
 }
 
-const handleUpdateTheme = (newTheme: Settings.Theme) => {
-  settingsStore.setTheme(newTheme)
+const handleUpdateTheme = (newVal: Settings.Theme) => {
+  settingsStore.setTheme(newVal)
 }
 </script>
