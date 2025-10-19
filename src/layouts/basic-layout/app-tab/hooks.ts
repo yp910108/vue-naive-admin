@@ -16,7 +16,7 @@ export const useCssVars = () => {
     '--tab-height': `${settings.value.tab.height}px`,
     '--border-radius': '6px',
     '--bg-color-hover': themeVars.value.buttonColor2Hover,
-    '--bg-color-active': changeColor(themeVars.value.primaryColor, { alpha: 0.15 }),
+    '--bg-color-active': changeColor(themeVars.value.primaryColor, { alpha: 0.1 }),
     '--text-color-hover': themeVars.value.primaryColor,
     '--text-color-active': themeVars.value.primaryColor,
     '--close-bg-color-hover':

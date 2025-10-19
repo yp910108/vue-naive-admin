@@ -1,20 +1,24 @@
 <template>
   <div class="relative flex-center h-full">
-    <n-flex align="center" class="absolute left-26px top-26px">
-      <img :src="ImgLogo" class="w-42px" />
-      <span class="font-bold text-20px">{{ appName }}</span>
-    </n-flex>
     <theme-select class="absolute right-26px top-26px" />
-    <n-flex vertical>
-      <n-h1 :style="{ '--n-margin': 0 }">欢迎回来 👋🏻</n-h1>
-      <n-text depth="3">请输入您的帐户信息以开始管理您的项目</n-text>
+    <theme-wrap
+      class="flex-col px-32px py-50px b-rd-[var(--border-rdaius)] shadow-[var(--shadow)]"
+      :style="{
+        '--border-rdaius': themeVars.borderRadius,
+        '--shadow': themeVars.boxShadow1
+      }"
+    >
+      <n-flex justify="center" align="center">
+        <img :src="ImgLogo" class="w-42px" />
+        <span class="font-bold text-20px">{{ appName }}</span>
+      </n-flex>
       <n-form
         ref="formRef"
         :model="model"
         :rules="rules"
         size="large"
         :show-label="false"
-        class="mt-30px w-400px"
+        class="mt-30px w-300px"
       >
         <n-form-item path="userName">
           <n-input v-model:value="model.userName" placeholder="请输入用户名" />
@@ -42,18 +46,20 @@
       >
         确 定
       </n-button>
-    </n-flex>
+    </theme-wrap>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { type FormInst, type FormRules } from 'naive-ui'
+import { useThemeVars, type FormInst, type FormRules } from 'naive-ui'
 import { ImgLogo } from '@/assets'
 import { useAuthStore } from '@/store'
-import { ThemeSelect } from '@/components'
+import { ThemeSelect, ThemeWrap } from '@/components'
 
 const appName = import.meta.env.VITE_APP_NAME
+
+const themeVars = useThemeVars()
 
 const formRef = ref<FormInst>()
 
