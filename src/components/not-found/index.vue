@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex-col-center min-h-520px size-full overflow-hidden"
+    class="flex-col-center gap-50px min-h-520px size-full overflow-hidden"
     :style="{ '--primary-color': themeVars.primaryColor }"
   >
     <div class="flex text-450px text-[var(--primary-color)]">
