@@ -1,7 +1,7 @@
 <template>
-  <exception-base type="404" />
+  <not-found />
 </template>
 
 <script setup lang="ts">
-import { ExceptionBase } from '@/components'
+import { NotFound } from '@/components'
 </script>

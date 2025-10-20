@@ -1,6 +1,4 @@
-interface SessionStorage {
-  settings?: Settings.Settings
-}
+interface SessionStorage {}
 
 const createSessionStorage = <T extends SessionStorage>() => {
   const set = <K extends keyof T>(key: K, value: T[K]) => {

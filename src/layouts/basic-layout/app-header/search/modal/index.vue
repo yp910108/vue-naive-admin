@@ -2,39 +2,23 @@
   <n-modal
     v-model:show="visible"
     preset="card"
-    footer-style="padding: 0; margin: 0"
     :segmented="{ footer: 'soft' }"
     :closable="false"
-    :class="[
-      'fixed left-0 right-0',
-      isMobile ? 'w-full h-full top-0px rounded-0' : 'w-630px top-50px'
-    ]"
+    :footer-style="{ padding: 0, margin: 0 }"
+    class="fixed left-0 top-50px right-0 max-w-80% w-650px"
     @after-leave="handeAfterLeave"
   >
-    <n-input-group>
-      <n-input
-        v-model:value="keyword"
-        clearable
-        :placeholder="$translate('layout.header.search.modal.keywordPlaceholder')"
-        @input="handleSearch"
-      >
-        <template #prefix>
-          <icon-search class="text-15px text-#c2c2c2" />
-        </template>
-      </n-input>
-      <n-button v-if="isMobile" type="primary" ghost @click="hide">
-        {{ $translate('layout.header.search.modal.cancelButton') }}
-      </n-button>
-    </n-input-group>
+    <n-input v-model:value="keyword" clearable placeholder="请输入关键词搜索" @input="handleSearch">
+      <template #prefix>
+        <icon-search class="text-15px text-#c2c2c2" />
+      </template>
+    </n-input>
     <div class="mt-20px">
-      <n-empty
-        v-if="!resultOptions?.length"
-        :description="$translate('layout.header.search.modal.empty')"
-      />
+      <n-empty v-if="!resultOptions?.length" description="暂无搜索结果" />
       <result v-else v-model:value="activeKey" :options="resultOptions" @enter="handleEnter" />
     </div>
     <template #footer>
-      <search-footer v-if="!isMobile" />
+      <search-footer />
     </template>
   </n-modal>
 </template>
@@ -43,10 +27,8 @@
 import { ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { onKeyStroke, useDebounceFn } from '@vueuse/core'
-import { $translate } from '@/locales'
 import { isExternal } from '@/utils'
 import { useMenuStore } from '@/store'
-import { useMobile } from '../../../hooks'
 import { IconSearch } from '../icons'
 import Result from './result/index.vue'
 import SearchFooter from './footer/index.vue'
@@ -55,12 +37,10 @@ const router = useRouter()
 
 const menuStore = useMenuStore()
 
-const { isMobile } = useMobile()
-
-const visible = ref(false)
-
 const keyword = ref<string | null>()
+
 const activeKey = ref<string>()
+
 const resultOptions = shallowRef<Menu.SearchMenuOption[]>()
 
 const search = () => {
@@ -101,11 +81,6 @@ const handleDown = () => {
   }
 }
 
-const handeAfterLeave = () => {
-  keyword.value = null
-  resultOptions.value = undefined
-}
-
 const handleEnter = () => {
   if (!resultOptions.value?.length || !activeKey.value) return
   const { key, routePath } = resultOptions.value.find((item) => item.key === activeKey.value)!
@@ -122,6 +97,13 @@ onKeyStroke('ArrowUp', handleUp)
 onKeyStroke('ArrowDown', handleDown)
 
 onKeyStroke('Enter', handleEnter)
+
+const handeAfterLeave = () => {
+  keyword.value = null
+  resultOptions.value = undefined
+}
+
+const visible = ref(false)
 
 const show = () => {
   visible.value = true

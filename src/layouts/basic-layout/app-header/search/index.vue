@@ -1,29 +1,19 @@
 <template>
-  <hover-container
-    class="w-40px h-full"
-    :tooltip-content="$translate('layout.header.search.tooltip')"
-    :inverted="theme.header.inverted"
-    @click="handleSearch"
-  >
-    <icon-search class="text-20px" />
+  <icon-wrap round @click="handleShowSearch">
+    <icon-search />
     <modal ref="modalRef" />
-  </hover-container>
+  </icon-wrap>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { $translate } from '@/locales'
-import { useThemeStore } from '@/store'
-import { HoverContainer } from '@/components'
+import { IconWrap } from '@/components'
 import { IconSearch } from './icons'
 import Modal from './modal/index.vue'
 
-const { theme } = storeToRefs(useThemeStore())
-
 const modalRef = ref<InstanceType<typeof Modal>>()
 
-const handleSearch = () => {
+const handleShowSearch = () => {
   modalRef.value?.show()
 }
 </script>

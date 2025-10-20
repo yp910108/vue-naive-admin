@@ -1,24 +1,22 @@
 <template>
-  <vertical-mix-sider v-if="isVerticalMix" class="app-sider" />
-  <vertical-sider v-else class="app-sider" />
+  <theme-wrap class="flex-col shadow-[var(--shadow)]" :style="{ '--shadow': themeVars.boxShadow1 }">
+    <app-logo
+      class="flex-shrink-0 h-[var(--height)]"
+      :style="{ '--height': `${settings.sider.logoHeight}px` }"
+    />
+    <app-menu class="grow-1 h-0" />
+  </theme-wrap>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useThemeStore } from '@/store'
-import VerticalSider from './vertical-sider/index.vue'
-import VerticalMixSider from './vertical-mix-sider/index.vue'
+import { useThemeVars } from 'naive-ui'
+import { useSettingsStore } from '@/store'
+import { ThemeWrap } from '@/components'
+import AppLogo from './logo.vue'
+import AppMenu from './menu/index.vue'
 
-defineOptions({ name: 'AppSider' })
+const themeVars = useThemeVars()
 
-const { theme } = storeToRefs(useThemeStore())
-
-const isVerticalMix = computed(() => theme.value.layout.mode === 'vertical-mix')
+const { settings } = storeToRefs(useSettingsStore())
 </script>
-
-<style scoped lang="scss">
-.app-sider {
-  box-shadow: 2px 0 8px 0 rgb(29 35 41 / 5%);
-}
-</style>

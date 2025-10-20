@@ -1,10 +1,6 @@
 import { mockRequest } from '@/utils'
 import type { BackendModel, FetchListParams, Row } from './typings'
 
-export const fetchUserList = (params: FetchListParams) => {
-  return mockRequest.get<{ total?: number; list?: Row[] }>('/list/table-users', { params })
-}
-
 export const fetchList = (params: FetchListParams) => {
   return mockRequest.get<{ total?: number; list?: Row[] }>('/list/table', { params })
 }

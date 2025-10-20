@@ -14,9 +14,6 @@ importers:
       axios:
         specifier: 1.12.2
         version: 1.12.2
-      colord:
-        specifier: 2.9.3
-        version: 2.9.3
       echarts:
         specifier: 6.0.0
         version: 6.0.0
@@ -35,6 +32,9 @@ importers:
       qs:
         specifier: 6.14.0
         version: 6.14.0
+      seemly:
+        specifier: 0.3.10
+        version: 0.3.10
       sortablejs:
         specifier: 1.15.6
         version: 1.15.6
@@ -48,10 +48,10 @@ importers:
         specifier: 3.5.21
         version: 3.5.21(typescript@5.8.3)
       vue-i18n:
-        specifier: ^11.1.12
+        specifier: 11.1.12
         version: 11.1.12(vue@3.5.21(typescript@5.8.3))
       vue-router:
-        specifier: ^4.5.1
+        specifier: 4.5.1
         version: 4.5.1(vue@3.5.21(typescript@5.8.3))
       vueuc:
         specifier: 0.4.65
@@ -1235,9 +1235,6 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
-
-  colord@2.9.3:
-    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
@@ -3870,8 +3867,6 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
-
-  colord@2.9.3: {}
 
   colorette@2.0.20: {}
 

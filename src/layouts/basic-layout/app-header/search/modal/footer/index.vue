@@ -1,23 +1,22 @@
 <template>
-  <div class="flex items-center px-24px h-44px">
-    <span class="flex items-center mr-14px">
+  <div class="flex-y-center px-24px h-44px">
+    <span class="flex-y-center mr-14px">
       <icon-return class="icon text-20px p-2px mr-6px" />
-      <span>{{ $translate('layout.header.search.modal.action.return') }}</span>
+      <span>确认</span>
     </span>
-    <span class="flex items-center mr-14px">
+    <span class="flex-y-center mr-14px">
       <icon-up class="icon text-20px p-2px mr-5px" />
       <icon-down class="icon text-20px p-2px mr-6px" />
-      <span>{{ $translate('layout.header.search.modal.action.arrow') }}</span>
+      <span>切换</span>
     </span>
-    <span class="flex items-center">
+    <span class="flex-y-center">
       <icon-esc class="icon text-20px p-2px mr-6px" />
-      <span>{{ $translate('layout.header.search.modal.action.esc') }}</span>
+      <span>关闭</span>
     </span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { $translate } from '@/locales'
 import { IconUp, IconDown, IconReturn, IconEsc } from './icons'
 </script>
 

@@ -1,9 +1,9 @@
-import subscribeAppStore from './app'
-import subscribeThemeStore from './theme'
-import subscribeTabStore from './tab'
+import { subscribeSettingsStore } from './settings'
+import { subscribeTabStore } from './tab'
+import { subscribeCacheStore } from './cache'
 
 export const subscribeStore = () => {
-  subscribeAppStore()
-  subscribeThemeStore()
+  subscribeSettingsStore()
   subscribeTabStore()
+  subscribeCacheStore()
 }

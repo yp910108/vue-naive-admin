@@ -1,39 +1,50 @@
 <template>
-  <div
-    class="fixed left-0 top-0 flex flex-col justify-center items-center w-full h-full"
-    :style="{ '--primary-color': primaryColor }"
+  <n-config-provider
+    abstract
+    inline-theme-disabled
+    :theme="naiveTheme"
+    :theme-overrides="naiveThemeOverrides"
   >
-    <icon-logo icon="logo" class="text-128px text-[var(--primary-color)]" />
-    <div class="w-56px h-56px my-36px">
-      <div class="relative h-full animate-spin">
-        <div
-          v-for="(item, index) in loadingClses"
-          :key="index"
-          :class="[
-            'absolute w-16px h-16px rounded-8px bg-[var(--primary-color)] animate-pulse',
-            item
-          ]"
-        ></div>
-      </div>
+    <n-global-style />
+    <div class="fixed left-0 top-0 flex-col-center size-full">
+      <img :src="ImgLogo" class="w-128px h-128px" />
+      <n-h1 class="system-title">{{ appName }}</n-h1>
     </div>
-    <h2 class="font-500 text-28px text-#646464">
-      {{ $translate('system.title') }}
-    </h2>
-  </div>
+  </n-config-provider>
 </template>
 
 <script setup lang="ts">
-import { settings } from '@/settings'
-import { $translate } from '@/locales'
-import { sessionStg } from '@/utils'
-import { IconLogo } from './icons'
+import { storeToRefs } from 'pinia'
+import { ImgLogo } from '@/assets'
+import { useThemeStore } from '@/store'
 
-const loadingClses = [
-  'left-0 top-0',
-  'left-0 bottom-0 animate-delay-500',
-  'right-0 top-0 animate-delay-1000',
-  'right-0 bottom-0 animate-delay-1500'
-]
+const appName = import.meta.env.VITE_APP_NAME
 
-const primaryColor = (sessionStg.get('settings') ?? settings).primaryColor
+const { naiveTheme, naiveThemeOverrides } = storeToRefs(useThemeStore())
 </script>
+
+<style lang="scss" scoped>
+@-webkit-keyframes shine {
+  0% {
+    color: rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+@keyframes shine {
+  0% {
+    color: rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+.system-title {
+  background: linear-gradient(90deg, #c550d3, #57d1da, #a1dad1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine 1s linear infinite alternate;
+  -webkit-animation: shine 1s linear infinite alternate;
+}
+</style>

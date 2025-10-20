@@ -1,92 +1,99 @@
 <template>
-  <div
-    class="relative flex justify-center items-center w-full h-full"
-    :style="{ '--primary-color': themeVars.primaryColor, backgroundColor: bgColor }"
-  >
-    <dark-mode-switch
-      class="absolute left-48px top-24px z-3"
-      :dark="theme.darkMode"
-      @update:dark="setDarkMode"
-    />
-    <lang-select container-class="absolute right-37px top-13px z-3" />
-    <n-card :bordered="false" size="large" class="z-4 !w-auto rounded-20px shadow-sm">
-      <div class="w-300px sm:w-360px">
-        <header class="flex justify-between items-center">
-          <icon-logo class="text-64px text-[var(--primary-color)]" />
-          <n-gradient-text type="primary" :size="28">
-            {{ $translate('system.title') }}
-          </n-gradient-text>
-        </header>
-        <main class="pt-24px">
-          <h3 class="text-18px text-primary font-medium">
-            {{ $translate(activeType.label) }}
-          </h3>
-          <div class="pt-24px">
-            <transition name="fade-slide" mode="out-in" appear>
-              <component :is="activeType.component" />
-            </transition>
-          </div>
-        </main>
-      </div>
-    </n-card>
-    <login-bg :theme-color="bgThemeColor" />
+  <div class="relative flex-center h-full">
+    <theme-select class="absolute right-26px top-26px" />
+    <theme-wrap
+      class="flex-col px-32px py-50px b-rd-[var(--border-rdaius)] shadow-[var(--shadow)]"
+      :style="{
+        '--border-rdaius': themeVars.borderRadius,
+        '--shadow': themeVars.boxShadow1
+      }"
+    >
+      <n-flex justify="center" align="center">
+        <img :src="ImgLogo" class="w-42px" />
+        <span class="font-bold text-20px">{{ appName }}</span>
+      </n-flex>
+      <n-form
+        ref="formRef"
+        :model="model"
+        :rules="rules"
+        size="large"
+        :show-label="false"
+        class="mt-30px w-300px"
+      >
+        <n-form-item path="userName">
+          <n-input v-model:value="model.userName" placeholder="请输入用户名" />
+        </n-form-item>
+        <n-form-item path="password">
+          <n-input
+            v-model:value="model.password"
+            type="password"
+            show-password-on="click"
+            placeholder="请输入密码"
+          />
+        </n-form-item>
+      </n-form>
+      <n-flex justify="space-between">
+        <n-checkbox>记住账号</n-checkbox>
+        <n-button text>忘记密码？</n-button>
+      </n-flex>
+      <n-button
+        type="primary"
+        size="large"
+        block
+        :loading="loading"
+        class="mt-26px"
+        @click="handleLogin"
+      >
+        确 定
+      </n-button>
+    </theme-wrap>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, type Component } from 'vue'
-import { useRoute } from 'vue-router'
-import { useThemeVars } from 'naive-ui'
-import { $translate } from '@/locales'
-import { getColorPalette, mixColor } from '@/utils'
-import { useThemeStore } from '@/store'
-import { DarkModeSwitch, LangSelect } from '@/components'
-import type { LoginModule } from './typings'
-import { IconLogo } from './icons'
-import LoginBg from './login-bg/index.vue'
-import PwdLogin from './pwd-login/index.vue'
-import CodeLogin from './code-login/index.vue'
-import BindWechat from './bind-wechat/index.vue'
-import ResetPwd from './reset-pwd/index.vue'
-import Register from './register/index.vue'
+import { ref } from 'vue'
+import { useThemeVars, type FormInst, type FormRules } from 'naive-ui'
+import { ImgLogo } from '@/assets'
+import { useAuthStore } from '@/store'
+import { ThemeSelect, ThemeWrap } from '@/components'
+
+const appName = import.meta.env.VITE_APP_NAME
 
 const themeVars = useThemeVars()
 
-const route = useRoute()
+const formRef = ref<FormInst>()
 
-const { theme, setDarkMode } = useThemeStore()
-
-const bgThemeColor = computed(() =>
-  theme.darkMode ? getColorPalette(theme.primaryColor, 7) : theme.primaryColor
-)
-
-const bgColor = computed(() => {
-  const COLOR_WHITE = '#fff'
-  const ratio = theme.darkMode ? 0.5 : 0.2
-  return mixColor(COLOR_WHITE, theme.primaryColor, ratio)
+const model = ref({
+  userName: 'admin',
+  password: '123456'
 })
 
-interface LoginType {
-  key: LoginModule
-  label: string
-  component: Component
+const rules: FormRules = {
+  userName: {
+    required: true,
+    message: '请输入用户名',
+    trigger: 'input'
+  },
+  password: {
+    required: true,
+    message: '请输入密码',
+    trigger: 'input'
+  }
 }
 
-const types: LoginType[] = [
-  { key: 'pwd-login', label: 'login.pwdLogin.title', component: PwdLogin },
-  { key: 'code-login', label: 'login.codeLogin.title', component: CodeLogin },
-  { key: 'register', label: 'login.register.title', component: Register },
-  { key: 'reset-pwd', label: 'login.resetPwd.title', component: ResetPwd },
-  {
-    key: 'bind-wechat',
-    label: 'login.bindWeChat.title',
-    component: BindWechat
-  }
-]
+const loading = ref(false)
 
-const activeType = computed(() => {
-  const { module } = route.params
-  const active = types.find((item) => item.key === module)
-  return active ?? types[0]
-})
+const authStore = useAuthStore()
+
+const handleLogin = async () => {
+  try {
+    await formRef.value?.validate()
+    const { userName, password } = model.value
+    loading.value = true
+    authStore.login(userName, password)
+    loading.value = false
+  } catch (e) {
+    loading.value = false
+  }
+}
 </script>

@@ -51,12 +51,7 @@
             />
           </n-form-item-gi>
           <n-form-item-gi label="上级领导" path="leader">
-            <list-select
-              v-model:value="model.leader"
-              title="选择人员"
-              :columns="leaderColumns"
-              :request="leaderMethodRequest"
-            />
+            <user-select v-model:value="model.leader" />
           </n-form-item-gi>
           <n-form-item-gi :span="2" label="备注" path="remark">
             <n-input v-model:value="model.remark" type="textarea" clearable :maxlength="2000" />
@@ -76,78 +71,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 import { NInputNumber, type FormInst, type FormRules } from 'naive-ui'
-import { removeInvalidValues, transformOptionToValueLabel } from '@/utils'
+import { removeInvalidValues } from '@/utils'
 import { useDict } from '@/hooks'
-import { ListSelect, type ProTableColumn, type ProTableRequestParams } from '@/components'
-import type { BackendModel, FetchListParams, Model, Row } from './typings'
+import { UserSelect } from '@/components'
+import type { BackendModel, Model, Row } from './typings'
 import { addressOptions, deptOptions } from './constants'
-import { fetchUserList, fetchDetail, add, edit } from './service'
+import { fetchDetail, add, edit } from './service'
 
-interface Emits {
-  (e: 'refresh'): void
-}
-
-const emit = defineEmits<Emits>()
+const emit = defineEmits<{ (e: 'refresh'): void }>()
 
 const sexDict = useDict('sex')
 
-const sexValueLabel = computed(() => transformOptionToValueLabel(sexDict.value))
-
 const politicsDict = useDict('politics')
-
-const leaderColumns = ref<ProTableColumn<Row>[]>([
-  { type: 'selection', multiple: false },
-  {
-    key: 'name',
-    title: '用户姓名',
-    width: 100
-  },
-  {
-    key: 'sex',
-    title: '用户性别',
-    width: 100,
-    searchType: 'select',
-    searchOptions: () => sexDict.value,
-    render: (row) => sexValueLabel.value?.[row.sex!]
-  },
-  {
-    key: 'age',
-    title: '年龄',
-    width: 80,
-    renderSearchField: (params, key) =>
-      h(NInputNumber, {
-        value: params[key],
-        clearable: true,
-        min: 1,
-        max: 100,
-        precision: 0,
-        onUpdateValue: (newVal) => (params[key] = newVal)
-      })
-  },
-  {
-    key: 'birthDate',
-    title: '出生日期',
-    width: 120,
-    searchType: 'daterange'
-  }
-])
-
-const leaderMethodRequest = async ({
-  birthDate,
-  page,
-  pageSize,
-  ...rest
-}: ProTableRequestParams) => {
-  const params: FetchListParams = { ...rest, page: page!, pageSize: pageSize! }
-  if (birthDate && birthDate.length) {
-    params.startBirthDate = birthDate[0]
-    params.endBirthDate = birthDate[1]
-  }
-  const { total, list } = (await fetchUserList(params)) ?? {}
-  return { itemCount: total, data: list }
-}
 
 const formRef = ref<FormInst>()
 

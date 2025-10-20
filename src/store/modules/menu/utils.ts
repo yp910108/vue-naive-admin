@@ -1,39 +1,31 @@
 import { h } from 'vue'
-import { camelize, combineURL, isExternal } from '@/utils'
-import { Icons } from '@/components'
-
-/**
- * 通过路径获取组件名称
- * @param path
- */
-export const parsePathToName = (path: string) => {
-  path = path.split('/:')[0].replace(/\//g, '-')
-  return camelize(path, true)
-}
+import { combineURL, isExternal, pascalCase } from '@/utils'
+import { icons } from '@/components'
 
 /**
  * 将权限路由转换成菜单
  * @param routeData
  * @param prefix
  */
-export const transformMenus = (routeData: Route.RouteData[], prefix: string = '/') => {
+export const transformMenus = (routeData: Route.RouteData[], parentPath: string = '/') => {
   const menus: Menu.MenuOption[] = []
   for (const { title, path, icon, children } of routeData) {
-    const routePath = isExternal(path) ? path : `/${combineURL(prefix, path)}`
-    const name = parsePathToName(routePath)
+    const routePath =
+      isExternal(path) || path.startsWith('/') ? path : `/${combineURL(parentPath, path)}`
+    const name = pascalCase(routePath)
     const menu: Menu.MenuOption = {
       key: name,
       label: title,
       routePath
     }
     if (icon) {
-      if (Icons[icon]) {
-        menu.icon = () => h(Icons[icon])
+      if (icons[icon]) {
+        menu.icon = () => h(icons[icon])
       } else {
         console.warn(`图标 ${icon} 不存在！`)
       }
     }
-    if (children && children.length) {
+    if (children?.length) {
       menu.children = transformMenus(children, routePath)
     }
     menus.push(menu)
@@ -50,7 +42,7 @@ export const transformSearchMenus = (menus: Menu.MenuOption[]) => {
   for (const menu of menus) {
     const { children, ...rest } = menu
     searchMenus.push({ ...rest })
-    if (children && children.length) {
+    if (children?.length) {
       const _searchMenus = transformSearchMenus(children)
       searchMenus.push(..._searchMenus)
     }

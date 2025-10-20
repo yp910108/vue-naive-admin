@@ -1,72 +1,48 @@
 <template>
-  <app-layout
-    :mode="mode"
-    :is-mobile="isMobile"
-    :scroll-mode="theme.scrollMode"
-    :scroll-el-id="appStore.scrollElId"
-    :sider-visible="siderVisible"
-    :sider-collapse="appStore.siderCollapse"
-    :sider-width="siderWidth"
-    :sider-collapsed-width="siderCollapsedWidth"
-    :fixed-top="theme.fixedHeaderAndTab"
-    :header-height="theme.header.height"
-    :tab-visible="theme.tab.visible"
-    :tab-height="theme.tab.height"
-    :content-full="appStore.contentFull"
-    :content-class="appStore.disableMainXScroll ? 'overflow-x-hidden' : ''"
-    :footer-visible="theme.footer.visible"
-    :fixed-footer="theme.footer.fixed"
-    @click-mobile-sider-mask="appStore.setSiderCollapse(true)"
+  <div
+    class="flex h-full bg-[var(--bg-color)] transition-all"
+    :style="{ '--bg-color': theme === 'dark' ? themeVars.bodyColor : '#f6f9f8' }"
   >
-    <template #sider>
-      <app-sider />
-    </template>
-    <template #header>
-      <app-header />
-    </template>
-    <template #tab>
-      <app-tab />
-    </template>
-    <app-content />
-    <template #footer>
-      <app-footer />
-    </template>
-  </app-layout>
-  <n-back-top :key="theme.scrollMode" :listen-to="`#${appStore.scrollElId}`" class="z-100" />
-  <app-settings v-if="settingsAble" />
+    <div v-if="showMask" :class="maskCls" @click="handleMaskClick"></div>
+    <app-sider :class="siderClass" :style="siderStyle" />
+    <div class="relative z-1 flex-col grow-1 w-0">
+      <app-header
+        class="relative z-2 shrink-0 h[var(--height)]"
+        :style="{ '--height': `${settings.header.height}px` }"
+      />
+      <app-tab v-if="settings.tab.visible" class="relative z-1 shrink-0" />
+      <n-scrollbar ref="scrollRef" class="app-scroll-wrap" content-class="flex-col grow-1">
+        <app-content class="grow-1 p-16px" />
+        <n-back-top class="z-3" />
+      </n-scrollbar>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useAppStore, useThemeStore } from '@/store'
-import AppContent from '../components/app-content/index.vue'
-import { useMobile, useLayout } from './hooks'
-import AppLayout from './app-layout/index.vue'
-import AppHeader from './app-header/index.vue'
+import { useThemeVars } from 'naive-ui'
+import { useAppStore, useSettingsStore } from '@/store'
+import { AppContent } from '../components'
 import AppSider from './app-sider/index.vue'
+import AppHeader from './app-header/index.vue'
 import AppTab from './app-tab/index.vue'
-import AppFooter from './app-footer/index.vue'
-import AppSettings from './app-settings/index.vue'
+import { useSider } from './hooks'
 
-const appStore = useAppStore()
+const themeVars = useThemeVars()
 
-const { theme } = storeToRefs(useThemeStore())
+const { scrollRef } = storeToRefs(useAppStore())
 
-const { isMobile } = useMobile()
+const { settings, theme } = storeToRefs(useSettingsStore())
 
-const { mode, siderVisible, siderWidth, siderCollapsedWidth } = useLayout()
-
-const settingsAble = import.meta.env.DEV || import.meta.env.VITE_PROD_APP_SETTINGS === 'Y'
+const { showMask, maskCls, handleMaskClick, siderClass, siderStyle } = useSider()
 </script>
 
-<style lang="scss">
-@use '@/styles/scrollbar' as *;
-
-#__SCROLL_EL_ID__ {
-  @include scrollbar(8px, #e1e1e1);
-}
-
-.dark #__SCROLL_EL_ID__ {
-  @include scrollbar(8px, #555);
+<style lang="scss" scoped>
+:deep(.app-scroll-wrap) {
+  > .n-scrollbar-container {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

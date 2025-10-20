@@ -14,7 +14,7 @@ export const setupDiscreteApis = () => {
 
   const { message, notification, dialog, loadingBar } = createDiscreteApi(
     ['message', 'dialog', 'notification', 'loadingBar'],
-    { configProviderProps, messageProviderProps: { containerStyle: { top: '35px' } } }
+    { configProviderProps, messageProviderProps: { containerStyle: { top: '50px' } } }
   )
 
   window.$message = message

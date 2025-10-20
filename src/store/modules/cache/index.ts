@@ -1,14 +1,15 @@
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
-import { useTabStore } from '../tab'
+import { useRouter } from 'vue-router'
 
 export const useCacheStore = defineStore('cache-store', () => {
   const router = useRouter()
 
-  const tabStore = useTabStore()
-
   const caches = ref<string[]>([])
+
+  const setCaches = (_caches: string[]) => {
+    caches.value = _caches
+  }
 
   const addCache = (key: string) => {
     const routes = router.getRoutes()
@@ -25,17 +26,5 @@ export const useCacheStore = defineStore('cache-store', () => {
     }
   }
 
-  tabStore.$subscribe((_, { tabs }) => {
-    const routes = router.getRoutes()
-    const _caches = []
-    for (const { key } of tabs) {
-      const route = routes.find(({ name }) => name === key)
-      if (route?.meta.keepAlive) {
-        _caches.push(key)
-      }
-    }
-    caches.value = _caches
-  })
-
-  return { caches, addCache, removeCache }
+  return { caches, setCaches, addCache, removeCache }
 })

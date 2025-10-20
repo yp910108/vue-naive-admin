@@ -1,0 +1,1 @@
+export const SIDER_COLLAPSED_WIDTH = 60

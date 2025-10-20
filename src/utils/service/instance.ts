@@ -9,7 +9,7 @@ import {
   handleAxiosError,
   handleBackendError,
   transformRequestData
-} from './helpers'
+} from './utils'
 
 export default class CustomAxiosInstance {
   instance: AxiosInstance

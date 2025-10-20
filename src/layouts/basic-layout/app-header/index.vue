@@ -1,80 +1,33 @@
 <template>
-  <dark-mode-container
-    class="app-header flex items-center h-full"
-    :inverted="theme.header.inverted"
+  <theme-wrap
+    class="flex-y-center gap-30px px-10px shadow-[var(--shadow)]"
+    :style="{ '--shadow': '0 1px 2px rgb(0 21 41 / 8%)' }"
   >
-    <logo
-      v-if="headerProps.showLogo"
-      show-title
-      class="h-full"
-      :style="{ width: `${theme.sider.width}px` }"
-    />
-    <div v-if="!headerProps.showHeaderMenu" class="flex items-center flex-1 h-full overflow-hidden">
-      <menu-collapse v-if="headerProps.showMenuCollapse || isMobile" />
-      <breadcrumb v-if="theme.header.crumb.visible && !isMobile" />
-    </div>
-    <header-menu v-else />
-    <div class="flex justify-end h-full">
+    <n-flex align="center" :size="10" class="shrink-0">
+      <collapse />
+      <reload />
+      <breadcrumb v-if="!appStore.isSmallScreen" />
+    </n-flex>
+    <n-flex justify="flex-end" :wrap="false" align="center" :size="10" class="grow-1">
       <search />
-      <git-hub-site />
+      <settings />
+      <theme-select />
       <full-screen />
-      <theme-mode />
-      <lang-select with-hover-container />
-      <system-message />
-      <user-avatar />
-    </div>
-  </dark-mode-container>
+      <avatar />
+    </n-flex>
+  </theme-wrap>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useThemeStore } from '@/store'
-import { DarkModeContainer, LangSelect } from '@/components'
-import Logo from '../components/logo.vue'
-import { useMobile } from '../hooks'
-import MenuCollapse from './menu-collapse/index.vue'
+import { useAppStore } from '@/store'
+import { ThemeWrap, ThemeSelect } from '@/components'
+import Collapse from './collapse/index.vue'
 import Breadcrumb from './breadcrumb/index.vue'
-import HeaderMenu from './header-menu.vue'
+import Reload from './reload/index.vue'
 import Search from './search/index.vue'
-import GitHubSite from './github-site/index.vue'
+import Settings from './settings/index.vue'
 import FullScreen from './full-screen/index.vue'
-import ThemeMode from './theme-mode.vue'
-import SystemMessage from './system-message/index.vue'
-import UserAvatar from './user-avatar/index.vue'
+import Avatar from './avatar/index.vue'
 
-const { theme } = storeToRefs(useThemeStore())
-
-const { isMobile } = useMobile()
-
-const LAYOUT_HEADER_PROPS = {
-  vertical: {
-    showLogo: false,
-    showHeaderMenu: false,
-    showMenuCollapse: true
-  },
-  'vertical-mix': {
-    showLogo: false,
-    showHeaderMenu: false,
-    showMenuCollapse: false
-  },
-  horizontal: {
-    showLogo: true,
-    showHeaderMenu: true,
-    showMenuCollapse: false
-  },
-  'horizontal-mix': {
-    showLogo: true,
-    showHeaderMenu: false,
-    showMenuCollapse: true
-  }
-}
-
-const headerProps = computed(() => LAYOUT_HEADER_PROPS[theme.value.layout.mode])
+const appStore = useAppStore()
 </script>
-
-<style scoped>
-.app-header {
-  box-shadow: 0 1px 2px rgb(0 21 41 / 8%);
-}
-</style>

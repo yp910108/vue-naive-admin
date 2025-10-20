@@ -1,44 +1,34 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <transition
-      mode="out-in"
-      appear
-      :name="themeStore.pageAnimateMode"
-      @before-leave="appStore.setDisableMainXScroll(true)"
-      @after-enter="appStore.setDisableMainXScroll(false)"
-    >
+    <transition name="fade-slide" mode="out-in" appear>
       <keep-alive :include="cacheStore.caches">
-        <component
-          v-if="appStore.reloadFlag"
-          :is="Component"
-          :key="route.fullPath"
-          :class="[
-            'flex-grow bg-#f6f9f8 dark:bg-#101014 transition duration-300 ease-in-out',
-            { 'p-16px': showPadding }
-          ]"
-        />
+        <component v-if="appStore.reloadFlag" :is="Component" :key="route.fullPath" />
       </keep-alive>
     </transition>
   </router-view>
 </template>
 
 <script setup lang="ts">
-import { useAppStore, useCacheStore, useThemeStore } from '@/store'
-
-interface Props {
-  /**
-   * 显示padding
-   */
-  showPadding?: boolean
-}
-
-withDefaults(defineProps<Props>(), {
-  showPadding: true
-})
+import { useAppStore, useCacheStore } from '@/store'
 
 const appStore = useAppStore()
 
-const themeStore = useThemeStore()
-
 const cacheStore = useCacheStore()
 </script>
+
+<style lang="scss" scoped>
+.fade-slide-leave-active,
+.fade-slide-enter-active {
+  transition: all 0.3s;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>

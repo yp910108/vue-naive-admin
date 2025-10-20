@@ -2,7 +2,7 @@ import { ref, toRef } from 'vue'
 import { mockRequest } from '@/utils'
 
 const fetchDict = (type: keyof Dict.Type) => {
-  return mockRequest.get<Dict.Item[]>(`/dict`, { params: { type } })
+  return mockRequest.get<Dict.Item[]>('/dict', { params: { type } })
 }
 
 const dict = ref<Dict.Data>({})

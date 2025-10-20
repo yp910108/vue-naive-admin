@@ -1,67 +1,55 @@
 import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
-import { useAppStore, useThemeStore } from '@/store'
+import { useAppStore, useSettingsStore } from '@/store'
+import { SIDER_COLLAPSED_WIDTH } from './constants'
 
-export const useMobile = () => {
+export const useSider = () => {
   const appStore = useAppStore()
 
-  const breakpoints = useBreakpoints(breakpointsTailwind)
-
-  const isMobile = breakpoints.smaller('sm')
+  const { isSmallScreen, siderCollapse } = storeToRefs(appStore)
 
   watch(
-    isMobile,
+    isSmallScreen,
     (newVal) => {
       if (newVal) {
         appStore.setSiderCollapse(true)
+      } else {
+        appStore.setSiderCollapse(false)
       }
     },
     { immediate: true }
   )
 
-  return { isMobile }
-}
+  const { settings } = storeToRefs(useSettingsStore())
 
-export const useLayout = () => {
-  const appStore = useAppStore()
+  const showMask = computed(() => isSmallScreen.value && !siderCollapse.value)
 
-  const { theme } = storeToRefs(useThemeStore())
-
-  const mode = computed(() => {
-    const mode = theme.value.layout.mode
-    return mode.includes('vertical') ? 'vertical' : 'horizontal'
-  })
-
-  const siderVisible = computed(() => {
-    const mode = theme.value.layout.mode
-    return mode !== 'horizontal'
-  })
-
-  const siderWidth = computed(() => {
-    const { width, mixWidth, mixChildMenuWidth } = theme.value.sider
-    const isVerticalMix = theme.value.layout.mode === 'vertical-mix'
-    let w = isVerticalMix ? mixWidth : width
-    if (isVerticalMix && appStore.mixSiderFixed) {
-      w += mixChildMenuWidth
-    }
-    return w
-  })
-
-  const siderCollapsedWidth = computed(() => {
-    const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = theme.value.sider
-    const isVerticalMix = theme.value.layout.mode === 'vertical-mix'
-    let w = isVerticalMix ? mixCollapsedWidth : collapsedWidth
-    if (isVerticalMix && appStore.mixSiderFixed) {
-      w += mixChildMenuWidth
-    }
-    return w
-  })
-
-  return {
-    mode,
-    siderVisible,
-    siderWidth,
-    siderCollapsedWidth
+  const handleMaskClick = () => {
+    appStore.setSiderCollapse(true)
   }
+
+  const maskCls = 'absolute z-2 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.2)] cursor-pointer'
+
+  const siderWidth = computed(() =>
+    isSmallScreen.value || !siderCollapse.value
+      ? `${settings.value.sider.width}px`
+      : `${SIDER_COLLAPSED_WIDTH}px`
+  )
+
+  const siderClass = computed(() => {
+    const cls = ['z-2 shrink-0 w-[var(--width)] transition-all-300']
+    if (isSmallScreen.value) {
+      cls.push('absolute h-full')
+      if (siderCollapse.value) {
+        cls.push('translate-x--100%')
+      }
+    } else {
+      cls.push('relative')
+    }
+    return cls
+  })
+
+  const siderStyle = computed(() => ({ '--width': siderWidth.value }))
+
+  return { showMask, maskCls, handleMaskClick, siderClass, siderStyle }
 }

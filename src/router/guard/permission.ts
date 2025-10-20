@@ -1,18 +1,17 @@
 import type { RouteLocationNormalized } from 'vue-router'
 import { INVALID_CODE, localStg, type RequestError } from '@/utils'
-import { useAuthStore, useRouteStore } from '@/store'
+import { useAuthStore } from '@/store'
 
 export const createPermissionGuard = async (to: RouteLocationNormalized) => {
   const token = localStg.get('token')
   const authStore = useAuthStore()
-  const routeStore = useRouteStore()
   if (token) {
     if (to.name === 'Login') {
       return { name: 'Root' }
     } else {
-      if (!routeStore.isInit) {
+      if (!authStore.isInit) {
         try {
-          await routeStore.init()
+          await authStore.init()
           const { path, query, hash } = to
           return { path, query, hash, replace: true }
         } catch (e) {
@@ -21,8 +20,7 @@ export const createPermissionGuard = async (to: RouteLocationNormalized) => {
           }
           console.warn(e)
           authStore.reset()
-          const redirect = to.fullPath
-          return { name: 'Login', query: { redirect } }
+          return { name: 'Login' }
         }
       } else {
         return true
@@ -32,8 +30,7 @@ export const createPermissionGuard = async (to: RouteLocationNormalized) => {
     if (to.meta.white) {
       return true
     } else {
-      const redirect = to.fullPath
-      return { name: 'Login', query: { redirect } }
+      return { name: 'Login' }
     }
   }
 }

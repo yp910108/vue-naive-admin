@@ -3,7 +3,6 @@ import { createPinia } from 'pinia'
 
 export const setupStore = (app: App) => {
   const store = createPinia()
-
   app.use(store)
 }
 

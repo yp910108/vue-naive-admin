@@ -1,6 +1,5 @@
 import { defineComponent, type PropType } from 'vue'
 import { NButton, NDropdown, NTooltip } from 'naive-ui'
-import { $translate } from '@/locales'
 import type { TableSize } from '../../typings'
 import { tableSizeOptions } from './constants'
 import { IconSize } from './icons'
@@ -16,7 +15,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup: (props) => {
     return () => (
       <NDropdown
         trigger="click"
@@ -27,9 +26,9 @@ export default defineComponent({
       >
         <NTooltip>
           {{
-            default: () => $translate('proTable.action.size'),
+            default: () => '密度',
             trigger: () => (
-              <NButton text class="flex-shrink-0">
+              <NButton text class="shrink-0">
                 <IconSize class="font-size-18px cursor-pointer" />
               </NButton>
             )

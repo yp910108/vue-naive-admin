@@ -1,7 +1,6 @@
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import { defineStore } from 'pinia'
-import { $translate } from '@/locales'
+import { useRouter } from 'vue-router'
 import { localStg } from '@/utils'
 import { useRouteStore } from '../route'
 import { useTabStore } from '../tab'
@@ -10,73 +9,57 @@ import { login as postLogin, fetchUserInfo } from './service'
 export const useAuthStore = defineStore('auth-store', () => {
   const router = useRouter()
 
-  const route = useRoute()
-
   const routeStore = useRouteStore()
 
   const tabStore = useTabStore()
 
-  const token = ref(localStg.get('token'))
+  const isInit = ref(false)
 
-  const userInfo = ref(localStg.get('userInfo'))
+  const userInfo = ref<Auth.UserInfo>()
 
-  const loginLoading = ref(false)
+  const setUserInfo = async () => {
+    const res = await fetchUserInfo()
+    userInfo.value = res
+  }
+
+  const init = async () => {
+    await setUserInfo()
+    await routeStore.init()
+    isInit.value = true
+  }
 
   const reset = (timeout = 0) => {
+    isInit.value = false
     localStg.remove('token')
-    localStg.remove('userInfo')
     setTimeout(() => {
-      token.value = localStg.get('token')
-      userInfo.value = localStg.get('userInfo')
+      userInfo.value = undefined
+      routeStore.reset()
+      tabStore.reset()
     }, timeout)
   }
 
-  const getUserInfo = async () => {
-    const _userInfo = await fetchUserInfo()
-    localStg.set('userInfo', _userInfo)
-    userInfo.value = _userInfo
-  }
-
   const login = async (userName: string, password: string) => {
-    loginLoading.value = true
     try {
       const _token = await postLogin(userName, password)
       localStg.set('token', _token)
-      token.value = _token
-      await getUserInfo()
-      await routeStore.init()
-      loginLoading.value = false
+      await init()
       window.$notification.success({
-        title: $translate('login.loginSuccess'),
-        content: $translate('login.welcomeBack', {
-          userName: userInfo.value?.userName
-        }),
+        title: '登录成功',
+        content: `欢迎回来，${userInfo.value?.userName}！`,
         duration: 3000
       })
-      router.push(route.query.redirect ? (route.query.redirect as string) : { name: 'Root' })
+      router.push({ name: 'Root' })
     } catch (e) {
       console.warn(e)
-      loginLoading.value = false
       reset()
     }
   }
 
   const logout = () => {
-    const redirect = route.fullPath
     // 设置 500 毫秒延迟，避免页面出现空白
     reset(500)
-    setTimeout(() => {
-      routeStore.reset()
-      tabStore.reset()
-    }, 500)
-    router.push({ name: 'Login', query: { redirect } })
+    router.push({ name: 'Login' })
   }
 
-  return {
-    userInfo,
-    loginLoading,
-    reset,
-    login,
-    logout
-  }
+  return { isInit, userInfo, init, reset, login, logout }
 })

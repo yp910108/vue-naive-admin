@@ -8,6 +8,7 @@ import {
   type PropType,
   type Ref
 } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import {
   NButton,
   NCard,
@@ -25,8 +26,6 @@ import {
   NFormItem,
   type DataTableColumnKey
 } from 'naive-ui'
-import { useResizeObserver } from '@vueuse/core'
-import { $translate } from '@/locales'
 import { removeInvalidValues } from '@/utils'
 import type { SearchAction, SearchColumn } from '../typings'
 import { COLS, DATE_PICKER_TYPES, SIZE } from './constants'
@@ -84,7 +83,7 @@ const Search = defineComponent({
       type: Function as PropType<() => void>
     }
   },
-  setup(props, { expose }) {
+  setup: (props, { expose }) => {
     const { form, getForm, setForm, setDefaultForm, resetForm } = useForm(props.columns)
 
     const collapsed = ref(props.showActionCollapse)
@@ -291,9 +290,9 @@ const Search = defineComponent({
     onMounted(handleSearch)
 
     const renderSearchAction = () => [
-      <NButton onClick={handleReset}>{$translate('proTable.searchAction.reset')}</NButton>,
+      <NButton onClick={handleReset}>重 置</NButton>,
       <NButton type="primary" onClick={handleSearch}>
-        {$translate('proTable.searchAction.query')}
+        查 询
       </NButton>
     ]
 
@@ -348,10 +347,7 @@ const Search = defineComponent({
                               onClick={() => (collapsed.value = !collapsed.value)}
                             >
                               {{
-                                default: () =>
-                                  collapsed.value
-                                    ? $translate('proTable.searchAction.expand')
-                                    : $translate('proTable.searchAction.collapse'),
+                                default: () => (collapsed.value ? '展开' : '收起'),
                                 icon: () => (
                                   <IconDown class={{ 'rotate-180deg': !collapsed.value }} />
                                 )

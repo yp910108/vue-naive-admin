@@ -28,36 +28,42 @@ export type RenderContentParams = {
 }
 
 export type DatePickerType = DatePickerProps['type']
+
 type CommonInputColumn = {
   type?: 'input'
   options?: never
   searchType?: 'input'
   searchOptions?: never
 }
+
 type CommonInputNumberColumn = {
   type?: 'input-number'
   options?: never
   searchType?: 'input-number'
   searchOptions?: never
 }
+
 type CommonSelectColumn = {
   type?: 'select' | 'multiple-select'
   options?: SelectOption[] | (() => SelectOption[] | undefined)
   searchType?: 'select' | 'multiple-select'
   searchOptions?: SelectOption[] | (() => SelectOption[] | undefined)
 }
+
 type CommonTreeSelectColumn = {
   type?: 'tree-select'
   options?: TreeSelectOption[] | (() => TreeSelectOption[] | undefined)
   searchType?: 'tree-select'
   searchOptions?: TreeSelectOption[] | (() => TreeSelectOption[] | undefined)
 }
+
 type CommonCascaderColumn = {
   type?: 'cascader'
   options?: CascaderOption[] | (() => CascaderOption[] | undefined)
   searchType?: 'cascader'
   searchOptions?: CascaderOption[] | (() => CascaderOption[] | undefined)
 }
+
 type CommonDatePickerColumn = {
   type?: DatePickerType
   options?: never
@@ -72,7 +78,9 @@ type FieldColumn =
   | Pick<CommonTreeSelectColumn, 'type' | 'options'>
   | Pick<CommonCascaderColumn, 'type' | 'options'>
   | Pick<CommonDatePickerColumn, 'type' | 'options'>
+
 type OnSearchChange = (newValue: any, oldValue: any) => void
+
 export type SearchColumn = FieldColumn & {
   key: DataTableColumnKey
   label?: string | (() => VNodeChild)
@@ -104,7 +112,9 @@ export type SettingColumn = {
 }
 
 export type TableSize = NonNullable<DataTableProps['size']>
+
 export type TablePagination = NonNullable<DataTableProps['pagination']>
+
 export type TableLoading = NonNullable<DataTableProps['loading']>
 
 export type TableExcludeAttrs = 'size' | 'loading' | 'pagination'
@@ -118,6 +128,7 @@ type SearchFieldColumn =
   | Pick<CommonTreeSelectColumn, 'searchType' | 'searchOptions'>
   | Pick<CommonCascaderColumn, 'searchType' | 'searchOptions'>
   | Pick<CommonDatePickerColumn, 'searchType' | 'searchOptions'>
+
 export type ProTableColumnSpecific = SearchFieldColumn & {
   searchSpan?: SearchColumn['span']
   searchDefaultValue?: SearchColumn['defaultValue']
@@ -136,6 +147,7 @@ export type ProTableColumnSpecific = SearchFieldColumn & {
   order?: SettingColumn['order']
   _order?: SettingColumn['order']
 }
+
 export type ProTableColumn<T = Record<string, unknown>> = DataTableColumn<T> &
   ProTableColumnSpecific
 

@@ -1,95 +1,70 @@
-import { nextTick, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { scrollTo } from '@/utils'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
+import type { NScrollbar } from 'naive-ui'
 import { useCacheStore } from '../cache'
 
 export const useAppStore = defineStore('app-store', () => {
-  const cacheStore = useCacheStore()
+  const breakpoints = useBreakpoints(breakpointsTailwind)
 
-  /**
-   * 滚动元素的 id
-   */
-  const scrollElId = ref('__SCROLL_EL_ID__')
+  const isSmallScreen = breakpoints.smaller('md')
 
-  /**
-   * 主体内容是否全屏
-   */
-  const contentFull = ref(false)
-  const setContentFull = (full: boolean) => {
-    contentFull.value = full
-  }
-
-  /**
-   * 侧边栏折叠状态
-   */
   const siderCollapse = ref(false)
+
   const setSiderCollapse = (collapse: boolean) => {
     siderCollapse.value = collapse
   }
+
   const toggleSiderCollapse = () => {
     siderCollapse.value = !siderCollapse.value
   }
 
-  /**
-   * vertical-mix 模式下，侧边栏的固定状态
-   */
-  const mixSiderFixed = ref(false)
-  const toggleMixSiderFixed = () => {
-    mixSiderFixed.value = !mixSiderFixed.value
-  }
-
-  /**
-   * 禁用主体内容的水平方向的滚动
-   */
-  const disableMainXScroll = ref(false)
-  const setDisableMainXScroll = (disable: boolean) => {
-    disableMainXScroll.value = disable
-  }
+  const scrollRef = ref<InstanceType<typeof NScrollbar>>()
 
   /**
    * 获取滚动区域的滚动位置信息
    */
   const getScrollInfo = () => {
-    const scrollEl = document.querySelector(`#${scrollElId.value}`)
+    const scrollEl = (scrollRef.value?.$refs.scrollbarInstRef as any)
+      ?.containerRef as HTMLDivElement | null
     const { scrollLeft = 0, scrollTop = 0 } = scrollEl ?? {}
-    return { scrollEl, scrollLeft, scrollTop }
+    return { left: scrollLeft, top: scrollTop }
   }
+
+  interface ScrollToOption {
+    left?: number
+    top?: number
+    behavior?: ScrollBehavior
+  }
+
+  const scrollTo = (position: ScrollToOption) => {
+    scrollRef.value?.scrollTo(position)
+  }
+
+  const cacheStore = useCacheStore()
 
   /**
    * 重载页面（控制页面的显示）
    */
   const reloadFlag = ref(true)
+
   const reloadPage = (key: string) => {
     reloadFlag.value = false
     cacheStore.removeCache(key)
-    nextTick(() => {
+    setTimeout(() => {
       reloadFlag.value = true
       cacheStore.addCache(key)
-      setTimeout(() => {
-        const { scrollEl } = getScrollInfo()
-        if (scrollEl) scrollTo(scrollEl)
-      }, 600)
-    })
+    }, 500)
   }
 
   return {
-    scrollElId,
-
-    contentFull,
-    setContentFull,
-
+    isSmallScreen,
     siderCollapse,
     setSiderCollapse,
     toggleSiderCollapse,
-
-    mixSiderFixed,
-    toggleMixSiderFixed,
-
-    disableMainXScroll,
-    setDisableMainXScroll,
-
+    scrollRef,
     getScrollInfo,
-
+    scrollTo,
     reloadFlag,
     reloadPage
   }

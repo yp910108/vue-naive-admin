@@ -16,7 +16,7 @@ const ListSelect = defineComponent({
       type: Object as PropType<SelectProps>
     }
   },
-  setup(props, { attrs, expose }) {
+  setup: (props, { attrs, expose }) => {
     const NFormItem = inject(formItemInjectionKey, null)
 
     const paneRef = ref<InstanceType<typeof ListSelectPane>>()

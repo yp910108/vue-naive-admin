@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'scroll-pane relative w-full h-full',
+      'scroll-pane relative w-full',
       {
         'scroll-pane--shadow-start': !arrivedState.left,
         'scroll-pane--shadow-end': !arrivedState.right
@@ -19,9 +19,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useResizeObserver, useScroll } from '@vueuse/core'
 import { VXScroll } from 'vueuc'
 import { useThemeVars } from 'naive-ui'
-import { useResizeObserver, useScroll } from '@vueuse/core'
 
 const themeVars = useThemeVars()
 

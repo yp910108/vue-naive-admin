@@ -8,11 +8,11 @@
       :request="methodRequest"
       :scroll-x="1200"
     />
-    <Operate ref="operateRef" @refresh="tableRef?.reload" />
+    <operate ref="operateRef" @refresh="tableRef?.reload" />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="tsx">
 import { ref, h, computed } from 'vue'
 import { NButton, NDivider, NGradientText, NInputNumber, NPopconfirm, NTooltip } from 'naive-ui'
 import { transformOptionToValueLabel } from '@/utils'
@@ -25,20 +25,6 @@ import { IconQuestion } from './icons'
 import Operate from './operate.vue'
 
 const tableRef = ref<InstanceType<typeof ProTable>>()
-
-const handleDelete = async ({ id }: Row) => {
-  const instance = window.$message.loading('删除中，请稍后...', { duration: 0 })
-  try {
-    await deleteItem(id!)
-    tableRef.value?.reload()
-    setTimeout(() => {
-      instance.destroy()
-      window.$message.success('删除成功')
-    }, 200)
-  } catch (e) {
-    instance.destroy()
-  }
-}
 
 const operateRef = ref<InstanceType<typeof Operate>>()
 
@@ -89,15 +75,16 @@ const columns = ref<ProTableColumn<Row>[]>([
     key: 'age',
     title: '年龄',
     width: 80,
-    renderSearchField: (params, key) =>
-      h(NInputNumber, {
-        value: params[key],
-        clearable: true,
-        min: 1,
-        max: 100,
-        precision: 0,
-        onUpdateValue: (newVal) => (params[key] = newVal)
-      })
+    renderSearchField: (params, key) => (
+      <NInputNumber
+        value={params[key]}
+        min={1}
+        max={100}
+        precision={0}
+        clearable
+        onUpdateValue={(newVal) => (params[key] = newVal)}
+      />
+    )
   },
   {
     key: 'birthDate',
@@ -112,7 +99,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     searchType: 'select',
     searchOptions: () => politicsDict.value,
     render: (row) => politicsValueLabel.value?.[row.politics!],
-    renderSettingLabel: (label) => h(NGradientText, { size: 14 }, { default: () => label })
+    renderSettingLabel: (label) => <NGradientText size={14}>{label}</NGradientText>
   },
   {
     key: 'addressId',
@@ -144,24 +131,20 @@ const columns = ref<ProTableColumn<Row>[]>([
     fixed: 'right',
     hideInSearch: true,
     render: (row) => [
-      h(
-        NButton,
-        {
-          type: 'primary',
-          text: true,
-          onClick: operateRef.value?.show.bind(null, row)
-        },
-        { default: () => '修改' }
-      ),
-      h(NDivider, { vertical: true }),
-      h(
-        NPopconfirm,
-        { onPositiveClick: handleDelete.bind(null, row) },
-        {
+      <NButton type="primary" text onClick={() => operateRef.value?.show(row)}>
+        修改
+      </NButton>,
+      <NDivider vertical />,
+      <NPopconfirm onPositiveClick={() => handleDelete(row)}>
+        {{
           default: () => '确认删除该条数据吗？',
-          trigger: () => h(NButton, { type: 'primary', text: true }, { default: () => '删除' })
-        }
-      )
+          trigger: () => (
+            <NButton type="primary" text>
+              删除
+            </NButton>
+          )
+        }}
+      </NPopconfirm>
     ]
   }
 ])
@@ -174,5 +157,19 @@ const methodRequest = async ({ birthDate, ...rest }: ProTableRequestParams) => {
   }
   const { total, list } = (await fetchList(params)) ?? {}
   return { itemCount: total, data: list }
+}
+
+const handleDelete = async ({ id }: Row) => {
+  const instance = window.$message.loading('删除中，请稍后...', { duration: 0 })
+  try {
+    await deleteItem(id!)
+    tableRef.value?.reload()
+    setTimeout(() => {
+      instance.destroy()
+      window.$message.success('删除成功')
+    }, 200)
+  } catch (e) {
+    instance.destroy()
+  }
 }
 </script>

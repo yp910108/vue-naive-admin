@@ -6,12 +6,12 @@ export const scrollBehavior: RouterScrollBehavior = (to, from) => {
 
   const tabStore = useTabStore()
 
-  const { scrollEl, scrollLeft, scrollTop } = appStore.getScrollInfo()
+  const { left, top } = appStore.getScrollInfo()
 
   if (from.meta.keepAlive) {
     const fromTab = tabStore.tabs.find(({ key }) => key === from.name)
     if (fromTab) {
-      tabStore.setScrollPosition(fromTab, { left: scrollLeft, top: scrollTop })
+      tabStore.setScrollPosition(fromTab, { left, top })
     }
   }
 
@@ -20,11 +20,7 @@ export const scrollBehavior: RouterScrollBehavior = (to, from) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       if (toTab) {
-        const scrollPosition = toTab.scrollPosition
-        if (scrollEl) {
-          scrollEl.scrollLeft = scrollPosition.left
-          scrollEl.scrollTop = scrollPosition.top
-        }
+        appStore.scrollTo(toTab.scrollPosition)
       }
       resolve(false)
     }, 400)

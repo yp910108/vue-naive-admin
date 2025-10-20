@@ -1,3 +1,4 @@
+import { changeColor } from 'seemly'
 import { defineComponent, computed, nextTick, ref, type PropType } from 'vue'
 import {
   NButton,
@@ -12,8 +13,6 @@ import {
   type DataTableColumnKey
 } from 'naive-ui'
 import Sortable from 'sortablejs'
-import { $translate } from '@/locales'
-import { addColorAlpha } from '@/utils'
 import type { SettingColumn } from '../../typings'
 import { IconDrag, IconPinTop, IconPinBottom, IconUnpin, IconSetting } from './icons'
 import styles from './index.module.scss'
@@ -41,7 +40,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup: (props) => {
     const themeVars = useThemeVars()
 
     const sortable = ref<Sortable>()
@@ -92,7 +91,7 @@ export default defineComponent({
       return column.fixed === 'left' ? (
         <NTooltip contentStyle={{ padding: 0 }}>
           {{
-            default: () => $translate('proTable.action.columnsSetting.popover.action.unpin'),
+            default: () => '取消固定',
             trigger: () => (
               <span
                 class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
@@ -106,7 +105,7 @@ export default defineComponent({
       ) : (
         <NTooltip contentStyle={{ padding: 0 }}>
           {{
-            default: () => $translate('proTable.action.columnsSetting.popover.action.pinLeft'),
+            default: () => '固定到左侧',
             trigger: () => (
               <span
                 class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
@@ -124,7 +123,7 @@ export default defineComponent({
       return column.fixed === 'right' ? (
         <NTooltip contentStyle={{ padding: 0 }}>
           {{
-            default: () => $translate('proTable.action.columnsSetting.popover.action.unpin'),
+            default: () => '取消固定',
             trigger: () => (
               <span
                 class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
@@ -138,7 +137,7 @@ export default defineComponent({
       ) : (
         <NTooltip contentStyle={{ padding: 0 }}>
           {{
-            default: () => $translate('proTable.action.columnsSetting.popover.action.pinRight'),
+            default: () => '固定到右侧',
             trigger: () => (
               <span
                 class="p-4px color-[var(--icon-color)] font-size-14px hover:color-[var(--primary-color)]"
@@ -170,15 +169,15 @@ export default defineComponent({
             <NCheckbox
               checked={checkedAll.value}
               indeterminate={checkAllIndeterminate.value}
-              class="flex-grow w-0"
+              class="grow-1 w-0"
               onUpdateChecked={handleUpdateCheckedAll}
             >
               <NText strong depth="1">
-                {$translate('proTable.action.columnsSetting.popover.title')}
+                列展示/排序
               </NText>
             </NCheckbox>,
-            <NButton type="primary" text class="flex-shrink-0" onClick={props.onResetColumns}>
-              {$translate('proTable.action.columnsSetting.popover.action.reset')}
+            <NButton type="primary" text class="shrink-0" onClick={props.onResetColumns}>
+              重置
             </NButton>
           ],
           default: () => (
@@ -199,12 +198,14 @@ export default defineComponent({
                       style={{
                         '--border-radius': themeVars.value.borderRadius,
                         '--bg-color': themeVars.value.hoverColor,
-                        '--bg-active-color': addColorAlpha(themeVars.value.primaryColor, 0.1),
+                        '--bg-active-color': changeColor(themeVars.value.primaryColor, {
+                          alpha: 0.1
+                        }),
                         '--icon-color': themeVars.value.iconColor
                       }}
                     >
-                      <IconDrag class="flex-shrink-0 font-size-14px color-[var(--icon-color)] cursor-grab" />
-                      <NCheckbox value={column.key} class="flex-grow ml-8px w-0">
+                      <IconDrag class="shrink-0 font-size-14px color-[var(--icon-color)] cursor-grab" />
+                      <NCheckbox value={column.key} class="grow-1 ml-8px w-0">
                         {typeof column.label === 'function'
                           ? column.label()
                           : column.renderLabel
@@ -214,7 +215,7 @@ export default defineComponent({
                       <NSpace
                         size={0}
                         wrapItem={false}
-                        class="flex-shrink-0"
+                        class="shrink-0"
                         style={{ '--primary-color': themeVars.value.primaryColor }}
                       >
                         {renderLeftPinIcon(column)}
@@ -229,9 +230,9 @@ export default defineComponent({
           trigger: () => (
             <NTooltip>
               {{
-                default: () => $translate('proTable.action.columnsSetting.tooltip'),
+                default: () => '列设置',
                 trigger: () => (
-                  <NButton text class="flex-shrink-0">
+                  <NButton text class="shrink-0">
                     <IconSetting class="font-size-18px cursor-pointer" />
                   </NButton>
                 )

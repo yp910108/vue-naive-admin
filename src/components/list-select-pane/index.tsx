@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, type PropType, type StyleValue } from 'vue'
+import { computed, defineComponent, ref, type CSSProperties, type PropType } from 'vue'
 import { NButton, NModal, type DataTableRowKey, NSpace, type ModalProps } from 'naive-ui'
 import ProTable from '../pro-table'
 
@@ -32,7 +32,7 @@ const ListSelectPane = defineComponent({
       default: '选择'
     },
     modalProps: {
-      type: Object as PropType<ModalProps & { style: StyleValue }>
+      type: Object as PropType<ModalProps & { class?: string; style?: CSSProperties | string }>
     },
     valueField: {
       type: String as PropType<string>
@@ -54,7 +54,7 @@ const ListSelectPane = defineComponent({
       type: Function as PropType<(value: any) => Promise<void>>
     }
   },
-  setup(props, { attrs, expose }) {
+  setup: (props, { attrs, expose }) => {
     const confirmLoading = ref(false)
 
     const uncontrolledValue = ref<Value>(null)
@@ -113,12 +113,8 @@ const ListSelectPane = defineComponent({
       get: () => {
         return multiple.value ? checkedRows.value : checkedRows.value[0]
       },
-      set: (newChecked) => {
-        checkedRows.value = newChecked
-          ? Array.isArray(newChecked)
-            ? newChecked
-            : [newChecked]
-          : []
+      set: (checked) => {
+        checkedRows.value = checked ? (Array.isArray(checked) ? checked : [checked]) : []
       }
     })
 
@@ -195,7 +191,7 @@ const ListSelectPane = defineComponent({
         preset="card"
         title={props.title}
         maskClosable={false}
-        style={{ width: '950px', height: '650px' }}
+        class="w-950px h-650px"
         {...props.modalProps}
         show={visible.value}
         displayDirective="show"

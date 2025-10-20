@@ -44,6 +44,7 @@ export const filterSettingColumns = (columns: ProTableColumn[]) => {
 }
 
 type ProTableColumnSpecificKey = keyof ProTableColumnSpecific
+
 const PROTABLE_COLUMN_SPECIFIC: Record<ProTableColumnSpecificKey, undefined> = {
   searchSpan: undefined,
   searchType: undefined,
@@ -64,6 +65,7 @@ const PROTABLE_COLUMN_SPECIFIC: Record<ProTableColumnSpecificKey, undefined> = {
   order: undefined,
   _order: undefined
 }
+
 const PROTABLE_COLUMN_SPECIFIC_KEYS = Object.keys(
   PROTABLE_COLUMN_SPECIFIC
 ) as ProTableColumnSpecificKey[]

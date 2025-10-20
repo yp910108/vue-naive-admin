@@ -1,9 +1,8 @@
 interface LocalStorage {
+  settings?: Settings.Settings
   token?: string
-  userInfo?: Auth.UserInfo
-  lang?: Lang.Type
-  theme?: 'light' | 'dark'
-  tabs?: Tab.MultiTab[]
+  localRouteData?: Route.RouteData[]
+  tabs?: Tab.TabItem[]
 }
 
 interface StorageData<T> {

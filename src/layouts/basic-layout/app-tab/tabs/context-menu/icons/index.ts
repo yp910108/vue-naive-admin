@@ -1,7 +1,0 @@
-export { default as IconFullscreen } from './fullscreen.vue'
-export { default as IconReload } from './reload.vue'
-export { default as IconCloseCurrent } from './close-current.vue'
-export { default as IconCloseLeft } from './close-left.vue'
-export { default as IconCloseRight } from './close-right.vue'
-export { default as IconCloseOther } from './close-other.vue'
-export { default as IconCloseAll } from './close-all.vue'

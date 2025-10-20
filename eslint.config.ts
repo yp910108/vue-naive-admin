@@ -1,5 +1,9 @@
 import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import {
+  configureVueProject,
+  defineConfigWithVueTs,
+  vueTsConfigs
+} from '@vue/eslint-config-typescript'
 import configPrettier from '@vue/eslint-config-prettier'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 import pluginVue from 'eslint-plugin-vue'
@@ -9,6 +13,8 @@ import pluginImport from 'eslint-plugin-import'
 // import { configureVueProject } from '@vue/eslint-config-typescript'
 // configureVueProject({ scriptLangs: ['ts', 'tsx'] })
 // More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+
+configureVueProject({ scriptLangs: ['ts', 'tsx'] })
 
 export default defineConfigWithVueTs(
   {
@@ -53,12 +59,17 @@ export default defineConfigWithVueTs(
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           pathGroups: [
             {
-              pattern: 'vue',
+              pattern: 'lodash-es',
               group: 'external',
               position: 'before'
             },
             {
-              pattern: 'pinia',
+              pattern: 'seemly',
+              group: 'external',
+              position: 'before'
+            },
+            {
+              pattern: 'vue',
               group: 'external',
               position: 'before'
             },
@@ -68,17 +79,12 @@ export default defineConfigWithVueTs(
               position: 'before'
             },
             {
+              pattern: 'pinia',
+              group: 'external',
+              position: 'before'
+            },
+            {
               pattern: 'vue-router',
-              group: 'external',
-              position: 'before'
-            },
-            {
-              pattern: 'naive-ui',
-              group: 'external',
-              position: 'before'
-            },
-            {
-              pattern: 'lodash-es',
               group: 'external',
               position: 'before'
             },
@@ -93,12 +99,17 @@ export default defineConfigWithVueTs(
               position: 'before'
             },
             {
-              pattern: '@/settings',
+              pattern: 'naive-ui',
+              group: 'external',
+              position: 'before'
+            },
+            {
+              pattern: '@/assets',
               group: 'internal',
               position: 'before'
             },
             {
-              pattern: '@/locales',
+              pattern: '@/settings',
               group: 'internal',
               position: 'before'
             },
@@ -147,7 +158,8 @@ export default defineConfigWithVueTs(
               group: 'internal',
               position: 'before'
             }
-          ]
+          ],
+          pathGroupsExcludedImportTypes: []
         }
       ],
       'vue/multi-word-component-names': 0,

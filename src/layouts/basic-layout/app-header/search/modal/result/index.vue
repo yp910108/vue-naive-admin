@@ -5,10 +5,10 @@
         v-for="item of options"
         :key="item.key"
         :style="{
-          background: item.key === active ? theme.primaryColor : '',
+          background: item.key === active ? themeVars.primaryColor : '',
           color: item.key === active ? '#fff' : ''
         }"
-        class="flex justify-between items-center mt-8px h-56px px-14px rounded-4px bg-#e5e7eb dark:bg-dark cursor-pointer"
+        class="flex-center mt-8px h-56px px-14px rounded-4px bg-#e5e7eb dark:bg-dark cursor-pointer"
         @click="handleTo"
         @mouseenter="handleMouseEnter(item)"
       >
@@ -22,25 +22,20 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useThemeStore } from '@/store'
+import { useThemeVars } from 'naive-ui'
 import { IconEnter } from './icons'
 
-interface Props {
+const props = defineProps<{
   value?: string
   options: Menu.SearchMenuOption[]
-}
+}>()
 
-const props = defineProps<Props>()
-
-interface Emits {
+const emit = defineEmits<{
   (e: 'update:value', value?: string): void
   (e: 'enter'): void
-}
+}>()
 
-const emit = defineEmits<Emits>()
-
-const { theme } = storeToRefs(useThemeStore())
+const themeVars = useThemeVars()
 
 const active = computed({
   get() {

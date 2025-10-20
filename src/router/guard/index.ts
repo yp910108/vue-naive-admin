@@ -8,7 +8,10 @@ export const createRouterGuard = (router: Router) => {
     return await createPermissionGuard(to)
   })
   router.afterEach((to) => {
-    useTitle(`${to.meta.title} - ${import.meta.env.VITE_APP_NAME}`)
+    const title = to.meta.title
+      ? `${to.meta.title} - ${import.meta.env.VITE_APP_NAME}`
+      : import.meta.env.VITE_APP_NAME
+    useTitle(title)
     window.$loadingBar.finish()
   })
 }

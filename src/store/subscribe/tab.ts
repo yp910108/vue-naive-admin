@@ -1,13 +1,15 @@
-import { useEventListener } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import { localStg } from '@/utils'
-import { useTabStore } from '../modules'
+import { useSettingsStore, useTabStore } from '../modules'
 
-const subscribeTabStore = () => {
+export const subscribeTabStore = () => {
+  const { settings } = storeToRefs(useSettingsStore())
+
   const tabStore = useTabStore()
 
-  useEventListener(window, 'beforeunload', () => {
-    localStg.set('tabs', tabStore.tabs)
+  tabStore.$subscribe((_, { tabs }) => {
+    if (settings.value.tab.visible) {
+      localStg.set('tabs', tabs)
+    }
   })
 }
-
-export default subscribeTabStore

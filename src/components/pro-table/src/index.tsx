@@ -18,7 +18,6 @@ import {
   type DataTableRowKey,
   type PaginationProps
 } from 'naive-ui'
-import { $translate } from '@/locales'
 import type {
   ProTableColumn,
   RenderActionParams,
@@ -175,7 +174,7 @@ const ProTable = defineComponent({
       type: Function as PropType<() => void>
     }
   },
-  setup(props, { attrs, expose }) {
+  setup: (props, { attrs, expose }) => {
     const columns = toRef(props, 'columns')
     const {
       searchColumns,
@@ -216,16 +215,11 @@ const ProTable = defineComponent({
         pageSize: 20,
         itemCount: 0,
         prefix: ({ startIndex, endIndex, itemCount }) => {
-          const strs = [$translate('proTable.pagination.total', { total: itemCount })]
+          const strs = [`总共 ${itemCount} 条`]
           if (endIndex > startIndex) {
-            strs.unshift(
-              $translate('proTable.pagination.startEnd', {
-                start: startIndex + 1,
-                end: endIndex + 1
-              })
-            )
+            strs.unshift(`第 ${startIndex + 1}-${endIndex + 1} 条`)
           }
-          return strs.join($translate('proTable.pagination.separator'))
+          return strs.join('/')
         },
         showSizePicker: true,
         pageSizes: [10, 20, 50, 100]
@@ -351,15 +345,13 @@ const ProTable = defineComponent({
         bordered={false}
         size={tableSize.value}
         loading={loading.value}
-        // @ts-ignore
         rowKey={(row) => row.id}
         columns={tableColumns.value}
         data={data.value}
-        // @ts-ignore
         pagination={pagination.value}
         onUpdatePage={handleUpatePage}
         onUpdatePageSize={handleUpatePageSize}
-        class="flex-grow"
+        class="grow-1"
         {...restAttrs.value}
       />
     )
@@ -389,14 +381,14 @@ const ProTable = defineComponent({
               }
               onSearch={handleSearch}
               onReset={props.onReset}
-              class="flex-shrink-0"
+              class="shrink-0"
               contentStyle={props.searchStyle}
             />
           )
         ) : undefined}
         <NCard
           bordered={false}
-          class="flex-grow"
+          class="grow-1"
           contentStyle={{
             display: 'flex',
             flexDirection: 'column',
@@ -405,11 +397,9 @@ const ProTable = defineComponent({
           }}
         >
           {props.headerTitle || props.renderToolbar || props.action ? (
-            <NSpace size={20} wrapItem={false} align="center" class="flex-shrink-0 mb-16px">
-              {props.headerTitle ? (
-                <NH4 class="flex-shrink-0 m-0">{props.headerTitle}</NH4>
-              ) : undefined}
-              <NSpace wrapItem={false} justify="end" class="flex-grow w-0">
+            <NSpace size={20} wrapItem={false} align="center" class="shrink-0 mb-16px">
+              {props.headerTitle ? <NH4 class="shrink-0 m-0">{props.headerTitle}</NH4> : undefined}
+              <NSpace wrapItem={false} justify="end" class="grow-1 w-0">
                 {props.renderToolbar ? props.renderToolbar() : undefined}
                 {props.action
                   ? typeof props.action === 'function'

@@ -1,13 +1,25 @@
 <template>
-  <n-space vertical :size="16">
-    <top-chart />
-    <data-card />
-    <bottom-part />
-  </n-space>
+  <n-flex vertical :size="12">
+    <usage-num />
+    <usage-trend />
+    <n-grid cols="1 930:3" :x-gap="12" :y-gap="12">
+      <n-gi :span="2">
+        <n-flex vertical :size="12">
+          <visit-source />
+          <visit-way />
+        </n-flex>
+      </n-gi>
+      <n-gi>
+        <recent-news />
+      </n-gi>
+    </n-grid>
+  </n-flex>
 </template>
 
-<script lang="ts" setup>
-import TopChart from './top-chart.vue'
-import DataCard from './data-card/index.vue'
-import BottomPart from './bottom-part.vue'
+<script setup lang="ts">
+import UsageNum from './usage-num/index.vue'
+import UsageTrend from './usage-trend/index.vue'
+import RecentNews from './recent-news/index.vue'
+import VisitSource from './visit-source/index.vue'
+import VisitWay from './visit-way/index.vue'
 </script>
