@@ -49,5 +49,7 @@ export const useSider = () => {
     return cls
   })
 
-  return { showMask, maskCls, handleMaskClick, siderWidth, siderClass }
+  const siderStyle = computed(() => ({ '--width': siderWidth }))
+
+  return { showMask, maskCls, handleMaskClick, siderClass, siderStyle }
 }

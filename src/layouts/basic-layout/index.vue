@@ -4,7 +4,7 @@
     :style="{ '--bg-color': theme === 'dark' ? themeVars.bodyColor : '#f6f9f8' }"
   >
     <div v-if="showMask" :class="maskCls" @click="handleMaskClick"></div>
-    <app-sider :class="siderClass" :style="{ '--width': siderWidth }" />
+    <app-sider :class="siderClass" :style="siderStyle" />
     <div class="relative z-1 flex-col grow-1 w-0">
       <app-header
         class="relative z-2 shrink-0 h[var(--height)]"
@@ -35,7 +35,7 @@ const { scrollRef } = storeToRefs(useAppStore())
 
 const { settings, theme } = storeToRefs(useSettingsStore())
 
-const { showMask, maskCls, handleMaskClick, siderWidth, siderClass } = useSider()
+const { showMask, maskCls, handleMaskClick, siderClass, siderStyle } = useSider()
 </script>
 
 <style lang="scss" scoped>
