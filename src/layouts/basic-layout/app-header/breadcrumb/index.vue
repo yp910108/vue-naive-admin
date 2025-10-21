@@ -19,14 +19,14 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useMenuStore } from '@/store'
-import { getBreadcrumbsNyRouteName } from './utils'
+import { getBreadcrumbsByRouteName } from './utils'
 
 const route = useRoute()
 
 const menuStore = useMenuStore()
 
 const breadcrumbs = computed(() => {
-  return getBreadcrumbsNyRouteName(route.name as string, menuStore.menus)
+  return getBreadcrumbsByRouteName(route.name as string, menuStore.menus)
 })
 
 const router = useRouter()

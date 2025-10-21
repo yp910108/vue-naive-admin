@@ -50,7 +50,7 @@ declare namespace Settings {
     /**
      * 主题色
      */
-    primaryColor: 'default' | string
+    primaryColor: PrimaryColor
     /**
      * 侧边栏样式
      */

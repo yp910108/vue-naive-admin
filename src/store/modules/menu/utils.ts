@@ -5,7 +5,7 @@ import { icons } from '@/components'
 /**
  * 将权限路由转换成菜单
  * @param routeData
- * @param prefix
+ * @param parentPath
  */
 export const transformMenus = (routeData: Route.RouteData[], parentPath: string = '/') => {
   const menus: Menu.MenuOption[] = []
