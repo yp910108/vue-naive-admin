@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { setupAssets, setupDiscreteApis } from './plugins'
+import { setupAssets, setupDiscreteApis, setupProdMockServer } from './plugins'
 import { setupStore } from './store'
 import { setupRouter } from './router'
 import { AppLoading } from './components'
@@ -19,6 +19,8 @@ const setupApp = async () => {
   setupStore(app)
 
   setupDiscreteApis()
+
+  await setupProdMockServer()
 
   await setupRouter(app)
 

@@ -1,6 +1,6 @@
 import type { MockMethod } from 'vite-plugin-mock'
 
-const routeModel: Route.RouteData[] = [
+const data: Route.RouteData[] = [
   {
     title: '概览',
     path: 'dashboard',
@@ -90,7 +90,7 @@ const routeModel: Route.RouteData[] = [
   }
 ]
 
-const apis: MockMethod[] = [
+const methods: MockMethod[] = [
   {
     url: '/mock/getAuthRoutes',
     method: 'get',
@@ -109,13 +109,9 @@ const apis: MockMethod[] = [
     //   }
     // },
     response: () => {
-      return {
-        code: 200,
-        message: 'ok',
-        data: routeModel
-      }
+      return { code: 200, message: 'ok', data }
     }
   }
 ]
 
-export default apis
+export default methods

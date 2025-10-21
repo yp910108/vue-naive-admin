@@ -1,7 +1,7 @@
 import type { MockMethod } from 'vite-plugin-mock'
 import Mock from 'mockjs'
 
-interface Row {
+interface DataItem {
   id?: number
   name?: string
   sex?: string
@@ -9,7 +9,7 @@ interface Row {
   birthDate?: string
 }
 
-const apis: MockMethod[] = [
+const methods: MockMethod[] = [
   {
     url: '/mock/users',
     method: 'get',
@@ -31,7 +31,7 @@ const apis: MockMethod[] = [
           ]
         }
       })
-      let list = response.data.list as Row[]
+      let list = response.data.list as DataItem[]
       if (age) {
         list = list.filter((item) => item.age === +age)
       }
@@ -53,4 +53,4 @@ const apis: MockMethod[] = [
   }
 ]
 
-export default apis
+export default methods

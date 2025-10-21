@@ -1,11 +1,11 @@
 import type { MockMethod } from 'vite-plugin-mock'
 
-interface UserModel extends Auth.UserInfo {
+interface UserData extends Auth.UserInfo {
   token: string
   password: string
 }
 
-const userModel: UserModel[] = [
+const useData: UserData[] = [
   {
     token: '__TOKEN_ADMIN__',
     userId: '2',
@@ -19,18 +19,7 @@ const ERROR_PARAM_CODE = 10000
 
 const ERROR_PARAM_MSG = '参数校验失败！'
 
-const apis: MockMethod[] = [
-  {
-    url: '/mock/getSmsCode',
-    method: 'get',
-    response: () => {
-      return {
-        code: 200,
-        message: 'ok',
-        data: true
-      }
-    }
-  },
+const methods: MockMethod[] = [
   {
     url: '/mock/login',
     method: 'post',
@@ -50,7 +39,7 @@ const apis: MockMethod[] = [
         }
       }
 
-      const findItem = userModel.find(
+      const findItem = useData.find(
         (item) => item.userName === userName && item.password === password
       )
 
@@ -74,10 +63,11 @@ const apis: MockMethod[] = [
     // rawResponse: (_, res) => {
     //   res.setHeader('Content-Type', 'text/plain')
     //   res.statusCode = 401
-    //   res.end(`hello, this is data.`)
+    //   res.end('Unauthorized')
     // },
     response: (options: any) => {
       const { authorization = '' } = options.headers
+
       const INVALID_CODE = 66666
 
       if (!authorization) {
@@ -88,7 +78,7 @@ const apis: MockMethod[] = [
         }
       }
 
-      const userInfo = userModel.find(({ token }) => token === authorization)
+      const userInfo = useData.find(({ token }) => token === authorization)
 
       if (userInfo) {
         return {
@@ -107,4 +97,4 @@ const apis: MockMethod[] = [
   }
 ]
 
-export default apis
+export default methods

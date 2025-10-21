@@ -1,7 +1,7 @@
 import type { MockMethod } from 'vite-plugin-mock'
 import Mock from 'mockjs'
 
-const apis: MockMethod[] = [
+const methods: MockMethod[] = [
   {
     url: '/mock/dashboard/analysys/usage-num',
     method: 'get',
@@ -167,4 +167,4 @@ const apis: MockMethod[] = [
   }
 ]
 
-export default apis
+export default methods
