@@ -1,6 +1,6 @@
 import type { CascaderOption, TreeSelectOption } from 'naive-ui'
 
-export const addressOptions: CascaderOption[] = [
+export const ADDRESS_OPTIONS: CascaderOption[] = [
   {
     value: '10001',
     label: '山东省',
@@ -37,7 +37,7 @@ export const addressOptions: CascaderOption[] = [
   }
 ]
 
-export const deptOptions: TreeSelectOption[] = [
+export const DEPT_OPTIONS: TreeSelectOption[] = [
   {
     key: '10001',
     label: '开发部',

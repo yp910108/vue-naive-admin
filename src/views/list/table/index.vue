@@ -19,7 +19,7 @@ import { transformOptionToValueLabel } from '@/utils'
 import { useDict } from '@/hooks'
 import { ProTable, type ProTableColumn, type ProTableRequestParams } from '@/components'
 import type { FetchListParams, Row } from './typings'
-import { addressOptions, deptOptions } from './constants'
+import { ADDRESS_OPTIONS, DEPT_OPTIONS } from './constants'
 import { fetchList, deleteItem } from './service'
 import { IconQuestion } from './icons'
 import Operate from './operate.vue'
@@ -105,7 +105,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     key: 'addressId',
     title: '家庭住址',
     searchType: 'cascader',
-    searchOptions: addressOptions,
+    searchOptions: ADDRESS_OPTIONS,
     hideInTable: true
   },
   {
@@ -118,7 +118,7 @@ const columns = ref<ProTableColumn<Row>[]>([
     key: 'deptId',
     title: '所属组织',
     searchType: 'tree-select',
-    searchOptions: deptOptions,
+    searchOptions: DEPT_OPTIONS,
     hideInTable: true
   },
   { key: 'deptName', title: '所属组织', width: 100, hideInSearch: true },

@@ -35,7 +35,7 @@
           <n-form-item-gi label="家庭住址" path="addressId">
             <n-cascader
               v-model:value="model.addressId"
-              :options="addressOptions"
+              :options="ADDRESS_OPTIONS"
               check-strategy="child"
               clearable
               filterable
@@ -44,7 +44,7 @@
           <n-form-item-gi label="所属组织" path="deptId">
             <n-tree-select
               v-model:value="model.deptId"
-              :options="deptOptions"
+              :options="DEPT_OPTIONS"
               clearable
               filterable
               default-expand-all
@@ -77,7 +77,7 @@ import { removeInvalidValues } from '@/utils'
 import { useDict } from '@/hooks'
 import { UserSelect } from '@/components'
 import type { BackendModel, Model, Row } from './typings'
-import { addressOptions, deptOptions } from './constants'
+import { ADDRESS_OPTIONS, DEPT_OPTIONS } from './constants'
 import { fetchDetail, add, edit } from './service'
 
 const emit = defineEmits<{ (e: 'refresh'): void }>()

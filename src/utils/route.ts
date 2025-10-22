@@ -87,13 +87,13 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
     children: []
   }
 
-  const vueNotFoundRoute: RouteRecordRaw = {
+  const notFoundRoute: RouteRecordRaw = {
     name: 'NotFound',
     path: '/:pathMatch(.*)*',
     component: NotFound
   }
 
-  const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, vueNotFoundRoute]
+  const routes: RouteRecordRaw[] = [rootRoute, blankLayoutRoute, basicLayoutRoute, notFoundRoute]
 
   const transform = (
     routeData: Route.RouteData[],
