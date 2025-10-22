@@ -1,13 +1,16 @@
 <template>
   <div>
     <n-card :title="route.meta.title" :bordered="false" size="small" class="b-rd-8px shadow-sm">
-      <n-button @click="handleToTabDetail">跳转详情</n-button>
+      <n-grid :cols="5" :x-gap="12" :y-gap="12">
+        <n-gi v-for="i of 50" :key="i">
+          <n-button secondary block @click="handleToDetail(i)">/dynamic/{{ i }}</n-button>
+        </n-gi>
+      </n-grid>
     </n-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { uniqueId } from 'lodash-es'
 import { useRoute, useRouter } from 'vue-router'
 import { useRouteStore } from '@/store'
 
@@ -17,11 +20,10 @@ const router = useRouter()
 
 const routeStore = useRouteStore()
 
-const handleToTabDetail = () => {
-  const name = uniqueId()
-  const path = `${route.path}/${name}`
+const handleToDetail = (i: number) => {
+  const path = `${route.path}/${i}`
   routeStore.addLocalRoute({
-    title: `动态页签-${name}`,
+    title: `动态页签-${i}`,
     path,
     page: 'tabs/dynamic-detail',
     activeMenu: route.path

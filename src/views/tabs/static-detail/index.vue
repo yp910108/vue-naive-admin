@@ -10,14 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { PageBack } from '@/components'
 
 const route = useRoute()
-
-const router = useRouter()
-
-if (!route.query.name) {
-  router.push({ name: 'Root' })
-}
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <n-card :title="route.meta.title" :bordered="false" size="small" class="b-rd-8px shadow-sm">
-      <n-button @click="handleToTabDetail">跳转详情</n-button>
+      <n-button @click="handleToDetail">跳转详情</n-button>
     </n-card>
   </div>
 </template>
@@ -13,10 +13,7 @@ const route = useRoute()
 
 const router = useRouter()
 
-const handleToTabDetail = () => {
-  router.push({
-    name: 'TabsStaticDetail',
-    query: { name: 'abc' }
-  })
+const handleToDetail = () => {
+  router.push({ name: 'TabsStaticDetail' })
 }
 </script>
