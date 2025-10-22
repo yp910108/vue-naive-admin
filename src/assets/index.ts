@@ -1,1 +1,1 @@
-export { default as ImgLogo } from './logo.png'
+export { default as ImgLogo } from './logo.svg'
