@@ -29,7 +29,7 @@ export const useRouteStore = defineStore('route-store', () => {
 
   const addLocalRoute = (routeData: Route.RouteData) => {
     if (!localRouteData.value.find((item) => item.path === routeData.path)) {
-      localRouteData.value.push(routeData)
+      localRouteData.value.push({ ...routeData, unsafeRoot: true })
       localStg.set('localRouteData', localRouteData.value)
     }
     const routes = router.getRoutes()

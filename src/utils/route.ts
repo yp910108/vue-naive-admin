@@ -55,9 +55,9 @@ const getFirstPathNotExternal = (routeData: Route.RouteData[]) => {
 }
 
 const getRootRedirect = (basicLayoutRoute: RouteRecordRaw) => {
-  const routes = basicLayoutRoute.children
-  if (routes?.length) {
-    const firstPath = routes[0].path
+  const safeRoutes = basicLayoutRoute.children?.filter(({ meta }) => !meta?.unsafeRoot)
+  if (safeRoutes?.length) {
+    const firstPath = safeRoutes[0].path
     return firstPath.startsWith('/') ? firstPath : `/${firstPath}`
   }
   return undefined
@@ -109,7 +109,8 @@ export const transformRoutes = (routeData: Route.RouteData[]) => {
       const meta = {
         ...rest,
         keepAlive: rest.keepAlive ?? parentMeta?.keepAlive,
-        activeMenu: rest.activeMenu ?? parentMeta?.activeMenu
+        activeMenu: rest.activeMenu ?? parentMeta?.activeMenu,
+        unsafeRoot: parentMeta?.unsafeRoot ?? rest.unsafeRoot
       }
       if (children?.length) {
         const firstPathNotExternal = getFirstPathNotExternal(children)

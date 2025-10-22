@@ -9,6 +9,7 @@ export const routeData: Route.RouteData[] = [
     title: '静态页签-详情',
     path: 'tabs/static-detail',
     icon: 'tabs',
-    activeMenu: '/tabs/static'
+    activeMenu: '/tabs/static',
+    unsafeRoot: true
   }
 ]
