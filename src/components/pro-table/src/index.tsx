@@ -12,8 +12,8 @@ import {
 import {
   NCard,
   NDataTable,
+  NFlex,
   NH4,
-  NSpace,
   type DataTableColumnKey,
   type DataTableRowKey,
   type PaginationProps
@@ -55,7 +55,7 @@ type Search =
   | boolean
   | ((searchParams: RenderSearchParams) => VNodeChild)
   | {
-      cols?: number
+      cols?: string | number
       labelWidth?: string | number | 'auto'
       clearable?: boolean
       disabled?: boolean
@@ -141,7 +141,7 @@ const ProTable = defineComponent({
      * - searchSpan 搜索项占用的列
      * - searchType 搜索项的组件类型
      * - searchOptions 搜索项组件对应的选项内容，当 searchType 为 select、tree-select、cascader 时有效
-     * - searchDefaultValue 搜索项默认值，可以为一个方法
+     * - searchDefaultValue 搜索项默认值
      * - searchClearable 搜索项是否可清空
      * - searchDisabled 搜索项是否禁用，可以为一个方法
      * - onSearchChange 搜索项的值修改后调用的方法。也可以设置为一个对象，此时，如果对象的 watch 属性为 true 时，会通过 vue 的 watch 方法
@@ -255,6 +255,7 @@ const ProTable = defineComponent({
           }
         } catch (e) {
           loading.value = false
+          console.warn(e)
         }
       }
     }
@@ -357,10 +358,9 @@ const ProTable = defineComponent({
     )
 
     return () => (
-      <NSpace
+      <NFlex
         vertical
         size={props.segmented ? 10 : 0}
-        wrapItem={false}
         class={['h-full', styles['pro-table'], attrs.class]}
         style={attrs.style}
       >
@@ -397,21 +397,21 @@ const ProTable = defineComponent({
           }}
         >
           {props.headerTitle || props.renderToolbar || props.action ? (
-            <NSpace size={20} wrapItem={false} align="center" class="shrink-0 mb-16px">
+            <NFlex size={20} align="center" class="shrink-0 mb-16px">
               {props.headerTitle ? <NH4 class="shrink-0 m-0">{props.headerTitle}</NH4> : undefined}
-              <NSpace wrapItem={false} justify="end" class="grow-1 w-0">
+              <NFlex justify="end" class="grow-1 w-0">
                 {props.renderToolbar ? props.renderToolbar() : undefined}
                 {props.action
                   ? typeof props.action === 'function'
                     ? props.action({ vnodes: renderAction() })
                     : renderAction()
                   : undefined}
-              </NSpace>
-            </NSpace>
+              </NFlex>
+            </NFlex>
           ) : undefined}
           {props.renderContent ? props.renderContent({ vnode: renderTable() }) : renderTable()}
         </NCard>
-      </NSpace>
+      </NFlex>
     )
   }
 })

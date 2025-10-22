@@ -60,12 +60,12 @@
       </n-form>
     </n-spin>
     <template #footer>
-      <n-space justify="end">
+      <n-flex justify="end">
         <n-button @click="hide">取 消</n-button>
         <n-button type="primary" :loading="saveLoading" :disabled="!saveAble" @click="handleSave">
           确 定
         </n-button>
-      </n-space>
+      </n-flex>
     </template>
   </n-modal>
 </template>

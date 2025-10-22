@@ -4,9 +4,9 @@ import {
   NButton,
   NCheckbox,
   NCheckboxGroup,
+  NFlex,
   NPopover,
   NScrollbar,
-  NSpace,
   NText,
   NTooltip,
   useThemeVars,
@@ -45,7 +45,7 @@ export default defineComponent({
 
     const sortable = ref<Sortable>()
 
-    const sortRef = ref<InstanceType<typeof NSpace>>()
+    const sortRef = ref<InstanceType<typeof NFlex>>()
 
     const handleUpdateShow = (newVal: boolean) => {
       if (newVal) {
@@ -187,12 +187,11 @@ export default defineComponent({
                 class="px-12px py-8px"
                 onUpdateValue={props.onUpdateColumnsVisible}
               >
-                <NSpace ref={sortRef} vertical size={3} wrapItem={false}>
+                <NFlex ref={sortRef} vertical size={3}>
                   {props.columns.map((column) => (
-                    <NSpace
+                    <NFlex
                       key={column.key}
                       size={0}
-                      wrapItem={false}
                       align="center"
                       class="px-8px py-4px b-rd-[var(--border-radius)] hover:bg-[var(--bg-color)] cursor-pointer"
                       style={{
@@ -212,18 +211,17 @@ export default defineComponent({
                             ? column.renderLabel(column.label)
                             : column.label}
                       </NCheckbox>
-                      <NSpace
+                      <NFlex
                         size={0}
-                        wrapItem={false}
                         class="shrink-0"
                         style={{ '--primary-color': themeVars.value.primaryColor }}
                       >
                         {renderLeftPinIcon(column)}
                         {renderRightPinIcon(column)}
-                      </NSpace>
-                    </NSpace>
+                      </NFlex>
+                    </NFlex>
                   ))}
-                </NSpace>
+                </NFlex>
               </NCheckboxGroup>
             </NScrollbar>
           ),

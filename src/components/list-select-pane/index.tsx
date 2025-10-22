@@ -1,5 +1,5 @@
 import { computed, defineComponent, ref, type CSSProperties, type PropType } from 'vue'
-import { NButton, NModal, type DataTableRowKey, NSpace, type ModalProps } from 'naive-ui'
+import { NButton, NFlex, NModal, type DataTableRowKey, type ModalProps } from 'naive-ui'
 import ProTable from '../pro-table'
 
 type Row = Record<DataTableRowKey, any>
@@ -233,7 +233,7 @@ const ListSelectPane = defineComponent({
             />
           ),
           footer: () => (
-            <NSpace justify="end">
+            <NFlex justify="end">
               <NButton onClick={hide}>取 消</NButton>
               <NButton
                 type="primary"
@@ -247,7 +247,7 @@ const ListSelectPane = defineComponent({
                     ? `确 定（已选${checkedRows.value.length}条）`
                     : `确 定（已选${checkedRows.value[0][props.labelField]}）`}
               </NButton>
-            </NSpace>
+            </NFlex>
           )
         }}
       </NModal>

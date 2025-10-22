@@ -26,9 +26,14 @@ export const useColumns = (originColumns: Ref<ProTableColumn[]>) => {
   const tableColumns = computed(() => {
     return filterTableColumns(columns.value).map((column) => {
       const _ellipsis = column.ellipsis
-      const ellipsis = typeof _ellipsis === 'boolean' ? _ellipsis : { tooltip: true, ..._ellipsis }
+      const ellipsis =
+        typeof _ellipsis === 'boolean'
+          ? _ellipsis
+            ? { tooltip: { contentStyle: { maxWidth: '60vw' } } }
+            : _ellipsis
+          : { tooltip: { contentStyle: { maxWidth: '60vw' } }, ..._ellipsis }
       const _column: DataTableColumn = { align: 'center', ...column, ellipsis }
-      if (ellipsis && typeof ellipsis === 'object') {
+      if (ellipsis) {
         _column.ellipsisComponent = 'performant-ellipsis'
       }
       return _column

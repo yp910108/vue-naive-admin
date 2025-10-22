@@ -70,7 +70,7 @@ const columns = ref<ProTableColumn<Row>[]>([
 
 const methodRequest = async ({ birthDate, page, pageSize, ...rest }: ProTableRequestParams) => {
   const params: FetchListParams = { ...rest, page: page, pageSize: pageSize }
-  if (birthDate.length) {
+  if (birthDate?.length) {
     params.startBirthDate = birthDate[0]
     params.endBirthDate = birthDate[1]
   }

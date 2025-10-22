@@ -14,12 +14,12 @@ import {
   NCard,
   NCascader,
   NDatePicker,
+  NFlex,
   NForm,
   NGrid,
   NInput,
   NInputNumber,
   NSelect,
-  NSpace,
   NTooltip,
   NTreeSelect,
   NGridItem,
@@ -54,7 +54,7 @@ const Search = defineComponent({
       required: true
     },
     cols: {
-      type: Number as PropType<number>
+      type: [String, Number] as PropType<string | number>
     },
     labelWidth: {
       type: [String, Number] as PropType<string | number | 'auto'>,
@@ -215,11 +215,11 @@ const Search = defineComponent({
               {{
                 default: () =>
                   form.value[key] && (
-                    <NSpace wrapItem={false} align="center">
+                    <NFlex align="center">
                       {form.value[key][0]}
                       <IconArrowRight class="inline" />
                       {form.value[key][1]}
-                    </NSpace>
+                    </NFlex>
                   ),
                 trigger: () => DatePicker
               }}
@@ -248,8 +248,7 @@ const Search = defineComponent({
 
     const handleReset = () => {
       resetForm()
-      const { onReset } = props
-      if (onReset) onReset()
+      props.onReset?.()
       handleSearch()
     }
 
@@ -333,7 +332,7 @@ const Search = defineComponent({
                   default: ({ overflow }: { overflow: boolean }) => {
                     return (
                       <NFormItem>
-                        <NSpace wrapItem={false}>
+                        <NFlex>
                           {props.action
                             ? typeof props.action === 'function'
                               ? props.action({ vnodes: renderSearchAction() })
@@ -354,7 +353,7 @@ const Search = defineComponent({
                               }}
                             </NButton>
                           ) : undefined}
-                        </NSpace>
+                        </NFlex>
                       </NFormItem>
                     )
                   }
