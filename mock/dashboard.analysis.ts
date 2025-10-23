@@ -102,10 +102,10 @@ const methods: MockMethod[] = [
         message: 'ok',
         data: [
           {
-            name: '熊大',
+            name: '光头强',
             avatar: generateAvatar(),
             time: '刚刚',
-            desc: '在 `开源组` 创建了项目 `Vue`'
+            desc: '关注了 `熊大`'
           },
           {
             name: '熊二',
@@ -114,34 +114,34 @@ const methods: MockMethod[] = [
             desc: '发布了 `个人动态`'
           },
           {
-            name: '光头强',
+            name: '熊大',
             avatar: generateAvatar(),
             time: '1个小时前',
-            desc: '关注了 `熊大`'
+            desc: '在 `开源组` 创建了项目 `Vue`'
           },
           {
-            name: '福特',
+            name: '麦克斯',
             avatar: generateAvatar(),
             time: '1天前',
-            desc: '发布了 `个人动态`'
+            desc: '回复了 `露西` 的问题 `如何进行项目优化？`'
           },
           {
             name: '露西',
             avatar: generateAvatar(),
             time: '2天前',
-            desc: '发表文章 `如何编写一个 Vite 插件？`'
+            desc: '发表问题 `如何进行项目优化？`'
           },
           {
-            name: '赛力',
+            name: '赛米',
             avatar: generateAvatar(),
             time: '3天前',
-            desc: '回复了 `杰克` 的问题 `如何进行项目优化？`'
+            desc: '关闭了问题 `如何运行项目`'
           },
           {
-            name: '麦克斯',
+            name: '弗特',
             avatar: generateAvatar(),
             time: '1周前',
-            desc: '关闭了问题 `如何运行项目`'
+            desc: '发表文章 `如何编写一个 Vite 插件？`'
           },
           {
             name: '付小小',

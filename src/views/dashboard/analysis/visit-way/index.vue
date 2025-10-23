@@ -2,7 +2,7 @@
   <n-card
     title="访问方式统计"
     :bordered="false"
-    class="h-395px shadow-[var(--shadow)]"
+    class="h-398px shadow-[var(--shadow)]"
     :style="{
       '--shadow': '0 1px 2px rgb(0 21 41 / 8%)'
     }"
