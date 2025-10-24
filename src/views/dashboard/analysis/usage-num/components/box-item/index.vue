@@ -22,7 +22,7 @@
     <n-flex
       justify="center"
       align="center"
-      class="w-60px h-60px bg-[var(--bg-color)] b-rd-50%"
+      class="size-60px bg-[var(--bg-color)] b-rd-50%"
       :style="{ '--bg-color': changeColor(color, { alpha: 0.1 }) }"
     >
       <component :is="icon" class="text-28px color-[var(--color)]" :style="{ '--color': color }" />

@@ -28,7 +28,7 @@ export const useSider = () => {
     appStore.setSiderCollapse(true)
   }
 
-  const maskCls = 'absolute z-2 left-0 top-0 w-full h-full bg-[rgba(0,0,0,0.2)] cursor-pointer'
+  const maskCls = 'absolute z-2 left-0 top-0 size-full bg-[rgba(0,0,0,0.2)] cursor-pointer'
 
   const siderWidth = computed(() =>
     isSmallScreen.value || !siderCollapse.value

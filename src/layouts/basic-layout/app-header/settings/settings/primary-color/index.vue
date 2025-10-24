@@ -12,7 +12,7 @@
         @click="handleItemClick(item.value)"
       >
         <i
-          class="w-20px h-20px bg-[var(--bg-color)] b-rd-[var(--border-radius)]"
+          class="size-20px bg-[var(--bg-color)] b-rd-[var(--border-radius)]"
           :style="{
             '--bg-color': item.color,
             '--border-radius': themeVars.borderRadius
