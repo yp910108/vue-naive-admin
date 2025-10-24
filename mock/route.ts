@@ -31,14 +31,16 @@ const data: Route.RouteData[] = [
     icon: 'internal',
     children: [
       {
-        title: 'vue 文档',
-        path: 'vue',
-        icon: 'internal-vue'
-      },
-      {
         title: 'naive 文档',
         path: 'naive',
+        page: 'https://www.naiveui.com',
         icon: 'internal-naive'
+      },
+      {
+        title: '预览地址',
+        path: 'preview',
+        page: 'https://yp910108.github.io/vue-naive-admin',
+        icon: 'internal-preview'
       }
     ]
   },

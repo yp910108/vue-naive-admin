@@ -1,0 +1,51 @@
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="purple" x1="0%" x2="100%">
+        <stop offset="0%" stop-color="#c84fd5" />
+        <stop offset="100%" stop-color="#5635a8" />
+      </linearGradient>
+      <linearGradient id="blue" x1="0%" x2="100%">
+        <stop offset="0%" stop-color="#a2dbd2" />
+        <stop offset="100%" stop-color="#3b5aa0" />
+      </linearGradient>
+      <linearGradient id="cyan" x1="0%" x2="100%">
+        <stop offset="0%" stop-color="#64dbe0" />
+        <stop offset="100%" stop-color="#207cbb" />
+      </linearGradient>
+    </defs>
+    <rect
+      x="9"
+      y="-24"
+      width="86"
+      height="30"
+      rx="15"
+      ry="15"
+      fill="url(#purple)"
+      transform="rotate(60)"
+      style="filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2))"
+    />
+    <rect
+      x="-39"
+      y="-89.5"
+      width="86"
+      height="30"
+      rx="15"
+      ry="15"
+      fill="url(#blue)"
+      transform="rotate(120)"
+      style="filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2))"
+    />
+    <rect
+      x="-30"
+      y="-102"
+      width="86"
+      height="30"
+      rx="15"
+      ry="15"
+      fill="url(#cyan)"
+      transform="rotate(125)"
+      style="filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.2))"
+    />
+  </svg>
+</template>
