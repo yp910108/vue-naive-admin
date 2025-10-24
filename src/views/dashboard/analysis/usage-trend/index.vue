@@ -41,6 +41,10 @@ const option = computed(() => {
       right: 15,
       bottom: 25
     },
+    legend: {
+      right: 10,
+      top: 0
+    },
     tooltip: {
       trigger: 'axis',
       borderWidth: 0,
@@ -50,10 +54,6 @@ const option = computed(() => {
           type: [8, 5]
         }
       }
-    },
-    legend: {
-      right: 10,
-      top: 0
     },
     xAxis: {
       type: 'category',
